@@ -1,0 +1,8 @@
+:: Maplebrich Widget Icon Img [widget]
+
+<<widget "MaplebrichIcon">>
+    <<switch _args[0]>>
+		<<case "SydneyBunk">><<icon "Sydneyquarters.png">>
+    <<case "SydneyBed">><<icon "Sydneybed.png">>
+	<</switch>>
+<</widget>>

@@ -1,0 +1,118 @@
+{
+  "name": "Maplebirch",
+  "version": "0.0.1",
+  "styleFileList": [],
+  "scriptFileList": [],
+  "tweeFileList": [
+    "game/base-system/Maplebrichimages.twee",
+    "game/overworld-town/loc-temple/SydneyBunk.twee"
+  ],
+  "imgFileList": [
+    "img/misc/icon/Sydneybed.png",
+    "img/misc/icon/Sydneyquarters.png"
+  ],
+  "additionFile": [
+    "game/base-system/SydneyBunkSleep.txt"
+  ],
+  "addonPlugin": [
+    {
+      "modName": "ModdedClothesAddon",
+      "addonName": "ModdedClothesAddon",
+      "modVersion": "^1.1.0",
+      "params": {}
+    },
+    {
+      "modName": "TweeReplacer",
+      "addonName": "TweeReplacerAddon",
+      "modVersion": "1.0.0",
+      "params": [
+        {
+          "passage": "Temple Sydney Rescue",
+          "findString": "你们一起走回神殿的主厅。你花了好长时间才说服悉尼你没有什么大碍。<<if $sydneyromance is 1>><<he>>亲了亲你的脸颊，然后回去工作了。<<else>><<he>>向你挥手告别，离开的时候转身又看了你一眼。<</if>>",
+          "replace": "你们一起走回神殿的主厅。你花了好长时间才说服悉尼你没有什么大碍。<<if $sydneyromance is 1>><<he>>亲了亲你的脸颊，然后回去工作了。<<else>><<he>>向你挥手告别，离开的时候转身又看了你一眼。<</if>>\n<<SydneyBunkChat>>",
+          "_comment": "悉尼宿舍前置"
+        },
+        {
+          "passage": "Temple Quarters",
+          "findString": "<</if>>\n\t\t<<if Time.dayState is \"night\">>",
+          "replace": "<<MaplebrichSydneybunk>>\n\t\t<</if>>\n\t\t<<if Time.dayState is \"night\">>",
+          "_comment": "悉尼宿舍"
+        },
+        {
+          "passage": "Temple Quarters",
+          "findString": "<<else>>\n\t\t\t你藏在床铺下以保护自尊。",
+          "replace": "<<MaplebrichSydneybunk>>\n\t\t<<else>>\n\t\t\t你藏在床铺下以保护自尊。",
+          "_comment": "悉尼宿舍"
+        },
+        {
+          "passage": "Temple Bunk",
+          "findString": "<<mirroricon>><<link [[镜子|Temple Mirror]]>><<preMirror>><<endevent>><</link>>\n<br><br>",
+          "replace": "<<mirroricon>><<link [[镜子|Temple Mirror]]>><<preMirror>><<endevent>><</link>>\n<br><br><<MaplebrichSydneybunk>>",
+          "_comment": "悉尼宿舍"
+        },
+        {
+          "passage": "Temple Sleep",
+          "findString": "<<wakingEffects $sleepHoursTotal>>",
+          "replace": "<<temple_sydney_bunk_sleep_1>>\n\t<<wakingEffects $sleepHoursTotal>>",
+          "_comment": "神殿悉尼宿舍睡觉"
+        },
+        {
+          "passage": "Temple Sleep",
+          "findString": "<<sleepeffects>>",
+          "replace": "<<temple_sydney_bunk_sleep_2>>\n\t<<sleepeffects>>\n\t<<temple_sydney_bunk_sleep_3>>",
+          "_comment": "神殿悉尼宿舍睡觉"
+        },
+        {
+          "passage": "Widgets Sleep",
+          "findString": "\t\t\t<<case \"temple\">>",
+          "replaceFile": "game/base-system/SydneyBunkSleep.txt",
+          "_comment": "神殿悉尼睡觉部件"
+        }
+      ]
+    },
+    {
+      "modName": "ModLoader DoL ImageLoaderHook",
+      "addonName": "ImageLoaderAddon",
+      "modVersion": "^2.3.0",
+      "params": []
+    },
+    {
+      "modName": "ReplacePatcher",
+      "addonName": "ReplacePatcherAddon",
+      "modVersion": "1.0.0",
+      "params": {
+        "js": []
+      }
+    }
+  ],
+  "dependenceInfo": [
+    {
+      "modName": "TweeReplacer",
+      "version": ">=1.0.0"
+    },
+    {
+      "modName": "ModdedClothesAddon",
+      "version": "^1.1.0"
+    },
+    {
+      "modName": "ModLoader DoL ImageLoaderHook",
+      "version": "^2.0.0"
+    },
+    {
+      "modName": "Simple Frameworks",
+      "version": ">=1.2.0"
+    },
+    {
+      "modName": "ReplacePatcher",
+      "version": "^1.0.0"
+    },
+    {
+      "modName": "ModdedFeatsAddon",
+      "version": "^1.0.0"
+    },
+    {
+      "modName": "GameVersion",
+      "version": ">=0.5.1.0"
+    }
+  ]
+}
