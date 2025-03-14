@@ -1,6 +1,6 @@
             <<case "temple">>
                 <<run statusCheck("Sydney")>>
-                <<if $sydney_bed_frequency gte 1>>
+                <<if $sydney_bed_frequency gte 2>>
                     <<if ((Time.weekDay == 1 && Time.hour lt 6) || (Time.weekDay == 7 && Time.hour gt 23)) && _sydneyStatus.includes("corruptLust") && $sydneywake isnot 1>>
                         <<set $sydneywake to 1>>
                         <<set _sleepinterrupt to 1>>

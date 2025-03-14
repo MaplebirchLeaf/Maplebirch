@@ -1,0 +1,152 @@
+:: Maplebirch Settings [widget]
+
+/* 每日6时刷新点，含有每日变量 */
+<<widget "maplebirch_daily_reset">>
+    <<maplebirch_daily_unset>>
+    <<maplebirch_daily_set>>
+    <<robinTempleTestSpeed>>
+    <<MaplebirchnumValue>>
+    <<RobinTempleValue>>
+<</widget>>
+
+/* 每日变量删除 */
+<<widget "maplebirch_daily_unset">>
+    <<unset $MaplebirchSydneyattack>>
+    <<unset $frequencyalready>>
+    <<unset $MaplebirchSydneyTime>>
+    <<unset $Maplebirchdaily>>
+<</widget>>
+
+/* 每日变量建立 */
+<<widget "maplebirch_daily_set">>
+    <<set $Maplebirchdaily = {}>>
+    <<set $Maplebirchdaily.robin = {}>>
+<</widget>>
+
+/* 每周刷新点，含有每周变量 */
+<<widget "maplebirch_weekly_reset">>
+    <<maplebirch_weekly_unset>>
+    <<maplebirch_deekly_set>>
+<</widget>>
+
+/* 每周变量删除 */
+<<widget "maplebirch_weekly_unset">>
+    <<unset $Maplebirchweely>>
+<</widget>>
+
+/* 每周变量建立 */
+<<widget "maplebirch_deekly_set">>
+    <<set $Maplebirchweekly = {}>>
+<</widget>>
+
+/* 临时变量删除 */
+<<widget "MaplebirchEndEvent">>
+    <<unset $robin_examination>>
+    <<unset $robin_anguish>>
+    <<unset $Maplebirchstage>>
+    <<unset $Maplebirchanswer>>
+    <<unset $Maplebirchphase>>
+    <<unset $Maplebirchphase2>>
+    <<unset $Maplebirch_temple_evaluation>>
+<</widget>>
+
+<<widget "RobinTempleValue">>
+    <<if ["initiate", "monk"].includes(V.robin_temple_rank)>>
+        <<run dailyUpdateRobinGrace()>>
+    <</if>>
+    <<set $Maplebirchdaily.robin.sex = 0>>
+<</widget>>
+
+/* 罗宾加入神殿速度 */
+<<widget "robinTempleTestSpeed">>
+    <<if $RobinTempleTestDouble == true>>
+        <<if $MaplebirchRobin_pendant>>
+            <<set $MaplebirchRobinDom += 3>>
+        <<else>>
+            <<set $MaplebirchRobinDom += 1>>
+        <</if>>
+        <<if $MaplebirchRobinDom >= 100>>
+            <<set $MaplebirchRobinDom = 100>>
+        <</if>>
+    <<else>>
+        <<set $MaplebirchRobinDom = 0>>
+    <</if>>
+    <<if $RobinTempleInvitation != undefined>>
+        <<set _robin to statusCheck("Robin")>>
+        <<if _robin.lovestage gte 5 && ["test_superslowly","test_slowly"].includes($RobinTempleInvitation)>>
+            <<set $robintemplespeed += 1>>
+        <</if>>
+        <<if $robintemplespeed == 3 && $RobinTempleInvitation == "test_superslowly">>
+            <<set $robintemplespeed -= 3>>
+            <<set $RobinTempleInvitation = "test_slowly">>
+        <<elseif $robintemplespeed == 2 && $RobinTempleInvitation == "test_slowly">>
+            <<set $robintemplespeed -= 2>>
+            <<set $RobinTempleInvitation = "test_quickly">>
+        <<elseif  $robintemplespeed == 0 && $RobinTempleInvitation == "test_quickly">>
+            <<set $RobinTempleInvitation = "templetest">>
+        <</if>>
+    <</if>>
+<</widget>>
+
+<<widget "MaplebirchnumValue">>
+    <<if !$MaplebirchnumValue>>
+        <<set $MaplebirchnumValue to true>>
+
+        <<set $MaplebirchRobinDom to 0>>
+        <<set $robintemplespeed to 0>>
+        <<set $sydney_bed_frequency to 0>>
+    <</if>>
+<</widget>>
+
+<<widget "MaplebirchCheck">>
+    <<if $forest_costume.cd>>
+        <<set $MaplebirchrobinSeen.pushUnique("Transvestism")>>
+    <</if>>
+<</widget>>
+
+/* 全局临时递归检测 */
+<<widget "MaplebirchStage">>
+    <<set $Maplebirchstage to (($Maplebirchstage || 0) + 1)>>
+<</widget>>
+
+<!-- 传递的参数包括NNPC名称、变量类型和值（+/-）-->
+<<widget "Maplebirchnpcincr">>
+	<<set _nam to _args[0]>>
+	<<set _var to _args[1]>>
+	<<set _val to _args[2]>>
+	<<if _args[3]>>
+		<<set _cheat to _args[3]>>
+	<</if>>
+
+	<<set _i to $NPCNameList.indexOf(_nam)>>
+
+	<<switch _var>>
+	<<case holiness>>
+		<<if _nam is "Robin" and _val lt 0>>
+			<<if $NPCName[_i].holiness lt 0>>
+				<<set $NPCName[_i].holiness = 0>>
+			<</if>>
+		<<else>>
+			<<set $NPCName[_i].holiness += _val>>
+			<<if $NPCName[_i].holiness gt 200>>
+				<<set $NPCName[_i].holiness = 200>>
+			<</if>>
+		<</if>>
+	<<default>>
+		<span class="red">NPCINCR error - Unknown variable _var</span>
+		<br><br>
+	<</switch>>
+<<Maplebirchrelationshipclamp>>
+<</widget>>
+
+<<widget "Maplebirchrelationshipclamp">>
+	<<set _i to $NPCNameList.indexOf("Robin")>>
+    <<set $NPCName[_i].holiness = Math.clamp($NPCName[_i].holiness, 0, 100)>>
+<</widget>>
+
+<<widget "MaplebrchHint">>
+    |
+    <span class="MaplebirchMod">
+        <<print " —秋枫白桦">>
+    </span>
+<</widget>>

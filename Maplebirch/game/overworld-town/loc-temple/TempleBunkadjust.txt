@@ -1,0 +1,3 @@
+<</if>>
+<<if $Maplebirch_Lock == 1>>
+    <<set $wardrobe_location to "temple">>

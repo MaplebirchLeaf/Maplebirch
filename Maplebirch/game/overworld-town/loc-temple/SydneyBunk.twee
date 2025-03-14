@@ -1,17 +1,24 @@
-:: Sydney bunk Maplebrich [widget]
+:: Sydney bunk Maplebirch [widget]
 
-<<widget "MaplebrichSydneybunk">>
-	/* 神殿晋升，悉尼过审判， */
-    <<if $temple_rank is "monk" && $SydneyBunkChat>>
-        <br>
-        <<MaplebrichIcon "SydneyBunk">><<link [[悉尼的床铺|Temple Sydney Bunk]]>><</link>>
-        <br><br>
-    <</if>>
+<<widget "MaplebirchTemplebunk">>
+	/* 神殿晋升， */
+	<<if ["monk","priest"].includes($temple_rank) && ($SydneyBunkChat || $RobinBunkChat)>>
+		<br>
+    	<<if ["monk","priest"].includes($temple_rank) && $SydneyBunkChat>>
+        	<<MaplebirchIcon "SydneyBunk">><<link [[悉尼的床铺|Temple Sydney Bunk]]>><</link>><<MaplebrchHint>>
+        	<br><br>
+    	<</if>>
+		<<if ["monk","priest"].includes($temple_rank) && $RobinBunkChat>>
+        	<<MaplebirchIcon "RobinBunk">><<link [[罗宾的床铺|Temple Robin Bunk]]>><</link>><<MaplebrchHint>>
+        	<br><br>
+    	<</if>>
+	<</if>>
 <</widget>>
 
 <<widget "SydneyBunkChat">>
 	/* 神殿晋升，悉尼过审判， */
-    <<if $temple_rank is "monk" && !$weekly.trialFailed && $loveInterest.primary is "Sydney">>
+	<<MaplebirchMoreLoveInterests>>
+    <<if ["monk","priest"].includes($temple_rank) && !$weekly.trialFailed && $MaplebirchloveInterest.includes("Sydney")>>
         <br><br>
         <span class="teal"><i>在你走时，你细心地留意到了悉尼在神殿的床铺位置。</i></span>
         <<set $SydneyBunkChat to true>>
@@ -19,9 +26,9 @@
 <</widget>>
 
 <<widget "temple_sydney_bunk_sleep_options">>
-	<<nightmareCheck "Maplebrich Temple Sleep">>
+	<<nightmareCheck "Maplebirch Temple Sleep">>
 
-	<<generateSleepLinks "Maplebrich Temple Sleep">>
+	<<generateSleepLinks "Maplebirch Temple Sleep">>
 	<<if $bus is "temple_sydney_bed">>
 		<<link [[爬下床|Temple Sydney Bunk]]>>
 			<<storeon "temple sydney bed" "check">>
@@ -49,12 +56,14 @@
 	<</if>>
 	<<if $bus is "temple_sydney_bed" or $sydney_bed is "player">>
 		<<set $bedGuest to "Sydney">>
+	<<else>>
 	<</if>>
+	<<set $bus to "temple_bed">>
 <</widget>>
 
 
 <<widget "temple_sydney_bunk_sleep_2">>
-	<<if (!_sleepinterrupt && ((Time.weekDay == 1 && Time.hour < 6) || (Time.weekDay == 7 && Time.hour > 23)) && $bus is "temple_sydney_bed") || ($sydney_bed is "player" && !_sydneyWake)>>
+	<<if (!_sleepinterrupt && isMaplebirchTime("SydneyTempleTime") && $bus is "temple_sydney_bed") || ($sydney_bed is "player" && !_sydneyWake)>>
 		<<run statusCheck("Sydney")>>
 		<<switch random(1, 6)>>
 			<<case 1>>
@@ -101,11 +110,12 @@
 <</widget>>
 
 <<widget "temple_sydney_bunk_sleep_3">>
-	<<if _sleepinterrupt>>
+	<<if _sleepinterrupt && !$MaplebirchSydneyattack>>
+		<<set $MaplebirchSydneyattack = 1>>
 		<<npc Sydney>><<person1>>
 		<<if $bus is "temple_sydney_bed">>
 			<<run statusCheck("Sydney")>>
-			<<if (Time.weekDay == 1 && Time.hour < 6) && $rng gte 50 && C.npc.Sydney.lust gte 60 && (_sydneyStatus.includes("corrupt") || _sydneyStatus.includes("corruptLust"))>>
+			<<if isMaplebirchTime("SydneyTempleTime") && $rng gte 50 && C.npc.Sydney.lust gte 60 && (_sydneyStatus.includes("corrupt") || _sydneyStatus.includes("corruptLust"))>>
 				你醒了过来，感觉有个
 				<<if $NPCList[0].vagina isnot "none" && $NPCList[0].penis isnot "none">>坚硬的柱状体和湿湿的东西<<elseif $NPCList[0].penis isnot "none">>坚硬的柱状体<<else>>湿湿的东西<</if>>
 				压在你屁股上。你在等着悉尼说话，但迎接你的只有沉默。你看向悉尼，发现<<He>>还在沉沉的睡觉。<<His>>正双臂环抱着你，干蹭着你。<<arousal 600 "bottom">><<garousal>>
@@ -148,7 +158,7 @@
 				<<link [[顺其自然|Temple Sydney Allow]]>><<sub 1>><<npcincr Sydney purity -1>><</link>><<promiscuous1>><<lspurity>>
 				<br>
 			<</if>>
-		<<else>>
+		<<elseif $bus is "temple_bed">>
 			<<if $exposed gte 2 and random(1, 2) is 2>>
 				你打了个寒颤。你的被单不见了。床铺旁传来某人离去的脚步声。<<covered>>
 				<br><br>
@@ -191,10 +201,18 @@
 			<</if>>
 		<</if>>
 	<<else>>
+    	<<set $wardrobe_location to "temple">>
+    	<<wardrobeSelection true>>
+    	<<radiooutfits>>
+
+    	<br><br>
+    	<<link [[起床|Temple Bunk]]>><</link>>
+    	<br>
+   		<<set $phase to 0>>
 	<</if>>
 <</widget>>
 
-:: Maplebrich Temple Sleep
+:: Maplebirch Temple Sleep
 
 <<set _autosavehere to true>>
 <<sleep>>
@@ -229,7 +247,7 @@
             <br><br>
         <</if>>
     <</if>>
-	<<if (!_sleepinterrupt && ((Time.weekDay == 1 && Time.hour < 6) || (Time.weekDay == 7 && Time.hour > 23)) && $bus is "temple_sydney_bed") || ($sydney_bed is "player" && !_sydneyWake)>>
+	<<if (!_sleepinterrupt && isMaplebirchTime("SydneyTempleTime") && $bus is "temple_sydney_bed") || ($sydney_bed is "player" && !_sydneyWake)>>
 		<<run statusCheck("Sydney")>>
 		<<switch random(1, 6)>>
 			<<case 1>>
@@ -274,11 +292,12 @@
 		<</switch>>
 	<</if>>
     <<sleepeffects>>
-	<<if _sleepinterrupt>>
+	<<if _sleepinterrupt && !$MaplebirchSydneyattack>>
+		<<set $MaplebirchSydneyattack = 1>>
 		<<npc Sydney>><<person1>>
 		<<if $bus is "temple_sydney_bed">>
 			<<run statusCheck("Sydney")>>
-			<<if (Time.weekDay == 1 && Time.hour < 6) && $rng gte 50 && C.npc.Sydney.lust gte 60 && (_sydneyStatus.includes("corrupt") || _sydneyStatus.includes("corruptLust"))>>
+			<<if isMaplebirchTime("SydneyTempleTime") && $rng gte 50 && C.npc.Sydney.lust gte 60 && (_sydneyStatus.includes("corrupt") || _sydneyStatus.includes("corruptLust"))>>
 				你醒了过来，感觉有个
 				<<if $NPCList[0].vagina isnot "none" && $NPCList[0].penis isnot "none">>坚硬的柱状体和湿湿的东西<<elseif $NPCList[0].penis isnot "none">>坚硬的柱状体<<else>>湿湿的东西<</if>>
 				压在你屁股上。你在等着悉尼说话，但迎接你的只有沉默。你看向悉尼，发现<<He>>还在沉沉的睡觉。<<His>>正双臂环抱着你，干蹭着你。<<arousal 600 "bottom">><<garousal>>
@@ -321,7 +340,7 @@
 				<<link [[顺其自然|Temple Sydney Allow]]>><<sub 1>><<npcincr Sydney purity -1>><</link>><<promiscuous1>><<lspurity>>
 				<br>
 			<</if>>
-		<<else>>
+		<<elseif $bus is "temple_bed">>
 			<<if $exposed gte 2 and random(1, 2) is 2>>
 				你打了个寒颤。你的被单不见了。床铺旁传来某人离去的脚步声。<<covered>>
 				<br><br>
@@ -376,7 +395,7 @@
 				<</if>>
 			<</link>>
 			<br>
-		<<else>>
+		<<elseif $bus is "temple_bed">>
 			<<set $wardrobe_location to "temple">>
     		<<wardrobeSelection true>>
 			<<radiooutfits>>
@@ -397,11 +416,6 @@
 你在神殿宿舍的悉尼床铺旁。屋里有个衣柜收纳着悉尼的衣服，屏风后面有一个可以换装的小空间。
 <br><br>
 
-<<if !$first_sydney_bunk>>
-	<<set $first_sydney_bunk to true>>
-	<<set $sydney_bed_frequency to 0>>
-<</if>>
-
 <<if Time.dayState is "night">>
 	这里的床铺上躺满了人，除了偶尔传来的呼噜声外一切都显得是那么宁静祥和。
 <<elseif Time.dayState is "day">>
@@ -421,10 +435,15 @@
 		在神殿劳累了一天，悉尼很快地蜷在了床上。
 		<br><br>
 
-	<<elseif ((Time.weekDay == 1 && Time.hour < 6) || (Time.weekDay == 7 && Time.hour > 23))>>
-		<<npc Sydney>><<person1>><<set $sydney_bed_frequency += 1>>
+	<<elseif isMaplebirchTime("SydneyTempleTime") && !$MaplebirchSydneyTime>>
+		<<npc Sydney>><<person1>>
+		<<if !$MaplebirchSydneyTime && !$frequencyalready>>
+			<<set $sydney_bed_frequency += 1>>
+			<<set $frequencyalready = 1>>
+		<</if>>
 		悉尼安静地蜷在<<He>>的床铺上，枕头的边上还沾着些许口水。
-		<<if Time.weekDay is 1 && Time.hour is 5>>
+		<<if Time.weekDay is 1 && Time.hour is 5 && !$MaplebirchSydneyTime>>
+			<<set $MaplebirchSydneyTime to 1>>
 			<br><br>
 			<<set $sydney_bed to "none">>
 			<<if $sydney_bed_frequency < 2>>
@@ -487,13 +506,13 @@
 	<</if>>
 	<br>
 <<else>>
-	<<MaplebrichIcon "SydneyBed">><<link [[脱光并爬到悉尼床上|Temple Sydney Bed]]>><<undressSleep "temple sydney bed">><</link>>
+	<<MaplebirchIcon "SydneyBed">><<link [[脱光并爬到悉尼床上|Temple Sydney Bed]]>><<undressSleep "temple sydney bed">><</link>>
 	<br>
 	<<if $earSlime.alwaysSleepNaked is false>>
-		<<MaplebrichIcon "SydneyBed">><<link [[爬到悉尼床上|Temple Sydney Bed]]>><</link>>
+		<<MaplebirchIcon "SydneyBed">><<link [[爬到悉尼床上|Temple Sydney Bed]]>><</link>>
 	<<else>>
 		<<icon "cross.png" "infront">>
-		<<MaplebrichIcon "SydneyBed">>
+		<<MaplebirchIcon "SydneyBed">>
 		<<if $possessed>>
 			<span class="purple">史莱姆很安静。</span>
 		<<else>>
@@ -511,7 +530,7 @@
 :: Temple Sydney Bed
 <<set $bus to "temple_sydney_bed">><<effects>>
 
-<<if ((Time.weekDay == 1 && Time.hour < 6) || (Time.weekDay == 7 && Time.hour > 23)) && $sydney_bed is undefined>>
+<<if isMaplebirchTime("SydneyTempleTime") && $sydney_bed is undefined>>
 	你依偎在悉尼身边。
 <<else>>
 	你偎在被窝里。
@@ -1162,7 +1181,7 @@
 	“是又怎么样？”悉尼调戏地回问。
 	<br><br>
 
-	你不知道该说些什么。。。
+	你不知道该说些什么……
 	<br><br>
 
 	<<link [[战斗|Temple Sydney Sex]]>><<set $sexstart to 1>><<npcincr Sydney love 1>><<npcincr Sydney lust 5>><<npcincr Sydney purity -1>><</link>><<glove>><<glust>><<lspurity>>

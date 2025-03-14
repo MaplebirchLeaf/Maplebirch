@@ -1,0 +1,38 @@
+
+    <<elseif $templePromised is "Robin">>
+        <<set $robin_examination = true>>
+		<<npc Jordan>><<person1>>
+		<<if Time.dayState isnot "night" and Time.dayState isnot "dusk">>
+			那人影转过身来——是约旦。“我的孩子，”<<he>>说，“是时候进行贞洁检查了。
+		<<else>>
+			“我的孩子，”一个声音从旁边传来，是约旦。“是时候进行贞洁检查了。
+		<</if>>
+		我们必须确保你们仍然纯洁。如果你和你的同伴不纯洁，我们将对你们进行净化。”
+		<br><br>
+		<<if _robin_location is "temple">>
+            另一个人影小心翼翼地走了过来——是罗宾。
+		<<else>>
+			<<He>>耐心地对你笑了笑。“会回来的，放心好了。请你不要太过担忧。”
+		<</if>>
+		<br><br>
+		<<link [[允许检查|Robin Temple Test]]>><</link>>
+		<br>
+		<<link [[拒绝检查|Robin Temple Test Refuse]]>><<npcincr Robin love -5>><</link>><<lllove>>
+		<br>
+		<<link [[承认自己的不洁|Robin Temple Test Admission]]>><<npcincr Robin love -10>><</link>><<llllove>>
+		<br>
+    <<elseif ["initiate", "monk"].includes(V.robin_temple_rank) and C.npc.Robin.virginity.temple isnot true and $templePromised isnot "Robin">>
+		<<npc Jordan>><<person1>>
+		<<if Time.dayState isnot "night" and Time.dayState isnot "dusk">>
+			那个人影转过身来——是约旦，<<he>>正抓着罗宾的手臂。“我的孩子，”<<he>>说，“<span class="red">罗宾没有通过<<nnpc_his "Robin">>的贞操检查。</span>
+		<<else>>
+			“我的孩子，”旁边传来了一个声音，约旦抓着罗宾出现了。“<span class="red">罗宾没有通过<<nnpc_his "Robin">>的贞洁检查。</span>
+		<</if>>
+		我们知道你是罪魁祸首，你必须和<<nnpc_him "Robin">>一起被净化……我很抱歉。”约旦从袍子里拿出了一个小铃铛，轻轻地晃了起来。
+		<br><br>
+		约旦放开了罗宾，<<nnpc_his "Robin">>迅速地跑了过来，紧紧地挽住了你。
+		<br><br>
+		<<endevent>>
+		<<link [[继续|Robin Temple Punish Intro]]>><</link>>
+		<br>
+    <<elseif C.npc.Sydney.init is 1 and C.npc.Sydney.virginity.temple isnot true and $templePromised isnot "Sydney">>

@@ -1,0 +1,3 @@
+                    <<case "temple">>
+                        <<npcClothesType $NPCName[_i] "temple">>
+                    <<case "halloween">>
