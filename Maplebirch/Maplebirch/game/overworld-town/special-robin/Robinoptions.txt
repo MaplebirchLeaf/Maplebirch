@@ -1,0 +1,8 @@
+    <<if $robinmoney gt 0 and !$robinromance>>
+		<<highicon>><<link [[要钱|Robin Money]]>><<set $robinroomentered to 1>><</link>>
+		<br>
+	<</if>>
+    <<if $RobinTempleInvitation == "ask" && $robinromance == 1>>
+		<<socialiseicon "ask">><<link [[询问罗宾为什么叹气|Temple Robin Invitation]]>><</link>><<MaplebrchHint>>
+		<br>
+	<</if>>
