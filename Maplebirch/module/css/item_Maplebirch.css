@@ -1,0 +1,91 @@
+/*
+.wraith {
+	background: var(--150);
+	text-shadow: 0 0 7px var(--150), 0 0 22px var(--purple), 0 0 32px var(--purple);
+	background-clip: text;
+	-webkit-background-clip: text;
+	color: transparent;
+}
+.MaplebirchMod {
+    animation: lustful 180s linear infinite;  只保留渐变流动动画 
+    background: linear-gradient(-90deg, #FE9900, #F8D304, #BBF804, #01FF99, #BBF804, #F8D304, #FE9900);
+    background-size: 100% 100%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+ 渐变流动动画 
+@keyframes lustful {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+@keyframes glow {
+    75% { text-shadow: 0 0 5px #000000, 0 0 10px #828282; }
+    100% { text-shadow: 0 0 10px #ffffff, 0 0 20px #7f7f7f; }
+}
+ 渐变流动动画 
+@keyframes lustful {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}*/
+
+/* 炫彩光晕效果 
+@keyframes glow {
+    0% { text-shadow: 0 0 5px #000000, 0 0 10px #828282; }
+    50% { text-shadow: 0 0 10px #ffffff, 0 0 20px #7f7f7f; }
+    100% { text-shadow: 0 0 5px #000000, 0 0 10px #818181; }
+}
+/*text-shadow: 0 0 5px #000000, 0 0 10px #858585, 0 0 15px #ffffff, 0 0 20px #858585;*/
+
+.MaplebirchFallen {
+    background: linear-gradient(45deg, 
+        #5A5A5A 20%, 
+        #909090 50%, 
+        #3C3C3C 80%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    text-shadow: 
+        0 0 12px rgba(173, 216, 230, 0.4),  /* 冷光蓝调 */
+        0 0 25px rgba(105, 105, 105, 0.6),
+        0 0 40px rgba(169, 169, 169, 0.3);
+}
+
+.MaplebirchDemon {
+    background: linear-gradient(225deg, 
+        #8A2BE2 0%,      /* 深紫罗兰 */
+        #DA70D6 40%,     /* 兰花粉紫 */
+        #FF00FF 100%);   /* 品红高光 */
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    text-shadow: 
+        0 0 15px rgba(138, 43, 226, 0.5),  /* 紫色光晕 */
+        0 0 30px rgba(218, 112, 214, 0.7),
+        0 0 45px rgba(255, 0, 255, 0.4);
+}
+
+.MaplebirchAngel {
+    background: linear-gradient(135deg, 
+        #FFD700 10%,     /* 黄金色 */
+        #FFEC8B 35%,     /* 浅金 */
+        #FFA500 70%,     /* 橙金过渡 */
+        #FFD700 100%);   /* 循环增强 */
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    text-shadow: 
+        0 0 20px rgba(255, 215, 0, 0.5),  /* 金色光晕 */
+        0 0 35px rgba(255, 165, 0, 0.6),
+        0 0 50px rgba(255, 255, 0, 0.3);
+}
+
+.MaplebirchColor {
+    animation: lustful 180s linear infinite;
+    background: linear-gradient(-90deg, #FF0000, #FF7F00, #FFFF00, #00FF00, #00FFFF, #0000FF, #8B00FF);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
