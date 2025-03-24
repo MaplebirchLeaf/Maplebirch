@@ -1,0 +1,31 @@
+    <<case "robin_promised">>
+		“不要辜负你的承诺仪式，你会玷污自己和你所爱的人。”
+		<br><br>
+
+		"我……明白了，对不起，<<sister>>。"<<He>>走出了忏悔室。<<grace 1>><<ggrace>><<npcincr Robin lust -1>><<Maplebirchnpcincr Robin holiness 2>><<lslust>><<grholines>>
+	<<case "robin_romance">>
+		"你不能让自己被他人支配。记住你的誓言，还有你对我们的承诺。"
+		<br><br>
+
+		"我……明白了，对不起，<<sister>>。"<<He>>走出了忏悔室。<<grace 1>><<ggrace>><<npcincr Robin lust -1>><<Maplebirchnpcincr Robin holiness 2>><<lslust>><<grholines>>
+	<<case "robin_doubt">>
+		<<run statusCheck("Robin")>>
+		<<if $robinSeen.includes("self-sabotage")>>
+			"曾有一位睿智的<<monk>>告诉我，怀疑是自我毁灭，"你说道。"为伤害自己而忏悔，宽恕就会随之而来。"
+		<<else>>
+			"你比你的疑虑更强大，"你说道。"为质疑信仰忏悔，你将获得宽恕。"
+		<</if>>
+		<br><br>
+
+		<<if _robinStatus.includes("unbelief")>>
+			"我想我早就知道了，"<<he>>说道，"不过听到别人这么说还是挺好。谢谢你，<<sister>>。我会尽量记住的。"
+		<<else>>
+			"你说对了，"<<he>>说道。"当然是这样。非常感谢你，<<sister>>，感谢你让我走在正确的道路上。"
+		<</if>>
+		<<He>>离开了忏悔室。 <<grace 1>><<npcincr Robin love 2>><<ggrace>><<glove>>
+    <<case "confession_robin_things">>
+		"<<sister>>，你应该忏悔自己。即使你并没有做错什么，但你要学会如何去回报。"
+		<br><br>
+
+		你听见另一个人松了口气。"谢谢你，<<sister>>。"<<He>>走出了忏悔室。<<npcincr Robin love 2>><<glove>>
+    <<case "winter">>

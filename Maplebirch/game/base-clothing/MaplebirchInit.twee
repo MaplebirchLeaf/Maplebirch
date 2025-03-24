@@ -1,0 +1,43 @@
+:: Maplebirch Clothing Init [widget]
+
+<<widget "maplebirch_npc_clothes">>
+    <!-- 添加上衣 -->
+    <<set _npcClothesItems.upper = Object.assign(
+        {}, 
+        _npcClothesItems.upper,
+        {
+            "scarecrow shirt": {
+                name: "scarecrow shirt",
+                integrity_max: 100,
+                word: "a",
+                action: "open",
+                desc: "稻草人衬衫"
+            }
+        }
+    )>>
+    <!-- 添加下装 -->
+    <<set _npcClothesItems.lower = Object.assign(
+        {},
+        _npcClothesItems.lower,
+        {
+            "scarecrow skirt": {
+                name: "scarecrow skirt",
+                integrity_max: 100,
+                word: "n",
+                action: "aside",
+                desc: "稻草人裙"
+            }
+        }
+    )>>
+    <!-- 安全添加服装配置 -->
+    <<if !setup.npcClothesSets.some(s => s.name === "scarecrow")>>
+        <<set setup.npcClothesSets.push({
+            name: "scarecrow",
+            type: "forest",
+            gender: "n",
+            outfit: 1,
+            clothes: npcAssignClothesToSet("scarecrow shirt", "scarecrow skirt"),
+            desc: "稻草人衣装"
+        })>>
+    <</if>>
+<</widget>>

@@ -1,0 +1,1179 @@
+:: Maplebirch Confusion Examination [widget]
+
+<<widget "ConfusionTortureOptions">>
+	<span class="lewd">熏香和震动让你感到一股暖意。</span><<hallucinogen 10>><<arousal 1000>><<set $robinArousal += 1>><<set $sydneyArousal += 1>><<garousal>><<gsarousal>><<grarousal>>
+	<br>
+	<<if $robinPain lte 0>>
+		<<set $robinPain to 0>>
+	<</if>>
+	<<if $robinArousal lte 0>>
+		<<set $robinArousal to 0>>
+	<</if>>
+    <<if $sydneyPain lte 0>>
+		<<set $sydneyPain to 0>>
+	<</if>>
+	<<if $sydneyArousal lte 0>>
+		<<set $sydneyArousal to 0>>
+	<</if>>
+	<<set $punishmentTimer -= 1>>
+	<<if $stress gte $stressmax>>
+		<<passout>>
+		你感觉自己正在失去意识。在昏过去前，你看到了悉尼和罗宾的脸，<<he>>的表情愈发的恐慌，而你的视野随之逐渐模糊……<<trauma 100>><<gggtrauma>>
+		<br><br>
+		<<link [[你眼前一黑……|Ambulance Confusion]]>><<pain -8>><<set $arousal -= 2000>><<endevent>><<pass 1 hour>><</link>>
+		<br>
+	<<elseif $punishmentTimer lte 0>>
+		<<person3>><<priest>>举起了一只手，"够了。"<<monks>>停了下来，掐灭了燃香盏。<<He>>慢慢靠近你们，把手伸了出来，你和悉尼还有罗宾惊恐地后退。
+		<br><br>
+		鞭子没有再落下。相反，你听见金属落地的声音。"恭喜，我的孩子们，"<<he>>说，"你们共同经历了痛苦，也一同抵御了欲望。你们证明了你们的羁绊比欲望和痛苦更强大。<span class="green">你们再次纯洁了。</span>"你们的束缚全部解开。一位<<monk>>走了过来，拔掉你们的口球，项圈也随之拆落。<<tearful>>你和悉尼还有罗宾仍保持相拥的姿势，彼此支撑着站起。你的膝盖打着颤。
+		<br><br>
+		"一个警告，"<<priest>>继续说道，"不要向任何人透露此事。不要告诉你的朋友。不要告诉约旦。即使你有幸还有双亲，也不要告诉他们。我不希望再发现你们不洁了。"
+		<br><br>
+		<<monks>>把你叠好的衣服拿给你。
+		<<if $player.virginity.penile isnot true or $player.virginity.vaginal isnot true>>
+			<<if setup.mbContains($Maplebirch.Promised, ["Robin", "Sydney"])>>
+				你获得了<span class="wraith"><span class="blue">承诺仪式：</span><span class="tentacle">合二为一</span></span>特质。
+			<<else>>
+				你获得了<span class="blue">贞洁誓言</span>特质。
+			<</if>>
+		<</if>>
+		<br><br>
+		<<link [[继续|Maplebirch Confusion Punish End]]>><</link>>
+		<br>
+	<<elseif $pain gte 100 and $willpowerpain is 0>>
+		<span class="red">太痛苦了，你撑不住了。</span>你瘫倒在地，把悉尼和罗宾也给带了下去。
+		<br><br>
+		<<ConfusionTortureFail>>
+	<<elseif $arousal gte $arousalmax>>
+		<span class="red">太刺激了。</span>
+		<<orgasm>>
+		<<ConfusionTortureFail>>
+    <<elseif $robinPain gte 6 && $sydneyPain gte 6>>
+        <span class="red">透过口球，悉尼和罗宾发出一声可怕的哭喊。</span>
+		<br><br>
+		<<ConfusionTortureFail>>
+    <<elseif $robinArousal && $sydneyArousal gte 6>>
+        <span class="red">悉尼和罗宾呻吟着，身子不住地开始颤抖了起来，<<Maplebirch_anguish_He>>们被迫达到了高潮。</span><<npcincr Robin lust -1>><<Maplebirchnpcincr Robin holiness -2>><<npcincr Sydney lust -1>><<npcincr Sydney purity -2>><<lslust>><<lrholiness>><<lslust>><<lspurity>>
+		<<ConfusionTortureFail>>
+    <<elseif $sydneyPain gte 6>>
+        <span class="red">透过口球，悉尼发出一声可怕的哭喊。</span>
+        <br><br>
+		<<ConfusionTortureFail>>
+    <<elseif $sydneyArousal gte 6>>
+        <span class="red">悉尼呻吟着，身子不住地开始颤抖了起来，<<nnpc_hes "Sydney">>被迫达到了高潮。</span><<npcincr Sydney lust -1>><<npcincr Sydney purity -2>><<lslust>><<lspurity>>
+        <br><br>
+		<<ConfusionTortureFail>>
+	<<elseif $robinPain gte 6>>
+		<span class="red">透过口球，罗宾发出一声可怕的哭喊。</span>
+		<br><br>
+		<<ConfusionTortureFail>>
+	<<elseif $robinArousal gte 6>>
+		<span class="red">罗宾呻吟着，身子不住地开始颤抖了起来，<<nnpc_hes "Robin">>被迫达到了高潮。</span><<npcincr Robin lust -1>><<Maplebirchnpcincr Robin holiness -2>><<lslust>><<lrholiness>>",
+		<br><br>
+        <<ConfusionTortureFail>>
+	<<else>>
+        悉尼看起来
+		<<switch $robinPain>>
+			<<case 0>><span class="green">安然无恙</span>
+			<<case 1>><span class="teal">有些不适</span>
+			<<case 2>><span class="lblue">有些痛苦</span>
+			<<case 3>><span class="blue">很痛苦</span>
+			<<case 4>><span class="purple">很痛苦</span>
+			<<case 5>><span class="pink">已经无法承受更多的痛苦了，</span>
+		<</switch>>
+		并且
+		<<switch $robinArousal>>
+			<<case 0>><span class="green">面色平静。</span>
+			<<case 1>><span class="teal">略微兴奋。</span>
+			<<case 2>><span class="lblue">很兴奋。</span>
+			<<case 3>><span class="blue">十分兴奋。</span>
+			<<case 4>><span class="purple">脸因兴奋而涨得通红。</span>
+			<<case 5>><span class="pink">正处于高潮的边缘。</span>
+		<</switch>>
+		<br><br>
+		罗宾看起来
+		<<switch $robinPain>>
+			<<case 0>><span class="green">安然无恙</span>
+			<<case 1>><span class="teal">有些不适</span>
+			<<case 2>><span class="lblue">有些痛苦</span>
+			<<case 3>><span class="blue">很痛苦</span>
+			<<case 4>><span class="purple">很痛苦</span>
+			<<case 5>><span class="pink">已经无法承受更多的痛苦了，</span>
+		<</switch>>
+		并且
+		<<switch $robinArousal>>
+			<<case 0>><span class="green">面色平静。</span>
+			<<case 1>><span class="teal">略微兴奋。</span>
+			<<case 2>><span class="lblue">很兴奋。</span>
+			<<case 3>><span class="blue">十分兴奋。</span>
+			<<case 4>><span class="purple">脸因兴奋而涨得通红。</span>
+			<<case 5>><span class="pink">正处于高潮的边缘。</span>
+		<</switch>>
+		<br>
+		<span class="red">
+		<<person3>>
+		<<switch $priestAction>>
+			<<case undefined>>
+				<<priest>>准备鞭打你。
+				<<set $priestAction to "Player">>
+			<<case "Player">>
+				<<switch random(1, 4)>>
+					<<case 1>>
+						<<priest>>准备再次鞭打你。
+                    <<case 2>>
+						<<priest>>转而开始鞭打悉尼。
+						<<set $priestAction to "Sydney">>
+					<<case 3>>
+						<<priest>>转而开始鞭打罗宾。
+						<<set $priestAction to "Robin">>
+					<<case 4>>
+						<<priest>>开始调高振动的强度。
+						<<set $priestAction to "Vibrate">>
+				<</switch>>
+			<<case "Robin">>
+				<<switch random(1, 4)>>
+					<<case 1>>
+						<<priest>>转而开始鞭打你。
+						<<set $priestAction to "Player">>
+                    <<case 2>>
+						<<priest>>转而开始鞭打悉尼。
+						<<set $priestAction to "Sydney">>
+					<<case 3>>
+						<<priest>>准备再次鞭打罗宾。
+					<<case 4>>
+						<<priest>>开始调高振动的强度。
+						<<set $priestAction to "Vibrate">>
+				<</switch>>
+			<<case "Vibrate">>
+				<<switch random(1, 4)>>
+					<<case 1>>
+						<<priest>>转而开始鞭打你。
+						<<set $priestAction to "Player">>
+                    <<case 2>>
+						<<priest>>转而开始鞭打悉尼。
+						<<set $priestAction to "Sydney">>
+					<<case 3>>
+						<<priest>>转而开始鞭打罗宾。
+						<<set $priestAction to "Robin">>
+					<<case 4>>
+						<<priest>>继续维持着皮带高强度的振动。
+				<</switch>>
+		<</switch>>
+		</span>
+		<br><br>
+        <<if $sydneyHold lte 4 && $robinHold lte 4>>
+			<<link [[抱紧悉尼和罗宾|Maplebirch Confusion Punish Hold]]>><<set $sydneyHold += 1>><<set $robinHold += 1>><<pain -6>><<set $sydneyPain -= 1>><<set $robinPain -= 1>><</link>><<llpain>><<gspain>><<grpain>>
+			<br>
+		<</if>>
+        <<if $sydneyHold lte 4>>
+			<<link [[抱紧悉尼|Maplebirch Confusion Punish Hold]]>><<set $sydneyHold += 1>><<pain -3>><<set $sydneyPain -= 1>><</link>><<lpain>><<gspain>>
+			<br>
+		<</if>>
+		<<if $robinHold lte 4>>
+			<<link [[抱紧罗宾|Maplebirch Confusion Punish Hold]]>><<set $robinHold += 1>><<pain -3>><<set $robinPain -= 1>><</link>><<lpain>><<grpain>>
+			<br>
+		<</if>>
+        <<if $sydneyStop < 5 && $robinStop < 5>>
+			<<link [[阻止皮带振动|Maplebirch Confusion Punish Belt]]>><<set $sydneyStop += 1>><<set $robinStop += 1>><<set $sydneyArousal -= 2>><<set $robinArousal -= 2>><<arousal -2500>><</link>><<llarousal>><<llsarousal>><<llrarousal>>
+			<br>
+		<</if>>
+        <<if ($sydneyHit < 4 && $robinHit < 4) and ($priestAction === "Sydney" || $priestAction === "Robin")>>
+			<<link [[尝试避开鞭打|Maplebirch Confusion Punish Hit]]>><<def 1>><<set $sydneyHit += 1>><<set $robinHit += 1>><<arousal -3000>><<violence_noncombat 30 0.3>><</link>><<llarousal>><<gpain>><<lspain>><<lrpain>>
+			<br>
+		<</if>>    
+		<<if ($sydneyPlead < 4 && $robinPlead < 4) && $priestAction === "Player">>
+			<<link [[恳求|Maplebirch Confusion Punish Plead]]>><<sub 1>><<set $sydneyPlead += 1>><<set $robinPlead += 1>><<arousal 2000>><<pain -5>><</link>><<garousal>><<llpain>>
+			<br>
+		<</if>>
+        <<MaplebirchConfusionTouch>>
+		<br>
+		<<link [[闭上眼睛|Maplebirch Confusion Punish Close]]>><<arousal 3000>><<pain -3>><</link>><<ggarousal>><<lpain>>
+		<br>
+	<</if>>
+<</widget>>
+
+<<widget "MaplebirchConfusionTouch">>
+    <<set $confusionTouch = Math.floor(($sydneyTouch + $robinTouch) / 2)>>
+        <<switch $confusionTouch>>
+            <<case 0>>
+				<<link [[抚摸悉尼和罗宾|Maplebirch Confusion Punish Touch]]>><<set $Maplebirch.phase2 to 1>><<set $sydneyTouch += 1>><<set $robinTouch += 1>><<arousal 1500>><<set $sydneyPain -= 4>><<set $robinPain -= 4>><</link>><<garousal>><<grarousal>><<gsarousal>><<lllspain>><<lllrpain>><<promiscuous1>>
+				<br>
+			<<case 1>>
+				<<if hasSexStat("promiscuity", 2)>>
+					<<link [[抚摸悉尼和罗宾|Maplebirch Confusion Punish Touch]]>><<set $Maplebirch.phase2 to 1>><<set $sydneyTouch += 1>><<set $robinTouch += 1>><<arousal 1500>><<set $sydneyPain -= 4>><<set $robinPain -= 4>><</link>><<garousal>><<grarousal>><<gsarousal>><<lllspain>><<lllrpain>><<promiscuous2>>
+					<br>
+				<</if>>
+			<<case 2>>
+				<<if hasSexStat("promiscuity", 3)>>
+					<<link [[抚摸悉尼和罗宾|Maplebirch Confusion Punish Touch]]>><<set $Maplebirch.phase2 to 1>><<set $sydneyTouch += 1>><<set $robinTouch += 1>><<arousal 1500>><<set $sydneyPain -= 4>><<set $robinPain -= 4>><</link>><<garousal>><<grarousal>><<gsarousal>><<lllspain>><<lllrpain>><<promiscuous3>>
+					<br>
+				<</if>>
+			<<case 3>>
+				<<if hasSexStat("promiscuity", 4)>>
+					<<link [[抚摸悉尼和罗宾|Maplebirch Confusion Punish Touch]]>><<set $Maplebirch.phase2 to 1>><<set $sydneyTouch += 1>><<set $robinTouch += 1>><<arousal 1500>><<set $sydneyPain -= 4>><<set $robinPain -= 4>><</link>><<garousal>><<grarousal>><<gsarousal>><<lllspain>><<lllrpain>><<promiscuous4>>
+					<br>
+				<</if>>
+			<<case 4>>
+				<<if hasSexStat("promiscuity", 5)>>
+					<<link [[抚摸悉尼和罗宾|Maplebirch Confusion Punish Touch]]>><<set $Maplebirch.phase2 to 1>><<set $sydneyTouch += 1>><<set $robinTouch += 1>><<arousal 1500>><<set $sydneyPain -= 4>><<set $robinPain -= 4>><</link>><<garousal>><<grarousal>><<gsarousal>><<lllspain>><<lllrpain>><<promiscuous5>>
+					<br>
+				<</if>>
+			<<default>>
+			<span class="red">你不能再冒险刺激罗宾和悉尼了。</span>
+            <br>
+        <</switch>>
+    <<if $confusionTouch < 5>>
+        <<MaplebirchSydneyTouch>><<MaplebirchRobinTouch>>
+    <</if>>
+<</widget>>
+
+<<widget "MaplebirchSydneyTouch">>
+    <<switch $sydneyTouch>>
+		<<case 0>>
+			<<link [[抚摸悉尼|Maplebirch Confusion Punish Touch]]>><<set $Maplebirch.phase2 to 2>><<set $sydneyTouch += 1>><<arousal 1500>><<set $sydneyPain -= 4>><</link>><<garousal>><<gsarousal>><<lllspain>><<promiscuous1>>
+			<br>
+		<<case 1>>
+			<<if hasSexStat("promiscuity", 2)>>
+				<<link [[抚摸悉尼|Maplebirch Confusion Punish Touch]]>><<set $Maplebirch.phase2 to 2>><<set $sydneyTouch += 1>><<arousal 1500>><<set $sydneyPain -= 4>><</link>><<garousal>><<gsarousal>><<lllspain>><<promiscuous2>>
+				<br>
+			<</if>>
+		<<case 2>>
+			<<if hasSexStat("promiscuity", 3)>>
+				<<link [[抚摸悉尼|Maplebirch Confusion Punish Touch]]>><<set $Maplebirch.phase2 to 2>><<set $sydneyTouch += 1>><<arousal 1500>><<set $sydneyPain -= 4>><</link>><<garousal>><<gsarousal>><<lllspain>><<promiscuous3>>
+				<br>
+			<</if>>
+		<<case 3>>
+			<<if hasSexStat("promiscuity", 4)>>
+				<<link [[抚摸悉尼|Maplebirch Confusion Punish Touch]]>><<set $Maplebirch.phase2 to 2>><<set $sydneyTouch += 1>><<arousal 1500>><<set $sydneyPain -= 4>><</link>><<garousal>><<gsarousal>><<lllspain>><<promiscuous4>>
+				<br>
+			<</if>>
+		<<case 4>>
+			<<if hasSexStat("promiscuity", 5)>>
+				<<link [[抚摸悉尼|Maplebirch Confusion Punish Touch]]>><<set $Maplebirch.phase2 to 2>><<set $sydneyTouch += 1>><<arousal 1500>><<set $sydneyPain -= 4>><</link>><<garousal>><<gsarousal>><<lllspain>><<promiscuous5>>
+				<br>
+			<</if>>
+		<<default>>
+		<span class="red">你不能再冒险刺激悉尼了。</span>
+        <br>
+	<</switch>>
+<</widget>>
+
+<<widget "MaplebirchRobinTouch">>
+    <<switch $robinTouch>>
+		<<case 0>>
+			<<link [[抚摸罗宾|Maplebirch Confusion Punish Touch]]>><<set $Maplebirch.phase2 to 3>><<set $robinTouch += 1>><<arousal 1500>><<set $robinPain -= 4>><</link>><<garousal>><<grarousal>><<lllrpain>><<promiscuous1>>
+			<br>
+		<<case 1>>
+			<<if hasSexStat("promiscuity", 2)>>
+				<<link [[抚摸罗宾|Maplebirch Confusion Punish Touch]]>><<set $Maplebirch.phase2 to 3>><<set $robinTouch += 1>><<arousal 1500>><<set $robinPain -= 4>><</link>><<garousal>><<grarousal>><<lllrpain>><<promiscuous2>>
+				<br>
+			<</if>>
+		<<case 2>>
+			<<if hasSexStat("promiscuity", 3)>>
+				<<link [[抚摸罗宾|Maplebirch Confusion Punish Touch]]>><<set $Maplebirch.phase2 to 3>><<set $robinTouch += 1>><<arousal 1500>><<set $robinPain -= 4>><</link>><<garousal>><<grarousal>><<lllrpain>><<promiscuous3>>
+				<br>
+			<</if>>
+		<<case 3>>
+			<<if hasSexStat("promiscuity", 4)>>
+				<<link [[抚摸罗宾|Maplebirch Confusion Punish Touch]]>><<set $Maplebirch.phase2 to 3>><<set $robinTouch += 1>><<arousal 1500>><<set $robinPain -= 4>><</link>><<garousal>><<grarousal>><<lllrpain>><<promiscuous4>>
+				<br>
+			<</if>>
+		<<case 4>>
+			<<if hasSexStat("promiscuity", 5)>>
+				<<link [[抚摸罗宾|Maplebirch Confusion Punish Touch]]>><<set $Maplebirch.phase2 to 3>><<set $robinTouch += 1>><<arousal 1500>><<set $robinPain -= 4>><</link>><<garousal>><<grarousal>><<lllrpain>><<promiscuous5>>
+				<br>
+			<</if>>
+		<<default>>
+		<span class="red">你不能再冒险刺激罗宾了。</span>
+	<</switch>>
+<</widget>>
+
+<<widget "MaplebirchConfusionpriestAttack">>
+	<<switch $priestAction>>
+		<<case "Player">>
+			<<if ($robinPain <= 3 && $sydneyPain <= 3) && ($pain >= 50 || ($robinArousal >= 4 && $sydneyArousal >= 4))>>
+				<<person3>><<priest>>甩下<<his>>的鞭子，但是悉尼和罗宾突然移动了身体，挡在了鞭子的前边，悉尼和罗宾<span class="green">为你承受了打击。</span><<Maplebirch_anguish_He>>们痛苦地喊叫起来。<<set $robinPain += 2>><<set $robinArousal -= 1>><<set $sydneyPain += 2>><<set $sydneyArousal -= 1>><<ggspain>><<ggrpain>><<lsarousal>><<lrarousal>>
+			<<elseif $robinPain <= 3 && ($pain >= 50 || $robinArousal >= 4)>>
+				<<person3>><<priest>>甩下<<his>>的鞭子，但是罗宾突然移动了身体，挡在了鞭子的前边，罗宾<span class="green">为你们承受了打击。</span><<nnpc_he "Robin">>痛苦地喊叫起来。<<set $robinPain += 2>><<set $robinArousal -= 1>><<ggrpain>><<lrarousal>>
+				<<if $pain gte 60>>
+					悉尼惨叫着，猛烈地晃着<<his>>的头，恳求地看向<<person3>><<priest>>。
+				<<else>>
+					悉尼瞪着<<person3>><<him>>。
+				<</if>>
+			<<elseif $sydneyPain <= 3 && ($pain >= 50 || $sydneyArousal >= 4)>>
+				<<person3>><<priest>>甩下<<his>>的鞭子，但是悉尼突然移动了身体，挡在了鞭子的前边，悉尼<span class="green">为你们承受了打击。</span><<nnpc_he "Sydney">>痛苦地喊叫起来。<<set $sydneyPain += 2>><<set $sydneyArousal -= 1>><<ggspain>><<lsarousal>>
+				<<if $pain gte 60>>
+					罗宾嘶吼着，猛烈地晃着<<his>>的头，恳求地看向<<person3>><<priest>>。
+				<<else>>
+					罗宾注视着<<person3>><<him>>。
+				<</if>>
+			<<else>>
+				<<person3>><<priest>>的鞭子抽向了你，你隔着口球尖叫起来。
+				<<if $pain gte 60>>
+					悉尼和罗宾喊叫着，猛烈地晃着<<Maplebirch_anguish_He>>们的头，恳求地看向<<person3>><<priest>>。
+				<<else>>
+					悉尼和罗宾紧紧地看着<<person3>><<him>>。
+				<</if>>
+				<<violence_noncombat 30 0.3>><<gpain>>
+			<</if>>
+		<<case "Sydney">>
+			<<if !_blocked>>
+				<<person3>><<priest>>摔下了鞭子，把它抽向了悉尼。
+				<<if $sydneyPain gte 3>>
+					透过口球，<<person1>><<He>>呜咽着。
+				<<else>>
+					<<person1>><<He>>尽力忍住了。
+				<</if>>
+				<<set $sydneyPain += 2>><<set $sydneyArousal -= 1>><<ggspain>><<lsarousal>>
+			<</if>>
+		<<case "Robin">>
+			<<if !_blocked>>
+				<<person3>><<priest>>摔下了鞭子，把它抽向了罗宾。
+				<<if $robinPain gte 3>>
+					透过口球，<<person2>><<He>>呜咽着。
+				<<else>>
+					<<person2>><<He>>尽力忍住了。
+				<</if>>
+				<<set $robinPain += 2>><<set $robinArousal -= 1>><<ggrpain>><<lrarousal>>
+			<</if>>
+		<<case "Vibrate">>
+			振动变得更加强烈了。
+			<<if $robinArousal gte 3 && $sydneyArousal gte 3>>
+				悉尼和罗宾在你的肩膀上呻吟了起来。
+			<<elseif $sydneyArousal gte 3>>
+				悉尼在你的肩膀上呻吟了起来，罗宾还在强忍着喘息和呻吟。
+			<<elseif $robinArousal gte 3>>
+				罗宾在你的肩膀上呻吟了起来，悉尼还在强忍着喘息和呻吟。
+			<<else>>
+				悉尼和罗宾强忍着喘息和呻吟。
+			<</if>>
+			<<arousal 2000>><<set $robinArousal += 1>><<set $sydneyArousal += 1>><<garousal>><<gsarousal>><<grarousal>>
+	<</switch>>
+<</widget>>
+
+<<widget "ConfusionTortureFail">>
+	<<set $punishmentCounter += 1>>
+	<<person3>><<priest>>抬起手。"可以了。"<<monks>>纷纷停下，熄灭了燃香盏。"你们的身体背叛了你。给你们点时间恢复，然后我们重新开始。"<<stress 24>><<gggstress>>
+	<br><br>
+	<<monks>>熄灭了房间里的火光，一个接一个地离开。当最后一个人离开后，你和罗宾陷入了一片黑暗。
+	<br><br>
+	悉尼和罗宾的吐息轻轻拂过你的肌肤。一想到<<Maplebirch_anguish_He>>们在这里，你便平静了下来。<<Maplebirch_anguish_He>>们把你抱得更紧了，你也用力抱了回去。<<stress -1>><<lstress>>
+	<br><br>
+
+	<<if playerBellySize() gte 15>>
+		你感觉到了另一个微弱的心跳——它就夹在你们之间。
+		<br><br>
+	<</if>>
+
+	<<link [[休息 (1:00)|Maplebirch Confusion Punish Repeat]]>><<pass 1 hour>><<set $robinPain -= 4>><<set $robinArousal -= 4>><<set $sydneyPain -= 4>><<set $sydneyArousal -= 4>><<pain -30>><</link>><<lllpain>>
+	<br>
+<</widget>>
+
+:: Maplebirch Temple Confusion Examination
+<<set $outside to 0>><<set $location to "temple">><<temple_effects>><<effects>>
+<<run statusCheck("Robin")>><<run statusCheck("Sydney")>>
+约旦向你郑重点头。“请随我来。”
+<<if _robin_location is "temple" && _sydney_location is "temple">>
+	你和悉尼还有罗宾跟了上去。
+<<elseif _robin_location is "temple" && !_sydney_location is "temple">>
+    你和悉尼跟了上去。
+<<elseif !_robin_location is "temple" && _sydney_location is "temple">>
+    你和罗宾跟了上去。
+<</if>>
+<br><br>
+<<He>>带你离开主厅，来到一个小房间。“还有个仪式，和平常有些不一样，但没什么复杂的。我来准备，你先脱衣服吧。”
+<<if _robin_location isnot "temple" && _sydney_location isnot "temple">>
+	门在你身后打开，你迅速回头，只见悉尼和罗宾跟着一位<<monk>>走了进来。<<Maplebirch_anguish_He>>们打了个哈欠，微笑着朝你挥了挥手。
+<<elseif _robin_location isnot "temple" && !_sydney_location isnot "temple">>
+    门在你身后打开，你迅速回头，只见罗宾跟着一位<<monk>>走了进来。<<nnpc_He "Robin">>打了个哈欠，微笑着朝你挥了挥手。
+<<elseif !_robin_location isnot "temple" && _sydney_location isnot "temple">>
+    门在你身后打开，你迅速回头，只见悉尼跟着一位<<monk>>走了进来。<<nnpc_He "Sydney">>打了个哈欠，微笑着朝你挥了挥手。
+<</if>>
+<br><br>
+<<npc "Sydney" 2>><<person2>><<npc "Robin" 3>><<person3>>
+你们脱掉衣服，都希望不会很冷。约旦在两手间擦拭上白色粉末，然后跪在了你们的面前。<<person1>>
+<<if playerChastity() and $worn.genitals.origin is "temple">>
+    <<He>>拿着一根奇怪的杆状物抵住你的$worn.genitals.cn_name_cap，装置随即咔嗒落地。
+<</if>>
+<<if $player.penisExist>>
+	<<if playerChastity("penis") and $worn.genitals.origin isnot "temple">>
+		<<He>>用双手的食指夹住你的$worn.genitals.cn_name_cap，轻轻地摆弄着。<<He>>一边检查着它，一边在上面涂抹灰色粉末。你试图分散注意力，但很快就感觉到你的<<penis>>在<<his>>的审视下变得更硬了。
+	<<else>>
+		约旦用两根食指夹住你的阴茎，温柔地在上面套弄着。灰白色的粉末被均匀地涂抹在了你的阴茎上，用以细致地检查包皮的状况。你试图分散自己的注意力，但阴茎还是在<<his>>的抚摸下慢慢挺立。
+	<</if>>
+<</if>>
+<<if $player.vaginaExist>>
+	<<if playerChastity("vagina") and $worn.genitals.origin isnot "temple">>
+		<<He>>用<<his>>双手的拇指放在你的$worn.genitals.cn_name_cap边上，试图检查你的阴部。<<he>>艰难地将灰白色的粉末涂抹在上面。
+		<br>
+	<<else>>
+		随后<<He>>用<<his>>双手的拇指轻触着你的阴部，温柔地打开了你的
+		<<if setup.bodyliquid.combined("vagina") gte 2>>
+			<<if setup.bodyliquid.combined("vagina") gte 6>>
+				阴唇。淫液喷涌而出，溅了约旦一脸，沿着<<his>>的双手流下。
+				<<He>>震惊地跌坐在地，慌忙擦掉了眼中和嘴里的液体。
+				<br>
+				<<He>>看向你。
+			<<elseif setup.bodyliquid.combined("vagina") gte 4>>
+				阴唇。一股淫液涌出，滴在了约旦的手上，很快浸没到<<his>>的袖子里。
+				<<He>>惊叫地向后跳去，惊恐地甩着双手。
+				<br>
+			<<else>>
+				阴唇。淫液如细流淌下你的双腿，约旦吃惊地抽出双手。
+				<br>
+			<</if>>
+			"那可不是一个好兆头。"<<he>>喃喃道。
+			<br><br>
+			<<if $Maplebirch.daily.robin.cum && $daily.sydney.cum>>
+				悉尼和罗宾不知道为什么都突然脸红着向一旁看去，<<Maplebirch_anguish_He>>们异口同声地说："那……那是我的错……"
+			<<elseif !$Maplebirch.daily.robin.cum && !$daily.sydney.cum>>
+                悉尼和罗宾地双眼都惊恐地瞪大了。<<npcincr Robin love -5>><<npcincr Sydney love -5>><<note "--- 悉尼与罗宾的好感" "red">>
+            <<else>>
+                <<if !$Maplebirch.daily.robin.cum>>
+				罗宾的双眼惊恐地瞪大了。<<npcincr Robin love -5>><<lllove>>
+                <</if>>
+                <<if !$daily.sydney.cum>>
+				悉尼的双眼惊恐地瞪大了。<<npcincr Sydney love -5>><<lllove>>
+                <</if>>
+			<</if>>
+		<<else>>
+			阴唇，以便能清晰查看里面的景象。<<He>>在入口处涂抹上了灰色的粉末。
+			<br>
+		<</if>>
+	<</if>>
+	你不愿承认，但你的身体确实在淫荡地回应着这个检验。
+<</if>>
+<br><br>
+抚弄持续了几分钟。最后，<<he>>完成了手里的活儿，把灰粉刮进一个小罐子里，然后走向悉尼。
+<<arousal 1000 "genitals">>
+<br><br>
+<<link [[看向一边|Maplebirch Confusion Examination Middle]]>><<set $phase to 1>><<npcincr Sydney purity 2>><</link>><<gspurity>>
+<br>
+<<link [[观看|Maplebirch Confusion Examination Middle]]>><<set $phase to 2>><<npcincr Sydney lust 1>><<npcincr Sydney purity -2>><</link>><<gslust>><<lspurity>>
+<br>
+
+:: Maplebirch Confusion Examination Middle
+<<effects>><<run statusCheck("Robin")>><<run statusCheck("Sydney")>><<sydneySchedule>>
+<<if $phase is 1>>
+	约旦给悉尼做重复的检验时，你别过了头，等到完成时才敢转回来。
+<<elseif $phase is 2>>
+	你看着约旦在手上涂抹了更多的粉末。
+	<<if C.npc.Sydney.gender is "m">>
+		<<if $player.penisExist>>
+			约旦给悉尼做着同样的工作，<<if _sydneyStatus.includes("Lust")>>在手指的抚弄下，<<person2>><<he>>的阴茎缓缓立起，悉尼把脸别向了一旁<<else>>但悉尼的阴茎丝毫没有反应<</if>>。
+		<<else>>
+			<<He>>用两根食指夹住悉尼的阴茎，温柔地在上面套弄着。灰白色的粉末被均匀地涂抹在了柱身上，用以细致地检查里面包皮的状况。<<if _sydneyStatus.includes("Lust")>>只见阴茎缓缓立起，悉尼把脸别向了一旁<<else>>但悉尼的阴茎丝毫没有反应<</if>>。<<person2>>
+		<</if>>
+	<<else>>
+		<<if $player.vaginaExist>>
+			<<He>>给悉尼做着同样的工作。
+		<<else>>
+			<<He>>用拇指轻触悉尼的阴部，温柔地打开了<<person2>><<his>>的阴唇。
+		<</if>>
+		<<if $daily.sydney.sydneyCum>>
+			淫液如细流淌下<<person2>><<his>>的双腿，约旦吃惊地抽出双手。<<person1>>
+			<br>
+			"那可不是个好的迹象。"<<person1>><<he>>喃喃道。悉尼迅速捂住<<person2>><<his>>绯红的脸颊。深知这是你的功劳，你感到十分得意。
+			<br><br>
+		<</if>>
+		<<person1>><<He>>在入口处涂抹上了灰色的粉末。
+		<<if _sydneyStatus.includes("Lust")>>
+			你可以看出悉尼的身体在淫荡地回应着检验，尽管<<person2>><<his>>试图掩盖这件事。
+		<<else>>
+			悉尼的阴茎丝毫没有反应。
+		<</if>>
+	<</if>>
+<</if>>
+<br><br>
+约旦把粉末刮进小罐子后，紧接着后走向了罗宾。
+<br><br>
+<<link [[看向一边|Maplebirch Confusion Examination 2]]>><<set $Maplebirch.phase to 1>><<Maplebirchnpcincr Robin holiness 2>><</link>><<grholiness>>
+<br>
+<<link [[观看|Maplebirch Confusion Examination 2]]>><<set $Maplebirch.phase to 2>><<npcincr Robin lust 1>><<Maplebirchnpcincr Robin holiness -2>><</link>><<gslust>><<lrholiness>>
+<br>
+
+:: Maplebirch Confusion Examination 2
+<<effects>><<run statusCheck("Robin")>><<run statusCheck("Sydney")>><<sydneySchedule>>
+<<if $Maplebirch.phase is 1>>
+	约旦给罗宾做重复的检验时，你别过了头，等到完成时才敢转回来。
+<<elseif $Maplebirch.phase is 2>>
+	你看着约旦在手上涂抹了更多的粉末。
+	<<if C.npc.Robin.gender is "m">>
+		<<if $player.penisExist>>
+			约旦给罗宾做着同样的工作，<<if _robingenitalsStatus.includes("Lust")>>在手指的抚弄下，<<person3>><<he>>的阴茎缓缓立起，罗宾把脸别向了一旁<<else>>但罗宾的阴茎丝毫没有反应<</if>>
+		<<else>>
+			<<He>>用两根食指夹住罗宾的阴茎，温柔地在上面套弄着。灰白色的粉末被均匀地涂抹在了柱身上，用以细致地检查里面包皮的状况。<<if _robingenitalsStatus.includes("Lust")>>只见阴茎缓缓立起，罗宾把脸别向了一旁<<else>>但罗宾的阴茎丝毫没有反应<</if>>。<<person3>>
+		<</if>>
+	<<else>>
+		<<if $player.vaginaExist>>
+			<<He>>给罗宾做着同样的工作。
+		<<else>>
+			<<He>>用拇指轻触罗宾的阴部，温柔地打开了<<person3>><<his>>的阴唇。
+		<</if>>
+		<<if $Maplebirch.daily.robin.robinCum>>
+			淫液如细流淌下<<person3>><<his>>的双腿，约旦吃惊地抽出双手。<<person1>>
+			<br>
+			"那可不是个好的迹象。"<<person1>><<he>>喃喃道。罗宾迅速捂住<<person3>><<his>>绯红的脸颊。深知这是你的功劳，你感到十分得意。
+			<br><br>
+		<</if>>
+		<<person1>><<He>>在入口处涂抹上了灰色的粉末。
+		<<if _robingenitalsStatus.includes("Lust")>>
+			你可以看出罗宾的身体在淫荡地回应着检验，尽管<<person3>><<his>>试图掩盖这件事。
+		<<else>>
+			罗宾的阴茎丝毫没有反应。
+		<</if>>
+	<</if>>
+<</if>>
+<br><br>
+约旦把粉末刮进小罐子里，你和悉尼还有罗宾都期待地盯着。
+<<if (_robinVirgin && _sydneyVirgin && $player.virginity.penile === true && $player.virginity.vaginal is true) || ($player.virginity.temple === true && C.npc.Sydney.virginity.temple is true && $player.virginity.temple === true && C.npc.Robin.virginity.temple === true)>>
+	<span class="gold">粉末闪起了激烈的火花，</span>约旦微笑了起来。
+	“你们对彼此忠诚，希望继续保持。”
+	<<if playerChastity() and $worn.genitals.origin is "temple">>
+		<<he>>飞快地将$worn.genitals.cn_name_cap装了回去，护住你的裆部。
+	<</if>>
+	<br><br>
+	<<person1>><<He>>转过身，让你们将衣物穿好。
+	<<if $grace gte 90>>
+		<<he>>没有看你，只是把一个信封放在了你旁边的架子上。“这是你的月度津贴。你的表现非常出色。<span class="green">你是我们信仰中值得称赞的人，我们每个人都可以向你学习。</span>谢谢。”
+		<br><br>
+		你打开信封，里面有<span class="gold">£<<print ($grace * 40)>></span>。
+		<<money `($grace * 4000)`>>
+	<<elseif $grace gte 50>>
+		<<he>>没有看你，只是把一个信封放在你旁边的架子上。“这是你的月度津贴。<span class="teal">你一直是我们教会的杰出成员，</span>每一分钱都对应着你的付出。”
+		<br><br>
+		你打开信封，里面有<span class="gold">£<<print ($grace * 40)>></span>。
+		<<money `($grace * 4000)`>>
+	<<elseif $grace gte 1>>
+		<<he>>没有看你，只是把一个信封放在你旁边的架子上。“这是你的月度津贴。<span class="lblue">你一直是我们教会中表现良好的成员。</span>当然，还有提高的空间，但我们所有人都需要进步。我们应该每天努力变得更好。”
+		<br><br>
+		你打开信封，里面有<span class="gold">£<<print ($grace * 40)>></span>。
+		<<money `($grace * 4000)`>>
+	<<else>>
+		<span class="red">"尽管你很纯洁，但作为信徒，你的行为并不合乎我们的信仰，"</span><<he>>说道，"我们知道你可以做得更好。因此，我们决定暂停发放你这个月的津贴。希望下次我能发放给你。"
+		<br><br>
+	<</if>>
+	西尼尼和罗宾抱住你，<<Maplebirch_anguish_He>>们异口同声地说：“我爱你。”<<stress -6>><<lstress>>
+	<br><br>
+	<<clotheson>>
+	<<endevent>><<MaplebirchEndEvent>>
+	<<link [[继续|Temple]]>><</link>>
+<<else>>
+	<<set $templetest to "failed">>
+	<span class="red">反应微弱。</span>约旦皱起了眉头。
+	“抱歉，你们有人已经污浊了。”<<His>>的声音有些颤抖，你不确定你是否听错了。“作为一体，你们必须被净化。我会召集专人来，请一定配合。”<<He>>从斗篷里拿出一个小铃铛，然后摇了摇。
+	<br><br>
+	悉尼和罗宾慌了起来，<<Maplebirch_anguish_He>>们飞速地挽住了你的胳膊。
+	<br><br>
+	<<endevent>>
+	<<link [[继续|Maplebirch Confusion Punish Intro]]>><</link>>
+	<br>
+<</if>>
+
+:: Maplebirch Confusion Punish Intro
+<<effects>><<run statusCheck("Robin")>><<run statusCheck("Sydney")>>
+<<npc "Sydney">><<person1>><<npc "Robin">><<person2>>
+<<effects>>
+<<generate2>><<person3>><<generate3>><<generate4>>一名<<priest>>从一扇标有红色十字架的门里走出，两侧还跟随着一众<<monks>>。一人示意悉尼和罗宾去你那儿，<<Maplebirch_anguish_He>>们便立刻跑到了你的身边。
+<br><br>
+一个<<priest>>从长袍里拿出了口球，约旦则低头离开了房间。"为了赎罪，你们必须证明你们之间的羁绊依旧牢固。请不要动。"
+<br><br>
+<<if _robinStatus.includes("unbelief") && _sydneyStatus.includes("corrupt")>>
+	悉尼和罗宾走到你和<<monks>>的中间，努力想把你挡在身后。
+<<elseif _sydneyStatus.includes("corrupt")>>
+    悉尼走到你和<<monks>>的中间，努力想把你挡在身后，而罗宾紧紧地搂着你。
+<<elseif _robinStatus.includes("unbelief")>>
+    罗宾走到你和<<monks>>的中间，努力想把你挡在身后，而悉尼紧紧地搂着你。
+<<elseif>>
+	悉尼和罗宾把你搂得更紧了。
+<</if>>
+<<person1>>
+<<Maplebirch_anguish_He>>们说："我……我原谅你……只要……请不要离开我……"
+<br><br>
+你们已经完全被<<monks>>包围住了，但众人并没有打算将你们分开。
+<br><br>
+<<link [[抓紧悉尼和罗宾|Maplebirch Confusion Punish Intro 2]]>><<set $Maplebirch.phase to 1>><<npcincr Robin love 1>><<npcincr Sydney love 1>><</link>><<note "+ 悉尼与罗宾的好感" "green">>
+<br>
+<<link [[抓紧悉尼|Maplebirch Confusion Punish Intro 2]]>><<set $Maplebirch.phase to 2>><<npcincr Sydney love 1>><<npcincr Robin love -5>><</link>><<note "+ 悉尼的好感" "green">><<note "-- 罗宾的好感" "red">>
+<br>
+<<link [[抓紧罗宾|Maplebirch Confusion Punish Intro 2]]>><<set $Maplebirch.phase to 3>><<npcincr Robin love 1>><<npcincr Sydney love -5>><</link>><<note "+ 罗宾的好感" "green">><<note "-- 悉尼的好感" "red">>
+<br>
+<<link [[推开悉尼和罗宾|Maplebirch Confusion Punish Intro 2]]>><<set $Maplebirch.phase to 4>><<npcincr Robin love -5>><<npcincr Sydney love -5>><</link>><<note "-- 悉尼与罗宾的好感" "red">>
+<br>
+
+:: Maplebirch Confusion Punish Intro 2
+<<effects>>
+<<pass 20>><<facewear 4>><<leash 21>>
+<<if $Maplebirch.phase is 1>>
+	你抓紧悉尼和罗宾，不敢放开。你把手攥得很紧很紧。无论即将发生什么，你知道你都能和悉尼还有罗宾一起面对。<<nnpc_He "Robin">>透过恐惧，向你挤出一个微笑。
+	<br><br>
+	<<priest>>赞许地点了点头。“很好。”
+<<elseif $Maplebirch.phase is 2>>
+    你抓紧悉尼，将罗宾推开。全是<<nnpc_his "Robin">>的错，为什么要连带你和悉尼一起惩罚？你可以自行解决。<<nnpc_He "Robin">>含泪看向你，一脸被背叛的表情。<<npcincr Robin trauma -10>><<gggrtrauma>>
+    <br><br>
+	<<priest>>摇了摇头。"可悲，拒绝担负责任。你们的惩罚不会再拖了。"
+<<elseif $Maplebirch.phase is 3>>
+    你抓紧罗宾，将悉尼推开。全是<<nnpc_his "Sydney">>的错，为什么要连带你和罗宾一起惩罚？你可以自行解决。<<nnpc_He "Sydney">>含泪看向你，一脸被背叛的表情。<<npcincr Sydney love -10>><<note "--- 悉尼的好感" "red">>
+    <br><br>
+	<<priest>>摇了摇头。"可悲，拒绝担负责任。你们的惩罚不会再拖了。"
+<<elseif $Maplebirch.phase is 4>>
+	你猛地一挣，将悉尼和罗宾推开。全是<<Maplebirch_anguish_He>>们的错，为什么要连带你一起惩罚？你可以自行解决。<<Maplebirch_anguish_He>>们含泪看向你，一脸被背叛的表情。<<npcincr Robin trauma -5>><<npcincr Sydney love -5>><<ggrtrauma>><<note "-- 悉尼的好感" "red">>
+	<br><br>
+	<<priest>>摇了摇头。"可悲，拒绝担负责任。你们的惩罚不会再拖了。"
+<</if>>
+<<He>>将口球塞进你嘴里，在你脑后把它系紧，接着走到了悉尼和罗宾身边，做了同样的动作。你们支支吾吾，发不出任何声音。旁边一名<<person3>><<monk>>在自己的位置上站定，将你和悉尼还有罗宾的脖子一起用项圈套在了一起。<<He>>抓住中间连接的链子，用力拉了拉。
+<br><br>
+你们被带出标记门，走进一个狭窄的通道。墙上除了零星的火把，没有其他光照了。
+几分钟后，你们来到一个没有窗户的圆形小房间里。各种燃香盏从天花板悬下，屋内除了正中央的一些软垫外，空空荡荡。<span class="red">皮鞭，绑带，和其它惩罚用具都挂在墙面上。</span>
+<br><br>
+<<link [[继续|Maplebirch Confusion Punish Intro 3]]>><<pass 3>><</link>>
+<br>
+
+:: Maplebirch Confusion Punish Intro 3
+<<effects>>
+<<undress "duopunish">><<bindtemp>><<shackle_feet>>
+<<if $punishmentTimer is undefined>>
+	<<set $punishmentTimer to 16>>
+	<<set $punishmentCounter to 0>>
+	<<set $robinPain to 2>>
+	<<set $robinArousal to 0>>
+	<<set $robinHold to 0>>
+	<<set $robinStop to 0>>
+	<<set $robinHit to 0>>
+	<<set $robinPlead to 0>>
+	<<set $robinTouch to 0>>
+    <<set $sydneyPain to 2>>
+	<<set $sydneyArousal to 0>>
+	<<set $sydneyHold to 0>>
+	<<set $sydneyStop to 0>>
+	<<set $sydneyHit to 0>>
+	<<set $sydneyPlead to 0>>
+	<<set $sydneyTouch to 0>>
+<</if>>
+<<set $robinSeen.pushUnique("punishment")>><<set $robinSeen.pushUnique("punishment")>>
+<<monks>>把你们扒光，只留下口球和项圈。
+你们被领到软垫旁，被迫跪下。<<priest>>拿下一些绑带，一头捆住你的胳膊，然后把你的双手摆弄成环住悉尼和罗宾腰肢的姿势，手腕系在了<<Maplebirch_anguish_He>>们的身后。悉尼和罗宾也和你一样。<<person3>><<priest>>拿来更多绑带，缠绕上你和悉尼还有罗宾的腰，把你们紧贴在一起。当最后一根绑带捆上你的后背时，你们的身体间几乎没留下空隙。最后，一对脚镣把你们的腿铐上了。
+<br><br>
+"你违背了对彼此许下的承诺，"<<priest>>说着，挥舞起手中的九尾鞭。"鉴于你们特殊的羁绊，你们的第一个弥补就是和对方一起体验痛苦。"你可以感受到悉尼和罗宾加速的心跳。想到即将到来的事，你也被恐惧<<if $masochism_level gte 1>>和一丝兴奋<</if>>所淹没。
+<br><br>
+第一鞭没有任何预兆地落下，强烈的刺痛顿时席卷了全身，紧接的一鞭更是疼得你猛然一抖。你隔着口球尖叫着，泪水涌上眼眶。你可以感受到悉尼和罗宾惊惧的呼吸。看着你所承受的痛苦，<<person1>><<He>>含混地喊着不要。又是重重的一鞭刮在你的皮肉上，随着响亮的鞭响，刺痛袭击了你的肉体。<<violence_noncombat 40 0.3>><<gggpain>>
+<br><br>
+<<person3>><<priest>>走到悉尼和罗宾身边，没有任何犹豫地甩鞭挥向<<Maplebirch_anguish_He>>们的后背。<<Maplebirch_anguish_He>>们的尖叫闷在口球里，接着又受了一鞭。鞭子再一次落在悉尼和罗宾的背上，<<Maplebirch_anguish_He>>们痛得满脸泪水。<<stress 12>><<ggstress>>
+<br><br>
+<<link [[安抚悉尼和罗宾|Maplebirch Confusion Punish Intro 4]]>><<set $Maplebirch.phase to 1>><<npcincr Robin love 1>><<set $robinPain -= 1>><<npcincr Sydney love 1>><<set $sydneyPain -= 1>><</link>><<note "+ 悉尼与罗宾的好感" "green">><<lspain>><<lrpain>>
+<br>
+<<link [[安抚悉尼|Maplebirch Confusion Punish Intro 4]]>><<set $Maplebirch.phase to 2>><<npcincr Sydney love 1>><<set $sydneyPain -= 1>><<npcincr Robin love -1>><</link>><<note "+ 悉尼的好感" "green">><<note "- 罗宾的好感" "red">><<lspain>>
+<br>
+<<link [[安抚罗宾|Maplebirch Confusion Punish Intro 4]]>><<set $Maplebirch.phase to 3>><<npcincr Robin love 1>><<set $robinPain -= 1>><<npcincr Sydney love -1>><</link>><<note "+ 罗宾的好感" "green">><<note "- 悉尼的好感" "red">><<lrpain>>
+<br>
+<<link [[闭上眼睛|Maplebirch Confusion Punish Intro 4]]>><<set $Maplebirch.phase to 4>><<stress -3>><<pain -10>><</link>><<lstress>><<lpain>>
+<br>
+
+:: Maplebirch Confusion Punish Intro 4
+<<effects>>
+<<if $Maplebirch.phase is 1>>
+	你的眼神死死锁在悉尼和罗宾身上，无声地让<<Maplebirch_anguish_He>>们专注于你，不要想别的事。眼泪不住地流下，但你想<<Maplebirch_anguish_He>>们正努力挤出一个笑容。
+<<elseif $Maplebirch.phase is 2>>
+	你的眼神死死锁在悉尼身上，无声地让悉尼专注于你，不要想别的事。眼泪不住地流下，但你想<<nnpc_he "Sydney">>正努力挤出一个笑容，却忽视了罗宾的哭泣。
+<<elseif $Maplebirch.phase is 3>>
+    你的眼神死死锁在罗宾身上，无声地让罗宾专注于你，不要想别的事。眼泪不住地流下，但你想<<nnpc_he "Robin">>正努力挤出一个笑容，却忽视了悉尼的哭泣。
+<<elseif $Maplebirch.phase is 4>>
+    你紧紧闭上双眼，试图忽视悉尼和罗宾的哭泣。过了几分钟，你还是没忍住睁开了眼睛。
+<</if>>
+<br><br>
+那个<<person3>><<priest>>映入眼帘。"你们的羁绊必须坚如磐石，超越任何欲望，强过痛苦本身。"<<he>>循循善诱着。尽管悉尼和罗宾仍在抽泣，但你想这番话让<<Maplebirch_anguish_He>>们变得坚强了起来。悉尼和罗宾把你缠得更紧了，你也倚在<<Maplebirch_anguish_He>>们的身上。<span class="blue">你们知道，你们只能共同挺过这一切。</span>
+<br><br>
+你的后背和<<bottom>>受了更多鞭打，悉尼和罗宾也挨了同样的数目。像是过了几辈子，<<person3>><<priest>>终于收起九尾鞭。<<gpain>>
+<br><br>
+"你们的赎罪才刚刚开始。准备好吧。"<<person3>><<His>>的声音突然沉闷了起来。你环顾四周，只见<<priest>>和<<monks>>都戴上了奇怪的面罩，燃香盏也已被点燃。一股温意流淌在你的体内，<span class="lewd">腰带里的什么东西开始震动起来。</span>
+<<link [[继续|Maplebirch Confusion Punish]]>><</link>>
+<br>
+
+:: Maplebirch Confusion Punish
+<<effects>>
+<i>要是你和悉尼还有罗宾任何一人的疼痛或情欲达到最大值，你们的惩罚都将会继续。</i>
+<br><br>
+<<ConfusionTortureOptions>>
+
+:: Maplebirch Confusion Punish Hold
+<<effects>>
+<<if $robinPain lte 0>>
+	<<set $robinPain to 0>>
+<</if>>
+<<if $robinArousal lte 0>>
+	<<set $robinArousal to 0>>
+<</if>>
+<<if $sydneyPain lte 0>>
+	<<set $sydneyPain to 0>>
+<</if>>
+<<if $sydneyArousal lte 0>>
+	<<set $sydneyArousal to 0>>
+<</if>>
+<<set $confusionHold = Math.floor(($sydneyHold + $robinHold) / 2)>>
+<<switch $confusionHold>>
+	<<case 1>>
+		你把悉尼和罗宾抱得更紧了，<<Maplebirch_anguish_He>>们也一样。你们紧紧拥住了对方。
+	<<case 2>>
+		你尽可能地把悉尼和罗宾拉近，做好准备。<<Maplebirch_anguish_He>>们也和你一样。
+	<<case 3>>
+		悉尼和罗宾是你的生命线，你不会放手的。<<Maplebirch_anguish_He>>们把头埋在你的肩膀上。
+	<<case 4>>
+		你们紧拥在一起，用几乎窒息的方式死死抱住对方，但这有助于你们从痛苦中分散注意力。
+	<<case 5>>
+		你用尽每一丝力气拥抱着悉尼和罗宾，<span class="red"><<Maplebirch_anguish_He>>们在你的拥抱下几乎疼痛起来。</span>
+<</switch>>
+<br><br>
+<<MaplebirchConfusionpriestAttack>>
+<br><br>
+<<ConfusionTortureOptions>>
+
+:: Maplebirch Confusion Punish Belt
+<<if $robinPain lte 0>>
+	<<set $robinPain to 0>>
+<</if>>
+<<if $robinArousal lte 0>>
+	<<set $robinArousal to 0>>
+<</if>>
+<<if $sydneyPain lte 0>>
+	<<set $sydneyPain to 0>>
+<</if>>
+<<if $sydneyArousal lte 0>>
+	<<set $sydneyArousal to 0>>
+<</if>>
+<<effects>>
+<<set $confusionStop = Math.floor(($sydneyStop + $robinStop) / 2)>>
+<<switch $confusionStop>>
+	<<case 1>>
+		你将手塞入腰带，紧紧握住，想要止住震动。悉尼和罗宾也模仿你的样子，把手插了进去。
+	<<case 2>>
+		你把悉尼和罗宾的腰带向外拉了拉，但<<person3>><<priest>>立马加大了震动强度。
+	<<case 3>>
+		你把手掌搁在腰带的震动部位和悉尼还有罗宾的身体中间，但它们马上震动得更为剧烈了。
+	<<case 4>>
+		你握紧拳头，死死扣在腰带上，震动快把你的手震麻了。
+	<<case 5>>
+		你已经感觉不到手掌的知觉了。<span class="red">你不能再有效地制止腰带的震动了。</span>
+<</switch>>
+<br><br>
+<<MaplebirchConfusionpriestAttack>>
+<br><br>
+<<ConfusionTortureOptions>>
+
+:: Maplebirch Confusion Punish Hit
+<<if $robinPain lte 0>>
+	<<set $robinPain to 0>>
+<</if>>
+<<if $robinArousal lte 0>>
+	<<set $robinArousal to 0>>
+<</if>>
+<<if $sydneyPain lte 0>>
+	<<set $sydneyPain to 0>>
+<</if>>
+<<if $sydneyArousal lte 0>>
+	<<set $sydneyArousal to 0>>
+<</if>>
+<<effects>>
+<<set $confusionHit = Math.floor(($sydneyHit + $robinHit) / 2)>>
+<<switch $confusionHit>>
+	<<case 1>>
+		你抬起双臂，护住悉尼和罗宾的后背，顶住了一番抽打。<<larousal>><<gpain>>
+	<<case 2>>
+		你把双臂护在悉尼和罗宾的背上，用自己的身体为<<person1>><<him>>和<<person2>><<him>>承受鞭笞。<<larousal>><<gpain>>
+	<<case 3>>
+		你不愿让悉尼和罗宾受到更多伤害，再次用手臂挡下了鞭子，剧痛几乎到了难以承受的地步。<<larousal>><<gpain>>
+	<<case 4>>
+		随着最后无情的一击，<span class="red">你的双臂软软地垂下了。</span><<larousal>><<gpain>>
+<</switch>>
+<<set _blocked to true>>
+<<MaplebirchConfusionpriestAttack>>
+<br><br>
+<<ConfusionTortureOptions>>
+
+:: Maplebirch Confusion Punish Plead
+<<if $robinPain lte 0>>
+	<<set $robinPain to 0>>
+<</if>>
+<<if $robinArousal lte 0>>
+	<<set $robinArousal to 0>>
+<</if>>
+<<if $sydneyPain lte 0>>
+	<<set $sydneyPain to 0>>
+<</if>>
+<<if $sydneyArousal lte 0>>
+	<<set $sydneyArousal to 0>>
+<</if>>
+<<effects>>
+<<set $confusionPlead = Math.floor(($sydneyPlead + $robinPlead) / 2)>>
+<<switch $confusionPlead>>
+	<<case 1>>
+		你凝视着<<person3>><<priest>>的眼睛，<<He>>动摇了。
+	<<case 2>>
+		你无声地向<<person3>><<priest>>乞求，<<His>>举鞭的动作没有那么坚定了。
+	<<case 3>>
+		你眼里的泪水似乎让<<person3>><<priest>>迟疑了一瞬。
+	<<case 4>>
+		<<person3>><<priest>>摇摇头，重新坚定地准备挥鞭。<span class="red">你的乞求似乎不会再有用了。</span>
+<</switch>>
+<br><br>
+<<MaplebirchConfusionpriestAttack>>
+<br><br>
+<<ConfusionTortureOptions>>
+
+:: Maplebirch Confusion Punish Touch
+<<if $robinPain lte 0>>
+	<<set $robinPain to 0>>
+<</if>>
+<<if $robinArousal lte 0>>
+	<<set $robinArousal to 0>>
+<</if>>
+<<if $sydneyPain lte 0>>
+	<<set $sydneyPain to 0>>
+<</if>>
+<<if $sydneyArousal lte 0>>
+	<<set $sydneyArousal to 0>>
+<</if>>
+<<effects>>
+<<if $Maplebirch.phase2 is 1>>
+	<<switch $confusionTouch>>
+	<<case 1>>
+		你用绑住的手往悉尼和罗宾的屁股上一捏，<<person1>><<He>>和<<person2>><<He>>有些疑惑地看向你。<<promiscuity1>>
+	<<case 2>>
+		你把悉尼和罗宾拉近，往<<person1>><<his>>和<<person2>><<his>>屁股上一拧。这样似乎可以帮<<Maplebirch_anguish_He>>们忘掉疼痛。<<promiscuity2>>
+	<<case 3>>
+		你努力去触碰<<person1>><<his>>的<<sydneyGenitals>>和<<person2>><<his>>的<<robinGenitals>>，但<<Maplebirch_anguish_He>>们双目紧闭。<<promiscuity3>>
+	<<case 4>>
+		你把一只手掌压在<<person1>><<his>>的<<sydneyGenitals>>和<<person2>><<his>>的<<robinGenitals>>上，<<Maplebirch_anguish_He>>们忍着呻吟，疼痛似乎迅速消失了。<<promiscuity4>>
+	<<case 5>>
+		不顾其他，你开始抚弄悉尼和罗宾。很快，<<Maplebirch_anguish_He>>们疼痛的哭喊转变成了愉悦的呻吟。<<promiscuity5>>
+	<</switch>>
+<<elseif $Maplebirch.phase2 is 2>>
+	<<switch $sydneyTouch>>
+	<<case 1>>
+		你用绑住的手往悉尼的屁股上一捏，<<person1>><<He>>有些疑惑地看向你。<<promiscuity1>>
+	<<case 2>>
+		你把悉尼拉近，往<<person1>><<his>>屁股上一拧。这样似乎可以帮<<his>>忘掉疼痛。<<promiscuity2>>
+	<<case 3>>
+		你努力去触碰<<person1>><<his>>的<<sydneyGenitals>>，但<<His>>双目紧闭。<<promiscuity3>>
+	<<case 4>>
+		你把一只手掌压在<<person1>><<his>>的<<sydneyGenitals>>上，<<He>>忍着呻吟，疼痛似乎迅速消失了。<<promiscuity4>>
+	<<case 5>>
+		不顾其他，你开始抚弄悉尼。很快，<<person1>><<His>>疼痛的哭喊转变成了愉悦的呻吟。<<promiscuity5>>
+	<</switch>>
+<<elseif $Maplebirch.phase2 is 3>>
+	<<switch $robinTouch>>
+	<<case 1>>
+		你用绑住的手往罗宾的屁股上一捏，<<person2>><<He>>有些疑惑地看向你。<<promiscuity1>>
+	<<case 2>>
+		你把罗宾拉近，往<<person2>><<his>>屁股上一拧。这样似乎可以帮<<his>>忘掉疼痛。<<promiscuity2>>
+	<<case 3>>
+		你努力去触碰<<person2>><<his>>的<<robinGenitals>>，但<<His>>双目紧闭。<<promiscuity3>>
+	<<case 4>>
+		你把一只手掌压在<<person2>><<his>>的<<robinGenitals>>上，<<He>>忍着呻吟，疼痛似乎迅速消失了。<<promiscuity4>>
+	<<case 5>>
+		不顾其他，你开始抚弄罗宾。很快，<<person2>><<His>>疼痛的哭喊转变成了愉悦的呻吟。<<promiscuity5>>
+	<</switch>>
+<</if>>
+<<MaplebirchConfusionpriestAttack>>
+<br><br>
+<<ConfusionTortureOptions>>
+
+:: Maplebirch Confusion Punish Close
+<<if $robinPain lte 0>>
+	<<set $robinPain to 0>>
+<</if>>
+<<if $robinArousal lte 0>>
+	<<set $robinArousal to 0>>
+<</if>>
+<<if $sydneyPain lte 0>>
+	<<set $sydneyPain to 0>>
+<</if>>
+<<if $sydneyArousal lte 0>>
+	<<set $sydneyArousal to 0>>
+<</if>>
+<<effects>>
+你闭上眼，试图屏蔽痛苦。
+<br><br>
+<<MaplebirchConfusionpriestAttack>>
+<br><br>
+<<ConfusionTortureOptions>>
+
+:: Maplebirch Confusion Punish Repeat
+<<effects>>
+如果只是这样就好了，这还挺舒服的，但你的快乐并没有持续多久。
+当房门打开，光线涌回屋内时，你把悉尼和罗宾的手握紧了。
+<br><br>
+<<if $punishmentCounter gte 10>>
+	<<person3>><<priest>>向你们鞠了一躬。<<He>>慢慢抬起手，这让你和罗宾都害怕地一缩。
+	<br><br>
+	鞭子没有再落下。相反，你听见金属落地的声音。"恭喜，我的孩子们，"<<he>>一字一句地说着，"你们共同经历了痛苦。尽管多次失败，但你们向我们证明了你们的羁绊足够牢固。<span class="green">你们再次纯洁了。</span>"你们的束缚全部解开。一位<<monk>>走了过来，解开你们的口球，项圈也随之拆落。<<tearful>>你和悉尼还有罗宾仍保持相拥的姿势，彼此支撑着站起。你的膝盖仍然在打颤。
+	<br><br>
+	"一个警告，"<<priest>>说，"不要向任何人透露此事。无论朋友，还是约旦。即使你有幸还有双亲，也不要告诉他们。我不希望再发现你们不洁了。"
+	<br><br>
+	<<monks>>把你叠好的衣服递给你。
+	<<if $player.virginity.penile isnot true or $player.virginity.vaginal isnot true>>
+		<<if setup.mbContains($Maplebirch.Promised, ["Robin", "Sydney"])>>
+			你获得了<span class="wraith"><span class="blue">承诺仪式：</span><span class="tentacle">合二为一</span></span>特质。
+			<br><br>
+		<<else>>
+			你获得了<span class="blue">贞洁誓言</span>特质。
+			<br><br>
+		<</if>>
+	<</if>>
+	<br><br>
+	<<link [[继续|Maplebirch Confusion Punish End]]>><</link>>
+	<br>
+<<else>>
+	<<monks>>再次点燃香盏，而<<priest>>手执九尾鞭，缓缓向你走来。"撑住，你们的羁绊必须超越自身的肉体和精神。"<<He>>又拉下了面罩。
+	<br><br>
+	<<set $punishmentTimer to 14>>
+	<<set $robinHold to 0>>
+	<<set $robinStop to 0>>
+	<<set $robinHit to 0>>
+	<<set $robinPlead to 0>>
+	<<set $robinTouch to 0>>
+	<<set $sydneyHold to 0>>
+	<<set $sydneyStop to 0>>
+	<<set $sydneyHit to 0>>
+	<<set $sydneyPlead to 0>>
+	<<set $sydneyTouch to 0>>
+	<<ConfusionTortureOptions>>
+<</if>>
+
+:: Maplebirch Confusion Punish End
+<<effects>>
+<<set $worn.face.type.push("broken")>>
+<<faceruined>>
+<<set $worn.neck.type.push("broken")>>
+<<neckruined>>
+<<set $player.virginity.temple to true>>
+<<set C.npc.Robin.virginity.temple to true>><<set C.npc.Sydney.virginity.temple to true>>
+<<remove_shackle>><<unbindtemp>><<storeon "duopunish">><<Maplebirch_unset_punish>>
+<<clotheson>>
+<<endevent>>
+<<pass 20>>
+<<npc "Sydney" 1>><<person1>><<npc "Robin" 2>><<person2>><<set $Maplebirch.daily.robin.punish to 1>><<set $daily.sydney.punish to 1>>
+你们穿过地道，被带回了神殿。悉尼和罗宾一路上都紧抱着你不放。
+<br><br>
+当你们抵达主殿时，<<Maplebirch_anguish_He>>们彻底地瘫软在你的身上，开始抽泣了起来。你们拥住对方，就好像是过了一辈子。你也忍不住开始哭泣……在经历了这一切的一切之后。
+<br><br>
+“我们……我们做到了……”<<Maplebirch_anguish_He>>们抬眼看你，眼泪淌下脸颊，“我爱你。”
+<br><br>
+你们继续拥抱着彼此，直至最后，尽管仍在颤抖，悉尼和罗宾还是站起了身。"我……我得回家了。<<sydneyMum>>可能担心坏了。我……我们明天见。"悉尼说着，<<nnpc_he "Sydney">>在离开神殿时回头又看了你一眼，给了你一个虚弱的飞吻。之后，你和罗宾一起离开了。<<stress -6>><<llstress>>
+<br><br>
+<<link [[继续|Temple]]>><<endevent>><<MaplebirchEndEvent>><<set $eventskip to 1>><</link>>
+<br>
+
+:: Ambulance Confusion
+<<set $outside to 0>><<effects>>
+<<set $worn.face.type.push("broken")>><<faceruined>><<set $worn.neck.type.push("broken")>><<neckruined>>
+<<remove_shackle>><<unbind>><<storeon "duopunish">><<Maplebirch_unset_punish>>
+<<set $Maplebirch.daily.robin.punish to 1>><<set $daily.sydney.punish to 1>>
+
+你感觉自己被举到担架上。你抓住了什么东西，它也抓住了你。那感觉……非常温暖，以一种你无法理解的方式让你感到安心。有什么东西试图把它从你手中拽走，于是你攥的更紧了。你再次昏了过去。
+<br><br>
+
+<<if $player.virginity.penile isnot true or $player.virginity.vaginal isnot true>>
+	<<if setup.mbContains($Maplebirch.Promised, ["Robin", "Sydney"])>>
+		你获得了<span class="wraith"><span class="blue">承诺仪式：</span><span class="tentacle">合二为一</span></span>特质。
+		<br><br>
+	<<else>>
+		你获得了<span class="blue">贞洁誓言</span>特质。
+		<br><br>
+	<</if>>
+<</if>>
+<<set $player.virginity.temple to true>>
+<<set C.npc.Robin.virginity.temple to true>><<set C.npc.Sydney.virginity.temple to true>>
+
+<<link [[睡觉|Hospital Bed Confusion]]>><</link>>
+<br>
+
+:: Hospital Bed Confusion
+<<set $outside to 0>><<set $location to "hospital">><<effects>>
+<<set $hunger to 0>><<set $thirst to 0>><<set $tiredness to 0>><<set $hygiene to 0>>
+<<set $stress -= 2000>>
+
+你在医院的床上醒来。悉尼和罗宾在你的身旁，你们还紧紧相拥着。
+<<generate1>><<person1>>
+“终于醒了。”一个护士说。“医生试图分开你们三个，但即使在昏迷时，你们也不肯松手。”<<He>>指着悉尼和罗宾。“最后<<Maplebirch_anguish_He>>们坐了起来……在睡梦中对我嘶吼着。然后就像什么都没发生过一样又躺了下去。于是我们放弃了。”
+
+护士说你们似乎是因为压力导致的昏厥，但身体并无大碍。<<He>>让你们先候着，等自己去喊医生来。
+<br><br>
+<<endevent>>
+<<if $hospitalintro is 0>><<set $hospitalintro to 1>>
+	<<npc "Harper" 1>><<person1>><<npc "Sydney" 2>><<person2>><<npc "Robin" 3>><<person3>>没过多久，你看到一个穿着白大褂，胳膊夹着病例板的<<person1>><<personsimple>>走了进来。
+	<br><br>
+	<<He>>对你笑了笑。"你好，我是哈珀。"<<He>>在你的床边坐下，撩起挡在眼前的金色的刘海。<<He>>看起来很年轻，应该没超过25岁。
+	<br><br>
+<<else>>
+	<<npc "Harper" 1>><<person1>><<npc "Sydney" 2>><<person2>><<npc "Robin" 3>><<person3>>哈珀医生这时走了进来，手里拿着<<person1>><<his>>常用的写字板。<<He>>表示你目前并无大碍，但希望对你进行深度的检查。",
+	<br><br>
+<</if>>
+
+<<link [[继续|Hospital Bed Examination Confusion]]>><</link>>
+<br>
+
+:: Hospital Bed Examination Confusion
+<<effects>>
+你听到悉尼打了个哈欠，而罗宾在你身旁。<<Maplebirch_anguish_He>>们睁开了双眼，露出了虚弱的微笑。"很高兴你是我醒来后见到的第一个人。"但当悉尼看到哈珀医生时，表情立刻变了。他们就这样对视着，你很难读懂他们在干什么。
+<br>
+"但第二个就不是很高兴了。"
+<br>
+<<if !$robinSeen.includes("Harper")>>
+	<<set $robinSeen.pushUnique("Harper")>>
+<</if>>
+<<if !$sydneySeen.includes("Harper")>>
+	<<set $sydneySeen.pushUnique("Harper")>>
+	"悉尼。好久不见。"
+	<br>
+	"远远不够久。"如果你们不是还紧紧相拥着，悉尼可能会跳起来攻击哈珀。
+<<else>>
+	"别这样，我们可以好好谈一谈。"
+<</if>>
+<br><br>
+悉尼和罗宾挡在了你的面前，把你护在了身后。"我们将行驶拒绝治疗的权利。/* 也许可以加个罗宾共入精神病院 */
+<br><br>
+哈珀医生叹了口气。"非常好，但我仍然必须评估<<phim>>。
+<<person1>>
+<<if $trauma lte ($traumamax / 10) * 2>>
+	<<He>>温柔地询问你关于你的家庭生活、学校的情况以及你的健康状况等各种问题。<<He>>告诉你，据<<He>>所知，一切都还好，但你将来应该更加小心。
+	<br><br>
+	<<wash>>
+	悉尼和罗宾搀扶着你，很快你就被允许出院了。
+	<br><br>
+
+	<<link [[离开 (0:10)|Hospital Journey Home Confusion]]>><<pass 10>><<endevent>><</link>>
+	<br>
+<<elseif $trauma lt ($traumamax / 10) * 9>>
+	<<He>>关切地询问你有关你家庭生活、学校情况和身体状况的各种问题。不久之后，<<he>>召来一名护士，他们在房间角落里进行了简短的交谈。谈话的声音很小，不久后，护士点了点头，随后离开了房间。
+	<br><br>
+	<<if $psych is 0>>
+		<span class="gold">医生告诉你每个<span class="gold">星期五</span>都要来医院找<<him>>接受治疗。</span>
+		<br><br>
+		<<set $psych to 1>><<unset $schoolPsych>>
+		<<wash>>
+		悉尼和罗宾搀扶着你，很快你就被允许出院了。
+		<br><br>
+	<<else>>
+		医生提醒你在<span class="gold">星期五</span>来医院找<<him>>。
+		<br><br>
+		<<wash>>
+		悉尼和罗宾搀扶着你，很快你就被允许出院了。
+		<br><br>
+	<</if>>
+
+	<<link [[离开|Hospital Journey Home Confusion]]>><<pass 10>><<endevent>><</link>>
+	<br>
+<<else>>
+	<<He>>温柔地询问你关于你的家庭生活、学校的情况以及你的健康状况等各种问题，脸上逐渐浮现出一丝关切，但你不知道为什么。不久之后，<<He>>召来了一名护士，他们在房间的角落里进行了简短的谈话声音压的很低。过了一会儿，护士点了点头，随之离开了房间。
+	<br><br>
+
+	悉尼和罗宾看起来很不安。"我们需要离开。"你的喉咙仿佛被堵住了，发不出任何声响。护士走了过来，你被悉尼和罗宾一把拉住。"不。"
+	<br><br>
+
+	"我向你们保证——"
+	<br>
+	"一切都会好的吗？不会的。我们要离开，而你阻止不了我们。"护士抓住悉尼和罗宾的手臂，试图阻止<<Maplebirch_anguish_He>>们离开。悉尼则用惊人的力量推了回去，而罗宾则用牙齿咬了上去。但这一切都发生的太快了。医生将一块布贴在你的脸上，你感到一阵晕眩。悉尼和罗宾的声音在你的耳畔拉伸形变，一切开始旋转。你能感到无形的力量拖拽着你的身躯，然后是尖啸声。
+	<br><br>
+	你被带过走廊，周遭模糊的影子试图来到你身边，但被挡住了去路。护工一刻也没有停歇地把你送出了建筑外，那里停着一个发动的篷车。然后一切都变黑了。
+	<br><br>
+	<<endevent>>
+	<<link [[继续|Hospital Confusion Rescue]]>><<pass 1 hour>><</link>>
+	<br>
+<</if>>
+
+:: Hospital Journey Home Confusion
+<<effects>>
+悉尼带你走出医院，进入一辆等待的车。西里斯正坐在驾驶座上。<<npc "Sydney" 1>><<person1>><<npc "Sirris" 2>><<person2>><<npc "Robin" 3>><<person3>>
+"你们三个真是一群难缠的家伙。一切都还好吗？"<<nnpc_he "Sirris">>看着你，"悉尼对你几乎是寸步不离——如果时间允许的话，我也会留下来的……悉尼，系好安全带，你知道自己为什么一直开不了车？"悉尼撇了撇嘴。
+<<if !$sydneySeen.includes("ride")>>
+	<<set $sydneySeen.pushUnique("ride")>>
+	"那么，你们住在哪里？"西里斯侧身向后看着你。
+	<br><br>
+	你们给西里斯指路去孤儿院。你觉得<<nnpc_he "Sirris">>的蹙眉似乎透露着同情，但你不确定。
+<<else>>
+	“我知道了，没多远路。”
+<</if>>
+西里斯通过后视镜不断地向你投以关切的目光。你不一会儿便来到了孤儿院，你牵着悉尼和罗宾的手下了车。
+<br><br>
+<<Maplebirch_anguish_He>>们牵着你走到孤儿院。
+临走前悉尼对你说："小心那个医生。不要相信<<nnpc_he "Harper">>说的话。"
+<br><br>
+你们目送着悉尼走回车里，他们等你进门后才启车离开。
+<br><br>
+<<link [[继续|Orphanage]]>><<pass 10>><<endevent>><<MaplebirchEndEvent>><</link>>
+<br>
+
+:: Hospital Confusion Rescue 
+<<effects>>
+你再次醒来，头晕目眩。有两个人在前座上交谈着。你努力地想要识别——那是悉尼和西里斯。<<npc "Sydney" 1>><<person1>><<npc "Robin" 2>><<person2>><<npc "Sirris" 3>><<person3>>
+<br><br>
+"嘿，看到了？我告诉过你<<pshe>>会没事的，小悉尼。"你发现自己不知何时离开了医院，而你似乎在……麋鹿街？
+<br><br>
+悉尼几乎跳出车门，把后门哐开挤到了你身旁，随后紧紧地抱住了你。"当<<nnpc_he "Harper">>把那块布捂在你脸上时，我很担心。"你想问悉尼和罗宾究竟发生了什么，但你发不出声音，只能机械地回应了这个拥抱。
+<br><br>
+"好啦，你们在后座待好。悉尼，安全带！你想知道为什么你开不了车吗？
+<<if !$sydneySeen.includes("ride")>>
+	<<set $sydneySeen.pushUnique("ride")>>
+	那么，你们住在哪里？"西里斯侧过身问你。
+	<br><br>
+	你和罗宾干巴巴地完美无误地报出了孤儿院的位标。西里斯皱了皱眉，似乎透露着同情的意味，但你不确定。
+<<else>>
+	我知道了，没多远路。"
+<</if>>
+西里斯通过后视镜不断地向你投以关切的目光。一路上悉尼和罗宾一直紧紧地握着你的手，直至你们下车来到孤儿院。
+<br><br>
+你牵着悉尼和罗宾走到孤儿院的前门，临别时<<if $sydneyromance is 1>>悉尼在你的脸颊上留下一吻<<else>>再次紧紧地拥住了你<</if>>。
+“小心那个医生。不要相信<<nnpc_he "Harper">>说的话。”，悉尼警示道
+<br><br>
+你目送着悉尼走回车里，他们等你进门后才启车离开。
+<br><br>
+<<link [[继续|Orphanage]]>><<endevent>><<MaplebirchEndEvent>><</link>>
+<br>
+
+:: Confusion Temple Test Refuse
+<<effects>><<run statusCheck("Robin")>><<sydneySchedule>>
+"那我必须设想最坏的情况。"约旦说道，直直地盯着脚尖。
+<<if _robin_location isnot "temple" && _sydney_location isnot "temple">>
+	门打开了，悉尼和罗宾被另一位<<monk>>带了进去。<<Maplebirch_anguish_He>>们看上去十分惊恐。
+<<elseif _robin_location isnot "temple" && !_sydney_location isnot "temple">>
+	门打开了，悉尼被另一位<<monk>>带了进去。<<nnpc_He "Sydney">>看上去十分惊恐。罗宾看向你，神情有些疑惑。
+<<elseif _robin_location isnot "temple" && !_sydney_location isnot "temple">>
+	门打开了，罗宾被另一位<<monk>>带了进去。<<nnpc_He "Robin">>看上去十分惊恐。悉尼看向你，神情有些疑惑。
+<<else>>
+	悉尼和罗宾看向你，神情有些疑惑。
+<</if>>
+"抱歉。作为一体，你们必须被净化。我会召集专人来，请一定要配合。"<<He>>从斗篷里拿出一个小铃铛，然后摇了摇。
+<br><br>
+悉尼和罗宾飞速地用手挽住了你的两条胳膊。
+<br><br>
+<<endevent>><<MaplebirchEndEvent>>
+<<link [[继续|Maplebirch Confusion Punish Intro]]>><</link>>
+<br>
+
+:: Confusion Temple Test Admission
+<<effects>><<run statusCheck("Robin")>><<sydneySchedule>>
+<<if $speech_attitude is "meek">>
+"我，我没有守节，"你说，"抱歉，我真的很抱歉……"
+<<elseif $speech_attitude is "bratty">>
+"没必要了，"你说，"我没能保持忠诚。"
+<<else>>
+"抱歉，"你说，"我没有保持忠诚。"
+<</if>>
+<br><br>
+"谢谢你的坦诚。"约旦说着，直直地盯着脚尖。
+<<if _robin_location isnot "temple" && _sydney_location isnot "temple">>
+	门打开了，悉尼和罗宾被另一位<<monk>>带了进去。<<Maplebirch_anguish_He>>们看上去十分惊恐。
+<<elseif _robin_location isnot "temple" && !_sydney_location isnot "temple">>
+	门打开了，悉尼被另一位<<monk>>带了进去。<<nnpc_He "Sydney">>看上去十分惊恐。罗宾惊骇地看向你，但很快转为了怜悯。<<note "-- 罗宾的好感" "red">>
+<<elseif _robin_location isnot "temple" && !_sydney_location isnot "temple">>
+	门打开了，罗宾被另一位<<monk>>带了进去。<<nnpc_He "Robin">>看上去十分惊恐。悉尼惊骇地看向你，但很快转为了怜悯。<<note "-- 悉尼的好感" "red">>
+<<else>>
+	悉尼和罗宾惊骇地看向你，但很快转为了怜悯。<<note "-- 悉尼与罗宾的好感" "red">>
+<</if>>
+"作为一体，你们必须被净化。我会召集专人来，请一定要配合。"<<He>>从斗篷里拿出一个小铃铛，然后摇了摇。
+<br><br>
+悉尼和罗宾飞速地用手挽住了你的两条胳膊。
+<br><br>
+<<endevent>><<MaplebirchEndEvent>>
+<<link [[继续|Maplebirch Confusion Punish Intro]]>><</link>>
+<br>

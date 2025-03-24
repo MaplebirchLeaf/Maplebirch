@@ -1,0 +1,35 @@
+:: Widgets speech-VIVIAN [widget]
+
+<<widget "speech-vivian">>
+	<<set _vivian = C.npc.Vivian>><<rng>>
+	<<if !$vivianComments>>
+		<<set $vivianComments to {}>>
+		<<set $vivianComments.penetrated to 0>>
+		<<set $vivianComments.mouth to 0>>
+		<<set $vivianComments.trib to 0>>
+		<<set $vivianComments.imminent to 0>>
+		<<set $vivianComments.chastity to 0>>
+		<<set $vivianComments.touch to 0>>
+		<<set $vivianComments.fondle to 0>>
+		<<set $vivianComments.flaunt to 0>>
+		<<set $vivianUniqueComments to []>>
+	<</if>>
+    <<set _vivianText to `维安什么反应也没有。`>>
+	<<if $vivianComments>>
+		<<set _keys to Object.keys($vivianComments)>>
+		<<for $_i to 0; $_i lt _keys.length; $_i++>>
+			<<if $vivianComments[_keys[$_i]] gt 0>>
+				<<set $vivianComments[_keys[$_i]]-->>
+			<</if>>
+		<</for>>
+	<</if>>
+<</widget>>
+
+<<widget "ejaculation-vivian">>
+	<<set $ejaculating to 1>>
+	<<run maplebirchStatusCheck("Vivian")>>
+	<!-- 女性维安 -->
+	
+	<!-- 男性维安 -->	
+
+<</widget>>

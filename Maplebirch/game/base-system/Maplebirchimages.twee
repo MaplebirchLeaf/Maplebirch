@@ -1,0 +1,17 @@
+:: Maplebirch Widget Icon Img [widget]
+
+<<widget "MaplebirchIcon">>
+    <<switch _args[0]>>
+		<<case "SydneyBunk">><<icon "Sydneyquarters.png">>
+    <<case "SydneyBed">><<icon "Sydneybed.png">>
+    <<case "gift">><<icon "Maplebirch_gift.png">>
+    <<case "RobinBunk">><<icon "Robinquarters.png">>
+    <<case "RobinBed">><<icon "RobinTemplebed.png">>
+    <<case "blood_lemon">><<icon "tending/blood_lemon.gif">>
+    <<case "help">><<icon "maplebirch_help.png">>
+    <<case "awareness">><<icon "maplebirch_awareness.png">>
+    <<case "lewd">><<icon "lust.png">>
+    <<case "desecrate">><<icon "maplebirch_desecrate.png">>
+    <<case "Maplebirch">><<icon "Maplebirch.png">>
+	<</switch>>
+<</widget>>

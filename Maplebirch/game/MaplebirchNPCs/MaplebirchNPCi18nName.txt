@@ -1,0 +1,1 @@
+.replace("Vivian","维安").replace("Karasveil","卡拉斯维尔").replace("Igniharp","伊格尼哈普").replace("Noctyaph","诺克迪亚弗").replace("Niki","尼奇")

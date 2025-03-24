@@ -1,0 +1,5 @@
+    <<eventlakewater>>
+<<else>>
+    <<if $MB_lake_center_island>>
+        <<swimicon>><<link [[游得更远 (0:30)|Maplebirch Lake Center]]>><<pass 30>><</link>><<MaplebrchHint>>
+    <</if>>

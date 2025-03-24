@@ -1,0 +1,6 @@
+    <<run statusCheck("Robin")>>
+	<<if _robin_location is "temple">>
+        <<wolficon>><<link [[返回神殿 (0:10)|Temple]]>><<endevent>><<pass 10>><</link>>
+	<<else>>
+		<<robinoptions>>
+	<</if>>

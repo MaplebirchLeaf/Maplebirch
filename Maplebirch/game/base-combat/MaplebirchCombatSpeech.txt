@@ -1,0 +1,7 @@
+        <<case "Vivian">>
+			<<speech-vivian>>
+			<<if _vivianText and $speechdisable isnot 1>>
+				<<set $_text_output to _vivianText>>
+			<</if>>
+		<<case "Sydney">>
+			<<speech-sydney>>

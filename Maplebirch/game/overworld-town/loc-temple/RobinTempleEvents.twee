@@ -1,0 +1,2392 @@
+:: Robin Temple Events [widget]
+
+<<widget "robinFinishMaplebirch">>
+	<<run statusCheck("Robin")>>
+	<<if ["initiate", "monk"].includes(V.robin_temple_rank)>>
+		<<set $robin.sexTotal += 1>>
+		<<set $Maplebirch.daily.robin.sex += 1>>
+		<<set $Maplebirch.daily.robin.cum>>
+		<<set $Maplebirch.daily.robin.robinCum>>
+		<<set $Maplebirch.robin.sex = ($Maplebirch.robin.sex || 0) + 1>><<set $robin.sexTotal += 1>>
+		<<if (($penisfucked is 1 and ($penisstate isnot "otheranus" or $temple_rank isnot undefined)) or $vaginafucked is 1 or $anusfucked is 1) and $templePromised isnot "Robin">>
+			<br>
+			"我们……可能有麻烦了，我们实在是太粗心了。"
+		<</if>>
+		<<if $orgasmcurrent is 0>>
+			<br>
+			<<if playerChastity()>>
+				<<He>>低头看着你的$worn.genitals.cn_name_cap。
+				<<if _robinStatus.includes("unbelief")>>
+					"你没有高潮。我不知道我在你穿着<<if $worn.genitals.name is "chastity parasite">>……这个<<else>>$worn.genitals.cn_name_cap<</if>>的情况下能做多少，我不擅长处理这个，毕竟<<if _robinChastity>>一直都是<<else>>之前都是<</if>>交给你的，对不起。"
+				<<else>>
+					"你……感觉还好么？我不知道我怎样在你穿着<<if $worn.genitals.name is "chastity parasite">>……这个<<else>>$worn.genitals.cn_name_cap<</if>>的情况下取悦你，我不像你那般擅长这个……"
+				<</if>>
+				你对<<him>>点点头，告诉<<him>>没关系。
+			<<else>>
+				<<He>>低头看着你，
+				<<switch _robinStatus>>
+					<<case "belief">>
+						然后显得有些焦虑。"对不起，我已经加入神殿了。但是……"<<He>>深吸一口气，"我也想让你感觉舒服。"
+					<<case "unbelief">>
+						脸红了起来。"神殿的守则放一边好了，我才不会认真遵守呢。"<<He>>看起来都是为了你。
+					<<default>>
+						/* Nothings */
+				<</switch>>
+				<br>
+			<</if>>
+			<br>
+		<</if>>
+	<</if>>
+<</widget>>
+
+<<widget "robintempleOptions">>
+	<<run statusCheck("Robin")>>
+	<<if $location is "temple" && !$isRobinTempleRitual>>
+		<<switch _robin_location>>
+			<<case "temple">>
+				<<switch $robin_templeWork>>
+					<<case "pray">>
+						<<set _robinPray to true>>
+						<<robinOptionsTalkMaplebirch>>
+						<br>
+						<<Maplebirchprayoptions>>
+						<<if canGiftFood("Robin")>>
+							<<skinicon "give">><<link [[送食物给罗宾|Robin Temple Gifts List]]>><</link>>/* 改link */
+							<br>
+						<</if>>
+						<br><br>
+						<<getouticon>><<link [[离开|Temple]]>><<endevent>><<set $eventskip to 1>><</link>>
+						<br>
+					<<case "anguish">>
+						罗宾打起精神，"我要为今晚的守夜做准备了，祝我好运吧！"<<He>>吻了一口你的脸颊，然后离开了。
+						<br><br>
+						<<link [[继续|Temple]]>><<endevent>><<set $eventskip to 1>><</link>>
+						<br>
+					<<default>>
+						罗宾打起精神，"是时候回去工作了，我就在附近，随时可以找我。"<<He>>吻了吻你的脸颊，然后离开了。
+						<br><br>
+						<<link [[继续|Temple]]>><<endevent>><<set $eventskip to 1>><</link>>
+						<br>
+				<</switch>>
+			<<default>>
+				罗宾打起精神，"是时候回去工作了，我就在附近，随时可以找我。"<<He>>吻了吻你的脸颊，然后离开了。
+				<br><br>
+				<<link [[继续|Temple]]>><<endevent>><<set $eventskip to 1>><</link>>
+				<br>
+		<</switch>>
+	<</if>>
+<</widget>>
+
+<<widget "robinOptionsTalkMaplebirch">>
+	<<set _robin = C.npc.Robin>>
+	<<if _robin.trauma lt 80 and (!$daily.robin.walk or ($halloween_robin is 1 and $halloween_robin_costume is "ghost") or ( _robin.love gte 20 and $money gte 1500 and !$daily.robin.cinema)) and $passage isnot "Robin Walk" and $exposed lte 0>>
+		<<walkicon>><<link [[一起出门|Maplebirch Robin Walk]]>><<handheldon 1>><</link>>
+		<br>
+	<</if>>
+	<<if $location is "temple" and $temple_spear_mission is 1 and !$robinSeen.includes("spearMission") and $robinromance is 1 and !$spear_vessel>>
+		<<socialiseicon "ask">><<link [[询问<<him>>在想些什么|Robin Temple Spear]]>><<handheldon 1>><</link>>
+		<br>
+	<</if>>
+	<<if $location is "temple">>
+		<<set _tf to checkTFparts()>>
+		<<if !($Maplebirch.daily.robin.tf gte 3)>>
+			<<if C.npc.Robin.love gte 10 and $fox gte 6 and _tf.foxTail>>
+				<<tficon "fox">><<link [[摇晃尾巴 (0:10)|Robin Temple Transformation]]>><<pass 10>><<trauma -2>><<npcincr Robin love 2>><<handheldon 1>><<set $phase to 0>><</link>><<fox>><<ltrauma>><<glove>>
+				<br>
+			<<elseif C.npc.Robin.love gte 10 and $wolfgirl gte 6>>
+				<<tficon "wolf">><<link [[轻推 (0:10)|Robin Temple Transformation]]>><<pass 10>><<stress -2>><<npcincr Robin love 2>><<handheldon 1>><<set $phase to 1>><</link>><<wolfgirl>><<lstress>><<glove>>
+				<br>
+			<<elseif C.npc.Robin.love gte 10 and $cat gte 6>>
+				<<tficon "cat">><<link [[轻蹭 (0:10)|Robin Temple Transformation]]>><<pass 10>><<tiredness -2>><<npcincr Robin love 2>><<handheldon 1>><<set $phase to 2>><</link>><<cat>><<ltiredness>><<glove>>
+				<br>
+			<<elseif C.npc.Robin.love gte 10 and $harpy gte 6>>
+				<<birdicon "sing">><<link [[唱歌 (0:10)|Robin Temple Transformation]]>><<pass 10>><<tiredness -1>><<npcincr Robin love 2>><<handheldon 1>><<set $phase to 3>><</link>><<harpy>><<ltiredness>><<glove>>
+				<br>
+			<<elseif C.npc.Robin.love gte 10 and $cow gte 6>>
+				<<tficon "cow">><<link [[用头轻顶 (0:10)|Robin Temple Transformation]]>><<pass 10>><<trauma -2>><<npcincr Robin love 2>><<handheldon 1>><<set $phase to 4>><</link>><<cow>><<ltrauma>><<glove>>
+				<br>
+			<</if>>
+		<</if>>
+	<</if>>
+	<<if $location is "temple" and $robinChastityRemoveIntro>> /* $robinChastityRemoveIntro 拆除罗宾贞操带剧情 */
+		<<if $robinChastityRemoveIntro>>
+			<<lockicon "unlock">><<link [[询问<<him>>移除贞操带的事 (0:15)|Robin Chastity Remove Intro]]>><<pass 15>><<handheldon 1>><</link>>
+			<br>
+		<<elseif $robinChastityRemovePure and $templePromised isnot "Robin" and !$Maplebirch._temple_evaluation>>
+			<<socialiseicon "ask">><<link [[询问诺言|Robin Temple Pure]]>><<handheldon 1>><</link>>
+			<br>
+		<<else>>
+			/* Do Nothing */
+		<</if>>
+	<</if>>
+<</widget>>
+
+<<widget "Maplebirchprayoptions">>
+	<<if _robinPray>>
+		<<set _MapleprayPassage to "Temple Robin Pray">>
+	<<else>>
+		<<set _MapleprayPassage to "Temple Pray">>
+	<</if>>
+		<<templeicon "pray">><<link [[为救赎祈祷 (1:00)|_MapleprayPassage]]>>
+			<<pass 60>><<set $phase to 2>>
+			<<if $purity gte ((1000 / 7) * 7)>>
+				<<stress -6>><<awareness -2>><<arousal -1200>>
+			<<elseif $purity gte ((1000 / 7) * 6)>>
+				<<stress -6>><<awareness -1>><<arousal -1000>>
+			<<elseif $purity gte ((1000 / 7) * 5)>>
+				<<stress -5>><<awareness -1>><<arousal -800>>
+			<<elseif $purity gte ((1000 / 7) * 4)>>
+				<<stress -4>><<awareness -1>><<arousal -600>>
+			<<elseif $purity gte ((1000 / 7) * 3)>>
+				<<stress -3>><<awareness -1>><<arousal -500>>
+			<<elseif $purity gte ((1000 / 7) * 2)>>
+				<<stress -2>><<awareness -1>><<arousal -400>>
+			<<else>>
+				<<stress -1>><<awareness -1>><<arousal -300>>
+			<</if>>
+		<</link>>
+		<<lawareness>><<lstress>><<larousal>>
+		<br>
+		<<if $player.penisExist and $insecurity_penis_small gte 1 and $player.penissize lte 1 and $acceptance_penis_small lte 999 and $daily.templePray isnot 1>>
+			<<templeicon "pray">><<link [[为更大的阴茎祈祷 (1:00)|_MapleprayPassage]]>>
+				<<pass 60>><<set $phase to $player.penisSize lt 0 ? 4 : 5>><<set $daily.templePray to 1>>
+				<<if $purity gte ((1000 / 7) * 7)>>
+					<<stress 5>><<acceptance "penis_small" 20>>
+				<<elseif $purity gte ((1000 / 7) * 6)>>
+					<<stress 5>><<acceptance "penis_small" 18>>
+				<<elseif $purity gte ((1000 / 7) * 5)>>
+					<<stress 6>><<acceptance "penis_small" 16>>
+				<<elseif $purity gte ((1000 / 7) * 4)>>
+					<<stress 7>><<acceptance "penis_small" 14>>
+				<<elseif $purity gte ((1000 / 7) * 3)>>
+					<<stress 8>><<acceptance "penis_small" 12>>
+				<<elseif $purity gte ((1000 / 7) * 2)>>
+					<<stress 10>><<acceptance "penis_small" 10>>
+				<<else>>
+					<<stress 12>><<acceptance "penis_small" 8>>
+				<</if>>
+			<</link>>
+			<<gstress>><<gacceptance>>
+			<br>
+		<</if>>
+		<<if $player.penisExist and $insecurity_penis_big gte 1 and $player.penissize gte ($player.gender is "m" ? 4 : 2) and $acceptance_penis_big lte 999 and $daily.templePray isnot 1>>
+			<<templeicon "pray">><<link [[为更小的阴茎祈祷 (1:00)|_MapleprayPassage]]>>
+				<<pass 60>><<set $phase to 6>><<set $daily.templePray to 1>>
+				<<if $purity gte ((1000 / 7) * 7)>>
+					<<stress 5>><<acceptance "penis_big" 20>>
+				<<elseif $purity gte ((1000 / 7) * 6)>>
+					<<stress 5>><<acceptance "penis_big" 18>>
+				<<elseif $purity gte ((1000 / 7) * 5)>>
+					<<stress 6>><<acceptance "penis_big" 16>>
+				<<elseif $purity gte ((1000 / 7) * 4)>>
+					<<stress 7>><<acceptance "penis_big" 14>>
+				<<elseif $purity gte ((1000 / 7) * 3)>>
+					<<stress 8>><<acceptance "penis_big" 12>>
+				<<elseif $purity gte ((1000 / 7) * 2)>>
+					<<stress 10>><<acceptance "penis_big" 10>>
+				<<else>>
+					<<stress 12>><<acceptance "penis_big" 8>>
+				<</if>>
+			<</link>>
+			<<gstress>><<gacceptance>>
+			<br>
+		<</if>>
+		<<if $player.gender is "f" and $insecurity_breasts_small gte 1 and between($player.breastsize, 0, 4) and $acceptance_breasts_small lte 999 and $daily.templePray isnot 1>>
+			<<templeicon "pray">><<link [[为更大的胸部祈祷 (1:00)|_MapleprayPassage]]>>
+				<<pass 60>><<set $phase to !$player.breastsize ? 7 : 8>><<set $daily.templePray to 1>>
+				<<if $purity gte ((1000 / 7) * 7)>>
+					<<stress 5>><<acceptance "breasts_small" 20>>
+				<<elseif $purity gte ((1000 / 7) * 6)>>
+					<<stress 5>><<acceptance "breasts_small" 18>>
+				<<elseif $purity gte ((1000 / 7) * 5)>>
+					<<stress 6>><<acceptance "breasts_small" 16>>
+				<<elseif $purity gte ((1000 / 7) * 4)>>
+					<<stress 7>><<acceptance "breasts_small" 14>>
+				<<elseif $purity gte ((1000 / 7) * 3)>>
+					<<stress 8>><<acceptance "breasts_small" 12>>
+				<<elseif $purity gte ((1000 / 7) * 2)>>
+					<<stress 10>><<acceptance "breasts_small" 10>>
+				<<else>>
+					<<stress 12>><<acceptance "breasts_small" 8>>
+				<</if>>
+			<</link>>
+			<<gstress>><<gacceptance>>
+			<br>
+		<</if>>
+		<<if $insecurity_breasts_big gte 1 and $player.breastsize gte ($player.gender is "f" ? 8 : 6) and $acceptance_breasts_big lte 999 and $daily.templePray isnot 1>>
+			<<templeicon "pray">><<link [[为更小的胸部祈祷 (1:00)|_MapleprayPassage]]>>
+				<<pass 60>><<set $phase to 9>><<set $daily.templePray to 1>>
+				<<if $purity gte ((1000 / 7) * 7)>>
+					<<stress 5>><<acceptance "breasts_big" 20>>
+				<<elseif $purity gte ((1000 / 7) * 6)>>
+					<<stress 5>><<acceptance "breasts_big" 18>>
+				<<elseif $purity gte ((1000 / 7) * 5)>>
+					<<stress 6>><<acceptance "breasts_big" 16>>
+				<<elseif $purity gte ((1000 / 7) * 4)>>
+					<<stress 7>><<acceptance "breasts_big" 14>>
+				<<elseif $purity gte ((1000 / 7) * 3)>>
+					<<stress 8>><<acceptance "breasts_big" 12>>
+				<<elseif $purity gte ((1000 / 7) * 2)>>
+					<<stress 10>><<acceptance "breasts_big" 10>>
+				<<else>>
+					<<stress 12>><<acceptance "breasts_big" 8>>
+				<</if>>
+			<</link>>
+			<<gstress>><<gacceptance>>
+			<br>
+		<</if>>
+		<<if $insecurity_pregnancy gte 1 and $acceptance_pregnancy lte 999 and playerBellySize() gte 8 and $daily.templePray isnot 1>>
+			<<set _pregnancyLink to (playerAwareTheyArePregnant() ? "为你的孕肚祈祷 (1:00)" : "为你那像是怀孕的肚子祈祷 (1:00)")>>
+			<<templeicon "pray">><<link [[_pregnancyLink|_MapleprayPassage]]>>
+				<<pass 60>><<set $phase to 10>><<set $daily.templePray to 1>>
+				<<if $purity gte ((1000 / 7) * 7)>>
+					<<stress 5>><<acceptance "pregnancy" 20>>
+				<<elseif $purity gte ((1000 / 7) * 6)>>
+					<<stress 5>><<acceptance "pregnancy" 18>>
+				<<elseif $purity gte ((1000 / 7) * 5)>>
+					<<stress 6>><<acceptance "pregnancy" 16>>
+				<<elseif $purity gte ((1000 / 7) * 4)>>
+					<<stress 7>><<acceptance "pregnancy" 14>>
+				<<elseif $purity gte ((1000 / 7) * 3)>>
+					<<stress 8>><<acceptance "pregnancy" 12>>
+				<<elseif $purity gte ((1000 / 7) * 2)>>
+					<<stress 10>><<acceptance "pregnancy" 10>>
+				<<else>>
+					<<stress 12>><<acceptance "pregnancy" 8>>
+				<</if>>
+			<</link>>
+			<<gstress>><<gacceptance>>
+			<br>
+		<</if>>
+		<<crimeicon "mark">><<link [[观察这里 (1:00)|_MapleprayPassage]]>>
+			<<pass 60>><<set $phase to 3>>
+			<<if $purity gte ((1000 / 7) * 7)>>
+				<<stress 5>><<awareness 2>>
+			<<elseif $purity gte ((1000 / 7) * 6)>>
+				<<stress 5>><<awareness 1>>
+			<<elseif $purity gte ((1000 / 7) * 5)>>
+				<<stress 6>><<awareness 1>>
+			<<elseif $purity gte ((1000 / 7) * 4)>>
+				<<stress 7>><<awareness 1>>
+			<<elseif $purity gte ((1000 / 7) * 3)>>
+				<<stress 8>><<awareness 1>>
+			<<elseif $purity gte ((1000 / 7) * 2)>>
+				<<stress 10>><<awareness 1>>
+			<<else>>
+				<<stress 12>><<awareness 1>>
+			<</if>>
+		<</link>>
+		<<gawareness>><<gstress>>
+		<br>
+		<<if !_robinPray>>
+			<<refuseicon>><<link [[停止|Temple]]>><</link>>
+			<br>
+		<</if>>
+<</widget>>
+
+<<widget "passouttempleRobin">>
+	你把自己逼得太紧了。当你昏厥的时候，你听到有人在喊你的名字。
+	<br><br>
+	<<passout>>
+	<<link [[继续|Temple Robin Rescue]]>><</link>>
+	<br>
+	<<pass 1 hour>>
+	<<trauma 6>><<set $stress -= 2000>>
+<</widget>>
+
+<<widget "robinTempleBench">>
+	<<if ["initiate", "monk"].includes(V.robin_temple_rank)>>
+		<<run statusCheck("Robin")>>
+		<<if C.npc.Robin.init is 1 and $exposed lte 0>>
+			<<if _robin_location is "temple">>
+				<br>
+				<<switch $robin_templeWork>>
+					<<case "pray">>
+						罗宾正坐在长椅上，低头祷告着。
+						<br>
+						<<templeicon "pew">><<link [[接近罗宾|Temple Robin]]>><<set $phase to 1>><</link>><<MaplebrchHint>>
+					<<case "garden">>
+						<span class="lblue">你可以看到罗宾带着园艺用品在神殿进进出出。</span>
+					<<case "quarters">>
+						<span class="lblue">你看见罗宾拎着要洗的衣服和清洁用品在宿舍进进出出。</span>
+					<<case "mass">>
+						<span class="lblue">罗宾可能正在准备弥撒。</span>
+					<<case "sleep">>
+						<span class="lblue">罗宾在这里过夜。</span>
+					<<case "anguish">>
+						<<if $Maplebirch.weekly.trialFailed>> /* 审判变量 */
+							<span class="lblue">罗宾仍在审判仪式中。</span>
+						<<else>>
+							<span class="lblue">罗宾在这里过夜。</span>
+						<</if>>
+				<</switch>>
+			<<elseif !$Maplebirch.daily.robin.offSchedule and (_robin_location_message === "school" ||  _robin_location_message === "orphanage" || _robin_location_message === "park" || _robin_location_message === "beach" || _robin_location_message === "liveStream" || _robin_location_message === "danube")>>
+				<br>
+				<span class="blue">你在附近没有看到罗宾。</span>
+				<br>
+				<<socialiseicon "ask">><<link [[四处打听罗宾在哪里|Temple Robin Ask]]>><<set $Maplebirch.daily.robin.offSchedule to true>><</link>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</widget>>
+
+<<widget "robinTortureOptions">>
+	<span class="lewd">熏香和震动让你感到一股暖意。</span><<hallucinogen 10>><<arousal 1000>><<set $robinArousal += 1>><<garousal>><<grarousal>> /* robinArousal */
+	<br>
+	<<if $robinPain lte 0>>
+		<<set $robinPain to 0>>
+	<</if>>
+	<<if $robinArousal lte 0>>
+		<<set $robinArousal to 0>>
+	<</if>>
+	<<set $punishmentTimer -= 1>>
+	<<if $stress gte $stressmax>>
+		<<passout>>
+		你感觉自己正在失去意识。在昏过去前，你看到了罗宾的脸，<<he>>的表情愈发的恐慌，而你的视野随之逐渐模糊……<<trauma 100>><<gggtrauma>>
+		<br><br>
+		<<link [[你眼前一黑……|Ambulance Robin]]>><<pain -8>><<set $arousal -= 2000>><<endevent>><<pass 1 hour>><</link>>
+		<br>
+	<<elseif $punishmentTimer lte 0>>
+		<<person2>><<priest>>举起了一只手，"够了。"<<monks>>停了下来，掐灭了燃香盏。<<He>>慢慢靠近你们，把手伸了出来，你和罗宾惊恐地后退。
+		<br><br>
+		鞭子没有再落下。相反，你听见金属落地的声音。"恭喜，我的孩子们，"<<he>>说，"你们共同经历了痛苦，也一同抵御了欲望。你们证明了你们的羁绊比欲望和痛苦更强大。<span class="green">你们再次纯洁了。</span>"你们的束缚全部解开。一位<<monk>>走了过来，拔掉你们的口球，项圈也随之拆落。<<tearful>>你和罗宾仍保持相拥的姿势，彼此支撑着站起。你的膝盖打着颤。
+		<br><br>
+		"一个警告，"<<priest>>继续说道，"不要向任何人透露此事。不要告诉你的朋友。不要告诉约旦。即使你有幸还有双亲，也不要告诉他们。我不希望再发现你们不洁了。"
+		<br><br>
+		<<monks>>把你叠好的衣服拿给你。
+		<<if $player.virginity.penile isnot true or $player.virginity.vaginal isnot true>>
+			<<if $Maplebirch.templePromised is "Robin">>
+				你获得了<span class="blue">承诺仪式：罗宾</span>特质。
+			<<else>>
+				你获得了<span class="blue">贞洁誓言</span>特质。
+			<</if>>
+		<</if>>
+		<br><br>
+		<<link [[继续|Robin Temple Punish End]]>><</link>>
+		<br>
+	<<elseif $pain gte 100 and $willpowerpain is 0>>
+		<span class="red">太痛苦了，你撑不住了。</span>你瘫倒在地，把罗宾也给带了下去。
+		<br><br>
+		<<robinTortureFail>>
+	<<elseif $arousal gte $arousalmax>>
+		<span class="red">太刺激了。</span>
+		<<orgasm>>
+		<<robinTortureFail>>
+	<<elseif $robinPain gte 6>>
+		<span class="red">透过口球，罗宾发出一声可怕的哭喊。</span>
+		<br><br>
+		<<robinTortureFail>>
+	<<elseif $robinArousal gte 6>>
+		<span class="red">罗宾呻吟着，身子不住地开始颤抖了起来，<<nnpc_hes "Robin">>被迫达到了高潮。</span><<npcincr Robin lust -1>><<Maplebirchnpcincr Robin holiness -2>><<lslust>><<lrholiness>>
+		<br><br>
+		<<robinTortureFail>>
+	<<else>>
+		罗宾看起来
+		<<switch $robinPain>>
+			<<case 0>><span class="green">安然无恙</span>
+			<<case 1>><span class="teal">有些不适</span>
+			<<case 2>><span class="lblue">有些痛苦</span>
+			<<case 3>><span class="blue">很痛苦</span>
+			<<case 4>><span class="purple">很痛苦</span>
+			<<case 5>><span class="pink">已经无法承受更多的痛苦了，</span>
+		<</switch>>
+		并且
+		<<switch $robinArousal>>
+			<<case 0>><span class="green">面色平静。</span>
+			<<case 1>><span class="teal">略微兴奋。</span>
+			<<case 2>><span class="lblue">很兴奋。</span>
+			<<case 3>><span class="blue">十分兴奋。</span>
+			<<case 4>><span class="purple">脸因兴奋而涨得通红。</span>
+			<<case 5>><span class="pink">正处于高潮的边缘。</span>
+		<</switch>>
+		<br>
+		<span class="red">
+		<<person2>>
+		<<switch $priestAction>>
+			<<case undefined>>
+				<<priest>>准备鞭打你。
+				<<set $priestAction to "Player">>
+			<<case "Player">>
+				<<switch random(1, 3)>>
+					<<case 1>>
+						<<priest>>准备再次鞭打你。
+					<<case 2>>
+						<<priest>>转而开始鞭打罗宾。
+						<<set $priestAction to "Robin">>
+					<<case 3>>
+						<<priest>>开始调高振动的强度。
+						<<set $priestAction to "Vibrate">>
+				<</switch>>
+			<<case "Robin">>
+				<<switch random(1, 3)>>
+					<<case 1>>
+						<<priest>>转而开始鞭打你。
+						<<set $priestAction to "Player">>
+					<<case 2>>
+						<<priest>>准备再次鞭打罗宾。
+					<<case 3>>
+						<<priest>>开始调高振动的强度。
+						<<set $priestAction to "Vibrate">>
+				<</switch>>
+			<<case "Vibrate">>
+				<<switch random(1, 3)>>
+					<<case 1>>
+						<<priest>>转而开始鞭打你。
+						<<set $priestAction to "Player">>
+					<<case 2>>
+						<<priest>>转而开始鞭打罗宾。
+						<<set $priestAction to "Robin">>
+					<<case 3>>
+						<<priest>>继续维持着皮带高强度的振动。
+				<</switch>>
+		<</switch>>
+		</span>
+		<br><br>
+		<<if $robinHold lte 4>>
+			<<link [[抱紧罗宾|Robin Temple Punish Hold]]>><<set $robinHold += 1>><<pain -3>><<set $robinPain -= 1>><</link>><<lpain>><<grpain>>
+			<br>
+		<</if>>
+		<<if $robinStop lte 4>>
+			<<link [[阻止皮带振动|Robin Temple Punish Belt]]>><<set $robinStop += 1>><<set $robinArousal -= 2>><<arousal -2500>><</link>><<llarousal>><<llrarousal>>
+			<br>
+		<</if>>
+		<<if $robinHit lte 3 and $priestAction === "Robin">>
+			<<link [[尝试避开鞭打|Robin Temple Punish Hit]]>><<def 1>><<set $robinHit += 1>><<arousal -3000>><<violence_noncombat 30 0.3>><</link>><<llarousal>><<gpain>><<lrpain>>
+			<br>
+		<</if>>
+		<<if $robinPlead lte 3 and $priestAction === "Player">>
+			<<link [[恳求|Robin Temple Punish Plead]]>><<sub 1>><<set $robinPlead += 1>><<arousal 2000>><<pain -5>><</link>><<garousal>><<llpain>>
+			<br>
+		<</if>>
+		<<MaplebirchRobinTouch>>
+		<br>
+		<<link [[闭上眼睛|Robin Temple Punish Close]]>><<arousal 3000>><<pain -3>><</link>><<ggarousal>><<lpain>>
+		<br>
+	<</if>>
+<</widget>>
+
+<<widget "robinTortureFail">>
+	<<set $punishmentCounter += 1>>
+	<<person2>><<priest>>抬起手。"可以了。"<<monks>>纷纷停下，熄灭了燃香盏。"你们的身体背叛了你。给你们点时间恢复，然后我们重新开始。"<<stress 24>><<gggstress>>
+	<br><br>
+	<<monks>>熄灭了房间里的火光，一个接一个地离开。当最后一个人离开后，你和罗宾陷入了一片黑暗。
+	<br><br>
+	罗宾的吐息轻轻拂过你的肌肤。一想到<<nnpc_hes "Robin">>在这里，你便平静了下来。<<nnpc_He "Robin">>把你抱得更紧了，你也用力抱了回去。<<stress -1>><<lstress>>
+	<br><br>
+
+	<<if playerBellySize() gte 15>>
+		你感觉到了另一个微弱的心跳——它就夹在你们之间。
+		<br><br>
+	<</if>>
+
+	<<link [[休息 (1:00)|Robin Temple Punish Repeat]]>><<pass 1 hour>><<set $robinPain -= 4>><<set $robinArousal -= 4>><<pain -30>><</link>><<lllpain>>
+	<br>
+<</widget>>
+
+<<widget "robinGenitals">>
+	<<set _text_output to "">>
+	<<if (C.npc.Robin.chastity.penis.includes("chastity belt") || C.npc.Robin.chastity.vagina.includes("chastity belt")) && _args[0] isnot 'short' && $robinChastityKnown>>
+		<<set _text_output += "受保护的 ">>
+	<</if>>
+	<<if _args[0] isnot 'short' and ((C.npc.Robin.virginity.penile is true and C.npc.Robin.gender is "m") or (C.npc.Robin.virginity.vaginal is true and C.npc.Robin.gender is "f"))>>
+		<<set _text_output += "童贞 ">>
+	<</if>>
+	<<if C.npc.Robin.gender is "m">>
+		<<set _text_output += "阴茎">>
+	<<else>>
+		<<set _text_output += "小穴">>
+	<</if>>
+<<print _text_output>><</widget>>
+
+<<widget "TempleRobinConfession">>
+	<<run statusCheck("Robin")>>
+	<<if _robin_location is "temple" && !$Maplebirch.daily.robinConfession && C.npc.Robin.init is 1 and $confessionsTaken gte 5>>
+	<<if $Maplebirch.templePromised is "Robin" and $Maplebirch.daily.robin.sex gte 1>>
+		<<addinlineevent "confession_robin_promised_1" 4>>
+			<<npc Robin>><<person1>><<set $attendant to "robin_promised">>
+			<<set $Maplebirch.daily.robinConfession to true>>
+			<<if $robinSeen.includes("confessionRevealed")>>
+				<span class="teal">你听到门框上传来三声敲门声。</span>
+			<</if>>
+			你听到了一个<<personsimple>>的声音。“请宽恕我，<<sister>>，我……好像犯下罪过了？我……我对不起。”
+			<br><br>
+
+			<<He>>沉默了。你鼓励<<him>>继续。
+			<br><br>
+
+			“我爱人和我。我们进行了承诺仪式，但是……
+			<<if $Maplebirch.daily.robin.sex gte 2>>
+				我们今天已经做了很多次亲密行为。我感觉很罪恶，可我仍在渴望<<pher>>的抚摸。”
+			<<else>>
+				我们今天做了亲密行为，我现在感觉很罪恶。”
+			<</if>>
+		<</addinlineevent>>
+	<<elseif $Maplebirch.templePromised is "Robin" and $robin.sexTotal gte 3>>
+		<<addinlineevent "confession_robin_promised_2" 3>>
+			<<npc Robin>><<person1>><<set $attendant to "robin_promised">>
+			<<set $Maplebirch.daily.robinConfession to true>>
+			<<if $robinSeen.includes("confessionRevealed")>>
+				<span class="teal">你听到门框上传来三声敲门声。</span>
+			<</if>>
+			你听到了一个<<personsimple>>的声音。“请宽恕我，<<sister>>，我……好像犯下罪过了？我……我也不太清楚。”
+			<br><br>
+
+			<<He>>沉默了。你鼓励<<him>>继续。
+			<br><br>
+
+			“我爱人和我。我们进行了承诺仪式，但是……我们之间的亲密行为真的是很罪恶。”
+		<</addinlineevent>>
+	<<elseif $robinromance gte 1 and $robin.sexTotal gte 1>>
+		<<addinlineevent "confession_robin_romance" 2>>
+			<<npc Robin>><<person1>><<set $attendant to "robin_romance">>
+			<<set $Maplebirch.daily.robinConfession to true>>
+			<<if $robinSeen.includes("confessionRevealed")>>
+				<span class="teal">你听到门框上传来三声敲门声。</span>
+			<</if>>
+			你听到一个<<personsimple>>的声音。"请宽恕我，<<sister>>，我犯下了罪过。我和别人进行了亲密行为。
+			<<if _robinChastity>>
+				加入神殿后让我无法打破誓约，但我承认，我想移除装置。"
+			<<elseif C.npc.Robin.virginity.temple is true>>
+				我还没有违背誓约，但是……也差不多了。"
+			<<else>>
+				我们做了……很多。"
+			<</if>>
+		<</addinlineevent>>
+	<</if>>
+	<<if $Maplebirch.templePromised is "Robin" and $robinSeen.includes("punishment")>>
+		<<addinlineevent "confession_robin_doubt" 1>>
+			<<npc Robin>><<person1>><<set $attendant to "robin_doubt">>
+			<<set $Maplebirch.daily.robinConfession to true>>
+			<<if $robinSeen.includes("confessionRevealed")>>
+				<span class="teal">你听到门框上传来三声敲门声。</span>
+			<</if>>
+			一个<<personsimple>>的声音向你问候。"请宽恕我，<<sister>>，我犯下了罪过。”<<he>>说道。
+
+			<<if _robinStatus.includes("unbelief")>>
+				"我心怀疑虑。我与他人结成誓约，因此我们理所应当地想做就做。但如果我们中的任何一个违背誓言，和别人在一起，我们都会受到惩罚。要是因为自愿出轨，我可以理解。但要是我们中的任何一个被袭击了呢？这个小镇到处都是坏人，很多东西都想钻进去伤害别人。"
+				<br><br>
+
+				<<if $awarelevel gte 2>>你知道<<he>>在说什么。<<else>>你想知道<<he>>说的漏洞是什么意思。<</if>>
+				<br><br>
+
+				“这让我对神殿产生了怀疑，”<<he>>继续说道。“我做得对吗？我想我是对的，但是，<<sister>>，我承认，我讨厌这些。这不公平，<<pshe>>要为别人的罪过忍受惩罚，更何况是我。”<<he>>顿了顿，“哈哈，我真的该来神殿吗？”
+			<<else>>
+				“我一直在想这种事。”<<he>>深吸一口气，“我和我的爱人缔结了契约，亲密无间。但如果我们中的任何一方违背誓言与别人结合，我们就会受到惩罚。至少我们会一起受到惩罚，不是吗？但是……”
+				<br><br>
+
+				<<his>>的声音带着一丝哭腔。这很微妙，但在这个狭小的空间里，你听得清清楚楚。"但是如果我的——我最爱的人被侵犯了怎么办？"<<he>>问道。"对不起，<<sister>>，但为此惩罚<<pher>>似乎太不公平了。"话语像雨水般洒出。你感觉到<<his>>的眼泪流到地面，等待着你做出回应。<<stress 3>><<gstress>>
+				<br><br>
+
+				"我不是<<pshe>>求着发生这种事。但为此惩罚<<pher>>是公正合理的吗？为什么我也要跟<<pher>>一起受罚？"<<He>>停顿了一下，"我不该这么自私，我想我也得请求宽恕。"
+			<</if>>
+			<br><br>
+
+			<<He>>止住眼泪。“<<Sister>>，我该怎么做呢？”
+		<</addinlineevent>>
+	<</if>>
+	<<if $robinpaid is 1>>
+		<<addinlineevent "confession_robin_things" 1>>
+			<<npc Robin>><<person1>><<set $attendant to "robin_things">>
+			<<set $Maplebirch.daily.robinConfession to true>>
+			<<if $robinSeen.includes("confessionRevealed")>>
+				<span class="teal">你听到门框上传来三声敲门声。</span>
+			<</if>>
+			一个<<personsimple>>的声音向你问候。"我不知道该怎么办，<<sister>>，我很后悔。”<<he>>说道。" 
+			<br><br>
+			“我曾向我最敬仰的人述说我的悲苦，因为我要欠了很多的债务。但<<pshe>>直接替我承担了债务，我感到很愧疚<<sister>>。”
+			<br><br>
+			外面的人的声音细小，“我不知道该怎么做，我的内心始终有道坎，能宽恕我吗？<<sister>>。”
+		<</addinlineevent>>
+	<</if>>
+<</if>>
+<</widget>>
+
+<<widget "robinLewd">>
+	<<if !$robinSeen.includes("lewd")>>
+		<<set $robinSeen.pushUnique("lewd")>>
+		<<if _robinStatus.includes("unbelief")>>
+			"<span class="green">自从我加入神殿以来已经等了太久了。</span>我没想过能再和你一起做这件事。"
+		<<else>>
+			"<span class="green">我加入神殿后没想做过这样的事情，</span>我很害怕。"你花了些时间去安慰<<him>>，告诉<<him>>如果需要的话，你会停下来的。<<he>>最后同意了。"我……我相信你。"
+		<</if>>
+	<</if>>
+<</widget>>
+
+<<widget "robinExpose">>
+	<<if C.npc.Robin.chastity.penis.includes("chastity belt") or C.npc.Robin.chastity.vagina.includes("cchastity belt")>>
+		<<if $robinChastityKnown>>
+			<<if $npcSub or $combat isnot 1>>你瞥见了<<his>>受保护的<<robinGenitals "short">>.<</if>>
+		<<else>>
+			<<set $robinChastityKnown to true>>
+			<<if $npcSub or $combat isnot 1>><span class="lewd">你看见了<<him>>身上的贞操带。</span> <</if>>"我……应该提前告诉你的，抱歉。"
+		<</if>>
+	<<else>>
+		你可以清楚地看到<<his>>的<<robinGenitals>>。
+	<</if>>
+<</widget>>
+
+<<widget "MaplebirchpriestAttack">>
+	<<switch $priestAction>>
+		<<case "Player">>
+			<<if $robinPain lte 3 and ($pain gte 50 or $robinArousal gte 4)>>
+				<<person2>><<priest>>甩下<<his>>的鞭子，但是罗宾突然移动了身体，挡在了鞭子的前边，<<person1>><span class="green">为你承受了打击。</span><<He>>痛苦地喊叫起来。<<set $robinPain += 2>><<set $robinArousal -= 1>><<ggrpain>><<lrarousal>>
+			<<else>>
+				<<person2>><<priest>>的鞭子抽向了你，你隔着口球尖叫起来。
+				<<if $pain gte 60>>
+					罗宾嘶吼着，猛烈地晃着<<his>>的头，恳求地看向<<person2>><<priest>>。
+				<<else>>
+					罗宾注视着<<person2>><<him>>。
+				<</if>>
+				<<violence_noncombat 30 0.3>><<gpain>>
+			<</if>>
+		<<case "Robin">>
+			<<if !_blocked>>
+				<<person2>><<priest>>摔下了鞭子，把它抽向了罗宾。
+				<<if $robinPain gte 3>>
+					透过口球，<<person1>><<He>>呜咽着。
+				<<else>>
+					<<person1>><<He>>尽力忍住了。
+				<</if>>
+				<<set $robinPain += 2>><<set $robinArousal -= 1>><<ggrpain>><<lrarousal>>
+			<</if>>
+		<<case "Vibrate">>
+			振动变得更加强烈了。
+			<<if $robinArousal gte 3>>
+				罗宾在你的肩膀上呻吟了起来。
+			<<else>>
+				罗宾强忍着喘息和呻吟。
+			<</if>>
+			<<arousal 2000>><<set $robinArousal += 1>><<garousal>><<grarousal>>
+	<</switch>>
+<</widget>>
+
+<<widget "Maplebirch_unset_punish">>
+	<<unset $punishmentCounter>><<unset $punishmentTimer>><<unset $robinPain>><<unset $robinArousal>>
+	<<unset $robinHold>><<unset $robinStop>><<unset $robinHit>><<unset $robinPlead>><<unset $robinTouch>>
+	<<unset $punishmentCounter>><<unset $punishmentTimer>><<unset $sydneyPain>><<unset $sydneyArousal>>
+	<<unset $sydneyHold>><<unset $sydneyStop>><<unset $sydneyHit>><<unset $sydneyPlead>><<unset $sydneyTouch>>
+	<<unset $confusionHold>><<unset $confusionStop>><<unset $confusionHit>><<unset $confusionPlead>><<unset $confusionTouch>>
+<</widget>>
+
+:: Temple Robin
+<<set $outside to 0>><<set $location to "temple">><<run statusCheck("Robin")>><<temple_effects>><<effects>>
+<<npc "Robin">><<person1>>
+<<if $robinChastityRemoveIntro>>
+	你在罗宾身旁坐下，<<He>>似乎有些紧张。
+<<elseif $phase is 1>>
+	你与罗宾亲昵地坐在长凳上。<<He>>睁开一只眼睛，冲你微笑，然后闭上眼继续<<his>>的祷告。<<if $temple_spear_mission is 1 and !$robinSeen.includes("spearMission")>>你注意到<<his>>的手微微颤抖着。<</if>>
+<<else>>
+	罗宾的双眼紧闭，无声地祷告着。
+<</if>>
+<<if $Maplebirch.weekly.trialFailed>>
+	<<if $Maplebirch.weekly.trialFailed is "Robin">>
+		"对于试验，我很抱歉，"<<he>>毫无征兆地开口，脸上露出一丝苦涩的微笑。"我们下次会做得更好，对吗？"
+	<<else>>
+		"我也没通过试炼，"<<he>>毫无征兆地开口，脸上露出一丝苦涩的微笑。
+		<<switch $Maplebirch.weekly.trialFailed>>
+			<<case "strip">>
+				"在我的第一次试炼中，我也拒绝脱衣……就像你一样。"
+			<<case "cold">>
+				"下次我会试着让你暖和起来。"
+			<<case "whisper">>
+				"是风吗？很可怕，我明白的。"
+			<<default>>
+				"永远是火焰，我也总是因为那个失败。"
+		<</switch>>
+	<</if>>
+	<<run delete $Maplebirch.weekly.trialFailed>>
+<</if>>
+<br><br>
+<<robintempleOptions>>
+
+:: Temple Robin Ask
+<<set $outside to 0>><<set $location to "temple">><<run statusCheck("Robin")>><<temple_effects>><<effects>>
+<<if $Maplebirch.templePromised is "Robin">>
+	<<set _robinText to "我承诺陪伴的那位">>
+<<elseif isLoveInterest("Robin")>>
+	<<set _robinText to "我的" + ($NPCName[$NPCNameList.indexOf("Robin")].pronoun is "m" ? "男" : "女") + "朋友">>
+<<else>>
+	<<set _robinText to "我的朋友">>
+<</if>>
+<<generateTemple 1>><<person1>>
+你走向一个<<person1>><<monk>>打扮的<<person>>，上前拽了拽<<his>>的<<npcClothesText $NPCList[0] "upper">>。<<he>>转过身来，对你投以温暖的微笑。
+<br><br>
+<<if $speech_attitude is "meek">>
+	<<set _respond to "结结巴巴地">>
+	"我，我在找_robinText，"你说，"<<nnpc_Hes "Robin">>不在神殿，你知道罗宾去哪儿了吗？"
+<<elseif $speech_attitude is "bratty">>
+	<<set _respond to "低声嘀咕着">>
+	" _robinText呢？"你双手抱胸，"这个点<<nnpc_Hes "Robin">>跑去哪了。
+	<<if $temple_rank is undefined>>
+		我发誓，要是你这个混蛋对罗宾做了什么——"
+	<<else>>
+		我发誓，要是有人对罗宾做了什么——"
+	<</if>>
+<<else>>
+	<<set _respond to "">>
+	"我在找_robinText，"你说，"你知道在哪里可以找到罗宾吗？"
+<</if>>
+<br><br>
+<<if _robin_location_message === "school">>
+	"啊，罗宾！<<nnpc_He "Robin">>早些时候给约旦说过了。我想<<nnpc_he "Robin">>是去上学了，好像在镇上的……<span class="gold">牛津街</span>，要是我没记错的话。"
+<<elseif _robin_location_message === "englishPlay">>
+	“啊，罗宾！<<nnpc_He "Robin">>一直说<<nnpc_he "Robin">>要<span class="blue">参加学校里的什么戏剧来着的</span>，是圣诞主题演出……也许还在学校？”
+<<elseif _robin_location_message === "halloween">>
+	“啊，罗宾！<<nnpc_He "Robin">>一直说<<nnpc_he "Robin">>要<span class="blue">参加孤儿院里的什么活动来着的</span>，是万圣节活动……或许在<span class="gold">宅邸街</span>？”
+<<elseif _robin_location_message === "park">>
+	"啊，是罗宾啊！我想<<nnpc_he "Robin">>是去卖热可可了，好像在镇上的……<span class="gold">公园</span>，要是我没记错的话。"
+<<elseif _robin_location_message === "beach">>
+	"啊，是罗宾啊！我想<<nnpc_he "Robin">>是去卖柠檬水了，好像在镇上的……<span class="gold">海滩</span>，要是我没记错的话。"
+<<elseif _robin_location_message === "liveStream">>
+	“啊，原来是罗宾！<<nnpc_He "Robin">>一直说<<nnpc_he "Robin">>要<span class="blue">做什么直播来着的</span>，是在孤儿院的家里吗？”
+<<elseif _robin_location_message === "danube">>
+	“啊，原来是罗宾！<<nnpc_He "Robin">>一直说<<nnpc_he "Robin">>要<span class="blue">做什么家教来着的</span>，是在<span class="gold">多瑙河街</span>吗？”
+<<else>>
+	“我也不知道罗宾去哪了。”
+<</if>>
+<br><br>
+你_respond向<<him>>道谢。<<he>>点了点头，回到了自己的岗位上。
+<br><br>
+<<endevent>>
+<<link [[继续|Temple]]>><</link>>
+<br>
+
+:: Temple Robin Pray
+<<set $outside to 0>><<set _robinPray to true>><<run statusCheck("Robin")>><<temple_effects>><<effects>><<set $corruptionEvent to 1>>
+<<switch $phase>>
+	<<case 2>>
+		你祈祷救赎。你的思绪飘向你对未来的希望，以及事情如何能变得更好。
+		<br><br>
+		一个小时过去了，你感觉轻松了一些。
+		<<if _robinStatus.includes("corrupt")>>/* 未定义变量 */
+			罗宾似乎对什么事感到焦虑。
+		<<else>>
+			罗宾似乎很开心能有一个一起祷告的伙伴。
+		<</if>>
+	<<case 3>>
+		<<set _people to random(22, 34)>>
+		你睁开一只眼，扫视这个房间。有许多像你和罗宾一样，坐在长椅上祈祷的人。<<if C.npc.Jordan.pronoun is "m">>修士<<else>>修女<</if>>们在侧殿里蹑足走动，悄悄地相互传递信息。人数远超你的预料，你数着进进出出的人群。一个，两个……<<number _people>>个。
+		<br><br>
+		<<if $awareness gte 400>>
+			你抬头看了看被阴影笼罩的天花板，和上面敞开的深渊。恐怖使你的脊柱不住地颤抖。你的视线被强行移开了。
+			<<gtrauma>><<gstress>><<trauma 6>><<stress 6>>
+			<br><br>
+		<</if>>
+		<<if _robinStatus.includes("corrupt")>>/* 未定义变量 */
+			你注意到罗宾也在做一样的事。
+		<<else>>
+			罗宾深深地吸了一口气，似乎在努力无视某种可怕的事物。
+		<</if>>
+	<<case 4 5>>
+		你的思绪转向了你的<<penis>>，以及人们对它嘲笑的态度。折磨再次来临。你祈求能拥有一个更大的阴茎。
+		<br><br>
+		一个小时过去了，你的阴茎并没有变大。
+		<br><br>
+		<<if $acceptance_penis_small gte 1000>>
+			<<set _penisSize to setup.penisSizes[$player.penissize + 2].toUpperFirst()>>
+			<<set _acceptMessage to true>>
+			你恍然大悟地仰起身子。你的<<penis>>简直精巧而造型独特，你为什么要在意他人的闲言碎语？你获得了<span class="green">已接受：_penisSize阴茎</span>特质。
+			<br><br>
+		<</if>>
+		罗宾一直低着<<his>>的头，没有察觉到你的<<if _acceptMessage>>释然<<else>>心思<</if>>。
+	<<case 6>>
+		你的思绪转向了你的<<penis>>，以及人们对它嘲讽的态度。折磨再次来临。你祈求拥有一个更小的阴茎。
+		<br><br>
+		一个小时过去了，你的阴茎并没有变小。
+		<br><br>
+		<<if $acceptance_penis_big gte 1000>>
+			<<set _penisSize to setup.penisSizes[$player.penissize + 2].toUpperFirst()>>
+			<<set _acceptMessage to true>>
+			你恍然大悟地仰起身子。你的<<penis>>简直精巧而造型独特，你为什么要在意他人的闲言碎语？你获得了<span class="green">已接受：_penisSize阴茎</span>特质。
+			<br><br>
+		<</if>>
+		罗宾一直低着<<his>>的头，没有察觉到你的<<if _acceptMessage>>释然<<else>>心思<</if>>。
+	<<case 7>>
+		你的思绪转向你平坦的胸部。你回想起了人们是如何嘲笑、羞辱它的。痛苦再次袭来，你祈祷着有一天你能拥有更大的胸部。
+		<br><br>
+		一小时过去，你的胸部也没有变大。
+		<br><br>
+		<<if $acceptance_breasts_small gte 1000>>
+			<<set _acceptMessage to true>>
+			你恍然大悟地仰起身子。你的胸简直精致而小巧，你为什么要在意别人的闲言碎语？你<span class="green">已接受：平坦的胸部</span>特质。
+			<br><br>
+		<</if>>
+		罗宾一直低着<<his>>的头，没有察觉到你的<<if _acceptMessage>>释然<<else>>心思<</if>>。
+	<<case 8>>
+		你的思绪转到了你的<<breasts>>上，回想起人们是如何嘲笑、羞辱着你。痛苦再次涌上心头，你努力保持冷静。
+		<br><br>
+		一个小时过去了，有那么一刻你轻松了一些。
+		<br><br>
+		<<if $acceptance_breasts_small gte 1000>>
+			<<set _breastSizeName to setup.breastsizes[$player.breastsize].toUpperFirst()>>
+			<<set _acceptMessage to true>>
+			你恍然大悟地仰起身子。你的<<breasts>>很美丽，你为什么要在意别人的闲言碎语？你获得了<span class="green">已接受：_breastSizeName乳房</span>特质。
+			<br><br>
+		<</if>>
+		罗宾一直低着<<his>>的头，没有察觉到你的<<if _acceptMessage>>释然<<else>>心思<</if>>。
+	<<case 9>>
+		你的思维转向了自己的<<breasts>>，以及人们嘲笑它的方式。痛苦重新袭来。你祈祷胸部变小。
+		<br><br>
+		一个小时过去了，你的胸部并没有变小。
+		<br><br>
+		<<if $acceptance_breasts_big gte 1000>>
+			<<set _breastSizeName to setup.breastsizes[$player.breastsize].toUpperFirst()>>
+			<<set _acceptMessage to true>>
+			你恍然大悟地仰起身子。你的<<breasts>>很美丽，你为什么要在意别人的闲言碎语？你获得了<span class="green">已接受：_breastSizeName乳房</span>特质。
+			<br><br>
+		<</if>>
+		罗宾一直低着<<his>>的头，没有察觉到你的<<if _acceptMessage>>释然<<else>>心思<</if>>。
+	<<case 10>>
+		你想起了自己的<<print playerAwareTheyArePregnant() ? "孕肚" : "像是怀孕的肚子">>，以及人们嘲笑的眼神。痛苦重新袭来，但你试图保持冷静。
+		<br><br>
+		一个小时过去了，有那么一刻你轻松了一些。
+		<br><br>
+		<<if $acceptance_pregnancy gte 1000>>
+			你恍然大悟地仰起身子。你突然发觉你的肚子很好看。为什么要在乎别人说什么呢？你获得了<span class="green"><<print playerAwareTheyArePregnant() ? "已接受：孕肚" : "已接受：像是孕肚">></span>特质。
+			<br><br>
+		<</if>>
+		罗宾一直低着<<his>>的头，没有察觉到你的<<if _acceptMessage>>释然<<else>>心思<</if>>。
+<</switch>>
+<<Maplebirchnpcincr Robin holiness 1>><<grholiness>>
+<br><br>
+<<set $danger to random(1, 10000)>><<set $dangerevent to 0>>
+<<if $stress gte $stressmax>>
+	<<passouttempleRobin>>
+<<elseif $phase isnot 2 and $phase isnot 3 and random(1, 2) is 1 and $phase isnot 10>>
+	<<set $purityEvent to 1>>
+	罗宾睁开双眼看向了你。“那么，你在祈求什么？”
+	<br><br>
+	<<switch $phase>>
+		<<case 2>>
+			<<link [[告诉<<him>>|Temple Robin Pray Tell]]>><<npcincr Robin love 1>><<Maplebirchnpcincr Robin holiness 2>><</link>><<glove>><<grholiness>>
+			<br>
+		<<case 3>>
+			<<link [[告诉罗宾|Temple Robin Pray Tell]]>><<Maplebirchnpcincr Robin holiness -2>><</link>><<lrholiness>>
+			<br>
+		<<case 4 5 6 7 8 9 10>>
+			<<if _acceptMessage>>
+				<<link [[告诉<<him>>|Temple Robin Pray Tell Acceptance]]>><<stress -6>><<trauma -6>><</link>><<lstress>><<ltrauma>>
+				<br>
+			<<else>>
+				<<link [[告诉罗宾|Temple Robin Pray Tell]]>><<Maplebirchnpcincr Robin holiness -5>><</link>><<llrholiness>><<gacceptance>><<promiscuous1>>
+				<br>
+			<</if>>
+	<</switch>>
+	<<link [[还是算了|Temple Robin Pray Quiet]]>><</link>>
+	<br>
+<<elseif $danger gte (9900 - $allure) and $eventskip isnot 1>>
+	<<if $rng gte 81>>
+		<<set $robinPresent to true>>/* sydneyPresent */
+		<<generateTemple 2>><<person2>>一位<<monk>>拿着捐赠盘走过。<<He>>朝你笑了笑。
+		<br><br>
+
+		<<link [[无视|Temple Robin Plate Look]]>><<npcincr Robin love -1>><</link>><<llove>>
+		<br>
+		<<if $money gte 100>>
+			<<link [[小额捐款 (£1)|Temple Robin Plate Donation]]>><<set $phase to 0>><<money -100>><<trauma -6>><<famegood 1>><<npcincr Robin love 1>><</link>><<ltrauma>><<glove>>
+			<br>
+		<</if>>
+		<<if $money gte 500>>
+			<<link [[合理捐款 (£5)|Temple Robin Plate Donation]]>><<set $phase to 1>><<money -500>><<trauma -12>><<famegood 2>><<npcincr Robin love 1>><</link>><<lltrauma>><<glove>>
+			<br>
+		<</if>>
+		<<if $money gte 2500>>
+			<<link [[大额捐款 (£25)|Temple Robin Plate Donation]]>><<set $phase to 2>><<money -2500>><<trauma -18>><<famegood 3>><<npcincr Robin love 1>><</link>><<llltrauma>><<glove>>
+			<br>
+		<</if>>
+		<<set $skulduggerydifficulty to 200>>
+		<<link [[偷|Temple Plate Steal]]>><<crimeUp 5 "petty">><</link>><<crime "petty">><<skulduggerydifficulty>>
+		<br>
+
+	<<elseif $rng gte 71>>
+		<<generate2>><<generateyv3>>神殿侧边的一扇门在吱嘎作响。透过缝隙，你看到一个<<person3>><<persons>>正躺在桌子上，你只能看到那人的脑袋。<<Hes>>戴着眼罩和口塞。
+		<br><br>
+
+		你听到一声沉重的打击，那个<<person>>突然颤抖着皱起脸。片刻后，一个表情严厉的<<person2>><<monk>>出现在门缝那，挡住了你的视线。<<He>>把门合上了。
+		<br><br>
+		<<if _robinStatus.includes("unbelief")>>
+			罗宾咯咯地笑了起来。“让戒徒受戒，对吗？”
+		<<else>>
+			罗宾看向了别的方向。
+		<</if>>
+		<<Maplebirchnpcincr Robin holiness 1>><<grholiness>>
+		<br><br>
+		<<endevent>>
+		<<npc "Robin">><<person1>>
+		<<robinOptionsTalkMaplebirch>>
+
+	<<elseif $rng gte 61>>
+		<<generate2>><<generateyv3>>你身后传来了一位<<person2>><<monk>>的声音。“我们说过，违背誓言是有代价的，”<<he>>正对着身侧的某人说话，“现在，站起来。”只见<<He>>手里拿着一根丝线，线牵引着一位年轻<<person3>><<monk>>手上的绑带。
+		<br><br>
+
+		那个年轻<<monk>>戴着眼罩，嘴则被布堵住了。年长的<<person2>><<monk>>拽着绳子引导着<<person3>><<his>>前进。“直到你忏悔为止——”他们穿过一扇侧门，从你们的视线中消失，只留下这句话徘徊萦绕在此处。
+		<br><br>
+		<<if _robinStatus.includes("unbelief")>>
+			罗宾摇了摇头，“这里的其他见习教徒都应该好好学学如何小心行事。”<<person1>>
+		<<else>>
+			罗宾紧张地四处张望。
+		<</if>>
+		<<Maplebirchnpcincr Robin holiness 1>><<grholiness>>
+		<br><br>
+		<<endevent>>
+		<<npc "Robin">><<person1>>
+		<<robinOptionsTalkMaplebirch>>
+
+	<<elseif $rng gte 41>>
+		<<set $purityEvent to 1>>
+		罗宾睁开双眼看向了你。“那么，你在祈求什么？”
+		<br><br>
+		<<switch $phase>>
+			<<case 2>>
+				<<link [[告诉罗宾|Temple Robin Pray Tell]]>><<npcincr Robin love 1>><<Maplebirchnpcincr Robin holiness 2>><</link>><<glove>><<grholiness>>
+				<br>
+			<<case 3>>
+				<<link [[告诉罗宾|Temple Robin Pray Tell]]>><<Maplebirchnpcincr Robin holiness -2>><</link>><<lrholiness>>
+				<br>
+			<<case 4 5 6 7 8 9 10>>
+				<<if _acceptMessage>>
+					<<link [[告诉<<him>>|Temple Robin Pray Tell Acceptance]]>><<stress -6>><<trauma -6>><</link>><<lstress>><<ltrauma>>
+					<br>
+				<<else>>
+					<<link [[告诉罗宾|Temple Robin Pray Tell]]>><<Maplebirchnpcincr Robin holiness -5>><</link>><<llrholiness>><<gacceptance>><<promiscuous1>>
+					<br>
+				<</if>>
+		<</switch>>
+		<<link [[还是算了|Temple Robin Pray Quiet]]>><</link>>
+		<br>
+	<<elseif $rng gte 21>>
+		<<endevent>><<npc "Robin">><<person1>>
+		<<robinOptionsTalkMaplebirch>>
+	<<else>>
+		<<generateTemple 2>><<person2>>一个装扮成<<monk>>的<<person>>在你身边坐下。靠得非常近。<<He>>将手放在你的大腿上。“别出声，”<<he>>压低了声音，“不然我就说是你袭击了我……你认为他们会相信谁呢？”
+		<br><br>
+		<<if _robinStatus.includes("corrupt")>>
+			罗宾一把抬起那人的手，力气大的惊人。“不管他们信不信，反正我现在会‘袭击’你了。”
+		<<else>>
+			当<<He>>注意到罗宾正盯着<<he>>的时候，突然僵住了。你看不懂罗宾的表情，但那着实吓到了你——即使它并不是针对你的。
+		<</if>>
+		<br><br>
+		那个<<person2>><<monk>>起身离开，你觉得<<he>>根本没有预料到罗宾在你的身边。看样子<<he>>应该不会再骚扰你了。
+		<br><br>
+		<<endevent>><<npc "Robin">><<person1>>
+		<<robinOptionsTalkMaplebirch>>
+	<</if>>
+<<else>>
+	<<endevent>><<npc "Robin">><<person1>>
+	<<robinOptionsTalkMaplebirch>>
+<</if>>
+<<set $eventskip to 0>>
+
+:: Robin Temple Spear
+<<set $outside to 0>><<set $location to "temple">><<temple_effects>><<effects>>
+
+<<if $speech_attitude is "meek">>
+	“你，你没事吧？”你担心地低声问道。
+<<elseif $speech_attitude is "bratty">>
+	“出什么事了？有谁让你困扰了？”你问道。
+<<else>>
+	“你怎么了？”你低声问道。“你现在看起来不是很好。”
+<</if>>
+<br><br>
+“你注意到了？”罗宾睁开眼睛，叹了口气。“我听说约旦请你去取回一些东西。我相信你能做到……但不知为何我感觉很……害怕……？”<<He>>再次叹了口气，目光低垂，看着放在膝上的双手。“我只是……啊……为什么必须是你，而不是任何一个其他的见习教徒呢？”
+<br><br>
+
+<<link [[安慰罗宾|Robin Temple Spear 2]]>><<set $Maplebirch.phase to 1>><</link>><br>
+<<link [[保持沉默|Robin Temple Spear 2]]>><<set $Maplebirch.phase to 0>><</link>>
+
+:: Robin Temple Spear 2
+<<set $outside to 0>><<set $location to "temple">><<temple_effects>><<effects>><<run statusCheck("Robin")>>
+<<set $robinSeen.pushUnique("spearMission")>>
+
+<<if $Maplebirch.phase is 1>>
+	<<if $speech_attitude is "meek">>
+		“别难过……”你轻轻握住罗宾的手，对<<him>>露出一个安慰的微笑。“我在那里会没事的。”
+	<<elseif $speech_attitude is "bratty">>
+		“没什么好担心的。”你拍了拍罗宾的肩膀，对<<him>>露出自信的微笑。“我一定会打败任何阻挡我道路的人。”
+	<<else>>
+		“别担心。”你轻轻握住罗宾的手。“我会安全地把它取回来的。”
+	<</if>>
+	<br><br>
+
+	<<if _robinStatus.includes("unbelief")>>
+		“你处境危险，而我作为你的爱人却无法提供丝毫帮助或保护你，我怎么能不担心呢！？”罗宾沮丧地看着你，<<his>>的眼中含泪。“我无法想象你离开后会是什么样子。如果你在那里发生了什么事怎么办？最坏的情况是，你可能会……你……”
+	<<else>>
+		“我……我知道……但我还是很担心。”罗宾用担忧的目光看着你，<<his>>的眼中含泪。“我不知道你会离开多久，我不知道你在那里会不会没事，我不知道……如果你……”
+	<</if>>
+	<<He>>顿了顿，深吸了一口气。
+<<else>>
+	你只是静静地坐着，盯着放在膝盖上的双手。你知道承担这样的任务可能非常危险，但约旦已经把任务托付给你了。你现在不能退缩。
+<</if>>
+<br><br>
+
+“……抱歉，我有点想多了，”罗宾用颤抖的声音说道，试图平息自己不规律的呼吸。<<He>>擦了擦双眼。“我只是……非常担心你，你的安全……”你还没来得及回答，罗宾就微笑着抬头看着你。你不确定那微笑是安慰还是担忧。“只是……确保你走的时候没事，好吗……？我会等你回来的。”
+<br><br>
+
+你点点头。罗宾再次松了一口气，然后回到<<his>>的位置继续祈祷。
+<br><br>
+
+<<endevent>><<npc "Robin">><<person1>><<MaplebirchEndEvent>>
+<<robintempleOptions>>
+
+:: Robin Temple Transformation
+<<effects>><<run statusCheck("Robin")>>
+
+<<if $phase is 0>>
+	你坐在罗宾旁边的长凳上，朝<<him>>摇尾巴。你把尾巴放在<<He>>身边，轻轻地拍了拍它，此时<<him>>睁开了一只眼睛。
+	<<if _robinStatus.includes("unbelief")>>
+		"我想打个盹了。"
+	<<else>>
+		"我……我或许该休息一下了。"
+	<</if>>
+	<br><br>
+	<<He>>躺在长凳上，用你的尾巴当枕头。<<He>>才勉强小睡了一会儿，你们两个就被一个修士骂了。
+	<<if _robinStatus.includes("unbelief")>>
+		<<He>>一边叹气一边坐起来，"下次吧。它很蓬松，很舒服。"
+	<<else>>
+		<<He>>又睡眼惺忪地坐了起来。“谢谢你……至少它是个很棒的枕头。”
+	<</if>>
+	<<npcincr Robin lust 1>><<arousal 300>><<gslust>><<garousal>>
+<<elseif $phase is 1>>
+	你跪在罗宾身边，轻靠着<<his>>的膝盖。<<He>>轻轻地抚摸着你的头，微笑着看着你。
+	<<if _robinStatus.includes("unbelief")>>
+		“想偷看一眼吗？”
+	<<else>>
+		“在快速地祷告吗？”
+	<</if>>
+	你把头伸向<<him>>，<<he>>又抚摸了一会。片刻后，你坐回<<him>>身边。“感觉舒服吗？”
+<<elseif $phase is 2>>
+	你充满爱意地依偎进罗宾的胳膊，打搅了<<his>>的祈祷。
+	<<if _robinStatus.includes("unbelief")>>
+		“啊，你好呀，”<<he>>微笑着说，
+	<<else>>
+		“嘿！我在祈祷呢！”<<he>>噘着嘴说，
+	<</if>>
+	然后把手放在你的头上，轻轻地挠你的耳朵。在你被抚摸的时候，你躺在长凳上，发出咕噜咕噜的声音。
+	<<if _robinStatus.includes("unbelief")>>
+		“我要不要也戴上一个试试？”
+	<<else>>
+		“我很惊讶神职人员居然让你戴着这对耳朵。”
+	<</if>>
+	你恢复正常坐姿。
+<<elseif $phase is 3>>
+	你为罗宾啁啾着鸟鸣。一些修士注意到了，驻足聆听。你唱完后，罗宾和修士们都为你鼓掌。
+	<<if _robinStatus.includes("unbelief")>>
+		“很好听啊，你在床上的时候也能更动听的。”<<He>>朝你露出淫邪的微笑。
+	<<else>>
+		“太好听了，你想加入唱诗班吗？”<<He>>朝你高兴地微笑。
+	<</if>>
+<<elseif $phase is 4>>
+	你无言地用脑袋撞了一下罗宾的肩膀。<<He>>睁开一只眼睛，冲你微笑。
+	<<if _robinStatus.includes("unbelief")>>
+		“这耳朵真可爱。要我给你买连体睡衣吗？”
+	<<else>>
+		“你的耳朵很可爱，但其他人可能会误会你的角。”
+	<</if>>
+	<<He>>温柔地拍拍你的脑袋，你欢快地哞了一声，<<his>>非常困惑。
+<</if>>
+<br><br>
+<<if !$Maplebirch.daily.robin.tf>>
+	<<set $Maplebirch.daily.robin.tf to 0>>
+<</if>>
+<<set $Maplebirch.daily.robin.tf++>>
+
+<<endevent>><<npc "Robin">><<person1>>
+<<robintempleOptions>>
+
+:: Temple Robin Pray Tell
+<<run statusCheck("Robin")>><<temple_effects>><<effects>>
+<<switch $phase>>
+	<<case 2>>
+		你告诉罗宾你在为救赎祈祷，还有更美好的未来。
+		<<if _robinStatus.includes("unbelief")>>
+			<<He>>的表情仿佛希望能和你一样。
+		<<else>>
+			<<He>>开心地对你笑了笑。
+		<</if>>
+	<<case 3>>
+		你开始指出你周围不对劲的地方，一些<<monks>>眼斜着看向了你。
+		<br><br>
+		<<if _robinStatus.includes("unbelief")>>
+			<<He>>似乎意识到了什么，但最后摇了摇头，继续低头祈祷。
+		<<else>>
+			<<He>>似乎没有理解，只是担忧地看着你。
+		<</if>>
+	<<case 4>>
+		你向罗宾讲述了你内心深处的不安——他们评论着你过小的阴茎的样子一一浮现在了你的面前。
+		<br><br>
+		<<if _robinStatus.includes("unbelief")>>
+			<<He>>用胳膊挽着你，"我知道了。如果这让你好受一点的话，我会说我真心觉得它很可爱。不要去理会其他人，他们不懂得欣赏。"
+		<<else>>
+			<<He>>有些脸红，低头看着地面。"我……呃，我们还在神殿。"
+		<</if>>
+			<<acceptance "penis_small" 20>>
+		<<if $acceptance_penis_small gte 1000>>
+			<<set _penisSize to setup.penisSizes[$player.penissize + 2].toUpperFirst()>>
+			你恍然大悟地仰起身子。你的<<penis>>简直精巧而造型独特，你为什么要在意他人的闲言碎语？你获得了<span class="green">已接受：_penisSize阴茎</span>特质。
+			<br><br>
+			罗宾抱了抱你，然后笑了起来。"我希望我能帮到你。"
+		<</if>>
+	<<case 5>>
+		你向罗宾讲述了你内心深处的不安——他们评论着你偏小的阴茎的样子一一浮现在了你的面前。
+		<br><br>
+		<<if _robinStatus.includes("unbelief")>>
+			<<He>>用胳膊挽着你，"我知道了。如果这让你好受一点的话，我会说我真心觉得它很可爱。不要去理会其他人，他们不懂得欣赏。"
+		<<else>>
+			<<He>>有些脸红，低头看着地面。"我……呃，我们还在神殿。"
+		<</if>>
+			<<acceptance "penis_small" 20>>
+		<<if $acceptance_penis_small gte 1000>>
+			<<set _penisSize to setup.penisSizes[$player.penissize + 2].toUpperFirst()>>
+			你恍然大悟地仰起身子。你的<<penis>>简直精巧而造型独特，你为什么要在意他人的闲言碎语？你获得了<span class="green">已接受：_penisSize阴茎</span>特质。
+			<br><br>
+			罗宾抱了抱你，然后笑了起来。"我希望我能帮到你。"
+		<</if>>
+	<<case 6>>
+		你向罗宾讲述了你内心深处的不安——他们评论着你偏大的阴茎的样子一一浮现在了你的面前。
+		<br><br>
+		<<if _robinStatus.includes("unbelief")>>
+			<<He>>用胳膊挽着你，"我知道了，如果这会让你好受一点的话，我会说我真心觉得它令人印象深刻，你应该自豪才对，他们只是嫉妒。"
+		<<else>>
+			<<He>>有些脸红，低头看向地面。"我……呃，我觉得那……非常，呃……适合……如果这让你感觉好一点的话。"
+		<</if>>
+			<<acceptance "penis_big" 20>>
+		<<if $acceptance_penis_big gte 1000>>
+			<<set _penisSize to setup.penisSizes[$player.penissize + 2].toUpperFirst()>>
+			<<set _acceptMessage to true>>
+			你恍然大悟地仰起身子。你的<<penis>>简直精巧而造型独特，你为什么要在意他人的闲言碎语？你获得了<span class="green">已接受：_penisSize阴茎</span>特质。
+			<br><br>
+			罗宾抱了抱你，然后笑了起来。"我希望我能帮到你。"
+		<</if>>
+	<<case 7>>
+		你向罗宾讲述了你内心深处的不安——他们评论着你的平胸的样子一一浮现在了你的面前。
+		<br><br>
+		<<if _robinStatus.includes("unbelief")>>
+			<<He>>用胳膊环着你，“我知道了。如果会让你好受一点的话，我真心的认为没什么好担心的，你很可爱。”
+		<<else>>
+			<<He>>有些脸红，低头看向地面。"我……呃，我们还在神殿。"
+		<</if>>
+			<<acceptance "breasts_small" 20>>
+		<<if $acceptance_breasts_small gte 1000>>
+			<<set _acceptMessage to true>>
+			你恍然大悟地仰起身子。你的胸简直精致而小巧，你为什么要在意别人的闲言碎语？你<span class="green">已接受：平坦的胸部</span>特质。
+			<br><br>
+			罗宾抱了抱你，然后笑了起来。"我希望我能帮到你。"
+		<</if>>
+	<<case 8>>
+		你向罗宾讲述了你内心深处的不安——他们评论着你偏小的乳房的样子一一浮现在了你的面前。
+		<br><br>
+			<<if _robinStatus.includes("unbelief")>>
+				<<He>>用胳膊环着你，"我知道了。如果会让你好受一点的话，我真心认为它们很可爱，别听其他人的，那些人没品味。"
+			<<else>>
+				<<He>>有些脸红，低头看向地面。"我……呃，我们还在神殿。"
+			<</if>>
+			<<acceptance "breasts_small" 20>>
+		<<if $acceptance_breasts_small gte 1000>>
+			<<set _breastSizeName to setup.breastsizes[$player.breastsize].toUpperFirst()>>
+			<<set _acceptMessage to true>>
+			你恍然大悟地仰起身子。你的<<breasts>>很美丽，你为什么要在意别人的闲言碎语？你获得了<span class="green">已接受：_breastSizeName乳房</span>特质。
+			<br><br>
+			罗宾抱了抱你，然后笑了起来。"我希望我能帮到你。"
+		<</if>>
+	<<case 9>>
+		你向罗宾讲述了你内心深处的不安——他们评论着你偏大的乳房的样子一一浮现在了你的面前。
+		<br><br>
+			<<if _robinStatus.includes("unbelief")>>
+				<<He>>用胳膊搂着你。"我想我明白了，不知道这样会不会让你好受些，我认为它们真的很不错，你应该骄傲才对。"
+			<<else>>
+				<<He>>瞬间脸红，低头看向地面。"我……呃，我觉得它们的大小非常……合适……如果这会让你感觉好一点的话。"
+			<</if>>
+			<<acceptance "breasts_big" 20>>
+		<<if $acceptance_breasts_big gte 1000>>
+			<<set _breastSizeName to setup.breastsizes[$player.breastsize].toUpperFirst()>>
+			<<set _acceptMessage to true>>
+			你恍然大悟地仰起身子。你的<<breasts>>很美丽，你为什么要在意别人的闲言碎语？你获得了<span class="green">已接受：_breastSizeName乳房</span>特质。
+			<br><br>
+			罗宾抱了抱你，然后笑了起来。"我希望我能帮到你。"
+		<</if>>
+	<<case 10>>
+		你把手放在肚子上，告诉罗宾你的不安和羞耻。
+		<br><br>
+			<<if getPregnancyObject().fetus[0].father is "Robin">>
+			<<if _robinStatus.includes("unbelief")>>
+				<<He>>一只胳膊搭在你肩上。“换我来，我肯定会不停炫耀的。‘嘿，大家快来看！我<<nnpc_girlfriend "Robin">>把我操怀孕了！’”<<He>>轻抚你的孕肚，吮了口你的脸颊。你不禁笑出声来。<<stress -6>><<lstress>>
+			<<else>>
+				<<He>>的脸刷的一下变得通红。"有、有什么好羞愧的呢，亲爱的？我……我对我们的孩子很兴奋！你不是吗？"
+			<</if>>
+			<<acceptance "pregnancy" 20>>
+			<br><br>
+		<<else>>
+			<<if _robinStatus.includes("unbelief")>>
+				<<He>>悲伤地朝你笑了笑。"是啊，真是操蛋。别人会不停羞辱你，因为你未婚先孕，而你只能……你只能尽你所能。为你的孩子。"
+			<<else>>
+				<<He>>眨了眨眼睛。"未婚先孕确实是罪孽……但没有罪孽，自然也不会有救赎。既然你爱着你的孩子，那我认为你必然能够完成救赎！"
+			<</if>>
+			<<acceptance "pregnancy" 10>>
+		<</if>>
+		<<if $acceptance_pregnancy gte 1000>>
+			你恍然大悟地仰起身子。你突然发觉你的肚子很好看。为什么要在乎别人说什么呢？你获得了<span class="green"><<print playerAwareTheyArePregnant() ? "已接受：孕肚" : "已接受：像是孕肚">></span>特质。
+			<br><br>
+			罗宾抱了抱你，然后笑了起来。"我希望我能帮到你。"
+		<</if>>
+<</switch>>
+<<if $phase isnot 2 and $phase isnot 3 and !_acceptMessage>>
+	<<promiscuity1>>
+<<else>>
+	<br><br>
+<</if>>
+<<endevent>><<npc "Robin">><<person1>>
+<<robintempleOptions>>
+
+:: Temple Robin Pray Tell Acceptance
+<<run statusCheck("Robin")>><<temple_effects>><<effects>>
+你向罗宾露出微笑，告诉<<him>>你克服了一个巨大的心理障碍。
+<br><br>
+"这很好啊！我真为你感到高兴。祈祷可以创造奇迹，尽管它只是一种慰藉。"
+<br><br>
+<<endevent>><<npc "Robin">><<person1>>
+<<robintempleOptions>>
+
+:: Temple Robin Pray Quiet
+<<run statusCheck("Robin")>><<temple_effects>><<effects>>
+你决定把它埋藏在心底。罗宾皱了皱眉，但并未追问。
+<br><br>
+<<endevent>><<npc "Robin">><<person1>>
+<<robintempleOptions>>
+
+:: Temple Robin Rescue
+<<set $outside to 0>><<set $location to "temple">><<temple_effects>><<effects>>
+<<endevent>><<npc "Robin">><<person1>>
+你在神殿宿舍的一张床上醒来。你试图爬起，但还是瘫倒回了床上。
+
+有什么东西在你的旁边挪动着。是罗宾，你们正躺在同一张床上。
+
+“你醒了，你突然在我面前昏过去了，我很担心你”<<He>>站起身，随后也扶着你站了起来。<<takeHandholdingVirginity "Robin" `($robinromance is 1 ?'romantic':'consensual')`>>
+<br><br>
+“你最近是没有睡好吗？我很害怕你这样睡过去，如果你被其他人带走了，我会很焦心。”
+你们一起走回神殿的主厅。你花了好长时间才说服罗宾你没有什么大碍。<<he>>亲了亲你的脸颊，然后回去工作了。
+<<RobinBunkChat>>
+<br><br>
+<<link [[继续|Temple]]>><<endevent>><</link>>
+<br>
+
+:: Temple Robin Plate Look
+<<set $outside to 0>><<set $location to "temple">><<temple_effects>><<effects>>
+
+你把目光从<<monk>>身上移开，然后<<he>>继续沿着过道走下去。
+<<if $robinPresent>>
+	罗宾摇了摇<<nnpc_his "Robin">>头。
+<</if>>
+<br><br>
+
+<<endevent>>
+<<if $robinPresent>>
+	<<unset $robinPresent>><<set _robinPray to true>>
+	<<npc "Robin">><<person1>>
+	<<robintempleOptions>>
+<<else>>
+	<<Maplebirchprayoptions>>
+<</if>>
+
+:: Temple Robin Plate Donation
+<<set $outside to 0>><<set $location to "temple">><<temple_effects>><<effects>>
+
+<<if $phase is 0>>
+	你把一枚一镑硬币放在盘子上。那个<<monk>>向你<<if $pronoun is "m">>微微鞠躬<<else>>屈膝行礼<</if>>。
+	<<if $robinPresent>>
+		罗宾向你点头表示赞同。
+	<</if>>
+	<br><br>
+
+	<<endevent>>
+	<<if $robinPresent>>
+		<<unset $robinPresent>><<set _robinPray to true>>
+		<<npc "Robin">><<person1>>
+		<<robintempleOptions>>
+	<<else>>
+		<<Maplebirchprayoptions>>
+	<</if>>
+
+<<elseif $phase is 1>>
+	你把一张五镑的钞票放在盘子上。"我们感激这样的善意，"<<he>>说，"谢谢。"
+	<<if $robinPresent>>
+		罗宾向你微笑。
+	<</if>>
+	<br><br>
+
+	<<endevent>>
+	<<if $robinPresent>>
+		<<unset $robinPresent>><<set _robinPray to true>>
+		<<npc "Robin">><<person1>>
+		<<robintempleOptions>>
+	<<else>>
+		<<Maplebirchprayoptions>>
+	<</if>>
+
+<<elseif !$soup_kitchen_known>>
+	你在盘子里放了£25。<<monk>>笑容满面地看向你。"谢谢您，"<<he>>说，"这对神殿的维护有着长远的帮助。"<<He>>顿了一下，然后继续道："也许您想进一步帮助我们？我们长期运营着一间施粥所，厨房在晚上<span class="gold"><<ampm 18 00>> - <<ampm 21 00>></span>开放。我们非常希望能再添一位帮手。"
+	<br><br>
+
+	"如果你感兴趣的话，你可以在隔壁灰色建筑物里找到厨房。"
+	<br><br>
+
+	<span class="gold">你发现了狼街上的施粥所。</span>
+	<br><br>
+	<<set $soup_kitchen_known to 1>>
+	<<if $robinPresent>>
+		罗宾轻拍了一下你的肩膀，点头道："你真是太慷慨了。"
+		<br><br>
+	<</if>>
+	<<endevent>>
+	<<if $robinPresent>>
+		<<unset $robinPresent>><<set _robinPray to true>>
+		<<npc "Robin">><<person1>>
+		<<robintempleOptions>>
+	<<else>>
+		<<Maplebirchprayoptions>>
+	<</if>>
+
+<<else>>
+	你把£25放在盘子上。那个<<monk>>向你微笑着，<<he>>说道："谢谢，这笔钱对维护这座建筑大有帮助。"
+	<br><br>
+
+	<<if $robinPresent>>
+		罗宾轻拍了一下你的肩膀，点头道："你真是太慷慨了。"
+		<br><br>
+	<</if>>
+	<<endevent>>
+	<<if $robinPresent>>
+		<<unset $robinPresent>><<set _robinPray to true>>
+		<<npc "Robin">><<person1>>
+		<<robintempleOptions>>
+	<<else>>
+		<<Maplebirchprayoptions>>
+	<</if>>
+<</if>>
+
+
+:: Robin Temple Gifts List
+<<effects>>
+
+你想送罗宾什么礼物？
+<br><br>
+<<food_gift_list>>
+
+<<if _food_gift_found is true>>
+    <<skinicon "give">><<link [[送礼 (0:05)|Robin Temple Gifts]]>><<pass 5>><<give_gift Robin>><</link>>
+    <br>
+<</if>>
+<<refuseicon>><<link [[重新考虑|Robin Temple Gifts Reconsider]]>><</link>>
+<br>
+
+:: Robin Temple Gifts
+<<effects>>
+<<set _gift to $gift.handheld_gift || $gift.handheld>>
+<<wearProp _gift>>
+
+<<if $phase is 1>>
+    "我给你带了一些东西，"你说。
+<<elseif $phase is 2>>
+    “我做了点东西，”你说道。“专门给你的。”
+<<else>>
+    "我给你带了礼物，"你说，"希望你能喜欢。"
+<</if>>
+<br><br>
+
+<<if $gift.name is "sticky_toffee_pudding">>
+    看到<<recipe_name $gift.name>>后，罗宾哑然失声。“这是我的最爱！”<<he>>说。“太谢谢你了！”<<gglove>><<npcincr Robin love 3>>
+    <br><br>
+
+    <<He>>吃得津津有味，脸上带着陶醉的表情。"贝利不喜欢我吃粘稠的太妃布丁，"<<he>>在吞咽的间隙说道，"即使在孤儿院外面也不行，说是对身体不好。"
+    <br><br>
+
+    <<link [[问自己能不能尝尝|Robin Temple Gifts Pudding Ask]]>><<handheldon>><<npcincr Robin dom -1>><</link>><<ldom>>
+    <br>
+    <<link [[一言不发|Robin Temple Gifts Pudding Nothing]]>><<handheldon>><<npcincr Robin dom 1>><</link>><<gdom>>
+    <br>
+    <<earnFeat "Hungry Orphan">>
+<<elseif $gift.special.includes("spicy")>>
+    罗宾双手紧握，注视着<<recipe_name $gift.name>>。"给我的？太谢谢你了。"<<His>>笑容灿烂，然后又有点颤抖。"闻起来很辣。我希望我能吃得了。"
+    <br><br>
+
+    <<He>>把盘子摆在你们中间。“你要来点吗？”<<glove>><<npcincr Robin love 1>>
+    <br><br>
+
+    <<link [[分享|Robin Temple Gifts Spicy Share]]>><<handheldon>><</link>>
+    <br>
+    <<link [[让罗宾独自享用食物|Robin Temple Gifts Spicy Enjoy]]>><<handheldon>><</link>>
+    <br>
+<<elseif $gift.special.includes("drink")>>
+    罗宾双手紧握，注视着<<recipe_name $gift.name>>。"给我的？太谢谢你了。"<<His>>笑容灿烂，握着手中的饮料。"要一起喝吗？我有两根吸管"<<glove>><<npcincr Robin love 1>>
+    <br><br>
+    <<link [[分享|Robin Temple Gifts Drink Share]]>><<handheldon>><</link>>
+    <br>
+    <<link [[让罗宾独自享用饮料|Robin Temple Gifts Drink Enjoy]]>><<handheldon>><</link>>
+    <br>
+<<else>>
+    罗宾双手紧握，注视着<<recipe_name $gift.name>>。"给我的？太谢谢你了。"<<His>>笑容灿烂。"你要来点吗？"<<glove>><<npcincr Robin love 1>>
+    <br><br>
+
+    <<link [[分享|Robin Temple Gifts Share]]>><<handheldon>><</link>>
+    <br>
+    <<link [[让罗宾独自享用食物|Robin Temple Gifts Enjoy]]>><<handheldon>><</link>>
+    <br>
+<</if>>
+
+
+:: Robin Temple Gifts Share
+<<effects>>
+
+你和罗宾一起吃了<<recipe_name $gift.name>>。"真的很好吃，"<<he>>在吃东西的间隙说。"就像大厨做的一样。"
+<br><br>
+
+<<He>>吃完后把盘子放在一边。“我等会来洗。”
+<br><br>
+
+<<robintempleOptions>>
+
+:: Robin Temple Gifts Enjoy
+<<effects>>
+
+在你的坚持下，罗宾同意一个人吃。“真的很好吃，”<<he>>在吃东西的间隙说。“就像大厨做的一样。”
+<br><br>
+
+<<He>>吃完后把盘子放在一边。“我等会来洗。”
+<br><br>
+
+<<robintempleOptions>>
+
+:: Robin Temple Gifts Pudding Ask
+<<effects>>
+
+<<if $speech_attitudes is "meek">>
+    “能分我尝尝吗？”你问。
+<<elseif $speech_attitudes is "bratty">>
+    “别吃得像猪一样。”你说道。“让我尝点。”
+<<else>>
+    “能分我尝尝吗？”你问。
+<</if>>
+<br><br>
+
+罗宾看着你，有一瞬间似乎不明白发生了什么，然后一阵尴尬的红晕迅速爬上了<<he>>的脸颊。"我真的很抱歉！"<<he>>说着将盘子推回给你，"我忘了礼貌，这道菜太美味了。"
+<br><br>
+
+你帮罗宾吃完了这道粘稠的太妃布丁。它非常甜。
+<br><br>
+
+<<robintempleOptions>>
+
+:: Robin Temple Gifts Pudding Nothing
+<<effects>>
+
+你默默地看着罗宾大快朵颐地享用着粘稠的太妃布丁。吃完后，<<He>>闭上眼睛，脸上带着满足的笑容。
+<br><br>
+
+<<robintempleOptions>>
+
+:: Robin Temple Gifts Spicy Share
+<<effects>>
+
+你和罗宾一起吃了<<recipe_name $gift.name>>。"真的很好吃，"<<he>>在吃东西的间隙说，但是在吃东西的时候<<his>>的眼中流出了眼泪。
+<br><br>
+
+<<He>>跑去取了一杯水，同时也给你带来了一杯。<<He>>在吃完之前一口气喝完了整杯水。然后<<He>>把盘子和杯子放在了一边。"我待会儿再收拾这些。"
+<br><br>
+
+<<robintempleOptions>>
+
+:: Robin Temple Gifts Spicy Enjoy
+<<effects>>
+
+在你的坚持下，罗宾同意一个人吃。“真的很好吃，”<<he>>在吃东西的间隙说，但是在吃东西的时候<<his>>的眼中流出了眼泪。
+<br><br>
+
+<<He>>跑去取了一杯水，同时也给你带来了一杯。<<He>>在吃完之前一口气喝完了整杯水。然后<<He>>把盘子和杯子放在了一边。"我待会儿再收拾这些。"
+<br><br>
+
+<<robintempleOptions>>
+
+:: Robin Temple Gifts Drink Share
+<<effects>>
+
+罗宾在饮品中放了两根吸管，并将其中一根转向<<his>>那一边。你们俩一起喝了一口。"真的很好喝。"在说完后<<he>>又喝了一口。
+<br><br>
+
+<<He>>不停地喝着，直到杯子见了底。<<He>>微笑着看着你。"可以教我做饮料的秘诀吗？人们肯定愿意为它付钱的。"
+<br><br>
+
+<<robintempleOptions>>
+
+:: Robin Temple Gifts Drink Enjoy
+<<effects>>
+
+在你的坚持下，罗宾同意一个人喝。<<He>>喝了一口，“真的很好喝。”<<he>>在继续喝前说道。
+<br><br>
+
+<<He>>不停地喝着，直到杯子见了底。<<He>>微笑着看着你。"可以教我做饮料的秘诀吗？人们肯定愿意为它付钱的。"
+<br><br>
+
+<<robintempleOptions>>
+
+:: Ambulance Robin
+<<set $outside to 0>><<effects>>
+<<set $worn.face.type.push("broken")>><<faceruined>><<set $worn.neck.type.push("broken")>><<neckruined>>
+<<remove_shackle>><<unbind>><<storeon "duopunish">><<Maplebirch_unset_punish>>
+<<set $Maplebirch.daily.robin.punish to 1>>
+
+你感觉自己被举到担架上。你抓住了什么东西，它也抓住了你。那感觉……非常温暖，以一种你无法理解的方式让你感到安心。有什么东西试图把它从你手中拽走，于是你攥的更紧了。你再次昏了过去。
+<br><br>
+
+<<if $player.virginity.penile isnot true or $player.virginity.vaginal isnot true>>
+	<<if $Maplebirch.templePromised is "Robin">>
+		你获得了<span class="blue">承诺仪式：罗宾</span>特质。
+		<br><br>
+	<<else>>
+		你获得了<span class="blue">贞洁誓言</span>特质。
+		<br><br>
+	<</if>>
+<</if>>
+<<set $player.virginity.temple to true>>
+<<set C.npc.Robin.virginity.temple to true>>
+
+<<link [[睡觉|Hospital Bed Robin]]>><</link>>
+<br>
+
+:: Hospital Bed Robin
+<<set $outside to 0>><<set $location to "hospital">><<effects>>
+<<set $hunger to 0>><<set $thirst to 0>><<set $tiredness to 0>><<set $hygiene to 0>>
+<<set $stress -= 2000>>
+
+你在医院的床上醒来。罗宾就在你的身旁，你们还紧紧相拥着。
+<<generate1>><<person1>>
+“终于醒了。”一个护士说。“医生试图分开你们两个，但即使在昏迷时，你们也不肯松手。”<<He>>指着罗宾。“最后<<nnpc_he "Robin">>坐了起来……在睡梦中对我嘶吼着。然后就像什么都没发生过一样又躺了下去。于是我们放弃了。”
+
+护士说你们似乎是因为压力导致的昏厥，但身体并无大碍。<<He>>让你们先候着，等自己去喊医生来。
+<br><br>
+<<endevent>>
+<<if $hospitalintro is 0>><<set $hospitalintro to 1>>
+	<<npc "Harper" 1>><<person1>><<npc "Robin" 2>><<person2>>没过多久，你看到一个穿着白大褂，胳膊夹着病例板的<<person1>><<personsimple>>走了进来。
+	<br><br>
+	<<He>>对你笑了笑。"你好，我是哈珀。"<<He>>在你的床边坐下，撩起挡在眼前的金色的刘海。<<He>>看起来很年轻，应该没超过25岁。
+	<br><br>
+<<else>>
+	<<npc "Harper" 1>><<person1>><<npc "Robin" 2>><<person2>>哈珀医生这时走了进来，手里拿着<<person1>><<his>>常用的写字板。<<He>>表示你目前并无大碍，但希望对你进行深度的检查。",
+	<br><br>
+<</if>>
+
+<<link [[继续|Hospital Bed Examination Robin]]>><</link>>
+<br>
+
+:: Hospital Bed Examination Robin
+<<effects>>
+你看到罗宾在身旁。<<person2>><<His>>睁开了双眼，露出了虚弱的微笑。"很高兴你是我醒来后见到的第一个人。"<<His>>看到哈珀医生时，感觉有些不适。
+<br>
+"但第二个就不是很高兴了。"
+<br>
+<<if !$robinSeen.includes("Harper")>>
+	<<set $robinSeen.pushUnique("Harper")>>
+	"罗宾。初次见面。"
+	<br>
+	"我对你的感觉很差。"如果你们不是还紧紧相拥着，罗宾可能会跳起来攻击哈珀。
+<<else>>
+	"别这样，我们可以好好谈一谈。"
+<</if>>
+<br><br>
+罗宾挡在了你的面前，把你护在了身后。"我们将行驶拒绝治疗的权利。/* 也许可以加个罗宾共入精神病院 */
+<br><br>
+哈珀医生叹了口气。"非常好，但我仍然必须评估<<phim>>。
+<<person1>>
+<<if $trauma lte ($traumamax / 10) * 2>>
+	<<He>>温柔地询问你关于你的家庭生活、学校的情况以及你的健康状况等各种问题。<<He>>告诉你，据<<He>>所知，一切都还好，但你将来应该更加小心。
+	<br><br>
+	<<wash>>
+	罗宾搀扶着你，很快你就被允许出院了。
+	<br><br>
+
+	<<link [[离开 (0:10)|Hospital Journey Home Robin]]>><<pass 10>><<endevent>><</link>>
+	<br>
+<<elseif $trauma lt ($traumamax / 10) * 9>>
+	<<He>>关切地询问你有关你家庭生活、学校情况和身体状况的各种问题。不久之后，<<he>>召来一名护士，他们在房间角落里进行了简短的交谈。谈话的声音很小，不久后，护士点了点头，随后离开了房间。
+	<br><br>
+	<<if $psych is 0>>
+		<span class="gold">医生告诉你每个<span class="gold">星期五</span>都要来医院找<<him>>接受治疗。</span>
+		<br><br>
+		<<set $psych to 1>><<unset $schoolPsych>>
+		<<wash>>
+		罗宾搀扶着你，很快你就被允许出院了。
+		<br><br>
+	<<else>>
+		医生提醒你在<span class="gold">星期五</span>来医院找<<him>>。
+		<br><br>
+		<<wash>>
+		罗宾搀扶着你，很快你就被允许出院了。
+		<br><br>
+	<</if>>
+
+	<<link [[离开|Hospital Journey Home Robin]]>><<pass 10>><<endevent>><</link>>
+	<br>
+<<else>>
+	<<He>>温柔地询问你关于你的家庭生活、学校的情况以及你的健康状况等各种问题，脸上逐渐浮现出一丝关切，但你不知道为什么。不久之后，<<He>>召来了一名护士，他们在房间的角落里进行了简短的谈话声音压的很低。过了一会儿，护士点了点头，随之离开了房间。
+	<br><br>
+
+	罗宾看起来很不安。"我们需要离开。"你的喉咙仿佛被堵住了，发不出任何声响。护士走了过来，你被罗宾一把拉住。"不。"
+	<br><br>
+
+	"罗宾，我向你保证——"
+	<br>
+	"一切都会好的吗？不会的。我们要离开，而你阻止不了我们。"护士抓住罗宾的手臂，试图阻止<<person2>><<him>>离开。<<He>>则用用牙齿狠狠地咬了回去，但这一切都发生的太快了。医生将一块布贴在你的脸上，你感到一阵晕眩。罗宾的声音在你的耳畔拉伸形变，一切开始旋转。你能感到无形的力量拖拽着你的身躯，然后是尖啸声。
+	<br><br>
+	你被带过走廊，周遭模糊的影子试图来到你身边，但被挡住了去路。护工一刻也没有停歇地把你送出了建筑外，那里停着一个发动的篷车。然后一切都变黑了。
+	<br><br>
+	<<endevent>>
+	<<link [[继续|Hospital Robin Rescue]]>><<pass 1 hour>><</link>>
+	<br>
+<</if>>
+
+:: Hospital Robin Rescue 
+<<effects>>
+你再次醒来，头晕目眩。有两个人在前座上交谈着。你努力地想要识别——那是悉尼和西里斯。<<npc "Sydney" 1>><<person1>><<npc "Robin" 2>><<person2>>
+<br><br>
+罗宾看你醒来后对你说，"你还好吗？"你发现自己不知何时离开了医院，而你似乎在……孤儿院？
+<br><br>
+悉尼挤到了你身旁，随后紧紧地抱住了你。罗宾说：“当<<nnpc_he "Harper">>把那块布捂在你脸上时，我很担心。”你想问罗宾究竟发生了什么，但你发不出声音。
+<br><br>
+"小心那个医生。不要相信<<nnpc_he"Harper">>说的话。"悉尼警示道。
+<br><br>
+"快点，小悉尼。我们该走了。"西里斯在车里喊道。
+<br><br>
+悉尼在临走前<<if $sydneyromance is 1>>在你的脸颊上留下一吻<<else>>再次紧紧地拥住了你<</if>>。而罗宾上前把你拽到身旁，急急忙忙地说：“谢谢你们，西里斯老师和悉尼前辈。”
+<br><br>
+你们目送着悉尼走回车里，他们等你进门后才启车离开。
+<br><br>
+<<link [[继续|Orphanage]]>><<endevent>><<MaplebirchEndEvent>><</link>>
+<br>
+
+:: Hospital Journey Home Robin
+<<effects>>
+悉尼在神殿知道了你的消息后，急急忙忙地喊上西里斯赶到了医院。
+<br><br>
+罗宾和悉尼带你走出医院，进入一辆等待的车。西里斯正坐在驾驶座上。<<npc "Sydney" 1>><<person1>><<npc "Robin" 2>><<person2>>
+"你们三个真是一群难缠的家伙。一切都还好吗？"<<nnpc_he "Sirris">>看着你，罗宾对你几乎是寸步不离——“悉尼，系好安全带，你知道自己为什么一直开不了车？”悉尼撇了撇嘴。
+<<if !$sydneySeen.includes("ride")>>
+	<<set $sydneySeen.pushUnique("ride")>>
+	"那么，你们住在哪里？"西里斯侧身向后看着你。
+	<br><br>
+	你们给西里斯指路去孤儿院。你觉得<<nnpc_he "Sirris">>的蹙眉似乎透露着同情，但你不确定。
+<<else>>
+	“我知道了，没多远路。”
+<</if>>
+西里斯通过后视镜不断地向你投以关切的目光。你不一会儿便来到了孤儿院，悉尼盯着你们，你和罗宾牵着手下了车。
+<br><br>
+<<person2>><<He>>牵着你走到孤儿院。
+临走前悉尼对你说："小心那个医生。不要相信<<nnpc_he "Harper">>说的话。"
+<br><br>
+你们目送着悉尼走回车里，他们等你进门后才启车离开。
+<br><br>
+<<link [[继续|Orphanage]]>><<pass 10>><<endevent>><<MaplebirchEndEvent>><</link>>
+<br>
+
+:: Robin Chastity Remove Intro
+<<set $outside to 0>><<effects>><<run statusCheck("Robin")>>
+你开口对罗宾说，“你可以把贞操带取下来吗？”
+<br><br>
+罗宾有些吃惊，但还是回答：“我会试着和约旦<<print sexSwitch("Jordan","修女","修士",)>>说的。
+<br><br>
+<<robintempleOptions>>
+
+:: Temple Confess Purge Robin
+<<temple_effects>><<effects>>
+<<run statusCheck("Robin")>>
+<<if $speech_attitude is "meek">>
+	"是……是我，罗宾，"你说。
+<<elseif $speech_attitude is "bratty">>
+	"是我，罗宾，我只是想找点乐子。"你说道。
+<<else>>
+	"是我，罗宾。"你说。
+<</if>>
+<br><br>
+
+<<He>>停了下来。
+<<if _robinStatus.includes("unbelief")>>
+	"你真的差点骗到我了。"
+<<else>>
+	"为、为什么你要说刚才那种话？其实我觉得，还挺有趣的。"
+<</if>>
+<<He>>很快就对刚才发生的事一笑了之。"但是，我们……要不要想一个暗号或者别的什么，这样我们下次就能认出对方。"<<He>>说着陷入了思考。
+"啊！这个怎么样。下次我会在进门前<span class="teal">敲三下门框</span>这样你就能知道是我来了。"
+<br><br>
+
+<<set $robinSeen.pushUnique("confessionRevealed")>>
+
+<<link [[请罗宾到你的这一侧来|Temple Confess Robin Tempt]]>><</link>>
+<br>
+<<link [[告别|Temple Confess Start]]>><<endconfession>><</link>>
+<br>
+
+:: Temple Confess Robin Tempt
+<<temple_effects>><<effects>>
+<<run statusCheck("Robin")>>
+
+<<if $speech_attitude is "meek">>
+	"你想……到我这边来吗？我们可以享受一点私密时间。"
+<<elseif $speech_attitude is "bratty">>
+	"为什么不到我这边来，直接忏悔你的淘气行为呢？"
+<<else>>
+	"想到我这边来吗？我们可以做点别的什么？"
+<</if>>
+<br><br>
+
+<<if $Maplebirch.phase is 1>>
+	罗宾认出了你的声音后，似乎松了口气。
+<</if>>
+<<if _robinStatus.includes("unbelief")>>
+	"你可真是欲求不满！"<<He>>走出了隔间，"谢谢你，<<sister>>，谢谢你的宽恕。"<<He>>稍微观察了一下周围，走出了隔间，确保没人在看。你替<<him>>打开了你这侧的门。
+	<br><br>
+
+	<<He>>在你旁边的长凳上坐下，你锁上了门。
+	<<if $robin_temple_rank is "initiate">>
+		"亲爱的<<sister>>，你能不能帮帮这个淘气的见习教徒进行忏悔？"
+	<<else>>
+		"你能深切的告诉我犯了那些罪吗？"
+	<</if>>
+	<<He>>把你拉近到身边。
+	<br><br>
+
+	<<link [[继续|Temple Confess Robin Sex]]>><<set $sexstart to 1>><</link>>
+	<br>
+<<else>>
+	"要在这里吗？你……你真的很欲求不满。"<<He>>走出了隔间，"谢、谢谢你，<<sister>>，谢谢你的宽恕。"<<He>>稍微观察了一下周围，走出了隔间，确保没人在看。你替<<him>>打开了你这侧的门。
+	<br><br>
+
+	<<He>>在你旁边的长凳上坐下。
+	<<if _robingenitalsStatus.includes("Lust")>>
+		你将一只手放在<<his>>的胸前，温柔地将<<him>>推倒。<<He>>忍不住喘出一口气，抱住了你。
+		<<robinLewd>>
+		<br><br>
+
+		<<link [[继续|Temple Confess Robin Sex]]>><<set $sexstart to 1>><</link>>
+		<br>
+	<<else>>
+		<br><br>
+		<<set $seductiondifficulty to 8000 - ((C.npc.Robin.love + C.npc.Robin.lust) * 15) - C.npc.Robin.holiness>>
+		<<seductioncheck>>
+		<br><br>
+
+		<<if $seductionskill lt 1000>><span class="gold">你对自己的诱惑力更有信心了。</span><</if>><<seductionskilluse>>
+		<br><br>
+
+		你把手放在<<his>>的胸部，温柔地让<<him>>躺了下来。
+		<<if $seductionrating gte $seductionrequired>>
+			<span class="green"><<He>>重重吐出一口气，张开双臂拥住了你。</span></span>
+			<<robinLewd>>
+			<br><br>
+
+			<<link [[继续|Temple Confess Robin Sex]]>><<set $sexstart to 1>><</link>>
+			<br>
+		<<else>>
+			"等，等等！我……我真不知道要干什么……我还……"<<He>>微微颤抖着。
+			<br>
+			照顾到<<his>>的犹豫，你决定放慢节奏。
+			你开始隔着<<his>>的内裤<<handtext>>爱抚<<his>>的<<robinGenitals>><<if !$robinChastityKnown and _robinChastity>>，<span class="lewd">但你感觉到有什么东西阻碍了你</span><</if>>。<<He>>看起来非常的紧张，但没有试图去阻止你。<<He>>温柔地放开了你的手，然后把双腿分开，以便你更容易地接触。你脱下了<<his>>的内裤。
+			<br><br>
+			<<robinExpose>><<if _robinChastity>>隔着<<his>>的贞操带<</if>>，你毫不犹豫地给<<him>>带来想要的快感。随着你的触摸，<<he>>渐渐地<<if $NPCList[0].penis isnot "none" && $NPCList[0].vagina isnot "none">>勃起并且湿润<<elseif $NPCList[0].penis isnot "none">>勃起<<else>>湿润<</if>>了，脸红得无法直视你。你继续抚摸了一段时间，最后俯身在<<his>>的脖子上轻吻，引得<<he>>发出呻吟。
+			<<if _robinChastity>>
+				然而，由于有贞操带遮挡，你无法让<<him>>达到高潮。你只能选择继续挑逗<<him>>。
+			<<else>>
+				再也没有能阻挡你的东西，你
+				<<if $NPCList[0].penis isnot "none" && $NPCList[0].vagina isnot "none">>勃起并且湿润<<elseif $NPCList[0].penis isnot "none">>
+					一只手抓住<<his>>的阴茎，然后用拇指开始摩擦龟头。另一只手靠近<<He>>的小穴慢慢地插入一根手指。<<Hes>>出奇的湿润，手指很轻松地进去了。
+				<<elseif $NPCList[0].penis isnot "none">>
+					抓住<<his>>的阴茎，然后用拇指开始摩擦龟头。
+				<<else>>
+					慢慢地插入一根手指。<<Hes>>出奇的湿润，手指很轻松地进去了。
+				<</if>>
+				<<him>>没有坚持太久。在你让<<him>>达到高潮时，<<He>>用一只手紧紧抓住你，而另一只则手捂住<<his>>的嘴巴来压制住呻吟。
+			<</if>>
+			<<Maplebirchnpcincr Robin holiness 2>><<grholiness>>
+			<br><br>
+
+			<<link [[继续|Temple Confess Robin Tempt End]]>><<set $Maplebirch.phase to 2>><</link>>
+			<br>
+		<</if>>
+	<</if>>
+<</if>>
+
+:: Temple Confess Robin Sex
+<<run statusCheck("Robin")>><<set $corruptionEvent to 1>>
+<<if $sexstart is 1>>
+	<<set $corruptionEvent to 1>>
+	<<set $Maplebirch.robin.sex = ($Maplebirch.robin.sex || 0) + 1>><<set $robin.sexTotal += 1>>
+	<<set $sexstart to 0>>
+	<<consensual>>
+	<<set $consensual to 1>>
+	<<neutral 1>>
+
+	<<maninit>>
+	<<set $enemytrust += 500>>
+	<<set $enemyarousalmax to 600>>
+	<<if _robinStatus.includes("unbelief")>>
+		<<set $enemyarousalmax += 100>>
+	<<elseif _robinStatus.includes("belief")>>
+		<<set $enemyarousalmax -= 100>>
+	<</if>>
+	<<if _robinChastity and C.npc.Robin.chastity.anus.includes("anal shield")>>
+		<<set $enemyarousalmax -= 100>>
+	<</if>>
+	<<set $timer to random(6, 12)>>
+	<<set $robinConfession to {Sound: 0, Attendant: "", State: "", Pronoun: "", Choice: ""}>>
+<</if>>
+<<if $timer lte 0 and $robinConfession.State isnot "exposed" and $robinConfession.State isnot "gone" and $robinConfession.State isnot "leaving">>
+	<<temple_effects>>
+	<<set $robinConfession.State to "leaving">>
+	忏悔者在等着你的回应。
+	<<if $orgasmdown gte 1>>
+		<span class="lewd">你因高潮的兴奋而无法回复。</span>
+		<span class="red"><<if $robinConfession.State is "m">>他<<else>>她<</if>>愤怒地抽了口气，意识到了你在做的事。</span>"死变态！"
+		<<if $robinConfession.State is "m">>他<<else>>她<</if>>从忏悔室跑了出去。<<grace -4>><<llgrace>>
+		<<set $timer to 0>><<set $robinConfession.State to "exposed">>
+		<br><br>
+
+		<<link [[继续|Temple Confess Robin Sex]]>><<set $speechdisable to 0>><</link>>
+		<br>
+	<<else>>
+		<<set _rbtext to "罗宾">>
+		<<if $neckuse is "hand">>
+			<<if $NPCList[0].lefthand is "throat">>
+				<<set $NPCList[0].lefthand to 0>>
+			<</if>>
+			<<if $NPCList[0].righthand is "throat">>
+				<<set $NPCList[0].righthand to 0>>
+			<</if>>
+			罗宾松开你的<<if $mouthuse>>脖子<<else>>脖子。<</if>>
+			<<set _rbtext to " 并且">>
+			<<set $neckuse to 0>>
+		<</if>>
+		<<if $NPCList[0].vagina.toString().includes("facesit") or ($NPCList[0].vagina.toString().includes("mouth") and $NPCList[0].vagina isnot "othermouth")>>
+			<<set $NPCList[0].vagina to 0>>
+			<<set $NPCList[0].location.genitals to 0>>
+			_rbtext 从你们的吻中抽离。
+		<<elseif $NPCList[0].penis.toString().includes("mouth") and $NPCList[0].penis isnot "othermouth">>
+			<<set $NPCList[0].penis to 0>>
+			<<set $NPCList[0].location.genitals to 0>>
+			_rbtext 从你们的吻中抽离。
+		<<elseif $NPCList[0].mouth.toString().includes("kiss")>>
+			<<set $NPCList[0].mouth to 0>>
+			<<set $NPCList[0].location.head to 0>>
+			_rbtext 从你们的吻中抽离。
+		<<elseif $mouthuse is "breasts">>
+			<<set $NPCList[0].chest to 0>>
+			<<set $NPCList[0].location.head to 0>>
+			<<if [$NPCList[0].lefthand].includesAny("head_breasts", "head_nipples")>>
+				<<set $NPCList[0].lefthand to 0>>
+			<</if>>
+			<<if [$NPCList[0].righthand].includesAny("head_breasts", "head_nipples")>>
+				<<set $NPCList[0].righthand to 0>>
+			<</if>>
+			_rbtext 从你们的吻中抽离。
+		<<elseif _rbtext is "Robin">>
+			罗宾停了下来。
+		<</if>>
+		<<set $mouthuse to 0>><<set $mouthstate to 0>><<set $mouthaction to 0>><<set $head to 0>>
+		<br><br>
+
+		你打算该如何回应？
+		<br>
+		<<link [[宽恕|Temple Confess Robin Sex]]>><<set $robinConfession.Choice to "forgive">><</link>>
+		<br>
+		<<link [[忏悔|Temple Confess Robin Sex]]>><<set $robinConfession.Choice to "repent">><</link>>
+		<br>
+		<<link [[赎罪|Temple Confess Robin Sex]]>><<set $robinConfession.Choice to "contrition">><</link>>
+		<br>
+	<</if>>
+<<elseif $timer lte 0 and $robinConfession.State is "leaving">>
+	<<set $robinConfession.State to "gone">>
+	<<switch $robinConfession.Choice>>
+		<<case "forgive">>
+			<<if $angel gte 6 or ($confessionsTaken gte 10 and $grace gte 25)>>
+				"我以言辞宽恕你，"你说，"但你也必须用实际行动宽恕自己。"
+			<<elseif $speech_attitude is "meek">>
+				"我、我以言辞宽恕你，"你说，"但你也必须用实际行动宽恕自己。"
+			<<elseif $speech_attitude is "bratty">>
+				"你被宽恕了，"你说，"但你也需要宽恕自己。"
+			<<else>>
+				"你被宽恕了，"你说，"但你也必须用实际行动去宽恕自己。"
+			<</if>>
+			<br><br>
+			<<switch $robinConfession.Attendant>>
+				<<case "sinner_1">>
+					<<set $robinConfession.Choice to "correct">>
+					"我明白了。谢谢你，<<sister>>。"<<if $robinConfession.Pronoun is "m">>他<<else>>她<</if>>离开了隔间。<<grace 1>><<ggrace>>
+				<<case "sinner_2">>
+					"我被宽恕了吗？啊，谢谢你，<<sister>>！"<<if $robinConfession.Pronoun is "m">>他<<else>>她<</if>>离开了隔间。<<grace -2>><<lgrace>>
+				<<case "sinner_3">>
+					"宽恕？为——为什么你会在我做下这一切之后，依然宽恕我的罪行？你知道我在说什么吗？"<<if $robinConfession.Pronoun is "m">>他<<else>>她<</if>>愤怒地离开了，脚步声很沉重。<<grace -2>><<lgrace>>
+			<</switch>>
+			<br><br>
+		<<case "repent">>
+			<<if $angel gte 6 or ($confessionsTaken gte 10 and $grace gte 25)>>
+				"忏悔，然后重新做人，你就会被宽恕。"你用自信的语气说。
+			<<elseif $speech_attitude is "meek">>
+				"你……你被宽恕了，"你说，"但你仍然需要忏悔。"
+			<<elseif $speech_attitude is "bratty">>
+				"你被原谅了。但你必须自己振作起来然后忏悔。"你说。
+			<<else>>
+				"你被宽恕了。但你必须忏悔。"你说。
+			<</if>>
+			<br><br>
+			<<switch $robinConfession.Attendant>>
+				<<case "sinner_1">>
+					"当、当然了，<<sister>>。我会忏悔的。"<<if $robinConfession.Pronoun is "m">>他<<else>>她<</if>>走出了隔间。<<grace -2>><<lgrace>>
+				<<case "sinner_2">>
+					<<set $robinConfession.Choice to "correct">>
+					"我可能正需要这样严格的教诲，来让我重新找回自我，<<sister>>。"<<if $robinConfession.Pronoun is "m">>他<<else>>她<</if>>走出了隔间。<<grace 1>><<ggrace>>
+				<<case "sinner_3">>
+					"我会忏悔的，但这并没有办法弥补我所做过的糟糕的事。"<<if $robinConfession.Pronoun is "m">>他<<else>>她<</if>>走出了隔间。<<grace -2>><<lgrace>>
+			<</switch>>
+		<<case "contrition">>
+			<<if !$daily.contritions>>
+				<<set $daily.contritions to 0>>
+			<</if>>
+			<<wearProp "pen">>
+			你打算从纸堆里面拿出一张纸。你拼命伸手，但因为罗宾挡着而没办法够到。<<He>>替你拿了一张，然后从<<his>>的袍子里抽出一根红色记号笔，把它从金属百叶窗的缝隙里滑了过去。
+			<br><br>
+
+			"要进行赎罪，你必须之后再来一趟。请把你的全名写在张纸上。我们的专门人员会协助你进行净化的。"
+			<br><br>
+			<<switch $robinConfession.Attendant>>
+				<<case "sinner_1">>
+					"我的名字？我……我不想这么做！"<<if $robinConfession.Pronoun is "m">>他<<else>>她<</if>>离开了隔间。<<grace -2>><<lgrace>>
+				<<case "sinner_2">>
+					“我……你只是想用我的名字告发我吧！”<<if $robinConfession.Pronoun is "m">>他<<else>>她<</if>>怒气冲冲地走出了隔间。<<grace -2>><<lgrace>>
+				<<case "sinner_3">>
+					<<set $robinConfession.Choice to "correct">><<set $daily.contritions ++>>
+					"净化……当然了。谢谢你，<<sister>>。"<<if $robinConfession.Pronoun is "m">>他<<else>>她<</if>>把自己的名字写在纸上，走出了隔间。<<grace 1>><<ggrace>>
+			<</switch>>
+	<</switch>>
+	<br><br>
+
+	罗宾松了口气。
+	<<switch _robinArousal>>
+		<<case "high">>
+			<<if _robinStatus.includes("unbelief")>>
+				"时间刚刚好，来这边。"
+			<<else>>
+				"请……请快点，我……"
+			<</if>>
+		<<default>>
+			<<if _robinStatus.includes("unbelief")>>
+				"接下来轮到我们享受了。"
+			<<else>>
+				"你还要……继续吗？"
+			<</if>>
+	<</switch>>
+	<br><br>
+
+	<<link [[继续|Temple Confess Robin Sex]]>><<handheldon>><<set $speechdisable to 0>><</link>>
+	<br>
+<<else>>
+	<<set $enemyanger to -10>>
+	<<temple_effects>><<effects>>
+	<<effectsman>>
+	<<if $neckuse is "hand" and $timer is 4>>
+		<<set _neckused to 1>>
+		<<if $NPCList[0].lefthand is "throat">>
+			<<set $NPCList[0].lefthand to 0>>
+		<</if>>
+		<<if $NPCList[0].righthand is "throat">>
+			<<set $NPCList[0].righthand to 0>>
+		<</if>>
+		<<set $neckuse to 0>>
+	<</if>>
+	<<man>>
+	<<if _sound is 1>>
+		<<set $robinConfession.Sound++>>
+	<</if>>
+	<<if $enemyarousal gte ($enemyarousalmax / 5) * 3>>
+		<<set _robinArousal to "high">>
+	<<else>>
+		<<set _robinArousal to "low">>
+	<</if>>
+
+	<<if $timer is 4>>
+		<<set $robinConfession.Attendant to either("sinner_1", "sinner_2", "sinner_3")>>
+		<<set $robinConfession.State to ($rng lte maleChance() ? "m" : "f")>>
+		<<set $robinConfession.State to "present">>
+		<<set $speechdisable to 1>>
+		<span class="red">另一扇门打开了。</span>你们俩都愣住了，你赶紧捂住了罗宾的嘴。
+		<br><br>
+		<<set _rbtext to "罗宾">>
+		<<if _neckused>>
+			<<set _rbtext to "<<He>>">>
+			罗宾松开你的脖子。<<gaspair>>
+		<</if>>
+		<<if $NPCList[0].vagina.toString().includes("facesit") or ($NPCList[0].vagina.toString().includes("mouth") and $NPCList[0].vagina isnot "othermouth")>>
+			<<set $NPCList[0].vagina to 0>>
+			<<set $NPCList[0].location.genitals to 0>>
+			_rbtext 从你们的吻中抽离。
+		<<elseif $NPCList[0].penis.toString().includes("mouth") and $NPCList[0].penis isnot "othermouth">>
+			<<set $NPCList[0].penis to 0>>
+			<<set $NPCList[0].location.genitals to 0>>
+			_rbtext 从你们的吻中抽离。
+		<<elseif $NPCList[0].mouth.toString().includes("kiss")>>
+			<<set $NPCList[0].mouth to 0>>
+			<<set $NPCList[0].location.head to 0>>
+			_rbtext pulls out of the kiss.
+		<<elseif $mouthuse is "breasts">>
+			<<set $NPCList[0].chest to 0>>
+			<<set $NPCList[0].location.head to 0>>
+			<<if [$NPCList[0].lefthand].includesAny("head_breasts", "head_nipples")>>
+				<<set $NPCList[0].lefthand to 0>>
+			<</if>>
+			<<if [$NPCList[0].righthand].includesAny("head_breasts", "head_nipples")>>
+				<<set $NPCList[0].righthand to 0>>
+			<</if>>
+			_rbtext 从你们的吻中抽离。
+		<</if>>
+		<<set $mouthuse to 0>><<set $mouthstate to 0>><<set $mouthaction to 0>><<set $head to 0>>
+		<<switch _robinArousal>>
+			<<case "high">>
+				<<if _robinStatus.includes("unbelief")>>
+					"可、可恶！"<<he>>低声说着，
+				<<else>>
+					<<He>>呜咽着，
+				<</if>>
+			<<default>>
+				<<if _robinStatus.includes("unbelief")>>
+					"哦，不……"<<he>>低声说着，
+				<<else>>
+					"我会……保持安静的，"<<he>>低声说着，
+				<</if>>
+		<</switch>>
+		与此同时，有人坐在了你们的另一边。
+		<br><br>
+	<<elseif $timer is 3>>
+		忏悔者叹了口气。对面传来了一个<<if $robinConfession.Pronoun is "m">>男性<<else>>女性<</if>>的声音。
+		<<if $orgasmdown gte 1>>
+			<<set $robinConfession.Sound++>>
+			"请原谅我，<<sister>>，我……嗯？你还好吗？"你迅速点了点头，然后突然想起来<<if $robinConfession.Pronoun is "m">>他<<else>>她<</if>>现在看不到你。
+			<br><br>
+
+			"呃……我没事，"你试着掩饰自己的呻吟，"让我……呃，我是说让你的罪恶暴露于此，这样你才能得到呜……宽恕。"
+		<<elseif _sound>>
+			"请原谅我，<<sister>>，我……嗯？你还好吗？"你迅速点了点头，然后突然想起来<<if $robinConfession.Pronoun is "m">>他<<else>>她<</if>>现在看不到你。
+			<br><br>
+
+			"我没事，让你的罪暴露于此，求你的罪得赦免。"你说。
+		<<else>>
+			你回应了忏悔者。“欢迎，请完全将罪暴露于此，求你的罪得赦免。”
+			<br><br>
+
+			"宽恕我，<<sister>>，宽恕我的罪过。"
+		<</if>>
+		<br><br>
+	<<elseif $timer is 2>>
+		<<if $robinConfession.Sound gte 3>>
+			<span class="red"><<if $robinConfession.Pronoun is "m">>他<<else>>她<</if>>愤怒地抽了口气，意识到了你在做的事。</span>"死变态！"
+			<<if $robinConfession.Pronoun is "m">>他<<else>>她<</if>>从忏悔室跑了出去。<<grace -4>><<llgrace>>
+			<<set $timer to 0>><<set $robinConfession.State to "exposed">><<set $speechdisable to 0>>
+		<<else>>
+			忏悔者开口了。
+			<<switch $robinConfession.Attendant>>
+				<<case "sinner_1">>
+					“我对邻居的配偶有不纯的想法，而我自己明明有着幸福的婚姻……”
+				<<case "sinner_2">>
+					"我……我是个犯罪者。我在咖啡馆趁人不注意时偷走了别人的钱。"
+				<<case "sinner_3">>
+					"我做了一些非常不好的事，我强奸了一个妓院的舞者。"
+			<</switch>>
+			<<if $orgasmdown gte 1>>
+				<<set $robinConfession.Sound++>>
+				<span class="pink"><<if $robinConfession.Pronoun is "m">>他<<else>>她<</if>>听见了你的呻吟。</span>"你的声音好像有点奇怪，<<sister>>。"
+			<<elseif _sound>>
+				<span class="pink"><<if $robinConfession.Pronoun is "m">>他<<else>>她<</if>>听见了你发出的声音。</span>"我……什么？"
+			<</if>>
+		<</if>>
+		<br><br>
+	<<elseif $timer is 1>>
+		<<set $timer to 0>>
+		<<if $robinConfession.Sound gte 3>>
+			<span class="red"><<if $robinConfession.Pronoun is "m">>他<<else>>她<</if>>愤怒地抽了口气，意识到了你在做的事。</span>"死变态！"
+			<<if $robinConfession.Pronoun is "m">>他<<else>>她<</if>>从忏悔室跑了出去。<<grace -4>><<llgrace>>
+			<<set $timer to 0>><<set $robinConfession.State to "exposed">><<set $speechdisable to 0>>
+		<<else>>
+			忏悔者开口了。
+			<<switch $robinConfession.Attendant>>
+				<<case "sinner_1">>
+					"……我从来没有出过轨！我并不想要有这种想法，只是……这种想法就这么出现在我脑子里。"
+				<<case "sinner_2">>
+					"……也许我已经对这种快感上瘾了。我担心我很快真的会做出糟糕的事。"
+				<<case "sinner_3">>
+					"……明明求我停下，但我却没有听。"
+			<</switch>>
+			<<if $orgasmdown gte 1>>
+				<<set $robinConfession.Sound++>>
+				<span class="pink"><<if $robinConfession.Pronoun is "m">>他<<else>>她<</if>>听见了你的呻吟。</span>"抱歉，你还好吗？"
+			<<elseif _sound>>
+				<span class="pink"><<if $robinConfession.Pronoun is "m">>他<<else>>她<</if>>你见了你发出的声音。</span>"抱歉，你那边发生什么了吗？"
+			<</if>>
+		<</if>>
+		<br><br>
+	<</if>>
+	<<stateman>>
+	<br><br>
+	<<actionsman>>
+
+	<<if _combatend>>
+		<span id="next"><<link [[继续|Temple Confess Robin Sex Finish]]>><</link>></span><<nexttext>>
+	<<else>>
+		<span id="next"><<link [[继续|Temple Confess Robin Sex]]>><</link>></span><<nexttext>>
+	<</if>>
+<</if>>
+
+:: Temple Confess Robin Sex Finish
+<<temple_effects>><<effects>><<run statusCheck("Robin")>>
+
+<<if $enemyarousal gte $enemyarousalmax>>
+	<<if $robinConfession.State is "present">>
+		<<ejaculation "short">>
+		"那边难道还有其他人吗？！"忏悔者听起来非常愤怒。
+		<br><br>
+
+		<<if _robinStatus.includes("unbelief")>>
+			"是又如何。"罗宾嘲讽地回应。
+		<<else>>
+			沉默下来，罗宾尴尬地扫了你一眼。
+		<</if>>
+		<br><br>
+
+		"难以置信！这个地方太可怕了！"<<if $robinConfession.Pronoun is "m">>他<<else>>她<</if>>怒气冲冲地离开了隔间。<<grace -4>><<llgrace>>
+		<br><br>
+
+		<<if $corruptionRollover is 1>>
+			<<unset $corruptionRollover>>
+			"这……这真是太刺激了，"<<he>>低声咕哝着，"我从来没有感觉到这么兴奋。"<<He>>看向你的眼睛，"<span class="lewd">就像是新世界的大门打开了一样。</span>"
+		<<else>>
+			<<switch _robinStatus>>
+				<<case "unbelief">>
+					"哈哈，我敢肯定<<if $robinConfession.Pronoun is "m">>他<<else>>她<</if>>一定是羡慕我了，"<<he>>自信地说着，露出一个得意的坏笑。
+				<<default>>
+					"对不起……我搞砸了，"<<he>>低声说着。
+			<</switch>>
+		<</if>>
+	<<else>>
+		<<ejaculation>>
+		<<if $corruptionRollover is 1>>
+			<<unset $corruptionRollover>>
+			<<if $robinConfession.State isnot "">>
+				"这……这真是太刺激了，"<<he>>低声咕哝着，"我从来没有感觉到这么兴奋。"<<He>>看向你的眼睛，"<span class="lewd">就像是新世界的大门打开了一样。</span>"
+			<<else>>
+				"真、真是太不可思议了，"<<he>>自言自语着，"我好想……我好想再做一次。然后……一次又一次。"<<He>>凝视着你的眼睛。"<span class="lewd">我感觉一个新的世界向我敞开了。</span>"
+			<</if>>
+		<<else>>
+			<<if $robinConfession.State is "exposed">>
+				<<switch _robinStatus>>
+					<<case "unbelief">>
+						"那人真是个傻子，对吧？<<if $robinConfession.Pronoun is "m">>他<<else>>她<</if>>肯定是嫉妒我了，"<<he>>自信地说着，露出一个得意的坏笑。
+					<<default>>
+						"抱歉……我搞砸了，"<<he>>低声说着。
+				<</switch>>
+			<<else>>
+				<<switch _robinStatus>>
+					<<case "belief">>
+						"对……对不起，"<<he>>低声说着。
+					<<case "unbelief">>
+						"我从没觉得忏悔可以这么舒服，"<<he>>自信地说着，露出一个得意的坏笑。
+					<<default>>
+						"幸好隔间是隔音的，"<<he>>窃笑着。
+				<</switch>>
+			<</if>>
+		<</if>>
+	<</if>>
+	<<if _robinChastity and $robinChastityKnown>>
+		<<npcincr Robin lust 3>><<ggslust>>
+	<<else>>
+		<<npcincr Robin lust -20>><<lllslust>>
+	<</if>>
+	<<Maplebirchnpcincr Robin holiness -2>><<lrholiness>>
+	<br>
+	<<robinFinishMaplebirch>>
+	<<tearful>>你们清理干净自己，准备接待下一个忏悔者。虽然很不情愿，罗宾还是跟你分开了。
+<<elseif $enemyhealth lte 0>>
+	<<if $robinConfession.State is "present">>
+		罗宾漏出一丝痛苦的呻吟。
+		<br><br>
+
+		"那边难道还有其他人吗？！"忏悔者听起来非常愤怒。
+		<br><br>
+
+		<<if _robinStatus.includes("unbelief")>>
+			"爱哭鬼就哭吧。"罗宾嘲讽地回应。
+		<<else>>
+			沉默下来。罗宾尴尬地扫了你一眼。
+		<</if>>
+		<br><br>
+
+		"难以置信！这个地方太可怕了！"<<if $robinConfession.Pronoun is "m">>他<<else>>她<</if>>怒气冲冲地离开了隔间。<<grace -4>><<llgrace>>
+		<br><br>
+
+		<<if $corruptionRollover is 1>>
+			<<unset $corruptionRollover>>
+			"这……这真是太刺激了，"<<he>>低声咕哝着，"我从来没有感觉到这么兴奋。"<<He>>看向你的眼睛，"<span class="lewd">就像是新世界的大门打开了一样。</span>"
+		<<else>>
+			<<switch _robinStatus>>
+				<<case "unbelief">>
+					"那人真是个傻子，对吧？<<if $robinConfession.Pronoun is "m">>他<<else>>她<</if>>肯定是嫉妒我了，"<<he>>自信地说着，露出一个得意的坏笑。
+				<<default>>
+					"抱歉……我搞砸了，"<<he>>低声说着。
+			<</switch>>
+		<</if>>
+	<<else>>
+		<<if $corruptionRollover is 1>>
+			<<unset $corruptionRollover>>
+			罗宾漏出一丝痛苦的呻吟，然后迅速用手捂住了自己的嘴巴。"这、这真的……"<<He>>盯着你的眼睛。可以不要粗暴地对待我吗？<span class="lewd">就像是一个新世界的大门打开了。</span>"
+		<<else>>
+			<<switch _robinStatus>>
+				<<case "belief">>
+					<<if $enemyarousal gte ($enemyarousalmax / 5) * 2>>
+						罗宾漏出一丝痛苦的呻吟，然后迅速用手捂住了自己的嘴巴。<<He>>羞愧地埋下了头，"已……已经够了……"
+					<<else>>
+						"喂，喂！不要了！求你！"罗宾迅速和你分开了，"刚，刚才真的好痛……，但……"<<his>>脸红了，看向一边，"或……或许我们可以下次再做完……"
+					<</if>>
+				<<case "unbelief">>
+					罗宾喘着粗气和你分开了，"可以不要粗暴地对待我吗？"<<he>>说道，"不过，剩下的部分我们就等下次吧。"
+				<<default>>
+					"啊——！太痛了！"<<He>>迅速地和你分开了，
+			<</switch>>
+		<</if>>
+	<</if>>
+	<<npcincr Robin lust 5>><<gglust>>
+	<br><br>
+	<<tearful>>你清理干净自己，准备接待下一个忏悔者。
+<<else>>
+	<<if $robinConfession.State is "present">>
+		"停？停下什么？那边难道还有其他人吗？！"忏悔者听起来非常愤怒。
+		<br><br>
+
+		<<if _robinStatus.includes("unbelief")>>
+			"爱哭鬼就哭吧。"罗宾嘲讽地回应。
+		<<else>>
+			沉默下来。罗宾尴尬地扫了你一眼。
+		<</if>>
+		<br><br>
+
+		"难以置信！这个地方太可怕了！"<<if $robinConfession.Pronoun is "m">>他<<else>>她<</if>>怒气冲冲地离开了隔间。<<grace -4>><<llgrace>>
+		<br><br>
+
+		<<if $corruptionRollover is 1>>
+			<<unset $corruptionRollover>>
+			"这……这真是太刺激了，"<<he>>低声咕哝着，"我从来没有感觉到这么兴奋。"<<He>>看向你的眼睛，"<span class="lewd">就像是新世界的大门打开了一样。</span>"
+		<<else>>
+			<<switch _robinStatus>>
+				<<case "belief">>
+					"那人真是个傻子，对吧？<<if $robinConfession.Pronoun is "m">>他<<else>>她<</if>>肯定是嫉妒我了，"<<he>>自信地说着，露出一个得意的坏笑。
+				<<default>>
+					"抱歉……我搞砸了，"<<he>>低声说着。
+			<</switch>>
+		<</if>>
+	<<else>>
+		<<if $corruptionRollover is 1>>
+			<<unset $corruptionRollover>>
+			"停……停下了？但是我们才……"<<he>>失望地撅起嘴，"我们可以……之后继续这个吗？求你了？我……<span class="lewd">感觉我打开了新世界的大门，</span>我想看到更多。"
+		<<else>>
+			<<switch _robinStatus>>
+				<<case "belief">>
+					<<if $enemyarousal gte ($enemyarousalmax / 5) * 2>>
+						"不……不做了？但是我……我还……"<<he>>仍紧紧拥着你，话语开始变得断断续续，"好，好吧……"
+					<<else>>
+						罗宾紧张地看着你。"我没……做错什么，对吧？"
+					<</if>>
+				<<case "unbelief">>
+					罗宾不满地咕哝着撅起嘴，"太扫兴了！但行吧，我们可以下次。"
+				<<default>>
+					"行吧，我们停下。"<<He>>的眼里闪过一瞬失望。
+			<</switch>>
+		<</if>>
+	<</if>>
+	<<npcincr Robin lust 5>><<Maplebirchnpcincr Robin holiness 2>><<gglust>><<grholiness>>
+	<br><br>
+	<<tearful>>你清理干净自己，准备接待下一个忏悔者。
+<</if>>
+<br><br>
+<<unset $robinConfession>>
+<<clotheson>>
+<<endcombat>>
+<<npc "Robin">><<person1>>
+
+<<link [[继续|Temple Confess Robin Tempt End]]>><</link>>
+<br>
+
+:: Temple Confess Robin Tempt End
+<<temple_effects>><<effects>>
+<<run statusCheck("Robin")>>
+<<if $phase is 2>>
+	<<switch _robinStatus>>
+		<<case "belief">>
+			<<if !_robinChastity>>
+				<<pass 2>>“啊……哈啊……”<<He>>沉重地喘息着，用尽全身力气紧紧拥住你。“这……真是……”<<he>>低声说着。你搂着<<him>>，直到<<hes>>准备起身了。<<npcincr Robin lust 3>><<Maplebirchnpcincr Robin holiness -2>><<ggslust>><<lrholiness>>
+			<<else>>
+				你完事后，<<Hes>>还在轻轻喘息。"刚才的感觉……我不知道。我……我想我喜欢这样？"你帮<<him>>站起身，让<<he>>紧紧地靠了你一会儿。<<npcincr Robin lust 3>><<Maplebirchnpcincr Robin holiness -2>><<ggslust>><<lrholiness>>
+			<</if>>
+		<<default>>
+			<<if !_robinChastity>>
+				<<pass 2>><<He>>不住地呻吟着，随着你的动作达到了高潮。你们拥抱在了一起，享受片刻的温存。<<npcincr Robin lust 3>><<Maplebirchnpcincr Robin holiness -2>><<ggslust>><<lrholiness>>
+			<<else>>
+				你完事后，<<him>>还在微微喘息着。"感觉还差点什么……但还是好爽……"你扶着罗宾起身，<<he>>紧紧地靠在了你的身上，享受着片刻的温存。<<npcincr Robin lust 3>><<Maplebirchnpcincr Robin holiness -2>><<ggslust>><<lrholiness>>
+			<</if>>
+	<</switch>>
+	<br><br>
+<</if>>
+
+<<if _robinStatus.includes("unbelief")>>
+	罗宾亲吻了你，准备离开。"我们很快会再见的。"<<He>>离开了隔间。
+<<else>>
+	你亲吻了罗宾的额头，<<he>>准备离开。"再、再见。"<<he>>说着，走了出去。
+<</if>>
+<br><br>
+
+<<link [[继续|Temple Confess Start]]>><<endconfession>><<MaplebirchEndEvent>><</link>>
+<br>
+
+:: Maplebirch Robin Walk
+<<set $outside to 0>><<set $location to "home">><<effects>>
+<<if $speech_attitude is "meek">>
+	"你想去散步吗？"你问。
+<<elseif $speech_attitude is "bratty">>
+	"是时候出去锻炼锻炼了，"你提议。
+<<else>>
+	"我们去散会步吧，"你提议。
+<</if>>
+<br><br>
+<<if C.npc.Robin.trauma gte 40>>
+	罗宾微笑着点了点头。
+	<br><br>
+<<else>>
+	“好主意，”罗宾说，“那么你想去哪里呢？”
+	<br><br>
+<</if>>
+<<if !$daily.robin.walk>>
+	<<foresticon>><<link [[去森林 (0:30)|Robin Forest]]>><<pass 30>><<set $daily.robin.walk to 1>><</link>>
+	<br>
+<</if>>
+<<if C.npc.Robin.love gte 20 and $money gte 1500 and !$daily.robin.cinema>>
+	<<socialiseicon "cinema">><<link [[电影院 (£15 2:00)|Robin Walk Cinema]]>><<if Time.hour lt 12 and (Time.schoolDay or Time.isWeekEnd())>><<pass 15>><</if>><</link>>
+	<br>
+<</if>>
+<<if Time.hour is 20 and $loftTelescopeKnown and !$daily.watchingStar and !Weather.isOvercast>>
+	<img class="icon" src="img/icon/stars.jpg"><<link [[一起观星 (0:30)|Robin Walk Star]]>><<pass 30>><</link>>
+	<br>
+<</if>>
+<<if !Time.schoolTerm and !Time.isWeekEnd() and Time.hour lt 16 and $robinSwimsuit and !$daily.swimming and Weather.precipitation is "none">>
+	<<beachicon>><<link [[一起去海边游泳 (0:50+)|Robin Walk Beach]]>><</link>>
+	<br>
+<</if>>
+<<if $halloween_robin is 1 and $halloween_robin_costume is "ghost" and !(Time.monthDay is 31 and Time.hour gte 16)>>
+	<!-- SANITY: Intentional mismatch between stated time and actual time. Extra time is passed later on in the event -->
+	<<if !$robin_forest_visited>>
+		<<foodicon "halloween">><<link [[去买万圣节服装 (0:30)|Robin Forest Shop]]>><<pass 10>><</link>>
+	<<else>>
+		<<foodicon "halloween">><<link [[去买万圣节服装 (0:20)|Robin Forest Shop]]>><<pass 10>><</link>>
+	<</if>>
+	<br>
+<</if>>
+<br>
+<<robintempleOptions>>

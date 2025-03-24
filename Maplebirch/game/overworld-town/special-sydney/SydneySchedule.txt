@@ -1,0 +1,3 @@
+    <<elseif Time.weekDay === 1 || (Time.weekDay === 7 && Time.hor lte 6)>>
+        <<set _sydney_location to "temple">>
+    <<elseif $daily.sydney.punish is 1>>

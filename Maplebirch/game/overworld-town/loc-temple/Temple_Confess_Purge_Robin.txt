@@ -1,0 +1,16 @@
+    <<case "robin_promised" "robin_romance" "robin_doubt" "confession_robin_things">>
+		<<set _noOptions to true>>
+		<<run statusCheck("Robin")>>
+		<<if _robinStatus.includes("unbelief")>>
+			"你在说什么？你不能这样。我要对你再说一遍——我是有对象的，死变态。"
+		<<else>>
+			"我……我刚才说我有对象了，你不能这么对我，<<sister>>。如果你执意如此，我想我会检举你。"
+		<</if>>
+		<<his>>声音中的幽愤暴露了<<his>>的真实身份。<span class="pink">是罗宾。</span><<He>>转身准备离开隔间。<<grace -2>><<lgrace>>
+		<br><br>
+
+		<<link [[现身|Temple Confess Purge Robin]]>><</link>>
+		<br>
+		<<link [[让<<him>>离开|Temple Confess Start]]>><<endconfession>><</link>>
+		<br>
+    <<case "winter">>

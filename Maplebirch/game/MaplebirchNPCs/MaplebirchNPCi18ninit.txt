@@ -1,0 +1,9 @@
+	<<set setup.NPCNameList_cn_name[0].pushUnique("维安")>>
+	<<set setup.NPCNameList_cn_name[1].pushUnique("维安")>>
+	<<set setup.NPCNameList_cn_name[0].pushUnique("卡拉斯维尔")>>
+	<<set setup.NPCNameList_cn_name[1].pushUnique("卡拉斯维尔")>>
+	<<set setup.NPCNameList_cn_name[0].pushUnique("伊格尼哈普")>>
+	<<set setup.NPCNameList_cn_name[1].pushUnique("伊格尼哈普")>>
+	<<set setup.NPCNameList_cn_name[0].pushUnique("诺克迪亚弗")>>
+	<<set setup.NPCNameList_cn_name[1].pushUnique("诺克迪亚弗")>>
+	<<run initCNPC()>>
