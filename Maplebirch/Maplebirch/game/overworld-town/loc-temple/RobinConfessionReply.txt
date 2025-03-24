@@ -1,4 +1,0 @@
-        <<elseif $attendant.includes("robin") and $robinSeen.includes("confessionRevealed") and $robinromance gte 1>>
-		    <<link [[邀请罗宾过来|Temple Confess Robin Tempt]]>><<set $Maplebirchphase to 1>><</link>>
-		    <br>
-        <<elseif $temple_confessor_intro>>

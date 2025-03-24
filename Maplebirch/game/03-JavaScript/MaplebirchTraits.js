@@ -1,3 +1,0 @@
-setup.ModTraits.push(
-    
-);

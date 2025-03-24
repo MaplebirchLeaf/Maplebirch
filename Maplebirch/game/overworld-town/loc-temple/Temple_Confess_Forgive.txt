@@ -1,3 +1,0 @@
-<<if $attendant isnot "no_sin_generic" and $attendant isnot "sydney_promised">>
-<</if>>
-<<if $attendant isnot "no_sin_generic" and $attendant isnot "sydney_promised" and $attendant isnot "robin_promised">>
