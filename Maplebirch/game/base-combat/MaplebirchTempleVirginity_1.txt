@@ -1,4 +1,0 @@
-            <!-- Do nothing -->
-        <<else>>
-            <<set _maplevirginityProtected = $virginityProtected>>
-            <<set _maplePlayerVirginityTemple = $player.virginity.temple>>

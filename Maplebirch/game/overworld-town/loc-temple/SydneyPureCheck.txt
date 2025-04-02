@@ -1,9 +1,0 @@
-<<if !_sydneyStatus.includes("pure")>>
-<</if>>
-<<if $Maplebirch.templePromised is "Robin">>
-    “你说你已经和神殿的另一个人签订了承诺誓言？”悉尼有些惊讶，“好吧！对不起，看来约旦不会同意我们了。”
-    <br><br>
-    你觉得你挺对不起悉尼的。
-    <br><br>
-    <i><span class="teal">你无法在神殿同时和两个人订立誓约！除非……</span></i>
-<<elseif !_sydneyStatus.includes("pure")>>

@@ -1,2 +1,0 @@
-<<case Jordan>><<set $NPCName[_i].outfits.pushUnique("maleRobe", "femaleRobe")>>
-            <<case Vivian>><<set $NPCName[_i].outfits.pushUnique("scarecrow")>>

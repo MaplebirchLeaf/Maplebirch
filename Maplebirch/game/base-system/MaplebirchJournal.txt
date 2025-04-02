@@ -1,2 +1,0 @@
-            <<MaplebirchTimeliness>>
-            <<if $brothel_escortjob isnot undefined>>

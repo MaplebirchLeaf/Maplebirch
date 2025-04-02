@@ -1,5 +1,0 @@
-                    <<case "kiss">><<purity -10>>
-				<</switch>>
-			<</if>>
-            <<set _tempVirginityProtected = $virginityProtected>>
-            <<set _tempPlayerVirginityTemple = $player.virginity.temple>>

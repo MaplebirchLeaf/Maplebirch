@@ -1,9 +1,0 @@
-			<<if ($virginityProtected !== _maplebirchVirginityProtected || $player.virginity.temple !== _maplebirchPlayerVirginityTemple) && ($Maplebirch.templePromised === $_taker)>>
-				<<set $virginityProtected = _maplebirchVirginityProtected>>
-				<<set $player.virginity.temple = _maplebirchPlayerVirginityTemple>>
-			<</if>>
-        <</if>>
-	<</if>>
-<</widget>>
-
-<<widget "takeTempleVirginity">>

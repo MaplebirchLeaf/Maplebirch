@@ -1,3 +1,0 @@
-<</if>>
-<<if $Maplebirch.ValueLock === 1>>
-    <<set $wardrobe_location to "temple">>

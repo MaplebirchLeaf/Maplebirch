@@ -1,1 +1,0 @@
-                    "maleTown1", "femaleTown1", "maleWarm1", "femaleWarm1", "coldPuffer", "pyjamas","neutralRobe"
