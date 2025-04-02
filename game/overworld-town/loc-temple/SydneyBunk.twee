@@ -1,0 +1,1304 @@
+:: Sydney bunk Maplebirch [widget]
+
+<<widget "MaplebirchTemplebunk">>
+	/* 神殿晋升， */
+	<<if $SydneyBunkChat || $RobinBunkChat>>
+		<br>
+    	<<if $SydneyBunkChat>>
+        	<<MaplebirchIcon "SydneyBunk">><<link [[悉尼的床铺|Temple Sydney Bunk]]>><</link>><<MaplebirchHint>>
+        	<br><br>
+    	<</if>>
+		<<if $RobinBunkChat>>
+        	<<MaplebirchIcon "RobinBunk">><<link [[罗宾的床铺|Temple Robin Bunk]]>><</link>><<MaplebirchHint>>
+        	<br><br>
+    	<</if>>
+	<</if>>
+<</widget>>
+
+<<widget "SydneyBunkChat">>
+	/* 神殿晋升，悉尼过审判， */
+	<<MaplebirchMoreLoveInterests>>
+    <<if ["monk"].includes($temple_rank) && !$SydneyBunkChat && $Maplebirch.loveInterest.includes("Sydney")>>
+        <br><br>
+        <span class="teal"><i>在你走时，你细心地留意到了悉尼在神殿的床铺位置。</i></span>
+        <<set $SydneyBunkChat to true>>
+    <</if>>
+<</widget>>
+
+<<widget "temple_sydney_bunk_sleep_1">>
+	<<if $bus is "temple_sydney_bed">>
+		<<if $exposed gte 2>>
+			<<npcincr Sydney lust 3>>
+		<<else>>
+			<<npcincr Sydney lust 1>>
+		<</if>>
+	<</if>>
+	<<if $bus is "temple_sydney_bed" or $sydney_bed is "player">>
+		<<set $bedGuest to "Sydney">>
+	<<else>>
+	<</if>>
+	<<set $bus to "temple_bed">>
+<</widget>>
+
+
+<<widget "maplebirch_temple_bunk_sleep_2">>
+	<<if (!_sleepinterruptSydney && isMaplebirchTime("SydneyTempleTime") && $bus is "temple_sydney_bed") || ($sydney_bed === "player" && !_sydneyWake)>>
+		<<run statusCheck("Sydney")>>
+		<<switch random(1, 6)>>
+			<<case 1>>
+				<<if (Time.weekDay === 1 && Time.hour === 5)>>
+					你试着喊醒悉尼。<<nnpc_He "Sydney">>迷迷糊糊地眨了眨眼。
+				<<else>>
+					你以为悉尼醒了，但<<nnpc_hes "Sydney">>把被子拉过头顶，又睡了过去。
+				<</if>>
+			<<case 2>>
+				悉尼把腿跨在你的身上。你轻轻地把<<nnpc_his "Sydney">>的腿从你身上移开。
+			<<case 3>>
+				悉尼在梦里流着口水噗嗤笑着。
+			<<case 4>>
+				悉尼<<print either("将有些掉落的被子悄悄地盖在自己和你的身上", "把头靠在你的旁边", "嘴角淌出了口水。你把它们擦干净")>>。
+			<<case 5>>
+				悉尼快掉下床铺了。你抱住<<nnpc_him "Sydney">>的腰，把<<nnpc_him "Sydney">>拉到身旁。
+			<<case 6>>
+				<<switch _sydneyStatus>>
+					<<case "pure" "pureLust">>
+						“<<print either("约旦告诉我要约束自己",
+									"我不能让神殿的大家失望",
+									"我一定会好好地遵守誓言",
+									"挚爱，我想你了",
+									"妈妈，我想我想我找到命中注定了",
+									"我最爱的同修，<<pher>>今晚也在神殿吗")>>
+					<<case "corrupt" "corruptLust">>
+						“<<print either("宝贝，看我用马鞭怎么抽你",
+									"我会在身上写满涂鸦",
+									"罪人",
+									"我想要你把我玷污",
+									"尽可能地蹂躏我吧",
+									"你也可以这么对我")>>	
+					<<case "neutral" "neutralLust">>
+						“<<print either("凯拉尔……下次不要再涂画书本了",
+									"罗宾，<<nnpc_He \"Robin\">>好像也住在孤儿院",
+									"惠特尼……这个家伙总是把书本弄得乱七八糟",
+									"神殿还有好多工作要做",
+									"傍晚记得去麋鹿街帮妈妈工作",
+									"如果我的科学课也是第一节就好了")>>
+				<</switch>>
+				……”悉尼小声地说着梦话。	
+		<</switch>>
+		<<sleepeffects>>
+	<</if>>
+	<<if (!_sleepinterruptRobin && (Time.weekDay === 1 && Time.hour <= 6) && $bus is "temple_robin_bed") || ($robin_bed === "player" && !_robinWake)>>
+		<<run statusCheck("Robin")>>
+		<<switch random(1, 5)>>
+			<<case 1>>
+				<<if (Time.weekDay === 1 && Time.hour === 5)>>
+					你试着喊醒罗宾。<<nnpc_He "Robin">>睡眼惺惺地眨了眨眼。
+				<<else>>
+					你以为罗宾醒了，但<<nnpc_hes "Robin">>把被子拉过去又睡了。
+				<</if>>
+			<<case 2>>
+				罗宾的手抱住了你的腰。你轻轻地把<<nnpc_his "Robin">>的手从你身上移开。
+			<<case 3>>
+				罗宾的气息很安静，<<nnpc_his "Robin">>静静地睡在床上。
+			<<case 4>>
+				罗宾<<print either("将被子悄悄地盖在你的身上", "把头靠在你的旁边", "在身体突然颤抖地抱住了你")>>。
+			<<case 5>>
+				罗宾快掉下床铺了。你抱住<<nnpc_him "Robin">>的腰，把<<nnpc_him "Robin">>拉到身旁。
+			/*<<case 6>>
+				<</switch>>
+				……”罗宾小声地说着梦话。	*/
+		<</switch>>
+		<<sleepeffects>>
+	<</if>>
+<</widget>>
+
+<<widget "maplebirch_temple_bunk_sleep_3">>
+	<<if _sleepinterruptSydney && !$Maplebirch.Sydneyattack>>
+		<<set $Maplebirch.Sydneyattack = 1>>
+		<<npc Sydney>><<person1>>
+		<<if $bus is "temple_sydney_bed">>
+			<<run statusCheck("Sydney")>>
+			<<if isMaplebirchTime("SydneyTempleTime") && $rng gte 50 && C.npc.Sydney.lust gte 60 && (_sydneyStatus.includes("corrupt") || _sydneyStatus.includes("corruptLust"))>>
+				你醒了过来，感觉有个
+				<<if $NPCList[0].vagina isnot "none" && $NPCList[0].penis isnot "none">>坚硬的柱状体和湿湿的东西<<elseif $NPCList[0].penis isnot "none">>坚硬的柱状体<<else>>湿湿的东西<</if>>
+				压在你屁股上。你在等着悉尼说话，但迎接你的只有沉默。你看向悉尼，发现<<He>>还在沉沉的睡觉。<<His>>正双臂环抱着你，干蹭着你。<<arousal 600 "bottom">><<garousal>>
+				<br><br>
+				<<if hasSexStat("promiscuity", 4)>>
+					<span class="lewd">一个下流的想法在你脑海里浮现。</span>
+					<br>
+					<<link [[取悦悉尼|Temple Sydney Somno]]>><</link>><<promiscuous4>>
+					<br>
+				<</if>>
+				<<link [[叫醒悉尼|Temple Sydney Somno Wake Wholesome]]>><</link>>
+				<br>
+				<<link [[试着回去睡觉|Temple Sydney Somno Let Sleep]]>><<stress 6>><<trauma 6>><</link>><<gstress>><<gtrauma>>
+				<br>
+			<<else>>
+				<<genitals>>上的触感把你从睡梦中唤醒，
+				<<if $NPCList[0].penis isnot "none">>
+					你感受到一个坚硬的物体抵住了你<<bottom>>。
+				<<else>>
+					然后是
+					<<if $NPCList[0].breastsize is 0>>
+						胸部
+					<<else>>
+						<<print $NPCList[0].breastsdesc>>
+					<</if>>
+					紧贴着你的背。
+				<</if>>
+				另一只手放在了你的大腿上。
+				<br><br>
+
+				<<if (_sydneyStatus.includes("corrupt") || _sydneyStatus.includes("corruptLust"))>>
+					“亲爱的，你是特地来陪我的吗？”悉尼说着，<<his>>的呼吸拂过你的脖子。“想做一些刺激的事吗？”
+				<<else>>
+					“你怎么会在我的床上？”悉尼惊叹道，<<his>>的呼吸拂过你的脖子。”
+				<</if>>
+				<br><br>
+
+				<<link [[推开|Temple Sydney Climb]]>><<def 1>><<npcincr Sydney purity 1>><</link>><<gspurity>>
+				<br>
+				<<link [[顺其自然|Temple Sydney Allow]]>><<sub 1>><<npcincr Sydney purity -1>><</link>><<promiscuous1>><<lspurity>>
+				<br>
+			<</if>>
+		<<elseif $bus is "temple_bed">>
+			<<if $exposed gte 2 and random(1, 2) is 2>>
+				你打了个寒颤。你的被单不见了。床铺旁传来某人离去的脚步声。<<covered>>
+				<br><br>
+
+				你的被子花落在床脚的地上。你怀疑这是悉尼做的。在你睡着的时候，<<He>>偷偷盯着你的<<lewdness>>。
+				<br><br>
+
+				<<link [[继续睡觉|Temple Bunk Bed]]>><<endevent>><</link>>
+				<br>
+				<<link [[起来|Temple Bunk]]>><<endevent>><</link>>
+				<br>
+				<<link [[生气 (0:05)|Temple Sydney Bunk Confront]]>><<pass 5>><<npcincr Sydney love -1>><<npcincr Sydney purity 1>><</link>><<llove>><<gspurity>>
+				<br>
+				<<if hasSexStat("promiscuity", 3)>>
+					<<link [[调戏 (0:20)|Temple Sydney Bunk Dalliance]]>><<pass 20>><<npcincr Sydney purity -2>><<npcincr Sydney lust 10>><</link>><<promiscuous3>><<lspurity>><<gglust>>
+					<br>
+				<</if>>
+			<<else>>
+				<<genitals>>上的触感把你从睡梦中唤醒，,
+				<<if $NPCList[0].penis isnot "none">>
+					你感受到一个坚硬的物体抵住了你<<bottom>>。.
+				<<else>>
+					然后是
+					<<if $NPCList[0].breastsize is 0>>
+						胸部
+					<<else>>
+						<<print $NPCList[0].breastsdesc>>
+					<</if>>
+					紧贴着你的背。
+				<</if>>
+				<br><br>
+
+				“我觉得你可能需要我，”悉尼说道，<<his>>的呼吸落在你的脖子上。
+				<br><br>
+
+				<<link [[推开|Temple Sydney Push]]>><<def 1>><<npcincr Sydney purity 1>><</link>><<gspurity>>
+				<br>
+				<<link [[顺其自然|Temple Sydney Go]]>><<sub 1>><<npcincr Sydney purity -1>><</link>><<promiscuous1>><<lspurity>>
+				<br>
+			<</if>>
+		<</if>>
+	<<elseif _sleepinterruptRobin && !$Maplebirch.Robinattack>>
+		<<set $Maplebirch.Robinattack = 1>>
+		<<npc Robin>><<person1>>
+		<<if $bus is "temple_robin_bed">>
+			<<run statusCheck("Robin")>>
+			<<if (Time.weekDay === 1 && Time.hour <= 6) && $rng gte 50 && C.npc.Robin.dom gte 80 && C.npc.Robin.lust gte 60 && _robinStatus.includes("unbelief")>>
+				你醒了过来，感觉有个
+				<<if $NPCList[0].vagina isnot "none" && $NPCList[0].penis isnot "none">>坚硬的柱状体和湿湿的东西<<elseif $NPCList[0].penis isnot "none">>坚硬的柱状体<<else>>湿湿的东西<</if>>
+				压在你屁股上。你想等着罗宾说话，但迎接你的只有沉默。你看向罗宾，发现<<He>>还在沉沉的睡觉。<<His>>正双臂环抱着你，干蹭着你。<<arousal 600 "bottom">><<garousal>>
+				<br><br>
+				<<if hasSexStat("promiscuity", 4)>>
+					<span class="lewd">一个下流的想法在你脑海里浮现。</span>
+					<br>
+					<<link [[取悦罗宾|Temple Robin Somno]]>><</link>><<promiscuous4>>
+					<br>
+				<</if>>
+				<<link [[叫醒罗宾|Temple Robin Somno Wake Wholesome]]>><</link>>
+				<br>
+				<<link [[试着回去睡觉|Temple Robin Somno Let Sleep]]>><<stress 6>><<trauma 6>><</link>><<gstress>><<gtrauma>>
+				<br>
+			<<else>>
+				<<genitals>>上的触感把你从睡梦中唤醒，
+				<<if $NPCList[0].penis isnot "none">>
+					你感受到一个坚硬的物体抵住了你<<bottom>>。
+				<<else>>
+					然后是
+					<<if $NPCList[0].breastsize is 0>>
+						胸部
+					<<else>>
+						<<print $NPCList[0].breastsdesc>>
+					<</if>>
+					紧贴着你的背。
+				<</if>>
+				<br><br>
+				<<if _robinStatus.includes("unbelief")>>
+					“可以吗？”<<He>>在你耳边低语。
+				<<else>>
+					“原来是你啊”罗宾叹了一口气，<<his>>的呼吸拂过你的脖子。”
+				<</if>>
+				<br><br>
+				<<link [[更进一步|Temple Robin Bed Sex]]>><<Maplebirchnpcincr Robin holiness -1>><<strip "strap-on">><<set $sexstart to 1>><</link>><<promiscuous1>><<lrholiness>>
+				<br>
+				<<link [[拒绝|Temple Robin Refuse]]>><<Maplebirchnpcincr Robin holiness 1>><<trauma -6>><<stress -12>><<npcincr Robin trauma -3>><</link>><<grholiness>><<ltrauma>><<lstress>><<lrtrauma>>
+				<br>
+			<</if>>
+		<<elseif $bus is "temple_bed">>
+			<<set _robin = C.npc.Robin>>
+			<<if $exposed gte 2 and random(1, 2) is 2>>
+				<i>你看到罗宾来到你的床铺前。</i>
+				<br><br>
+				<<if _robin.trauma gte 50>>
+				"对不起，"你听到<<his>>在你耳边低语，"我最近一直都在做噩梦……"
+				<br><br>
+				在你回抱住<<him>>之后，<<his>>终于不再颤抖了。
+					<<if $trauma gte ($traumamax * 0.7)>>
+						在你被<<he>>回抱住之后，你终于不再颤抖了。
+					<</if>>
+				<</if>>
+				<br><br>
+
+				<<if _robin.dom gte 80 and _robin.trauma lt 50>>
+					<<link [[拥抱|Temple Robin Bed Dominant]]>><</link>>
+					<br>
+				<<else>>
+					<<link [[抱住|Temple Bunk Bed]]>><<endevent>><<trauma -6>><<stress -12>><<npcincr Robin trauma -3>><</link>><<ltrauma>><<lstress>><<lrtrauma>>
+					<br>
+				<</if>>
+				<<if _robin.trauma lt 50>>
+					<<link [[接吻|Temple Bunk Bed Robin Sex]]>><<set $sexstart to 1>><</link>>
+				<</if>>
+				<br>
+				<<if hasSexStat("promiscuity", 3)>>
+					<<link [[拒绝并调戏 (0:20)|Temple Robin Bunk Dalliance]]>><<pass 20>><<Maplebirchnpcincr Robin holiness -2>><<npcincr Robin lust 10>><<npcincr Robin dom -1>><</link>><<promiscuous3>><<lrholiness>><<gglust>><<ldom>>
+					<br>
+				<</if>>
+			<</if>>
+		<</if>>
+	<<else>>
+    	<<set $wardrobe_location to "temple">>
+    	<<wardrobeSelection true>>
+    	<<radiooutfits>>
+
+    	<br><br>
+    	<<link [[起床|Temple Bunk]]>><</link>>
+    	<br>
+   		<<set $phase to 0>>
+	<</if>>
+<</widget>>
+
+:: Temple Sydney Bunk
+<<set $wardrobe_location to "temple">>
+<<effects>>
+<<wearoutfit>>
+你在神殿宿舍的悉尼床铺旁。屋里有个衣柜收纳着悉尼的衣服，屏风后面有一个可以换装的小空间。
+<br><br>
+
+<<if Time.dayState is "night">>
+	这里的床铺上躺满了人，除了偶尔传来的呼噜声外一切都显得是那么宁静祥和。
+<<elseif Time.dayState is "day">>
+	见习教徒们正在努力进行着清扫工作。
+<<elseif Time.dayState is "dawn">>
+	修士和修女们已经起床了。
+<<elseif Time.dayState is "dusk">>
+	一些修士和修女正在做睡前的祷告。
+<</if>>
+<br><br>
+
+<<if $stress gte $stressmax>>
+	<<passouttempleSydney>>
+
+<<else>>
+	<<if Time.weekDay is 7 && Time.hour is 23>>		
+		在神殿劳累了一天，悉尼很快地蜷在了床上。
+		<br><br>
+
+	<<elseif isMaplebirchTime("SydneyTempleTime") && !$Maplebirch.SydneyTime>>
+		<<npc Sydney>><<person1>>
+		<<if !$Maplebirch.SydneyTime && !$frequencyalready>>
+			<<set $sydney_bed_frequency += 1>>
+			<<set $frequencyalready = 1>>
+		<</if>>
+		悉尼安静地蜷在<<He>>的床铺上，枕头的边上还沾着些许口水。
+		<<if Time.weekDay is 1 && Time.hour is 5 && !$Maplebirch.SydneyTime>>
+			<<set $Maplebirch.SydneyTime to 1>>
+			<br><br>
+			<<set $sydney_bed to "none">>
+			<<if $sydney_bed_frequency < 2>>
+				<<He>>把被褥整齐地叠在床铺上。<<covered>>悉尼惊讶地发现你躺在旁边睡着，赶忙把你喊起来。
+			<<else>>
+				悉尼害怕你着凉，<<He>>把被褥盖在你的身上后，独自离开了宿舍。
+				<<if $sydney.bedOrgasm>>
+					过了一会儿，<<He>>转向你，脸红了。“我昨晚应该听到了什么声音。算、算了，忘了我说的吧。”
+				<<else>>
+					<<switch $sydneySomno>>
+						<<case 0>> /* 悉尼没有醒来 */
+							悉尼微笑着，“我今天早上感觉特别清爽。我有预感今天在神殿将会非常美好。”
+						<<case 1>> /* 悉尼醒了并XX */
+							悉尼的脸非常红，“昨晚真的很刺激，亲爱的。我想我应该赶快去工作了。”
+						<<case 2>> /* 悉尼醒了但没有XX */
+							悉尼看向你，脸红了，虽然，<<He>>似乎避免与你视线接触。
+					<</switch>>
+				<</if>>
+			<</if>>
+			<<if $exposed gte 1>>
+				<<He>>离开宿舍时，假装没有偷看。<<glust>><<npcincr Sydney lust 1>>
+			<<else>>
+				<<He>>离开了宿舍，你听到了<<he>>在神殿主厅忙碌的脚步声。
+			<</if>>
+		<</if>>
+		<<endevent>>
+		<br><br>
+
+	<<else>>
+		<<npc Sydney>><<person1>>
+		悉尼不在<<he>>的床铺上。
+		<br><br>
+		<<endevent>>
+
+	<</if>>
+<</if>>
+
+<<if $unbind is 1>>
+	<<unset $unbind>>
+	<<if $possessed>>
+		你低头盯着你的绑带。你一拉，它们就会散架，无法遮挡住你。
+		<br><br>
+	<<else>>
+		<span class="green">你在桌角处摩擦你那些用于拘束你的东西。</span>这需要一些努力，但是这些东西最终还是败在了你的努力之下，你的肢体终于得到解放。
+		<br><br>
+	<</if>>
+	<<unbind>>
+<</if>>
+
+<<if $leftarm is "bound" or $rightarm is "bound" or $feetuse is "bound">>
+	<<undobindingsicon>><<link [[解除束缚 (0:10)|Temple Sydney Bunk]]>><<set $unbind to 1>><<pass 10>><</link>>
+	<br><br>
+<</if>>
+
+<<if $earSlime.event and $earSlime.noSleep>>
+	<<if $possessed>>
+		<<ind>><span class="purple">你脑袋里的史莱姆很安静。</span>
+	<<else>>
+		<<ind>><span class="red">史莱姆想要你在上床睡觉前<<print $earSlime.event.replace("go running or swimming naked for","光着身子跑步或游泳").replace("study at the school library while naked for","光着身子在学校图书馆学习").replace(" an hour","1个小时").replace(" two hours","2个小时").replace("only wear feminine clothes for a while","暂时只穿女性服装").replace("only wear masculine clothes for a while","暂时只穿男性服装").replace("steal something","偷点东西").replace("go commando","不穿内衣").replace("masturbate to orgasm","自慰高潮").replace("fully expose yourself while working as a model in town","在镇上当模特时一丝不挂").replace("use the farm equipment to empty your breasts of milk","用农场的设备榨干最后一滴奶").replace("use the farm equipment to empty your penis of semen","用农场的设备榨干最后一滴精").replace("have sex with someone or something","与某人或某物做爱").replace("have sex with someone","与某人做爱").replace("only sleep naked from now on","从现在开始光着身子睡觉").replace("go running or swimming for","跑步或游泳").replace("ejaculate into someones vagina","射在某人的小穴里").replace("get sperm into your","用精子灌入自己的").replace(" vagina","阴道").replace(" anus","菊花").replace("get your own sperm into your","用自己的精子灌入自己的").replace("masturbate and orgasm at least","自慰高潮至少").replace(" five times","5次").replace(" ten times","10次")>>。</span>
+	<</if>>
+	<br>
+<<else>>
+	<<MaplebirchIcon "SydneyBed">><<link [[脱光并爬到悉尼床上|Temple Sydney Bed]]>><<undressSleep "temple sydney bed">><</link>>
+	<br>
+	<<if $earSlime.alwaysSleepNaked is false>>
+		<<MaplebirchIcon "SydneyBed">><<link [[爬到悉尼床上|Temple Sydney Bed]]>><</link>>
+	<<else>>
+		<<icon "cross.png" "infront">>
+		<<MaplebirchIcon "SydneyBed">>
+		<<if $possessed>>
+			<span class="purple">史莱姆很安静。</span>
+		<<else>>
+			<span class="purple">史莱姆不允许你在穿着衣服的情况下睡觉。</span>
+		<</if>>
+	<</if>>
+	<br>
+<</if>>
+
+<br>
+<<templeicon "quarters">><<link [[你的床铺|Temple Bunk]]>><</link>>
+<br><br>
+<<MaplebirchIcon "getouticon">><<link [[离开|Temple Quarters]]>><</link>>
+
+:: Temple Sydney Bed
+<<set $bus to "temple_sydney_bed">><<effects>>
+
+<<if isMaplebirchTime("SydneyTempleTime") && $sydney_bed is undefined>>
+	你依偎在悉尼身边。
+<<else>>
+	你偎在被窝里。
+	<<if numberOfEarSlime() and $sydney_bed isnot "player" and random(0,100) lt 3 + Math.floor($earSlime.growth / 100) - $earSlime.eventTimer and !$earSlime.event>>
+		<<set $slimeBedExit to "Temple Sydney Bed">>
+		<<set $slimeBedroomExit to "Temple Sydney Bunk">>
+		<<setSlimeSleepEvents>>
+		<<if $earSlimeEvent>>
+			<<slimeSleepEvents>>
+		<</if>>
+	<</if>>
+<</if>>
+<br><br>
+<<maplebirch_temple_bunk_sleep_options>>
+
+:: Temple Sydney Push
+<<effects>>
+<<set _sydney to C.npc.Sydney>>
+
+你转过身去，把悉尼推开了。
+<<if _sydney.corruption gte random(30, 45)>>
+	<<He>>用手臂搂住你的腰和肩膀，把你的身体拉近。“想让我更粗暴一点吗？”<<he>>边问，边磨蹭你的<<bottom>>。“我没问题。”<<gstress>><<stress 6>><<glust>><<npcincr Sydney lust 2>>
+	<br><br>
+
+	<<link [[再次推开|Temple Sydney Push 2]]>><<def 1>><<npcincr Sydney purity 1>><</link>><<gspurity>>
+	<br>
+	<<link [[顺从|Temple Sydney Go]]>><<sub 1>><<npcincr Sydney purity -3>><</link>><<promiscuous1>><<llspurity>>
+	<br>
+<<else>>
+	<<He>>失望地从床上爬起来。“好吧。。”<<he>>说道，天太黑了，你看不清<<he>>的表情。<<He>>回到了自己的床铺。
+	<br><br>
+
+	<<link [[继续|Temple Bunk Bed]]>><<endevent>><</link>>
+	<br>
+<</if>>
+
+:: Temple Sydney Push 2
+<<effects>>
+
+你把悉尼推开，这次更用力一点。<<He>>快从床上掉了下去。“那行吧，”<<he>>说道。“如果你改变主意了，就来我的床铺吧。”<<He>>回到自己的床铺。
+<br><br>
+
+<<link [[继续|Temple Bunk Bed]]>><<endevent>><</link>>
+<br>
+
+:: Temple Sydney Go
+<<effects>>
+
+<<if $speech_attitude is "meek">>
+	你引导悉尼的手在你的身体上下移动，邀请<<him>>探索着。
+<<elseif $speech_attitude is "bratty">>
+	你向后挤向悉尼的屁股，同时把你的屁股抵在<<his>>的胯下。
+<<else>>
+	你张开双腿，同时用胳膊抱住悉尼。
+<</if>>
+<<promiscuity1>>
+
+ <<he>>受到鼓励后更加大胆，用吻蹂躏着你的浑身。
+ <br><br>
+
+<<link [[继续|Temple Sydney Sex]]>><<set $sexstart to 1>><</link>>
+<br>
+
+:: Temple Sydney Sex
+<<if $sexstart is 1>>
+	<<set $sexstart to 0>>
+	<<consensual>>
+	<<set $consensual to 1>>
+	<<neutral 1>>
+	<<maninit>>
+	<<set $enemytrust += 100>>
+<</if>>
+
+<<effects>>
+<<effectsman>>
+<<man>>
+<<stateman>>
+<br><br>
+
+<<actionsman>>
+<<if _combatend>>
+	<span id="next"><<link [[继续|Temple Sydney Sex Finish]]>><</link>></span><<nexttext>>
+<<else>>
+	<span id="next"><<link [[继续|Temple Sydney Sex]]>><</link>></span><<nexttext>>
+<</if>>
+
+:: Temple Sydney Sex Finish
+
+<<set $outside to 0>><<effects>>
+<<if $enemyarousal gte $enemyarousalmax>>
+	<<ejaculation>>
+	悉尼翻了个身。<<lllust>><<npcincr Sydney lust -5>><<npcincr Sydney love 1>><<glove>>
+	<<if $bus is "temple_sydney_bed">>
+		<<unset $sydney_bed>>
+	<<else>>
+		<<set $sydney_bed to "player">>
+	<</if>>
+	<br><br>
+
+	<<tearful>>你感觉<<his>>紧紧地贴着你。
+	<br><br>
+
+	<<clotheson>>
+	<<endcombat>>
+	<<if $bus is "temple_sydney_bed">>
+		<<link [[继续|Temple Sydney Bed]]>><</link>>
+	<<else>>
+		<<link [[继续|Temple Bunk Bed]]>><</link>>
+	<</if>>
+	<br>
+<<elseif $enemyhealth lte 0>>
+	<<if $bus is "temple_sydney_bed">>
+		你一把将悉尼推下床，然后从另一边爬了下去。“你想要激烈到这种程度吗？”<<he>>说道，一边在床单下面动来动去。<<llove>><<npcincr Sydney love -1>>
+		<br><br>
+
+		<<tearful>>你回到自己的床铺。
+		<br><br>
+		<<clotheson>>
+		<<endcombat>>
+
+		<<link [[继续|Temple Bunk]]>><<storeon "temple sydney bed" "check">><<if _store_check is 1>><<storeon "temple sydney bed">><<set $wardrobe_location to "temple">><<wardrobeSelection>><</if>><</link>>
+		<br>
+	<<else>>
+		你一把将悉尼推下床。“你想要激烈到这种程度吗？”<<he>>说道。太黑了，你看不见<<his>>的表情。<<He>>回自己的床铺去了。<<llove>><<npcincr Sydney love -1>>
+		<br><br>
+
+		<<tearful>>你尝试继续去睡觉。
+		<br><br>
+		<<clotheson>>
+		<<endcombat>>
+
+		<<link [[继续|Temple Bunk Bed]]>><</link>>
+	<</if>>
+<<else>>
+	<<if $bus is "temple_sydney_bed">>
+		你从床上爬起来。“随便你咯，”<<he>>说道。<<tearful>>你回到自己的床铺。
+		<br><br>
+
+		<<clotheson>>
+		<<endcombat>>
+		<<link [[继续|Temple Bunk]]>><<storeon "temple sydney bed" "check">><<if _store_check is 1>><<storeon "temple sydney bed">><<set $wardrobe_location to "temple">><<wardrobeSelection>><</if>><</link>>
+	<<else>>
+		悉尼从床上爬起来。“随便你咯，”<<he>>说道，“想和我来一发的时候，你知道该怎么做。”
+		<br><br>
+
+		<<tearful>>你尝试继续去睡觉。
+		<br><br>
+
+		<<clotheson>>
+		<<endcombat>>
+		<<link [[继续|Temple Bunk Bed]]>><</link>>
+	<</if>>
+<</if>>
+
+:: Temple Sydney Somno
+<<effects>>
+
+你开始轻轻地在悉尼的胯部磨蹭你的屁股。<<His>>身体抽搐一下，开始在你耳边呻吟。你小心移动以免吵醒<<him>>。<<promiscuity4>><<arousal 1000 "bottom">>
+
+悉尼把你的身体抓得更紧，更快地拱起了你的屁股。
+<br><br>
+
+<<link [[继续|Temple Sydney Somno 2]]>><<set $phase to 0>><</link>>
+<br>
+<<link [[给悉尼口交|Temple Sydney Somno 2]]>><<set $phase to 1>><</link>><<if $NPCList[0].penis isnot "none">><<oralvirginitywarning>><</if>>
+<br>
+<<link [[给悉尼手交|Temple Sydney Somno 2]]>><<set $phase to 2>><</link>>
+
+:: Temple Sydney Somno 2
+<<effects>>
+
+<<if $phase is 0>> /* 继续前进 */
+	你继续顶着<<his>>衣物下的<<if $NPCList[0].vagina isnot "none" && $NPCList[0].penis isnot "none">>鸡巴和小穴<<elseif $NPCList[0].penis isnot "none">>鸡巴<<else>>小穴<</if>>。悉尼喃喃着，你听不清，但依稀辨认得出“同修”这个词。一想到悉尼正做着你的春梦，你就兴奋得浑身发抖。<<arousal 2500 "bottom">><<ggarousal>>
+	<br><br>
+	<<if $speech_attitude is "meek">>
+		你很快发现自己正渴求着悉尼的<<if $NPCList[0].vagina isnot "none" && $NPCList[0].penis isnot "none">>鸡巴和小穴<<elseif $NPCList[0].penis isnot "none">>鸡巴<<else>>小穴<</if>>，不得不捂住嘴来阻止自己。
+	<<elseif $speech_attitude is "bratty">>
+		你默默忍住，不小心漏出一声呻吟。
+	<<else>>
+		你捂住嘴呻吟着。“悉尼……”你低声说道。
+	<</if>>
+<<elseif $phase is 1>> /* 给悉尼口活 */
+	你深吸一口气，小心地移动悉尼的胳膊，来让自己得以移动。慢慢地，你转过身面向了悉尼。<<He>>继续紧贴着你磨蹭着，但<<his>>的速度慢了下来。你继续向被子里滑去，直到你的脸接近了<<his>>的胯部。你用手指靠近<<his>>的<<if $NPCList[0].vagina isnot "none" && $NPCList[0].penis isnot "none">>鸡巴和小穴<<elseif $NPCList[0].penis isnot "none">>鸡巴<<else>>小穴<</if>>，把它移到脸前。你将自己的嘴唇凑近<<his>>的<<if $NPCList[0].vagina isnot "none" && $NPCList[0].penis isnot "none">>肉棒和阴蒂<<elseif $NPCList[0].penis isnot "none">>肉棒<<else>>阴蒂<</if>>，开始温柔地舔弄。
+	<br><br>
+	悉尼抽动了一下，将<<his>>的<<if $NPCList[0].vagina isnot "none" && $NPCList[0].penis isnot "none">>肉棒和小穴<<elseif $NPCList[0].penis isnot "none">>肉棒<<else>>小穴<</if>>贴向你的嘴唇。你张开嘴，<<if $NPCList[0].penis isnot "none">>让<<his>>的肉棒插进了你的嘴里<<else>>开始吮吸<<his>>的阴蒂<</if>>。<<if $NPCList[0].penis isnot "none" and $player.virginity.oral is true>><<takeVirginity "Sydney" "oral">><</if>>
+	<br><br>
+	<<if $speech_attitude is "meek">>
+		<<His>>的<<if $NPCList[0].vagina isnot "none" && $NPCList[0].penis isnot "none">>精前液和淫液<<elseif $NPCList[0].penis isnot "none">>精前液<<else>>淫液<</if>>开始充斥你的口腔，你也喘息起来。你将双腿挤压并拢，试图处理自己高涨的兴奋感。
+	<<elseif $speech_attitude is "bratty">>
+		你用的牙齿划过<<his>>的<<if $NPCList[0].vagina isnot "none" && $NPCList[0].penis isnot "none">>柱身和阴蒂<<elseif $NPCList[0].penis isnot "none">>柱身<<else>>阴蒂<</if>>，<<him>>随之进一步挺动了<<his>>的腰部。随着<<his>>的动作，你差点被噎到，但你还是<<if $NPCList[0].vagina isnot "none" && $NPCList[0].penis isnot "none">>含着<<his>>的肉棒喘了口气并喘着气亲吻起<<his>>的阴蒂<<elseif $NPCList[0].penis isnot "none">>含着<<his>>的肉棒喘了口气<<else>>喘着气亲吻起<<his>>的阴蒂<</if>>。
+	<<else>>
+		你顺着<<his>>的<<if $NPCList[0].vagina isnot "none" && $NPCList[0].penis isnot "none">>肉棒和阴蒂<<elseif $NPCList[0].penis isnot "none">>肉棒<<else>>阴蒂<</if>>往下舔，品味着<<his>>的<<if $NPCList[0].vagina isnot "none" && $NPCList[0].penis isnot "none">>精前液和淫液<<elseif $NPCList[0].penis isnot "none">>精前液<<else>>淫液<</if>>。你感到自己双腿间升起的温度，催促着你继续更进一步。你舔得越来越快，过程中不时吮吸<<his>>的<<if $NPCList[0].vagina isnot "none" && $NPCList[0].penis isnot "none">>龟头和花蕾<<elseif $NPCList[0].penis isnot "none">>龟头<<else>>花蕾<</if>>。
+	<</if>>
+	<<arousal 1500 "mouth">><<garousal>>
+<<else>> /* 给悉尼手活 */
+	你在悉尼怀中想办法找到一丝空间，然后转动了身体。<<Hes>>仍然在磨蹭你，但速度慢了下来。你挪动到了<<his>>的胯下，将自己的手滑入<<his>>的下体。<<His>>的<<if $NPCList[0].vagina isnot "none" && $NPCList[0].penis isnot "none">>肉棒和小穴<<elseif $NPCList[0].penis isnot "none">>肉棒<<else>>小穴<</if>>已经因为<<if $NPCList[0].vagina isnot "none" && $NPCList[0].penis isnot "none">>精前液和淫液<<elseif $NPCList[0].penis isnot "none">>精前液<<else>>淫液<</if>>湿了。
+	<br><br>
+	<<if $NPCList[0].vagina isnot "none" && $NPCList[0].penis isnot "none">>
+		你一只手抓起<<print $NPCList[0].penisdesc>>，另一只手用两根手指插进悉尼的阴道，你用平稳的速度开始撸动<<his>>的肉棒。悉尼的身体抽动呻吟着，<<his>>的胳膊环住你将你固定住，让你的身体紧贴在<<his>>身上。<<His>>的腰配合着你的动作开始挺动。
+		<br><br>
+		<<if $speech_attitude is "meek">>
+			你一只手温柔地将龟头包裹在手里，开始用手指摩擦着上面的缝隙。另一只手用拇指轻抚<<his>>的阴蒂，专注于抽插手指。悉尼嘴里漏出一丝轻轻的呻吟，这让你无比性奋。<<his>>嘴角稍微流出一丝口水。“你……你太可爱了……”你低声说着。
+		<<elseif $speech_attitude is "bratty">>
+			你玩弄着<<his>>的肉棒和<<his>>的阴蒂，并不时挤压肉棒根部。你突然想到一个主意，不禁坏笑起来。你又滑入两根手指，继续加速撸动<<him>>的肉棒。<<He>>在睡梦中呜咽起来，但仍继续渴望地顶向你的手指。
+		<<else>>
+			你撸动着<<his>>的肉柱，用手指轻抚<<his>>的睾丸并用拇指逗弄着悉尼的阴蒂。悉尼在你的抚摸下抽动着，轻轻喘着气。<<He>>在你手中耸动着身体，而你继续玩弄着<<him>>肉棒和小穴。“睡着了你也这么兴奋，”你一边低语，一边加快了动作。
+		<</if>>
+		<<arousal 1500>><<garousal>>
+	<<elseif $NPCList[0].penis isnot "none">>
+		你抓起<<print $NPCList[0].penisdesc>>，用平稳的速度开始撸动<<his>>的肉棒。悉尼的身体抽动起来，<<his>>的胳膊环住你将你固定住，让你的身体紧贴在<<his>>身上。<<His>>的腰配合着你的动作开始挺动。
+		<br><br>
+		<<if $speech_attitude is "meek">>
+			你温柔地将龟头包裹在手里，开始用手指摩擦着上面的缝隙。悉尼嘴里漏出一丝轻轻的呻吟，<<his>>嘴角稍微流出一丝口水。“你……你太可爱了……”你一边低声说着，一边将另一只空闲的手向下游移，开始摩擦你自己的下体。
+		<<elseif $speech_attitude is "bratty">>
+			你玩弄着<<his>>的肉棒，并不时挤压肉棒根部。<<He>>咕哝着呻吟起来，将头埋进了你的肩膀。你忍住一声轻笑，然后继续撸动<<him>>。
+		<<else>>
+			你撸动着<<his>>的肉柱，用手指轻抚<<his>>的睾丸。悉尼在你的抚摸下抽动着，轻轻喘着气。<<He>>在你手中耸动着身体，而你继续玩弄着<<him>>。“就算睡着了，你还是兴奋起来了吗，”你一边低语，一边加快了动作。
+		<</if>>
+		<<arousal 1500>><<garousal>>
+	<<else>>
+		你把两根手指插进悉尼的阴道，感受到<<he>>紧紧包裹着你。<<His>>双臂锁住你的肩膀，把你压向<<his>>的身体。<<His>>的臀部开始顶向你的手。
+		<br><br>
+		<<if $speech_attitude is "meek">>
+			你用拇指轻抚<<his>>的阴蒂，专注于抽插手指。悉尼喘息呻吟着，让你更加性奋。你另一只手探向自己腿间，在胯下摩擦起来。“你、你太可爱了……”你轻声说道。
+		<<elseif $speech_attitude is "bratty">>
+			你抽插着手指，偶尔停下来捏捏<<his>>的阴蒂。<<He>>在睡梦中呜咽起来，但仍继续渴望地顶向你的手指。你突然想到一个主意，不禁坏笑起来。你又滑入两根手指，让节奏平稳前进。悉尼的喘息和呻吟加快着，<<he>>把脸埋进你的肩膀。
+		<<else>>
+			你用拇指逗弄着悉尼的阴蒂。在你的触碰下，<<He>>抽搐起来，继续顶向你的手指。你又加了根手指，<<his>>呻吟得更频繁了。“睡着了你也这么兴奋，”你低声说道。
+		<</if>>
+		<<arousal 1500>><<garousal>>
+	<</if>>
+<</if>>
+<br><br>
+
+<<if $arousal gte $arousalmax>>
+	<<link [[继续 |Temple Sydney Somno Orgasm]]>><</link>>
+<<elseif $rng gte 50>> /* Sydney wake up */
+	<<link [[继续 |Temple Sydney Somno Wake]]>><</link>>
+<<else>>
+	<<link [[继续 |Temple Sydney Somno 3]]>><</link>>
+<</if>>
+
+:: Temple Sydney Somno 3
+<<effects>>
+
+<<if $phase is 0>> /* 继续前进 */
+	突然，悉尼的双手抓住了你的手臂。<<His>>的腰最后向你的屁股用力挺动了一下。<<arousal 1500 "bottom">><<garousal>>
+<<elseif $phase is 1>> /* 给悉尼口活 */
+	<<if $NPCList[0].vagina isnot "none" && $NPCList[0].penis isnot "none">>
+		突然间，悉尼向前一挺腰，在你嘴里高潮了。精液充满你的嘴巴，<<His>>淫穴喷出的液体也粘在了你的脖子上。你试着把嘴里的精液吞下去后，用手摸了摸脖子上的液体往嘴里送。<<bodyliquid "mouth" "semen">><<bodyliquid "face" "goo">>
+	<<elseif $NPCList[0].penis isnot "none">>
+		突然间，悉尼向前一挺腰，在你嘴里高潮了。你试着把液体吞了下去。<<bodyliquid "mouth" "semen">>
+	<<else>>
+		突然间，悉尼挺腰，让身体贴住你的嘴。<<His>>高潮的液体沾满了你脸。你舔了舔嘴唇，味道出奇的好。 <<bodyliquid "face" "goo">>
+	<</if>>
+	<<arousal 1500>><<garousal>>
+<<else>> /* 给悉尼手活 */
+	<<if $NPCList[0].vagina isnot "none" && $NPCList[0].penis isnot "none">>
+		<<His>>的身体在高潮的愉悦中痉挛着，你感觉到液体涌出悉尼的阴道，随之是<<he>>高潮极乐中的痉挛，在床单上留下了一点湿斑，你的手也被液体洒满。
+		<<arousal 1500 "mouth">><<garousal>>
+		<<if random(0,1) is 1>><<bodyliquid "rightarm" "semen">><<bodyliquid "rightarm" "goo">><<else>><<bodyliquid "leftarm" "semen">><<bodyliquid "leftarm" "goo">><</if>>
+		<br><br>
+		<<His>>抓握的力道减轻了，最终放开了你。
+	<<elseif $NPCList[0].penis isnot "none">>
+		<<His>>的身体在高潮的愉悦中痉挛着，你的手被液体洒满。<<arousal 1500 "mouth">><<garousal>><<if random(0,1) is 1>><<bodyliquid "rightarm" "semen">><<else>><<bodyliquid "leftarm" "semen">><</if>>
+		<br><br>
+		<<His>>抓握的力道减轻了，最终放开了你。
+	<<else>>
+		你感觉到液体涌出悉尼的阴道，随之是<<he>>高潮极乐中的痉挛，在床单上留下了一点湿斑。<<arousal 1500>><<garousal>><<if random(0,1) is 1>><<bodyliquid "rightarm" "goo">><<else>><<bodyliquid "leftarm" "goo">><</if>>
+	<</if>>
+<</if>>
+<br><br>
+
+<<if $arousal gte $arousalmax>>
+	<<link [[继续 |Temple Sydney Somno Orgasm]]>><</link>>
+<<else>>
+	<<if $phase is 0>>
+		兴奋渐渐从<<his>>身上褪去，<<he>>叹了口气，显然已经高潮了。<<He>>靠在你身上，你微笑起来。<<stress -6>><<lstress>>
+	<<else>>
+		<<if $NPCList[0].vagina isnot "none" && $NPCList[0].penis isnot "none">>
+			你将<<his>>的肉棒放回了原位并回到悉尼的怀中躺好。
+		<<elseif $NPCList[0].penis isnot "none">>
+			你将<<his>>的肉棒放回了原位。
+		<<else>>
+			你回到悉尼的怀中躺好。
+		<</if>>
+	<</if>>
+	<br><br>
+	之后，你很快就睡着了。
+	<br><br>
+
+	<<link [[继续|Temple Sydney Bed]]>><<set $sydneySomno to 0>><<endevent>><</link>>
+<</if>>
+
+:: Temple Sydney Somno Orgasm
+<<effects>>
+
+你自身的快感太过激烈了。
+<<orgasm>>
+<<if $phase is 0>> /* 继续前进 */
+	悉尼的臀部继续磨蹭着你，你仍然在自己高潮的快感中，而<<he>>则用你的身体满足着<<himself>>的兴奋。
+<<elseif $phase is 1>> /* 给悉尼口活 */
+	你等待着自己高潮的快感消退，而悉尼继续用你的嘴摩擦着。
+<<else>> /* 给悉尼手活 */
+	在你的高潮褪去的过程中，
+	<<if $NPCList[0].vagina isnot "none" && $NPCList[0].penis isnot "none">>
+		你一边紧紧抓着<<his>>的鸡巴，一边将手指深深插入悉尼的小穴。
+	<<elseif $NPCList[0].penis isnot "none">>
+		你紧紧抓着<<his>>的鸡巴。
+	<<else>>
+		你将手指深深插入悉尼的小穴。
+	<</if>>
+<</if>>
+<br><br>
+你回到<<his>>的怀中，迷迷糊糊睡着了。
+<br><br>
+
+<<link [[继续|Temple Sydney Bed]]>><<endevent>><</link>>
+
+:: Temple Sydney Somno Wake
+<<effects>>
+
+一个不属于你的声音响起，你僵住了。“……挚爱？”<<stress 3>><<gstress>><<arousal 300>><<garousal>>
+<br><br>
+悉尼听起来仍然很困，但也有些尴尬。“你在干什么……？”
+<br><br>
+<<if $phase is 0>> /* 继续前进 */
+	<<if $speech_attitude is "meek">>
+		“我……你睡觉的时候一直磨我……”你喃喃地说。
+	<<elseif $speech_attitude is "bratty">>
+		“你像发情的可爱小狗一样蹭我的屁股。所以我觉得该帮你点忙，”你窃笑着，把你的屁股进一步顶进<<his>>的胯部。
+	<<else>>
+		“你把我拱醒了。我觉得我应该帮点忙，”你直截了当地回答。
+	<</if>>
+<<elseif $phase is 1>> /* 给悉尼口活 */
+	<<if $NPCList[0].vagina isnot "none" && $NPCList[0].penis isnot "none">>
+		<<if $speech_attitude is "meek">>
+			你瞪大双眼，抬头看向悉尼。你犹豫了一会儿，然后迅速把嘴从悉尼的鸡巴和外阴上移开。“我……你看起来很压抑，所以我想帮你……”你喃喃自语，精液还在从你嘴里滴下来。
+		<<elseif $speech_attitude is "bratty">>
+			你坏笑着把悉尼的鸡巴从嘴里吐出来。“你的小老弟在你睡觉的时候老戳我，小朋友也弄得到处滑溜溜的，所以我觉得帮个忙，”你一边舔着嘴唇上的精液一边说。
+		<<else>>
+			你把悉尼的鸡巴从嘴里吐出来。“你在睡觉时简直是搭了一个帐篷且湿的一塌糊涂。我只是想帮你，”你说。
+		<</if>>
+	<<elseif $NPCList[0].penis isnot "none">>
+		<<if $speech_attitude is "meek">>
+			你瞪大双眼，抬头看向悉尼。你犹豫了一会儿，然后迅速把嘴从悉尼的鸡巴上移开。“我……你看起来很压抑，所以我想帮你……”你喃喃自语，精液还在从你嘴里滴下来。
+		<<elseif $speech_attitude is "bratty">>
+			你坏笑着把悉尼的鸡巴从嘴里吐出来。“你的小老弟在你睡觉的时候老戳我，所以我觉得帮个忙，”你一边舔着嘴唇上的精液一边说。
+		<<else>>
+			你把悉尼的鸡巴从嘴里吐出来。“你在睡觉时简直是搭了一个帐篷。我只是想帮忙，”你说。
+		<</if>>
+	<<else>>
+		<<if $speech_attitude is "meek">>
+			你瞪大双眼，抬头看向悉尼。你犹豫了一下，把嘴从悉尼的外阴上移开。“我……你真的好湿，所以我想帮你……”你喃喃着，擦去下巴上的淫液。
+		<<elseif $speech_attitude is "bratty">>
+			你坏笑着把嘴从悉尼的外阴移开。“你的小朋友在你睡觉的时候弄得到处滑溜溜的，所以我觉得得帮个忙，”你一边舔着嘴唇上的淫液一边说。
+		<<else>>
+			你把嘴从悉尼的外阴上挪开。“我感觉到你湿了。我只是想帮你，”你说。
+		<</if>>
+	<</if>>
+<<else>> /* 给悉尼手活 */
+	<<if $NPCList[0].vagina isnot "none" && $NPCList[0].penis isnot "none">>
+		<<if $speech_attitude is "meek">>
+			你惊叫一声，僵在原地。你把手指从悉尼的阴道里抽出来，并放开<<his>>的鸡巴，把手移开。“我……你好像很压抑，所以我只是想帮你……”你低声说着，把脸埋在枕头里。
+		<<elseif $speech_attitude is "bratty">>
+			你咯咯笑着，把手从悉尼的鸡巴上和阴道里移开，捏了捏<<his>>的屁股。“你的小老弟和小朋友真的很饥渴，我得动手帮忙，”你坏笑着说。
+		<<else>>
+			听到悉尼的声音，你跳了起来，把手从<<his>>的鸡巴上和阴道里移开。“你睡觉的时候一直拱我的屁股。我想帮你，”你微笑着说。
+		<</if>>
+	<<elseif $NPCList[0].penis isnot "none">>
+		<<if $speech_attitude is "meek">>
+			你惊叫一声，僵在原地。你放开<<his>>的鸡巴，把手移开。“我……你好像很压抑，所以我只是想帮你……”你低声说着，把脸埋在枕头里。
+		<<elseif $speech_attitude is "bratty">>
+			你咯咯笑着，把手从悉尼的鸡巴上移开，捏了捏<<his>>的屁股。“你的小老弟需要我动手帮助，仅此而已，”你坏笑着说。
+		<<else>>
+			听到悉尼的声音，你跳了起来，把手从<<his>>的鸡巴上移开。“你睡觉的时候一直拱我的屁股。我想帮你，”你微笑着说。
+		<</if>>
+	<<else>>
+		<<if $speech_attitude is "meek">>
+			你惊叫一声，僵在原地。你把手指从悉尼的阴道里抽出来，把手移开。“我……你一直蹭我，所以我只是想帮你……”你喃喃道，把脸埋在枕头里。
+		<<elseif $speech_attitude is "bratty">>
+			你咯咯笑着，把手指从悉尼的阴道里移开，捏了捏<<his>>的屁股。“你的小朋友刚才真的很饥渴，我得动手帮忙，”你坏笑着说。
+		<<else>>
+			听到悉尼的声音，你跳了起来，把手指从<<his>>的阴道里移开。“你睡觉的时候一直蹭我。我想帮你，”你微笑着说。
+		<</if>>
+	<</if>>
+<</if>>
+<br><br>
+<<if C.npc.Sydney.love lte 20>>
+	悉尼把你从床上推到地板上。<<pain 8>><<ggpain>>
+	<br><br>
+	<<He>>坐起身俯视着你。	
+	“你，你到底在想什么？我……回你自己的床上去睡吧，”悉尼愤怒地说道。
+	<<npcincr Sydney love -1>><<llove>>
+	<br><br>
+	悉尼目不转睛地看着你。今晚不会让你到<<He>>床上过夜了。
+	<br><br>
+
+	<<set $sydney_bed_spurned to 1>>
+
+	<<link [[继续|Temple Sydney Bed]]>><<set $sydneySomnoAngry to 0>><<endevent>><</link>>
+<<else>>
+	悉尼变得满脸通红。<<He>>努力想说点什么。
+	“我……你没必要这样帮我……你能做完吗？”悉尼低声说道，然后用鼻子蹭了蹭你的脸颊。
+	<br><br>
+
+	<<link [[答应|Temple Sydney Somno Wake 2]]>><</link>>
+	<br>
+	<<link [[拒绝|Temple Sydney Somno Wake Reject]]>><</link>>
+<</if>>
+
+:: Temple Sydney Somno Wake 2
+<<effects>>
+
+<<if $phase is 0>> /* 继续前进 */
+	你立刻继续把屁股顶向悉尼胯下。
+	<<if $player.penisExist or $worn.genitals.name is "chastity parasite">>
+		<<He>>将手滑向你的<<if $worn.genitals.name is "chastity parasite">>$worn.genitals.cn_name_cap开始抚摸<<else>>肉棒开始撸动<</if>>。<<He>>挤压的力气不时变得很大，而<<he>>自己也呻吟着。
+		<<arousal 5000 "genitals">><<gggarousal>>
+	<<else>>
+		悉尼揉弄你的<<breasts>>。<<He>>不时玩捏你的乳头，同时发出呻吟。
+		<<arousal 5000 "breasts">><<gggarousal>>
+	<</if>>
+<<elseif $phase is 1>> /* 给悉尼口活 */
+	你立刻回到了悉尼胯部的位置。
+	<<if C.npc.Sydney.vagina isnot "none" && C.npc.Sydney.penis isnot "none">>
+		你在<<his>>肉棒的头部亲吻了一下，又吻了一下<<his>>的阴蒂，然后一下把整根长度的肉棒都含进嘴里，<<him>>呻吟起来。
+	<<elseif C.npc.Sydney.penis isnot "none">>
+		你在<<his>>肉棒的头部吻了一下，然后一下把整根长度都含进嘴里，<<him>>呻吟起来。
+	<<else>>
+		你亲吻了一下<<his>>的阴蒂，然后伸出舌头开始探索<<his>>的缝隙。你将舌头埋进<<his>>的阴部，<<his>>呻吟起来。
+	<</if>>
+	你感觉到<<his>>的手放到了你的后脑勺上，鼓励着你继续进一步。
+	<<arousal 5000 "mouth">><<gggarousal>>
+<<else>> /* 给悉尼手活 */
+	<<if C.npc.Sydney.vagina isnot "none" && C.npc.Sydney.penis isnot "none">>
+		你用一只手手包裹悉尼的肉棒，另一只手用手指插进悉尼的阴道，开始快速上下抚摸<<his>>的鸡巴并粗暴地指交<<him>>。
+	<<elseif C.npc.Sydney.penis isnot "none">>
+		你用手包绕悉尼的肉棒，开始快速上下抚摸<<his>>的鸡巴。
+	<<else>>
+		你把手指插进悉尼的阴道，粗暴地指交着<<him>>。
+	<</if>>
+	<br><br>
+
+	<<if $worn.genitals.name is "chastity parasite">>
+		悉尼用手包裹着你的$worn.genitals.cn_name_cap挤压起来。<<arousal 5000 "genitals">><<gggarousal>>
+	<<elseif playerChastity()>>
+		你感觉<<him>>在微微颤抖。<<arousal 2000>><<ggarousal>>
+	<<elseif $player.penisExist && $player.vaginaExist>>
+		悉尼用手握住你的鸡巴上下抚摸着，并将手指塞进你的阴道开始抽插。<<arousal 5000 "genitals">><<gggarousal>>
+	<<elseif $player.penisExist>>
+		悉尼用手握住你的鸡巴，上下抚摸起来。<<arousal 5000 "genitals">><<gggarousal>>
+	<<elseif $player.vaginaExist>>
+		悉尼将手指塞进你的阴道开始抽插。<<arousal 5000 "genitals">><<gggarousal>>
+	<</if>>
+<</if>>
+<br><br>
+
+<<link [[继续|Temple Sydney Somno Wake 3]]>><</link>>
+
+:: Temple Sydney Somno Wake 3
+<<effects>>
+
+<<if $phase is 0>> /* 继续前进 */
+	悉尼继续抚摸着你，直到最后，你终于将<<him>>推向了高潮。<<He>>猛烈地用胯部紧紧贴向你。
+<<elseif $phase is 1>> /* 给悉尼口活 */
+	悉尼紧紧抓住你的后脑勺，<<he>>高潮的液体洒在了你的嘴里。
+	<<if C.npc.Sydney.vagina isnot "none" && C.npc.Sydney.penis isnot "none">>
+		<<bodyliquid "mouth" "semen">><<bodyliquid "mouth" "goo">>
+	<<elseif C.npc.Sydney.penis isnot "none">>
+		<<bodyliquid "mouth" "semen">>
+	<<else>>
+		<<bodyliquid "mouth" "goo">>
+	<</if>>
+<<else>> /* 给悉尼手活 */
+	悉尼呻吟着，
+	<<if playerChastity()>>
+		<<if $worn.genitals.name is "chastity parasite">>
+			在你的$worn.genitals.cn_name_cap上射精，
+		<</if>>
+	<<elseif $player.penisExist && $player.vaginaExist>>
+		紧紧地抓着你的鸡巴并深深抽插着你的阴道，
+	<<elseif $player.penisExist>>
+		紧紧抓着你的鸡巴，
+	<<elseif $player.vaginaExist>>
+		深深抽插着你的阴道，
+	<</if>>
+	在你的手上高潮了。
+	<<if C.npc.Sydney.vagina isnot "none" && C.npc.Sydney.penis isnot "none">>
+		<<if random(0,1) is 1>><<bodyliquid "rightarm" "semen">><<bodyliquid "rightarm" "goo">><<else>><<bodyliquid "leftarm" "semen">><<bodyliquid "leftarm" "goo">><</if>>
+	<<elseif C.npc.Sydney.penis isnot "none">>
+		<<if random(0,1) is 1>><<bodyliquid "rightarm" "semen">><<else>><<bodyliquid "leftarm" "semen">><</if>>
+	<<else>>
+		<<if random(0,1) is 1>><<bodyliquid "rightarm" "goo">><<else>><<bodyliquid "leftarm" "goo">><</if>>
+	<</if>>
+<</if>>
+<br><br>
+
+<<if $arousal gte $arousalmax>>
+	<<orgasm>>
+	你喘着气，从高潮中平静下来。悉尼露出狡黠的微笑。
+	<br><br>
+<</if>>
+
+悉尼将你抱回怀里。“你感觉怎么样，挚爱？”<<He>>边说边和你碰了碰头。你靠在枕头上放松下来，悉尼吻了吻你的额头。“晚安，挚爱。”
+<br><br>
+
+<<link [[继续|Temple Sydney Bed]]>><<set $sydneySomno to 1>><<endevent>><</link>>
+
+:: Temple Sydney Somno Wake Reject
+<<effects>>
+
+<<if $speech_attitude is "meek">>
+	“明……明天再说吧，悉尼，”你温顺地回答。
+<<elseif $speech_attitude is "bratty">>
+	“我想要睡觉，我们可以明天再做，”你哼了一下。
+<<else>>
+	“现在不行。明天吧。”你说。
+<</if>>
+<br><br>
+<<if C.npc.Sydney.corruption >= 20>>
+	悉尼叹了口气，沉默了一会儿。“别这样，就现在吧。你难道不想知道我刚才梦见了什么吗？”<<His>>的手一路向下游移，开始揉你的屁股。
+	<br><br>
+
+	<<link [[推开|Temple Sydney Somno Wake Pushy]]>><<npcincr Sydney purity 1>><</link>><<gspurity>>
+	<br>
+	<<link [[屈服|Temple Sydney Somno Wake Sex]]>><<npcincr Sydney purity -1>><<set $sexstart to 1>><</link>><<lspurity>>
+<<else>>
+	悉尼撅了撅嘴，但没有进一步强迫你。“好吧，晚安，同修。”悉尼亲了亲你的脸颊，然后翻了个身。
+	<br><br>
+
+	<<link [[继续|Temple Sydney Bed]]>><<set $sydneySomno to 2>><<endevent>><</link>>
+<</if>>
+
+:: Temple Sydney Somno Wake Wholesome
+<<effects>>
+
+<<if $speech_attitude is "meek">>
+	你从悉尼身旁移开。“悉，悉尼……请醒醒吧，”你说着用脚拍拍<<his>>的大腿。
+<<elseif $speech_attitude is "bratty">>
+	“悉尼，醒醒吧你，你这小色鬼，”你用着有些生气的语气说着，碰了<<him>>一下。
+<<else>>
+	你叹了口气。“悉尼，醒醒。”你推了推<<his>>的肩膀。
+<</if>>
+<br><br>
+悉尼咕哝着，打了个呵欠。<<He>>把你抱得更紧，头靠在你肩上。“出什么事了？”<<He>>挪了挪，当意识到自己干了些什么时，<<he>>僵住了。“操……”你翻身看着悉尼。
+<br><br>
+<<if C.npc.Sydney.lust gte 20>>
+	<<He>>来回打量着你和自己胯下。“来场夜间骑行怎么样？”<<He>>窃笑着问。
+	<br><br>
+
+	<<link [[接受|Temple Sydney Somno Wake Sex]]>><<set $sexstart to 1>><</link>>
+	<br>
+	<<link [[拒绝|Temple Sydney Somno Wake Reject]]>><</link>>
+<<else>>
+	<<He>>挪开目光，转身把背对向你。<<He>>咕哝着道歉，然后用被褥把自己盖得严严实实。
+	<br><br>
+
+	<<link [[继续|Temple Sydney Bed]]>><<endevent>><</link>>
+<</if>>
+
+:: Temple Sydney Somno Wake Sex
+<<if $sexstart is 1>>
+	<<set $sexstart to 0>>
+	<<consensual>>
+	<<set $consensual to 1>>
+	<<neutral 1>>
+	<<maninit>>
+
+	你在悉尼的床铺上紧紧地抱住<<He>>。<<He>>回应着你，疯狂地亲吻你。<<arousal 600>><<garousal>>
+	<<set $enemytrust += 100>>
+<</if>>
+
+<<effects>>
+<<effectsman>>
+<<man>>
+<<stateman>>
+<br><br>
+
+<<actionsman>>
+<<if _combatend>>
+	<span id="next"><<link [[继续|Temple Sydney Somno Wake Sex Finish]]>><</link>></span><<nexttext>>
+<<else>>
+	<span id="next"><<link [[继续|Temple Sydney Somno Wake Sex]]>><</link>></span><<nexttext>>
+<</if>>
+
+:: Temple Sydney Somno Wake Sex Finish
+<<effects>>
+
+<<if $enemyarousal gte $enemyarousalmax>>
+	<<ejaculation>>
+	悉尼把你拉到身前，将你紧紧地抱住。<<He>>咕哝了一声“晚安”，就进入了梦乡。<<lllust>><<npcincr Sydney lust -5>>
+	<br><br>
+	<<tearful>>你紧紧地贴着<<He>>的身体。
+	<<set $sydneySomno to 1>>
+<<elseif $enemyhealth lte 0>>
+	悉尼懊恼地嘟着嘴抱怨。“这样真的一点意思都没有。”<<he>>说道，听起来很受伤。<<He>>躺了回去，背对着你。<<llove>><<gspurity>><<npcincr Sydney love -1>><<npcincr Sydney purity 1>>
+	<br><br>
+	<<tearful>>你翻了个身。
+	<<set $sydneySomno to 2>>
+<<else>>
+	悉尼用手捂着嘴。“这样子让我很难睡着啊，”<<he>>不好意思地坏笑道。
+	<br><br>
+	<<He>>把你拉到身前，抱着你。
+	<br><br>
+	<<tearful>>你贴着悉尼睡去。
+	<<set $sydneySomno to 2>>
+<</if>>
+<br><br>
+<<clotheson>>
+<<endcombat>>
+
+<<link [[继续|Temple Sydney Bed]]>><<endevent>><</link>>
+
+:: Temple Sydney Somno Wake Pushy
+<<effects>>
+
+你把悉尼推开，差点把<<him>>推下床铺。<<He>>给了你一个恼怒的眼神，然后翻过身去。“晚安，”你听见<<him>>说道，听起来有点愤愤不平。你挤回到了你原来的位置。
+<br><br>
+<<link [[继续|Temple Sydney Bed]]>><<set $sydneySomno to 2>><<endevent>><</link>>
+
+:: Temple Sydney Somno Let Sleep
+<<effects>>
+
+你试着重新入睡。悉尼继续拱着你的屁股。<<stress 2>><<trauma 2>><<gstress>><<gtrauma>>
+<br><br>
+
+<<link [[继续|Temple Sydney Bed]]>><<endevent>><</link>>
+
+:: Temple Sydney Bunk Confront
+<<effects>>
+
+你踮起脚偷偷走向悉尼地床铺，发现<<him>>在假装睡觉。
+<br><br>
+
+<<if $speech_attitude is "meek">>
+	“你、你不应该那样骚扰我，”你说，“这是不礼貌的。”
+<<elseif $speech_attitude is "bratty">>
+	“你这个小色鬼，”你说道，“要不我对你也做同样的事？”
+<<else>>
+	“别这么变态，”你说。
+<</if>>
+<br><br>
+
+<<if C.npc.Sydney.lust gte 50>>
+	“是又怎么样？”悉尼调戏地回问。
+	<br><br>
+
+	你不知道该说些什么……
+	<br><br>
+
+	<<link [[战斗|Temple Sydney Sex]]>><<set $sexstart to 1>><<npcincr Sydney love 1>><<npcincr Sydney lust 5>><<npcincr Sydney purity -1>><</link>><<glove>><<glust>><<lspurity>>
+	<br>
+	<<link [[回去睡觉|Temple Bunk Bed]]>><<endevent>><</link>>
+<<else>>
+	“我不明白你的意思，”悉尼故作无辜地说道。
+	<br><br>
+
+	你又说了<<him>>几句，但<<he>>坚持否认。虽然最后还是表现出了悔过。
+	<br><br>
+
+	你回到自己的床上。
+	<br><br>
+
+	<<link [[继续|Temple Bunk Bed]]>><<endevent>><</link>>
+<</if>>
+
+:: Temple Sydney Bunk Dalliance
+<<effects>>
+<<set _sydney to C.npc.Sydney>>
+<<set _chest to (_sydney.pronoun === "f" ? _sydney.breastsdesc : "muscular chest")>>
+<<set _genitals to (_sydney.penis !== "none" ? _sydney.penisdesc : "pussy")>>
+
+你等了好一会儿，直到确定悉尼入睡了，然后悄悄走进<<his>>的床铺。你发现<<he>>正仰躺着，<<his>>的被子随着<<his>>的呼吸而起伏。
+<br><br>
+
+	你扯开被子。<<He>>穿着一套<<print (_sydney.pronoun === "f" ? "修士服" : "修女服")>>。
+	<br><br>
+
+	你小心翼翼地不发出声音，把<<print (_sydney.pronoun === "f" ? "修士服" : "修女服")>>从<<his>>身上褪下，<span class="lewd">露出了<<his>>的_genitals。</span>
+
+你把<<He>>的<<print (_sydney.pronoun === "f" ? "修士服" : "修女服")>>抱了起来，发现<<his>>没有穿内裤，你试着<span class="lewd">挑逗着<<He>>的_genitals。</span>
+<<promiscuity3>>
+
+突然，悉尼的手往股间探了探，突然意识到你干了什么。“我、我操，”<<he>>说着，脸颊涨红了。<<He>>伸手去抢<<his>>的<<print (_sydney.pronoun === "f" ? "修士服" : "修女服")>>，但是你从床边一下溜走了。
+<br><br>
+
+<<He>>起身追你，用<<his>>的手遮住自己的_genitals。
+<<He>>没有穿衣服，显露出<<his>>_chest。
+<br><br>
+
+<<link [[归还|Temple Sydney Give]]>><<npcincr Sydney love 1>><</link>><<glove>>
+<br>
+<<link [[继续挑逗|Temple Sydney Tease]]>><<npcincr Sydney lust 10>><<npcincr Sydney purity -2>><</link>><<athleticsdifficulty 1 1000>><<gglust>><<llspurity>>
+<br>
+
+:: Temple Sydney Give
+<<effects>>
+<<set _sydney to C.npc.Sydney>>
+
+你把<<his>>的<<print (_sydney.pronoun === "f" ? "修士服" : "修女服")>>递了回去。
+<<He>>犹豫了一下，好像害怕这是个陷阱，然后一把把它们抢走了。
+<br><br>
+
+<<if $speech_attitude is "meek">>
+	“我、我只是想让你明白被这么做是什么感觉，”你说，转身让<<him>>穿衣服。“我知道你在偷看我睡觉。”
+<<elseif $speech_attitude is "bratty">>
+	“我还以为你喜欢这种下流游戏呢，”你说着，转身让<<him>>穿衣服。
+<<else>>
+	“是你先开始的，”你边说，转身让<<him>>穿衣服，“我知道你喜欢偷看我睡觉。”
+<</if>>
+<br><br>
+
+“我、我不明白你的意思，”悉尼撒谎说道。你觉得<<he>>肯定已经明白你的意思了。
+<br><br>
+
+你回到自己的床上。
+<br><br>
+
+<<link [[继续|Temple Bunk Bed]]>><<endevent>><</link>>
+
+:: Temple Sydney Tease
+<<effects>>
+<<set _sydney to C.npc.Sydney>>
+
+你踩在悉尼的被子上，站在<<him>>和衣柜之间。<<He>>扑向<<his>>的
+<<print (_sydney.pronoun === "f" ? "修士服" : "修女服")>>
+<<if $athleticsSuccess>>
+
+	<span class="green">但你一下把它们拿远了。</span><<He>>不得不同时用一只手遮住自己的大腿之间，因而处于劣势之中。<<glust>><<npcincr Sydney lust 5>>
+	<br><br>
+
+	<<if $speech_attitude is "meek">>
+		“你要为此惩罚我吗？”你揶揄道。
+	<<elseif $speech_attitude is "bratty">>
+		“这很有趣，”你说道。“不是吗？”
+	<<else>>
+		“你想要回来吗？”你问，“或许你可以拿什么来换它们？”
+	<</if>>
+	<br><br>
+
+	悉尼服软了。“你的目的已经达到了，”<<he>>的脸涨得通红。“可以把衣服还给我了。”
+	<br><br>
+
+	<<link [[归还|Temple Sydney Tease Give]]>><<npcincr Sydney love 1>><</link>><<glove>>
+	<br>
+	<<link [[要求演出|Temple Sydney Tease Demand]]>><<npcincr Sydney love -1>><<npcincr Sydney lust 10>><</link>><<llove>><<gglust>>
+	<br>
+<<else>>
+	<span class="red">你手上的东西被强行夺走了。</span><<gspurity>><<npcincr Sydney purity 1>>
+	<br><br>
+
+	<<if $speech_attitude is "meek">>
+		“我、我只是想让你明白被这么做是什么感觉，”你说，转身让<<him>>穿衣服。“我知道你在偷看我睡觉。”
+	<<elseif $speech_attitude is "bratty">>
+		“我还以为你喜欢这种下流游戏呢，”你说着，转身让<<him>>穿衣服。
+	<<else>>
+		“是你先开始的，”你边说，转身让<<him>>穿衣服，“我知道你喜欢偷看我睡觉。”
+	<</if>>
+	<br><br>
+
+	“我、我不明白你的意思，”悉尼撒谎说道。你觉得<<he>>肯定已经明白你的意思了。
+	<br><br>
+
+	你回到自己的床上。
+	<br><br>
+
+	<<link [[继续|Temple Bunk Bed]]>><<endevent>><</link>>
+<</if>>
+
+:: Temple Sydney Tease Give
+<<effects>>
+<<set _sydney to C.npc.Sydney>>
+
+你把<<print (_sydney.pronoun === "f" ? "修士服" : "修女服")>>丢给悉尼。
+
+<<if $speech_attitude is "meek">>
+	“我、我只是想让你明白被这么做是什么感觉，”你说，转身让<<him>>穿衣服。“我知道你在偷看我睡觉。”
+<<elseif $speech_attitude is "bratty">>
+	“我还以为你喜欢这种下流游戏呢，”你说着，转身让<<him>>穿衣服。
+<<else>>
+	“是你先开始的，”你边说，转身让<<him>>穿衣服，“我知道你喜欢偷看我睡觉。”
+<</if>>
+<br><br>
+
+“我、我不明白你的意思，”悉尼撒谎说道。你觉得<<he>>肯定已经明白你的意思了。
+<br><br>
+
+你回到自己的床上。
+<br><br>
+
+<<link [[继续|Temple Bunk Bed]]>><<endevent>><</link>>
+
+:: Temple Sydney Tease Demand
+<<effects>>
+<<set _sydney to C.npc.Sydney>>
+<<set _chest to (_sydney.pronoun is "f" ? _sydney.breastsdesc : "toned chest")>>
+<<set _genitals to (_sydney.penis isnot "none" ? _sydney.penisdesc : "pussy")>>
+
+<<if $speech_attitude is "meek">>
+	“我、我会的，”你说道，“但我要你给我表演一下。”
+<<elseif $speech_attitude is "bratty">>
+	“我会还给你的，”你说道。“如果你能为我表演的话。”
+<<else>>
+	“我会的，”你说道。“如果你能为我表演。”
+<</if>>
+<br><br>
+
+悉尼脸红得更深了。<<He>>用力遮住自己，不自在地移开目光。<<He>>停顿了片刻，把手臂抬了起来。你欣赏了<<his>>的_genitals。
+
+你同样欣赏了<<his>>_chest。
+<br><br>
+
+“满意了？”<<he>>问。
+<br><br>
+
+你把<<print (_sydney.pronoun === "f" ? "修士服" : "修女服")>>丢给了<<him>>。
+
+<<if $speech_attitude is "meek">>
+	“我、我只是想让你明白被这么做是什么感觉，”你说，转身让<<him>>穿衣服。“我知道你在偷看我睡觉。”
+<<elseif $speech_attitude is "bratty">>
+	“我还以为你喜欢这种下流游戏呢，”你说着，转身让<<him>>穿衣服。
+<<else>>
+	“是你先开始的，”你边说，转身让<<him>>穿衣服，“我知道你喜欢偷看我睡觉。”
+<</if>>
+<br><br>
+
+“我、我不明白你的意思，”悉尼撒谎说道。你觉得<<he>>肯定已经明白你的意思了。
+<br><br>
+
+但或许我们可以在床上更进一步。
+<br><br>
+
+<<link [[战斗|Temple Sydney Sex]]>><<set $sexstart to 1>><<npcincr Sydney love 1>><<npcincr Sydney lust 5>><<npcincr Sydney purity -1>><</link>><<glove>><<glust>><<lspurity>>
+<br>
+<<link [[回去睡觉|Temple Bunk Bed]]>><<endevent>><</link>>
+
+:: Temple Sydney Climb
+<<effects>>
+<<set _sydney to C.npc.Sydney>>
+
+你从悉尼边上挪开。
+<<if _sydney.corruption gte random(30, 45)>>
+	<<He>>用手臂搂住你的腰和肩膀，把你的身体拉近。“想让我更粗暴一点吗？”<<he>>边问，边磨蹭你的<<bottom>>。“我没问题。”<<gstress>><<stress 6>><<glust>><<npcincr Sydney lust 2>>
+	<br><br>
+
+	<<link [[挣脱|Temple Sydney Climb 2]]>><<def 1>><<npcincr Sydney purity 1>><</link>><<gspurity>>
+	<br>
+	<<link [[顺从|Temple Sydney Allow]]>><<sub 1>><<npcincr Sydney purity -3>><</link>><<promiscuous1>><<llspurity>>
+	<br>
+<<else>>
+	<<He>>失望地从床上爬起来。“好吧。。”<<he>>说道，天太黑了，你看不清<<he>>的表情。<<He>>回到了自己的床铺。
+	<br><br>
+
+	<<link [[继续|Temple Sydney Bunk]]>><<endevent>><<storeon "temple sydney bed" "check">><<if _store_check is 1>><<storeon "temple sydney bed">><<set $wardrobe_location to "temple">><<wardrobeSelection>><</if>><</link>>
+	<br>
+<</if>>
+
+:: Temple Sydney Climb 2
+<<effects>>
+
+你甩开悉尼的手，挣扎着从床上爬起来。“随便你咯，”<<He>>翻过了身去。
+<br><br>
+
+<<set $sydney_bed_spurned to 1>>
+
+<<link [[继续|Temple Sydney Bunk]]>><<endevent>><<storeon "temple sydney bed" "check">><<if _store_check is 1>><<storeon "temple sydney bed">><<set $wardrobe_location to "temple">><<wardrobeSelection>><</if>><</link>>
+<br>
+
+:: Temple Sydney Allow
+<<effects>>
+<<set _sydney to C.npc.Sydney>>
+
+你挪动你的屁股，<<bottomtext>>用你的<<bottom>>隔着衣服摩擦悉尼的<<if _sydney.vagina isnot "none" && _sydney.penis isnot "none">>阴茎和小穴<<elseif _sydney.penis isnot "none">>阴茎<<else>>小穴<</if>>，它
+<<if currentSkillValue("bottomskill") lt 400>>
+	慢慢变得湿润了。
+<<elseif currentSkillValue("bottomskill") lt 800>>
+	很快就湿掉了。
+<<else>>
+	瞬间就湿润了。
+<</if>>
+<<promiscuity1>>
+
+<<He>>变得更加大胆，用吻蹂躏着你的身子。
+<br><br>
+
+<<link [[继续|Temple Sydney Sex]]>><<set $sexstart to 1>><</link>>
+<br>

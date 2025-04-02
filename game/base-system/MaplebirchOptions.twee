@@ -1,0 +1,125 @@
+:: MaplebirchOptions [widget]
+
+<<widget "MaplebirchOptions">>   
+<div class="settingsHeader options"><span class="MaplebirchMod">秋枫白桦拓展</span></div>
+    <div class="settingsToggleItem">
+	    <label><<MaplebirchIcon "Maplebirch">><<checkbox "$options.bag" false true autocheck>>秋枫白桦行囊袋</label><mouse class="tooltip linkBlue">(?)<span>如果拥有背包，开启后将在侧边栏启用枫桦背包。()</span></mouse>
+    </div>
+<<if $debug is 1>>
+    <div class="MaplebirchGrid">
+    <b>秋枫白桦模组的debug通道：</b><br>
+    </div>
+        <div class="Maplebirchframe">
+            <<link [[一键进入苦难审判|Temple Vigil]]>><</link>>
+            <br>
+            <<link [[一键进入罗宾承诺仪式|Robin Temple Pure]]>><</link>>
+            <br>
+            <<link [[一键进入罗宾月度惩罚|Robin Temple Test]]>><</link>>
+            <br>
+            <<link [[一键进入混乱月度惩罚|Maplebirch Temple Confusion Examination]]>><</link>>
+            <br>
+            <<link [[一键进入湖心岛|Maplebirch Lake Center]]>><</link>>
+            <br>
+            <<link [[一键进入湖心岛你的房间|Lake Island Bedroom]]>><</link>>
+        </div>
+        <div class="Maplebirchframe">
+            <<link [[增加神殿信仰|$passage]]>><<Maplebirchnpcincr Robin holiness 1>><</link>>
+            <br>
+            <<link [[增加异端|$passage]]>><<Maplebirchnpcincr Vivian heresy 1>><</link>>
+            <br>
+            <<link [[增加痴愚|$passage]]>><<Maplebirchnpcincr Vivian moronity 1>><</link>>
+            <br>
+            <<link [[增加真理|$passage]]>><<Maplebirchnpcincr Vivian truth 1>><</link>>
+            <br>
+            <<link [[增加诡谲|$passage]]>><<Maplebirchnpcincr Vivian fraud 1>><</link>>
+        </div>
+         <div class="Maplebirchframe">
+            <<link [[一键崩溃|$passage]]>><<set $Maplebirch.Sanity = 0>><<set $willpower = 0>><<set $stress = 10000>><<set $trauma = 5000>><<set $control = 0>><</link>>
+            <br>
+            <<link [[增加恐惧|$passage]]>><<fear 6>><</link>>
+            <br>
+            <<link [[减少恐惧|$passage]]>><<fear -6>><</link>>
+        </div>
+        <div class="settingsToggleItemWide">
+			<span class="gold">维安</span>
+			<<numberStepper "<<symbol love>>好感" `C.npc.Vivian.love` { callback: value => { C.npc.Vivian.love = value }, max: 150 }>>
+			<<numberStepper "<<symbol lust>>性欲" `C.npc.Vivian.lust` { callback: value => { C.npc.Vivian.lust = value } }>>
+			<<VivianTraitsControl>>
+		</div>
+<</if>>
+
+<hr>
+<</widget>>
+
+<<widget "VivianTraitsControl">>
+  <<set _vivian = C.npc.Vivian>>
+  <!-- 理智（Sanity） -->
+  <<numberStepper "<<maplebirchsymbol sanity>>理智" `_vivian.dom` {
+    callback: value => {
+      _vivian.dom = Math.clamp(value, 0, 200);
+    },
+    min: 0, max: 200, step: 1, percentage: false,
+    valueFormat: value => `<b>${Math.round((value/200)*100)}%</b>`
+  }>> 
+<!-- 异端（Heresy） -->
+  <<numberStepper "<<maplebirchsymbol heresy>>异端" `_vivian.heresy` {
+    callback: value => {
+      _vivian.heresy = Math.clamp(value, 0, 150);
+      _vivian.moronity = 0;
+      _vivian.truth = 0;
+      _vivian.fraud = 0;
+      _vivian.trauma = _vivian.heresy;
+    },
+    min: 0, max: 150, step: 1, 
+    valueFormat: value => `<b>${Math.round((value/150)*100)}%</b>`
+  }>>
+  <!-- 痴愚（Moronity） -->
+  <<numberStepper "<<maplebirchsymbol moronity>>痴愚" `_vivian.moronity` {
+    callback: value => {
+      _vivian.moronity = Math.clamp(value, 0, 150);
+      _vivian.heresy = 0;
+      _vivian.truth = 0;
+      _vivian.fraud = 0;
+      _vivian.trauma = _vivian.moronity;
+    },
+    min: 0, max: 150, step: 1,
+    valueFormat: value => `<b>${Math.round((value/150)*100)}%</b>`
+  }>>
+  <!-- 真理（Truth） -->
+  <<numberStepper "<<maplebirchsymbol truth>>真理" `_vivian.truth` {
+    callback: value => {
+      _vivian.truth = Math.clamp(value, 0, 150);
+      _vivian.heresy = 0;
+      _vivian.moronity = 0;
+      _vivian.fraud = 0;
+      _vivian.trauma = _vivian.truth;
+    },
+    min: 0, max: 150, step: 1,
+    valueFormat: value => `<b>${Math.round((value/150)*100)}%</b>`
+  }>>
+  <!-- 欺诈/诡谲（Fraud） -->
+  <<numberStepper "<<maplebirchsymbol fraud>>诡谲" `_vivian.fraud` {
+    callback: value => {
+      _vivian.fraud = Math.clamp(value, 0, 150);
+      _vivian.heresy = 0;
+      _vivian.moronity = 0;
+      _vivian.truth = 0;
+      _vivian.trauma = _vivian.fraud;
+    },
+    min: 0, max: 150, step: 1,
+    valueFormat: value => `<b>${Math.round((value/150)*100)}%</b>`
+  }>>
+<</widget>>
+
+<<widget "maplebirchsymbol">>
+	<<set _symbol to "">>
+	<<switch _args[0]>>
+		<<case "sanity">><<set _symbol to "sym_maplebirchsanity">>
+		<<case "heresy">><<set _symbol to "Maplebirch_Heresy">>
+		<<case "moronity">><<set _symbol to "Maplebirch_Moronity">>
+		<<case "truth">><<set _symbol to "Maplebirch_Truth">>
+		<<case "fraud">><<set _symbol to "Maplebirch_Fraud">>
+		<<default>><<set _symbol to _args[0]>>
+	<</switch>>
+	<span class="icon-container"><img class="icon" @src='"img/ui/" + _symbol + ".png"'></span>
+<</widget>>

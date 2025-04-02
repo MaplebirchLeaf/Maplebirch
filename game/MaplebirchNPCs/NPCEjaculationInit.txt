@@ -1,0 +1,3 @@
+            <<elseif $npc[$npcrow.indexOf(_nn)] is "Vivian">>
+                <<ejaculation-vivian _args[0]>>
+            <<elseif $npc[$npcrow.indexOf(_nn)] is "Alex">>

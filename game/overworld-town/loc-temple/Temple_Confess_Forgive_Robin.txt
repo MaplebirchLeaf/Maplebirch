@@ -1,0 +1,33 @@
+	<<case "robin_promised">>
+		"如果你们已经被誓言所绑定，那你就没有犯下任何罪。你们神圣的仪式给了你们特许的例外。"
+		<br><br>
+
+		你听见另一个人松了口气。"谢谢你，<<sister>>。我真的很需要这样的安慰。"<<He>>走出了忏悔室。<<grace 1>><<ggrace>><<arousal 20>><<garousal>>
+	<<case "robin_romance">>
+		"你已经保持了真诚和信仰如此长的时间，还信守了自己的承诺，你并没有太大的罪过。"
+		<br><br>
+
+		你听见另一个人松了口气。"谢谢你，<<sister>>。"<<He>>走出了忏悔室。<<npcincr Robin lust 1>><<Maplebirchnpcincr Robin holiness -1>><<gslust>><<lrholines>>
+	<<case "robin_doubt">>
+		<<run statusCheck("Robin")>>
+		“疑虑是正常的。持有所疑是人之常情，全知则是神的领域。只要你不让疑虑吞噬自己，你就不会迷失。<<nnpc_brother "Robin">>，我原谅你，你也要原谅自己。”
+		<br><br>
+
+		<<if _robinStatus.includes("unbelief")>>
+			“若焦虑把我吞噬呢？”<<he>>质疑道。“那又该如何，<<sister>>？我还能获得宽恕吗？”
+			<br><br>
+
+			"是的，"你自信地说道。"因为你被上帝所爱，<<if isLoveInterest("Robin")>>以及你的爱人所爱<</if>>，那份爱会阻止你迷失。我对此深信不疑。"
+			<br><br>
+
+			<<He>>沉默了很长时间。"谢谢你，<<sister>>。"
+		<<else>>
+			"人之常情，"<<he>>轻声重复。"确实，我只是一个<<personsimple>>。谢谢你提醒我，告诉我其实不需要。"
+		<</if>>
+		<<He>>走出了忏悔室。你偷偷地透过门缝看了一眼，<<He>>看起来很平静。 <<grace 1>><<npcincr Robin love 2>><<ggrace>><<glove>>
+    <<case "confession_robin_things">>
+		"<<sister>>，我可以宽恕你。你并没有做错什么，如果回报<<pshe>>那就对<<pshe>>表示你的善意。"
+		<br><br>
+
+		你听见另一个人松了口气。"谢谢你，<<sister>>。"<<He>>走出了忏悔室。<<npcincr Robin love 1>><<npcincr Robin dom 1>><<glove>><<note "+ 罗宾的自信" "purple">>
+    <<case "winter">>

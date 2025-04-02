@@ -1,0 +1,37 @@
+:: Maplebirch Sydney Settings [widget]
+
+<<widget "maplebirch_temple_retention">>
+    <<if $SydneyBunkChat>>
+        <<link [[挽留悉尼在神殿过夜|Maplebirch Temple Retention]]>><</link>><<MaplebirchHint>>
+    <</if>>
+<</widget>>
+
+:: Maplebirch Temple Retention
+<<effects>><<run statusCheck("Sydney")>>
+
+你拉了拉悉尼的手问<<nnpc_he "Sydney">>，“你可以陪我留在神殿过夜码？”
+<br><br>
+<<if _sydneyStatus.includes("corruptLust")>>
+    <<set $Maplebirch.sydney.retention = true>>
+    悉尼的嘴角上扬，你感觉<<nnpc_he "Sydney">>已经按捺不住情绪了。<<nnpc_he "Sydney">>转头对西里斯说：“<<sydneymum>>，我今晚也能在神殿过夜吗。”
+    <br>
+    西里斯看了看你和悉尼皱着眉头：“那随你吧，我先回家了。”随后，西里斯驾车离开了神殿。
+    <br><br>
+    你看了看悉尼的下体，发现<<nnpc_he "Sydney">>的股间已经略微湿润了。“你准备好今晚怎么过了吗？我的挚——爱——”悉尼挑逗地对你说道，“你知道今晚会发生什么的。”<<arousal 500>><<garousal>><<npcincr Sydney lust 5>><<gslust>>
+    <br><br>
+    随后，悉尼径直走向了神殿的<span class="gold">宿舍</span>。<<npcincr Sydney purity -3>><<llspurity>>
+<<elseif _sydneyStatus.includes("corrupt")>>
+    <<set $Maplebirch.sydney.retention = true>>
+    悉尼有些惊讶，<<nnpc_he "Sydney">>没想到你会这么说，但<<nnpc_he "Sydney">>马上就理解了你的意思对你眨了眨眼睛。之后，<<nnpc_he "Sydney">>转头对西里斯说：“<<sydneymum>>，我今晚也能在神殿过夜吗。”
+    <br>
+    西里斯看了看你和悉尼皱着眉头：“那随你吧，我先回家了。”随后，西里斯驾车离开了神殿。
+    <br><br>
+    “没想到你居然如此饥渴难耐，”在西里斯走后悉尼对你小声的抱怨道，“不过，我也喜欢。我在<span class="gold">宿舍</span>里等你哦。”<<npcincr Sydney purity -1>><<lspurity>><<arousal 500>><<garousal>>
+<<else>>
+    悉尼有些尴尬和愕然，<<nnpc_he "Sydney">>用抱歉的语气对你说：“对……对不起了，我还是得和<<sydneymum>>一起回家，如果有事的话我们明天再说吧！”
+    <br><br>
+    悉尼拒绝了你的挽留，<<if $sydneyromance is 1>><<nnpc_he "Sydney">>吻了吻你的脸颊，然后离开了神殿。<<else>><<nnpc_he "Sydney">>向你挥手告别，然后离开了神殿。<</if>><<nnpc_he "Sydney">>
+<</if>>
+<br><br>
+<<link [[继续|Temple]]>><<endevent>><</link>>
+<br>

@@ -1,0 +1,7 @@
+    <<MaplebirchmobileStatsColor "fear">>
+	<<if Number.isFinite($Maplebirch.fear)>>
+		<div @class="'stat ' + _mobileColor">
+			<mouse class="tooltip-centertop">惧<span>恐惧：<<print $Maplebirch.fear.toFixed(2)>></span></mouse>
+		</div>
+	<</if>>
+    <<mobileStatsColor "allure">>

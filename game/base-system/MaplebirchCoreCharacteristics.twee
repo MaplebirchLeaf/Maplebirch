@@ -1,0 +1,55 @@
+:: Maplebirch Core Characteristics [widget]
+
+<<widget "MaplebirchSanity">>
+    <<set _MaplebirchSanityConfig = { name : "理智", icon : "ui/sym_maplebirchsanity", displayType : "level", currentValue : $Maplebirch.Sanity, modifier: 100, modTypes: { good: [], bad: [] },
+					states : [
+						{ requiredValue: 0,		level: 0, color: 'red',		description: '你迷恋于不可名状中，成为疯狂本身的回响。'},
+						{ requiredValue: 1,		level: 1, color: 'red',		description: '你已经彻底崩溃，陷入疯狂与绝望之中。'},
+						{ requiredValue: 50,	level: 2, color: 'pink',	description: '你状态已近崩溃，几乎无法维持自我。'},
+						{ requiredValue: 100,	level: 3, color: 'purple',	description: '你世界观正在崩塌，现实与幻想开始模糊不清。'},
+						{ requiredValue: 250,	level: 4, color: 'blue',	description: '你认知状态不稳定，焦虑和恐惧萦绕心头。'},
+						{ requiredValue: 450,	level: 5, color: 'lblue',	description: '你思维开始紊乱，难以完全冷静。'},
+						{ requiredValue: 700,	level: 6, color: 'teal',	description: '你依旧保持理智，但偶尔会感到困惑。'},
+						{ requiredValue: 1000,	level: 7, color: 'green',	description: '你精神坚定而清晰，内心毫无动摇。'}
+					]
+				}>>
+	<<characteristic-box _MaplebirchSanityConfig>>
+<</widget>>
+
+<<widget "fearcaption">>
+	<<if Number.isFinite($Maplebirch.fear)>>
+		<div id="fearcaption" @title="'恐惧：' + $Maplebirch.fear.toFixed(2)">
+			<div @class="($options.showCaptionText is true ? '' : 'rightMeterText')">
+				恐惧：
+				<<if $options.showCaptionText is true>>
+					<<if $Maplebirch.fear gte $Maplebirch.fearmax>>
+						<span class="red">极度的恐惧将你吞噬！</span>
+					<<elseif $Maplebirch.fear gte ($Maplebirch.fearmax / 5) * 4>>
+						<span class="pink">你快被恐惧淹没。</span>
+					<<elseif $Maplebirch.fear gte ($Maplebirch.fearmax / 5) * 3>>
+						<span class="purple">恐惧让你全身颤抖。</span>
+					<<elseif $Maplebirch.fear gte ($Maplebirch.fearmax / 5) * 2>>
+						<span class="blue">你开始感到心慌意乱。</span>
+					<<elseif $Maplebirch.fear gte $Maplebirch.fearmax / 5>>
+						<span class="lblue">一丝恐惧悄然浮现。</span>
+					<<elseif $Maplebirch.fear gte 1>>
+						<span class="teal">你略感害怕。</span>
+					<<else>>
+						<span class="green">你内心平静。</span>
+					<</if>>
+				<</if>>
+			</div>
+			<<set $Maplebirch.fear = Math.clamp($Maplebirch.fear, 0, $Maplebirch.fearmax)>>
+			<<set _showCaptionText to !$options.showCaptionText>>
+			<<statbar 0 $Maplebirch.fear $Maplebirch.fearmax _showCaptionText>>
+			<div style="clear:both;"></div>
+		</div>
+	<</if>>
+<</widget>>
+
+<<widget "MaplebirchmobileStatsColor">>
+	<<switch _args[0]>>
+		<<case "fear">>
+			<<mobileStatsColorSet `Math.clamp($Maplebirch.fear, 0, $Maplebirch.fearmax)` $Maplebirch.fearmax>>
+	<</switch>>
+<</widget>>

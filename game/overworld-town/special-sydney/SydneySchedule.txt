@@ -1,0 +1,3 @@
+<<elseif $Maplebirch.sydney.retention>>
+        <<set _sydney_location to "temple">>
+    <<elseif $daily.sydney.punish is 1>>

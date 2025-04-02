@@ -1,0 +1,273 @@
+:: Vivian Ruin Plinth Help
+<<set $outside to 0>><<set $location to "lake_ruin">>
+<<underwater>><<effects>><<lakeeffects>>
+<<run maplebirchStatusCheck("Vivian")>>
+<<npc Vivian>><<person1>><<set $VivianMeet = true>>
+<br><br>
+<<if !$VivianNameKnow>>
+    <i><span class="teal">你来到躺在基座上的<<nnpcboy "Vivian">>身边</span></i>
+<<else>>
+    <i><span class="teal">你来到维安的身边</span></i>
+<</if>>
+<br><br>
+<<if C.npc.Vivian.maplebirch_lost >= 90>> 
+    你看到<<He>>躺在基座上对外界什么反应都没有。
+<<elseif C.npc.Vivian.maplebirch_lost >= 60>>
+    你看到<<He>>的额头冒着汗，仿佛在挣扎。
+<<elseif C.npc.Vivian.maplebirch_lost >= 30>>
+    <<He>>在看着你。
+<<elseif C.npc.Vivian.maplebirch_lost >= 10>>
+    你看到<<He>>的身体对外界做出了微弱反应。
+<<else>>
+    <<He>>想对你说话，但只听到咕隆咕隆的水泡声。
+<</if>>
+你试图让<<He>>醒来，你摇晃着<<He>>的身体,
+<<if C.npc.Vivian.maplebirch_lost >= 90>> 
+    但<<He>>没有任何反应。
+<<elseif C.npc.Vivian.maplebirch_lost >= 60>>
+    <<He>>的瞳孔略微收缩了以下。
+<<elseif C.npc.Vivian.maplebirch_lost >= 30>>
+    <<He>>的身体微微颤抖
+<<elseif C.npc.Vivian.maplebirch_lost >= 10>>
+    <<He>>试图对你说话。
+<<else>>
+    你听到一串又一串的咕隆声。
+<</if>>
+<br><br>
+<<if $Maplebirch.oldtemple>>
+    你从约旦那里了解到关于森林湖废墟中是千年前神殿的悲剧，传言这里现在有一只苍白幽灵在此游荡并且和血月息息相关。<span class="gold"><i>|或许可以使用关于血月的物品？</i></span>
+<<else>>
+    <<set $Maplebirch.oldtempleAsk to true>>
+    <<if C.npc.Jordan.init === 1>>
+        你看到这里的环境很像狼街中的神殿，或许可以去找<span class="gold">约旦</span>问一问森林湖中的废墟由来。
+    <<else>>
+        你看到这里的环境很像狼街中的神殿，或许可以去问一问森林湖中的废墟由来。
+    <</if>>
+<</if>>
+<<if hasSexStat("promiscuity", 5)>>
+    <br><br>
+    <span class="purple">一个邪恶的想法在你的脑中浮现</span>
+<</if>>
+<br><br>
+<<MaplebirchIcon "help">><<link [[继续摇晃|Vivian Ruin Plinth Help 2]]>><<loxygen>><<set $Maplebirch.phase to 1>><</link>>
+<br>
+<<if $Maplebirch.oldtemple>>
+    <<if $plants.blood_lemon.amount !== 0>>
+        <<MaplebirchIcon "blood_lemon">><<link [[`尝试喂<<He>>血柠`|Vivian Ruin Plinth Help 2]]>><<loxygen>><<set $Maplebirch.phase to 2>><</link>>
+        <br>
+    <</if>>
+    <<if window.modUtils.getMod('Terraria Expand Mod')>>
+        <<if $Bloody_Tear !== 0>>
+            <<icon "tool/Bloody_Tear.png">><<link [[`将血泪给予<<He>>`|Vivian Ruin Plinth Help 2]]>><<loxygen>><<set $Maplebirch.phase to 3>><</link>>
+            <br>
+        <</if>>
+    <</if>>
+<</if>>
+<<if hasSexStat("promiscuity", 6)>>
+    <<MaplebirchIcon "awareness">><<link [[`亵渎<<He>>`|Vivian Ruin Plinth Sex]]>><<loxygen>><<set $sexstart to 1>><<set $Maplebirch.vivian.LakeRuinattack = 1>><</link>><<promiscuous6>><<note "世界腐化度？" "purple">>
+    <br>
+<</if>>
+
+:: Vivian Ruin Plinth Help 2
+<<set $outside to 0>><<set $location to "lake_ruin">>
+<<underwater>><<effects>><<lakeeffects>>
+<<set $Maplebirch.daily.Vivianhelp to true>>
+<<run maplebirchRandomNum()>>
+<<set _amount = -Math.floor(($Maplebirch.Rng / 25) + 1)>>
+<br><br>
+<<if $Maplebirch.phase is 1>>
+    <<Maplebirchnpcincr Vivian lost _amount>>
+    你持续摇晃着<<He>>，<<He>>好像有些清醒了一点。<<lvlost>>
+<<elseif $Maplebirch.phase is 2>> 
+    <<Maplebirchnpcincr Vivian lost _amount*5>><<set $plants.blood_lemon.amount += _amount>>
+    你带着血柠来到<<He>>的嘴边，你把血柠塞进<<He>>的嘴里。你感觉<<He>>呜咽着有些难受，但你强行让<<He>>把血柠吞了下去。<<llvlost>>
+<<elseif $Maplebirch.phase is 3>>
+    <<Maplebirchnpcincr Vivian lost -50>><<set $Bloody_Tear -= 1>>
+    你从虚空袋里拿出血泪，你小心翼翼地将血泪移到<<He>>的嘴边，你将血泪破开来让其中的液体流进<<He>>的嘴里。过了一会，<<He>>浑身一颤彷佛收到了极大的刺激。<<lllvlost>>
+<</if>>
+<br><br>
+片刻后，你感觉到几根触手从身后接近你。它们轻轻戳着、试探着你。尽管在水下，被它们触摸过的皮肤还是变得光滑起来。
+<br><br>
+几根触手开始探索你的身体，在一切所过之处留下粘液。你感觉到两根触手缠绕在你的脚踝上。每当它们接触你的皮肤时，你就感到疼痛刺激着你。当触手沿着你的大腿滑向你的<<genitals>>时，你被一种强烈的兴奋所填满。<<ggarousal>><<arousal 1500>>
+<br><br>
+<<endevent>>
+<<link [[继续|Maplebirch Lake Ruin Deep]]>><<loxygen>><<set $sexstart to 1>><</link>>
+<br>
+<<link [[逃脱|Vivian Ruin Plinth Help 3]]>><<loxygen>><<set $Maplebirch.phase = 2>><</link>><<swimmingdifficulty 1 1000>>
+
+:: Vivian Ruin Plinth Help 3
+<<underwater>><<effects>>
+<<run maplebirchStatusCheck("Vivian")>>
+<<set _phase to $phase2>>
+<<if C.npc.Vivian.maplebirch_lost === 0>>
+    <<set _nextroom to "Vivian Awake Talk">>
+<<elseif $bus is "lake_ruin_deep">>
+	<<set _nextroom to "Lake Ruin Deep">>
+<<elseif $bus is "lake_ruin">>
+	<<set _nextroom to "Lake Ruin">>
+<</if>>
+<<clotheson>>
+<<endcombat>>
+<<npc Vivian>><<person1>>
+<<if $Maplebirch.phase === 1>>
+    这个生物从你身边退缩，消失在黑暗中。<<tearful>>你转向出口<<if _phase is 1>>当你回头看时，苍白的身影已经消失了。<</if>>
+<<elseif $Maplebirch.phase === 2>>
+    你迅速躲避靠近你的生物，你从触手中挣脱出来。
+<</if>>
+<br><br>
+你发现触手并没有攻击<<He>>，这令你感到疑惑。你继续把视线移到<<He>>的身上，
+<<if C.npc.Vivian.maplebirch_lost >= 90>> 
+    你看到<<He>>仍然躺在基座上没有任何反应。
+<<elseif C.npc.Vivian.maplebirch_lost >= 60>>
+    你看到<<He>>的脸皱眉地至扭曲，仿佛极力在挣扎。
+<<elseif C.npc.Vivian.maplebirch_lost >= 30>>
+    <<He>>的身体在颤抖着，你感觉<<He>>现在好多了。
+<<elseif C.npc.Vivian.maplebirch_lost >= 10>>
+    你感觉<<He>>的嘴里试图想说些什么。
+<<else>>
+    <<He>>想对你说话，但只听到了咕隆咕隆的水泡声。
+<</if>>
+<br><br>
+<<if C.npc.Vivian.maplebirch_lost === 0>>
+    <<He>>的身体突然活动了起来，你的身体被吓了一跳往后退去。之后，<<He>>的目光对视着你的眼睛，似乎想领着你朝基座室外游去。
+    不可思议的是四周的触手居然纷纷退开，为你们送行，但你并不知道维安想要将你带到那里。
+    <br><br>
+<</if>>
+<<if C.npc.Vivian.maplebirch_lost <= 50>>
+    <<set $VivianNameKnow = true>>
+    <i>在你离开时，你注意到的<<He>>胸口隐隐地被涂了几个字，<span class="gold">“维安”</span>。</i>
+    <br><br>
+<</if>>
+<<if _phase is 1>><<endWraith>><</if>>
+<<link [[继续|_nextroom]]>><<endevent>><<MaplebirchEndEvent>><</link>>
+<br>
+
+:: Vivian Ruin Plinth Sex
+<<underwater>><<effects>><<lakeeffects>>
+<<promiscuity6>>
+<<if $sexstart is 1>>
+	<<set $sexstart to 0>>
+	<<consensual>>
+	<<set $consensual to 1>>
+	<<neutral 1>>
+	<<maninit>><<npcexpose>>
+	<<set $enemytrust += 500>>
+	<<set $enemyarousalmax to 2400>>
+<</if>>
+<<set $enemyanger to -10>>
+<<effectsman>>
+<<man>><<stateman>>
+<br><br>
+<<actionsman>>
+
+<<if _combatend>>
+	<span id="next"><<link [[继续|Vivian Ruin Plinth Sex Finish]]>><</link>></span><<nexttext>>
+<<else>>
+	<span id="next"><<link [[继续|Vivian Ruin Plinth Sex]]>><</link>></span><<nexttext>>
+<</if>>
+
+:: Vivian Ruin Plinth Sex Finish
+<<underwater>><<effects>><<lakeeffects>>
+<<set $world_corruption_hard += 1>>
+<i><span class="lewd">你将心中的欲望狠狠发泄。</span></i><<Maplebirchnpcincr Vivian lost 20>><<ggvlost>>
+<br><br>
+<<if $enemyarousal gte $enemyarousalmax>>
+    <<ejaculation>>
+    维安在基座上颤抖着。
+    <br><br>
+<<elseif $enemyhealth lte 0>>
+    维安的身上被你打出了淤青。<<Maplebirchnpcincr Vivian love -5>><<llove>>
+    <br><br>
+<</if>>
+<<endcombat>>
+四周的触手注视着你，仿佛都在等着一个时机。
+<br><br>
+突然，几条触手出现在你的身后缠绕在你的手臂和脚踝上，在你的身上布满粘液。尽管在水下，你的皮肤还是被它们触摸地变得光滑起来。
+<br><br>
+每当它们接触你的皮肤时，你就感到疼痛刺激着你。当触手沿着你的大腿滑向你的<<genitals>>时，你被一种强烈的兴奋所填满。<<ggarousal>><<arousal 1500>>
+<br><br>
+<span id="next"><<link [[继续|Vivian Lake Ruin Sex Tentacle]]>><<endevent>><<MaplebirchEndEvent>><<loxygen>><<set $sexstart to 1>><</link>></span><<nexttext>>
+
+:: Maplebirch Lake Ruin Deep
+<<if $sexstart is 1>>
+	<<set $sexstart to 0>>
+	<<consensual>>
+	<<set $enemytype to "tentacles">>
+	<<neutral 1>>
+	<<set $enemytrust += 100>>
+	<<tentaclestart 6 8>>
+<</if>>
+
+<<statetentacles>>
+<<underwater>><<effects>>
+<<effectstentacles>>
+<<tentacles>>
+<<actionstentacles>>
+<<if $tentacles.active lte ($tentacles.max / 2)>>
+	<span id="next"><<link [[继续|Vivian Ruin Plinth Help 3]]>><<set $Maplebirch.phase = 1>><</link>></span><<nexttext>>
+<<else>>
+	<span id="next"><<link [[继续|Maplebirch Lake Ruin Deep]]>><</link>></span><<nexttext>>
+<</if>>
+
+:: Vivian Lake Ruin Sex Tentacle
+<<if $sexstart is 1>>
+	<<set $sexstart to 0>>
+	<<consensual>>
+	<<set $enemytype to "tentacles">>
+	<<neutral 1>>
+	<<set $enemytrust += 100>>
+	<<tentaclestart 8 10>>
+<</if>>
+
+<<statetentacles>>
+<<underwater>><<effects>>
+<<effectstentacles>>
+<<tentacles>>
+<<actionstentacles>>
+<<if $tentacles.active lte ($tentacles.max / 3)>>
+	<span id="next"><<link [[继续|Vivian Lake Ruin Sex Tentacle Finish]]>><</link>></span><<nexttext>>
+<<else>>
+	<span id="next"><<link [[继续|Vivian Lake Ruin Sex Tentacle]]>><</link>></span><<nexttext>>
+<</if>>
+
+:: Vivian Lake Ruin Sex Tentacle Finish
+<<underwater>><<effects>>
+<<run maplebirchStatusCheck("Vivian")>>
+<<set _phase to $phase2>>
+<<if $bus is "lake_ruin_deep">>
+	<<set _nextroom to "Lake Ruin Deep">>
+<<elseif $bus is "lake_ruin">>
+	<<set _nextroom to "Lake Ruin">>
+<</if>>
+这个生物从你身边退缩，消失在黑暗中。<<tearful>>你转向出口<<if _phase is 1>>当你回头看时，苍白的身影已经消失了。<</if>>
+<<clotheson>>
+<<endcombat>>
+<<if _phase is 1>><<endWraith>><</if>>
+<<link [[继续|_nextroom]]>><</link>>
+<br>
+
+:: Vivian Awake Talk
+<<set $outside to 1>><<set $location to "lake_island">><<effects>>
+<<npc Vivian>><<person1>>
+
+<<He>>领着你从湖下废墟的基座室里游到了森林湖的湖面上，在湖面上你们大口的喘气。你听到<<He>>的嘴里发出一串沙哑、不协调的语句，你隐隐约约能听懂<<He>>在说些什么，
+“现…现在是…是什么时候，我大概沉…沉睡了多长时…间？”
+<br><br>
+<<if $Maplebirch.vivian.LakeRuinattack === 1>> 维安从你身上感受到了恐惧，<<He>>有些害怕地看着你。<<else>>维安有些警惕地看着你，但<<He>>还是呼了口气。<<Maplebirchnpcincr Vivian love 1>><</if>>
+<<He>>的眼睛重新望向天空，似乎已经很久没有见过日晖与星辰了。<<He>>感慨着，牵着你的手在湖面上摸索着一条道路。<<takeHandholdingVirginity "Vivian" "romantic">>
+<br><br>
+在路上<<He>>不时地对你说些什么，
+<<if $englishtrait >= 3 && $historytrait >= 2>>
+    你依稀听出维安说的语言是来自于几百年前，你感觉<<He>>的样貌似乎从未改变。维安说<<He>>是来自神殿众多教徒的一员，但现在<<He>>或许已经与这个身份无关了。
+    <br><br>
+    “我…我曾在神殿的历史圣物中翻阅到很久以前有一座更古老的神殿”，你感觉维安有些适应了，说话没有那么违和。
+    <<He>>继续说着：“关于缘由，我曾在森林中撞见过一位苍白美丽的身影从我身前飘过，这深深地吸引了我的好奇心。我为此专研群书只为寻求那段历史的真相，但我不慎陷入了幻境。
+    <br><br>
+    那时我在基座室中，我随身的携带一件古物在此发生共鸣。之后，我的眼中闪过白光使我在梦境中度过一段又一段的人生，但这些又像碎片般藏在潜意识中，我不明白我现在是否还是曾经的自己。
+    <br><br>
+    在梦中那年，年轻的我在教堂中喃喃地祈祷，突然一阵光晕袭来将我唤醒。”，这是<<He>>突然摸了摸自己的脸有些差异，<<He>>能感觉到<<He>>的样貌竟变成了梦中的样子。
+<<else>>
+    你有些听不懂维安在说些什么。<<note "语文与历史等级不足" "teal">>
+<</if>>
+<br><br>
+<span id="next"><<link [[继续|Maplebirch Lake Center]]>><<set $Maplebirch.phase = 2>><<pass 45>><<endevent>><</link>></span><<nexttext>>

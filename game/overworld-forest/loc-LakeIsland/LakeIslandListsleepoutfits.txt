@@ -1,0 +1,5 @@
+        <<case "Lake Island Bed">>
+            <<set _passage to "Lake Island Bed">>
+			<<set $wardrobe_location to "lake_island">>
+			<<set $storeLocation to "Lake Island Bed">>
+        <<case "Farm Bed">>

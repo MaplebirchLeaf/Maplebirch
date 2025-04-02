@@ -1,0 +1,54 @@
+:: Lake Island Vivian Slap
+<<set $outside to 0>><<effects>>
+<<lake_island_effects>>
+
+
+:: Lake Island Vivian Clothes
+<<set $outside to 0>><<effects>>
+<<lake_island_effects>>
+
+你站在维安的身后看着<<He>>，<<He>>找了许久后开心地拿了一套衣服正要穿上时看见了你。
+<br><br>
+<<He>>被你吓了一跳，连连后退到墙边拽紧<<He>>的衣服。
+<<if $Maplebirch.vivian.LakeRuinattack>>
+    <<He>>的身体好像收到刺激般发颤，<<He>>不明白为什么会这样。<<He>>不可思议地看着自己的下体，突然发现自己好像失去了什么。<<awareness 1>><<gawareness>>
+    <br><br>
+    <span class="lewd">你清楚的知道自己做了什么而感到性奋。</span><<arousal 500>><<garousal>>
+    最后维安羞红了脸将你你请出了木屋外。
+<<else>>
+    <<He>>害怕地看着你，但还是吐了口气。“如果可以，你可以在外面等我吗？” 
+<</if>>
+<br><br>
+<<if hasSexStat("exhibitionism",5)>>
+    <<link [[你说想看着<<nnpc_He "Vivian">>穿|Lake Island Vivian Clothes 2]]>><</link>><<exhibitionist4>><<gvexhibitionism>>
+    <br>
+<</if>>
+<br>
+<<link [[继续|Maplebirch Lake Center Island]]>><<set $Maplebirch.phase = 3>><</link>>
+
+
+:: Lake Island Vivian Clothes 2
+<<set $outside to 0>><<effects>>
+<<lake_island_effects>>
+<!-- 暂时无效 -->
+<<He>>被你的请求惊住了，
+<<if $Maplebirch.vivian.exhibitionismtrait >= 4>>
+    “好啊！，那你就好好看着我穿的过程吧。”维安挑逗着对你说道，维安慢慢地将稻草人裙缓缓地从<<He>>的脚跟往上提。
+    <br><br>
+    <<He>>穿到<<He>>的<<if C.npc.Vivian.vagina isnot "none" && C.npc.Vivian.penis isnot "none">>小穴还有<<print C.npc.Vivian.penisdesc>><<elseif C.npc.Vivian.penis isnot "none">><<print C.npc.Vivian.penisdesc>><<else>>小穴<</if>>时，
+    <<He>>故意放慢了动作。
+    <br>
+    你看到了<<He>>略显湿润的下体。<<arousal 1500>><<ggarousal>>
+    <br><br>
+    然后维安又慢慢的将<<He>>的稻草人衫穿在了<<He>>赤裸的上身。
+    <br><br>
+<<else>>
+    “你知道你在说什么吗？”维安有些生气，“我知道你帮了我，但是你得有个限度把！你……你快出去！”<<Maplebirchnpcincr Vivian love -2>><<llove>>
+    <br><br>
+    <span class="teal"><i>维安把你“请”出了木屋。</i></span>
+    <br><br>
+<</if>>
+<<link [[继续|Maplebirch Lake Center Island]]>><<set $Maplebirch.phase = 3>><</link>>
+
+:: Lake Island Vivian Slap Sex
+<<set $outside to 0>><<effects>>

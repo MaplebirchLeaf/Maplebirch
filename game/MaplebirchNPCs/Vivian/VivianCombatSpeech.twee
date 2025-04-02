@@ -1,0 +1,68 @@
+:: Widgets speech-VIVIAN [widget]
+
+<<widget "speech-vivian">>
+	<<set _vivian = C.npc.Vivian>><<rng>>
+	<<if !$vivianComments>>
+		<<set $vivianComments to {}>>
+		<<set $vivianComments.penetrated to 0>>
+		<<set $vivianComments.mouth to 0>>
+		<<set $vivianComments.trib to 0>>
+		<<set $vivianComments.imminent to 0>>
+		<<set $vivianComments.chastity to 0>>
+		<<set $vivianComments.touch to 0>>
+		<<set $vivianComments.fondle to 0>>
+		<<set $vivianComments.flaunt to 0>>
+		<<set $vivianUniqueComments to []>>
+	<</if>>
+
+	<!-- 记得更新，分类 -->
+	<<if _vivian.maplebirch_lost !== 0>>
+    	<<set _vivianText to `维安安静地躺在基座上什么反应也没有。`>>
+	<<else>>
+		<<if $speechNPCPenisVirgin is 1 or $speechNPCVaginaVirgin is 1>>
+			<<if $speechpenisvirgin is 1 or $speechvaginavirgin is 1 or $speechanusvirgin is 1>>	
+				<<set _vivianText to `<<He>>喘着粗气，看向你的眼睛充满了陶醉。“为……为什么这么做我会如此开心？”<<He>>狠狠地抱紧你。“我们结合在一起了？……对吗？”`>>
+			<<else>>
+				<<set _vivianText to `<<He>>喘着粗气，看向你的眼睛充满了陶醉。“为……为什么这么做我会如此开心？”<<He>>狠狠地抱紧你。“真希望我是第一个品尝你的人。”`>>
+			<</if>>
+		<<elseif $speechNPCAnusVirgin is 1>>
+			<<if $speechpenisvirgin is 1>>
+				<<set _vivianText to `“哈……哈哈，”<<He>>喘着气。“这是什么？这种感觉真……真是太好了……”<<He>>狠狠地抱紧你。`>>			
+			<<else>>
+				<<set _vivianText to `“哈……哈哈，”<<He>>喘着气。“这是什么？这种感觉真……真是太好了……”<<He>>狠狠地抱紧你。`>>
+			<</if>>
+		<<elseif $speechmouthvirgin is 1>>
+			<<set _vivianText to `<<He>>捂着嘴。"你……你第一次做这个吗——"<<He>>试图继续说下去，但马上用手捂紧了嘴，压制住了更多淫荡的声音。`>>
+		<<elseif $speechNPCKissVirgin is 1>>
+			<<set _vivianText to `<<He>>神情地注视着你的眼睛。"这是我的初吻……"<<He>>的嘴角勾勒出笑容。`>>
+		<<elseif $speechhermaroused is 1>>			
+			<<if _vivian.gender is "h">>
+				<<set _vivianText to `<<He>>十分惊讶地看着你的下体。“你……你居然和我一样？我以为只有我被周围的人称作怪物！”`>>
+			<<else>>
+				<<set _vivianText to `<<He>>十分惊讶地看着你的下体。“两……两个？你是被写在传言中的怪物吗？”`>>
+			<</if>>
+		<<elseif $speechcrossdressaroused is 1>>
+			<<set _vivianText to `<<He>>的脸上略微皱眉。“你是……<<gender>>？但是不在意这个，我在意你。”`>>
+		<<else>>
+
+		<</if>>
+	<</if>>
+
+	<<if $vivianComments>>
+		<<set _keys to Object.keys($vivianComments)>>
+		<<for $_i to 0; $_i lt _keys.length; $_i++>>
+			<<if $vivianComments[_keys[$_i]] gt 0>>
+				<<set $vivianComments[_keys[$_i]]-->>
+			<</if>>
+		<</for>>
+	<</if>>
+<</widget>>
+
+<<widget "ejaculation-vivian">>
+	<<set $ejaculating to 1>>
+	<<run maplebirchStatusCheck("Vivian")>>
+	<!-- 女性维安 -->
+	
+	<!-- 男性维安 -->	
+
+<</widget>>

@@ -1,0 +1,5 @@
+    <<if $Maplebirch.lakeisland.Hint>>
+        <<getinicon>><<link [[走得更远 (0:30)|Maplebirch Lake Center]]>><<pass 30>><</link>><<MaplebirchHint>>
+        <br><br>
+    <</if>>
+    <<if !Time.schoolDay and Weather.isSnow and Time.dayState is "day">>

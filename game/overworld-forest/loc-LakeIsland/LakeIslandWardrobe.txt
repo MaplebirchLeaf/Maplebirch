@@ -1,0 +1,7 @@
+        <<case "Lake Island Wardrobe">>
+            <<if hasSexStat("exhibitionism", 5) or $exposed lte 0 or (hasSexStat("exhibitionism", 4) and $exposed lte 1)>>
+				<<link [[关闭衣柜|Lake Island Bedroom]]>><<cleanupOnWardrobeExit>><</link>>
+			<<else>>
+				你不能这样光着身子！
+			<</if>>
+        <<case "Farm Wardrobe">>

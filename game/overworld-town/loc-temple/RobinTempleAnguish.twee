@@ -1,0 +1,411 @@
+:: Robin Anguish Temple [widget]
+
+<<widget "robin_anguish_temple">>
+	<<if (["initiate"].includes(V.robin_temple_rank) && ($robinromance === 1 || C.npc.Robin.love gte 90)) && ($sydneyromance is 1 or C.npc.Sydney.love gte 90)>>
+		<<templeicon "trialcontinue">><<link [[牵起罗宾与悉尼的手 (1:00)|Maplebirch Temple Vigil 11]]>><<set $Maplebirch.phase to 1>><<set $robin_anguish = true>><<pain 8>><</link>><<gpain>>
+		<<handholdingvirginitywarning>><<NPCvirginitywarning "Sydney" "handholding">>
+		<br>
+	<</if>>
+    <<if ["initiate"].includes(V.robin_temple_rank) && ($robinromance === 1 || C.npc.Robin.love gte 90)>>
+		<<templeicon "trialcontinue">><<link [[牵起罗宾的手 (1:00)|Maplebirch Temple Vigil 11]]>><<set $Maplebirch.phase to 2>><<set $robin_anguish = true>><<pain 8>><</link>><<gpain>><<handholdingvirginitywarning>><<NPCvirginitywarning "Robin" "handholding">>
+		<br>
+	<</if>>
+<</widget>>
+
+<<widget "robin_anguish_talk_1">>
+	<<if ["initiate"].includes(V.robin_temple_rank)>>
+		你看到了罗宾。<<nnpc_he "Robin">>自信地朝你挥了挥手。
+	<</if>>
+<</widget>>
+
+<<widget "robin_anguish_talk_2">>
+	<<if ["initiate"].includes(V.robin_temple_rank)>>
+		罗宾慢慢地把身上的衣服褪去，把<<nnpc_he "Robin">>的衣服交了出去。
+	<</if>>
+<</widget>>
+
+<<widget "robin_anguish_talk_3">>
+	<<if ["initiate"].includes(V.robin_temple_rank)>>
+		一旁的罗宾看到后，也向你们这边赶来寻找你。
+	<</if>>
+<</widget>>
+
+<<widget "robin_anguish_talk_4">>
+	<<if ["initiate"].includes(V.robin_temple_rank)>>
+		还有罗宾
+	<</if>>
+<</widget>>
+
+<<widget "robin_anguish_talk_5">>
+	<<if ["initiate"].includes(V.robin_temple_rank)>>
+		罗宾闭着眼祈祷着，你只听清一点。“……这些都是虚假幻影罢了……怎么会对我造成伤害……这些甚至不如孤儿院的殴打……”尽管这么说，但是<<nnpc_he "Robin">>自己也不信。
+		<br><br>
+	<</if>>
+<</widget>>
+
+<<widget "Maplebirch_anguish_He">>
+	<<if C.npc.Robin.gender === "f" && C.npc.Sydney.gender === "f">>她<<else>>他<</if>>
+<</widget>>
+
+
+:: Maplebirch Temple Vigil 11
+<<effects>><<set Weather.Temperature.override.increase.outside(60)>>
+<<set $player.bodyTemperature to $player.bodyTemperature + 1>>
+
+<<if $Maplebirch.phase is 1>>
+	<<canvas-model-override "arm_left" "idle">><<canvas-model-override "arm_right" "idle">>
+	你牵起罗宾和悉尼的手。<<Maplebirch_anguish_He>>们脸上的顾虑顿时一扫而空，然后，同之前无数次的微笑那般，再次向你展露了笑颜。<<takeHandholdingVirginity  "Robin" "romantic">><<takeHandholdingVirginity  "Sydney" "romantic">>
+	<br><br>
+<<elseif $Maplebirch.phase is 2>>
+	<<canvas-model-override "arm_right" "idle">>
+	你牵起罗宾的手。<<nnpc_he "Robin">>脸上的顾虑顿时一扫而空，然后，<<nnpc_he "Robin">>像之前一样对你展露出笑颜。<<takeHandholdingVirginity  "Robin" "romantic">>
+	<br><br>
+<</if>>
+
+你随即走向火堆。热浪驱散了你整晚忍受的寒冷。你出了一身汗。
+<br><br>
+
+<<person2>><<person>>面无表情地盯着火堆，紧握着十字架的指节微微发白。<<person3>><<person>>双目紧闭，嘴唇疯狂地蠕动着。
+<<if $Maplebirch.phase is 1>>
+	罗宾和悉尼紧紧握住你的手。
+<<elseif $Maplebirch.phase is 2>>
+	罗宾默默念叨着什么，但被火焰的噼啪声淹没了。
+<<elseif $Maplebirch.templePromised is "Robin" && $templePromised is "Sydney" >>
+	<<set $Maplebirch.phase to 1>><<canvas-model-override "arm_left" "idle">><<canvas-model-override "arm_right" "idle">>
+	悉尼跌跌撞撞地走到你身边，同时罗宾也摇摇晃晃地走到你身边。你接住悉尼和罗宾，握着<<Maplebirch_anguish_He>>们的手，扶着<<Maplebirch_anguish_He>>们站稳。
+<<elseif $Maplebirch.templePromised is "Robin">>
+	<<canvas-model-override "arm_right" "idle">>
+	罗宾摇摇晃晃地走到你身边。你接住<<nnpc_he "Robin">>，握着<<nnpc_he "Robin">>的手，扶<<nnpc_he "Robin">>站稳。<<takeHandholdingVirginity "Robin" "romantic">>
+<<elseif $templePromised is "Sydney">>
+	<<canvas-model-override "arm_left" "idle">>
+	悉尼跌跌撞撞地走到你身边。你接住<<person6>><<him>>，握着<<his>>的手，扶<<his>>站稳。 <<takeHandholdingVirginity "Sydney" "romantic">>
+<<else>>
+	悉尼和罗宾都在念叨着什么，但被火焰的噼啪声淹没了。
+<</if>>
+<br><br>
+
+突然，你感觉双目刺痛。眨眼间，视野扭转——邪恶的化身笼罩了整个小镇，罪孽的镰刀横扫了这片地区。这股恶意撕开了无数通往现世的裂隙。铺天盖地的裂隙小而细碎，但足以让罪恶的仆从们蠕动着侵入现世、足以招募新的仆从。仆从们又将撕开更多更大的裂隙。
+<br><br>
+
+紧接着，你感到皮肤刺痛。炽烈至极的火舌包裹着你。你的皮肤生出水泡，然后如蜡一般消融了。
+
+<<if $Maplebirch.phase is 1 || $Maplebirch.phase is 2>>
+	<<if (currentSkillValue('willpower') / 10) gte (($pain - 10) + random(0, 10))>>
+		<span class="green">但此身不过樊笼而已。</span>火焰释放了你。你不再恐惧，因为你没有恐惧。
+		<<gwillpower>><<willpower 1>><<wash>>
+		<br><br>
+
+		<<link [[继续|Maplebirch Temple Vigil 12]]>><</link>>
+		<br>
+	<<else>>
+		<span class="red">恐惧和痛苦将你们俩淹没，疯狂攫取了你们。</span>你们逃离火堆，投入约旦的怀抱。
+		<<ggwillpower>><<willpower 10>>
+		<br><br>
+
+		<<link [[继续|Maplebirch Temple Vigil End]]>><<set $Maplebirch.weekly.trialFailed to "Robin">><<set $weekly.trialFailed to "Sydney">><<canvas-model-override "clear">><</link>>
+		<br>
+	<</if>>
+<<else>>
+	<<if (currentSkillValue('willpower') / 10) gte ($pain + random(0, 10))>>
+		<span class="green">但此身不过樊笼而已。</span>火焰释放了你。你不再恐惧，因为你没有恐惧。
+		<<gwillpower>><<willpower 1>><<wash>>
+		<br><br>
+
+		<<link [[继续|Maplebirch Temple Vigil 12]]>><</link>>
+		<br>
+	<<else>>
+		<span class="red">恐惧和痛苦将你淹没，疯狂攫取了你。</span>你逃离火堆，投入约旦的怀抱。
+		<<ggwillpower>><<willpower 10>>
+		<br><br>
+
+		<<link [[继续|Temple Vigil End]]>><<set $Maplebirch.weekly.trialFailed to "pyre">><<canvas-model-override "clear">><<MaplebirchEndEvent>><</link>>
+		<br>
+	<</if>>
+<</if>>
+
+:: Maplebirch Temple Vigil 12
+<<effects>><<wash>><<set Weather.Temperature.override.increase.outside(80)>>
+<<set $player.bodyTemperature to $player.bodyTemperature + 1>>
+
+<<person2>><<persons>>率先动摇了。<<He>>跪了下来，脖子上的十字架摇晃着，泪水满溢而出，掉落在地面上。即便隔着火焰的噼啪声，你也能听见<<his>>的哭嚎。
+<br><br>
+
+一些<<monks_and_nuns>>向<<him>>走去，试着帮助<<him>>振作一些。所有的这些，就像是一个梦，一个似曾相识的、深埋于你意识一隅的梦。
+<br><br>
+
+<<if $Maplebirch.phase is 1>>
+	你和悉尼还有罗宾互相搀扶着前进。
+	<br><br>
+<<elseif $Maplebirch.phase is 2>>
+	你和罗宾互相搀扶着前进。
+	<br><br>
+<<else>>
+	悉尼和罗宾成了下一个倒下的人。<<Maplebirch_anguish_He>>们挣扎着想要最后接近柴堆，但只能徒劳地伸出自己的手。<<Maplebirch_anguish_He>>们嘴里不断重复着什么，即便<<Maplebirch_anguish_He>>们被带走时也没有停下。
+	<br><br>
+<</if>>
+
+<<link [[继续|Maplebirch Temple Vigil 13]]>><</link>>
+<br>
+
+:: Maplebirch Temple Vigil 13
+<<effects>><<canvas-model-override "blink" false>><<canvas-model-override "eyes_half" true>><<canvas-model-override "trauma" true>><<canvas-model-override "mouth" "cry">>
+<<set Weather.Temperature.override.increase.outside(100)>>
+<<set $player.bodyTemperature to $player.bodyTemperature + 1>>
+
+无感疼痛，不觉暖冷。光涤汝身，映照汝魂。
+<br><br>
+
+光影汇集间，一个美丽的身影凝结而成，祂华彩夺目而又力量磅礴。神志不清的你回避了祂的意识。你羞愧地想着，凭自己粗陋的认知，竟能见识到如此伟大的存在。
+<br><br>
+
+你隐约察觉到地上的<<person3>><<person>>在颤抖，其意识被某种幻象所征服。
+<br><br>
+
+<<link [[专注|Maplebirch Temple Vigil Focus]]>><</link>>
+<br>
+<<link [[屈服|Maplebirch Temple Vigil Yield]]>><</link>>
+<br>
+
+:: Maplebirch Temple Vigil Focus
+<<effects>>
+<<set Weather.Temperature.override.increase.outside(100)>>
+<<set $player.bodyTemperature to $player.bodyTemperature + 1>>
+
+你抵制住本能，集中注意力凝视着这个身影。祂数不胜数的眼睛注视着周遭的环境，祂巨大的翅膀以不可闻的节奏上下翻飞。
+<br><br>
+
+祂的某些东西缺失了。祂身上破碎的裂痕与你在现世中见过的裂痕完全吻合。如同前世见过般，你几乎可以描摹出祂的全貌。失去的手臂，断掉的翅膀，消失的翎羽……如此多的残缺。你意识到了荣耀的表象以及背后的畸变与扭曲。意志之黑暗更胜于信仰，意志之力量更强于信仰。意志撕裂世界，信仰只可迎合。
+<br><br>
+
+<<if $Maplebirch.phase is 1>>
+	你的躯壳融化了，和悉尼与罗宾的一同融合在一起。
+	<<run statusCheck("Robin")>>
+	<<run statusCheck("Sydney")>>
+	<<if !_robinStatus.includes("belief") && !_sydneyStatus.includes("pure")>>
+		你们共同接受这亵渎般的启示。
+	<<elseif !_robinStatus.includes("belief") && _sydneyStatus.includes("pure")>>
+		你和罗宾接受这亵渎般的启示，但悉尼没有。
+	<<elseif _robinStatus.includes("belief") && !_sydneyStatus.includes("pure")>>
+		你和悉尼接受这亵渎般的启示，但罗宾没有。
+	<<else>>
+		你能感觉到，悉尼和罗宾的意识厌恶着你们所看到的一切。
+	<</if>>
+	<br><br>
+<<elseif $Maplebirch.phase is 2>>
+	你的躯壳融化了，和罗宾的一同融合在一起。
+	<<run statusCheck("Robin")>>
+	<<if !_robinStatus.includes("belief")>>
+		你们共同接受这亵渎般的启示。
+	<<else>>
+		你能感觉到，罗宾的意识厌恶着你们所看到的一切。
+	<</if>>
+	<br><br>
+<</if>>
+
+然后，火焰消逝，光亮溢散。你双膝一软，跪倒在回廊中央。
+<br><br>
+
+<<link [[继续|Maplebirch Temple Vigil 14]]>><</link>>
+<br>
+
+:: Maplebirch Temple Vigil Yield
+<<effects>>
+<<set Weather.Temperature.override.increase.outside(90)>>
+<<set $player.bodyTemperature to $player.bodyTemperature + 1>>
+
+<<if $Maplebirch.phase is 1>>
+	你跪在了地上，将悉尼和罗宾也一同拽了下来——又或许，是<<Maplebirch_anguish_He>>们先倒下的。你感觉到<<Maplebirch_anguish_He>>们摔在了地面上，就像你在<<Maplebirch_anguish_He>>们身体里一样。你把彼此拽向了火堆。
+	<br><br>
+
+	疼痛包围着你，火焰的每一次舔舐都让你发颤。但没关系，因为在如此美丽的存在面前，生命本身得以欣喜若狂地消散殆尽。
+	<<run statusCheck("Robin")>>
+	<<run statusCheck("Sydney")>>
+	<<if !_sydneyStatus.includes("corrupt") && !_robinStatus.includes("unbelief")>>
+		融为一体，你们一同凝视这宏伟壮大的美丽。
+	<<elseif !_sydneyStatus.includes("corrupt") && _robinStatus.includes("unbelief")>>
+		然而，存在某种矛盾。你察觉到了罗宾的探索欲，如同你自己的求知欲般，祈求着更深入的窥探与解答。
+	<<elseif _sydneyStatus.includes("corrupt") && !_robinStatus.includes("unbelief")>>
+		然而，存在某种矛盾。你察觉到了悉尼的求知欲，如同你自己的求知欲般，祈求着更深入的窥探与解答。
+	<<else>>
+		然而，存在某种矛盾。你察觉到了悉尼和罗宾的求知欲，如同你自己的求知欲般，祈求着更深入的窥探与解答。
+	<</if>>
+<<elseif $Maplebirch.phase is 2>>
+	你跪在了地上，将罗宾也一同拽了下来——又或许，是<<person6>><<he>>先倒下的。你感觉到<<him>>摔在了地面上，就像你在<<his>>身体里一样。你把彼此拽向了火堆。
+	<br><br>
+
+	疼痛包围着你，火焰的每一次舔舐都让你发颤。但没关系，因为在如此美丽的存在面前，生命本身得以欣喜若狂地消散殆尽。
+	<<run statusCheck("Robin")>>
+	<<if !_robinStatus.includes("unbelief")>>
+		融为一体，你们一同凝视这宏伟壮大的美丽。
+	<<else>>
+		然而，存在某种矛盾。你察觉到了罗宾的探索欲，如同你自己的求知欲般，祈求着更深入的窥探与解答。
+	<</if>>
+<<else>>
+	你跪倒在地，爬向火光。疼痛包围着你，火焰的每一次舔舐都让你发颤。但没关系，因为在如此美丽的存在面前，生命本身得以欣喜若狂地消散殆尽。
+<</if>>
+<br><br>
+
+然后，火焰消逝，光亮溢散。你双膝一软，跪倒在回廊中央。
+<br><br>
+
+<<link [[继续|Maplebirch Temple Vigil 14]]>><</link>>
+<br>
+
+:: Maplebirch Temple Vigil 14
+<<effects>><<canvas-model-override "clear">>
+<<pass 60>>
+<<set $pain to 0>><<tiredness -20>><<stress -40>>
+<<if $Maplebirch.phase is 1>>
+	当火焰无迹可寻，仅剩你脚边将熄的余烬时，耀日点亮了神殿之顶，圣洁的黎明驱散了黑夜。
+	<br><br>
+
+	三道钟声连鸣。约旦<<person1>>急匆匆地跑到你们跟前，将钟铃放下。一块温暖的布料盖在你和悉尼还有罗宾身上，遮住了你们的胴体。尽管烈焰熊熊，你却依然觉得很冷。是约旦和悉尼还有罗宾温暖了你。
+	<br><br>
+
+	“我就知道你们能做到！”<<he>>庆贺道，“通常我们仅允许一位见习教徒通过试炼。但你们如若一体般进入了火场。这没有违背圣典。祝贺你们！”其余的<<monks_and_nuns>>们也围了上来，微笑着送上贺词，并用<<person6>><<if $player.gender_appearance is "m" and $pronoun is "m">>兄弟<<elseif $player.gender_appearance is "f" and $pronoun is "f">>姐妹<<else>>兄弟姐妹<</if>>来称呼你们。你还在晕头转向。
+	<br><br>
+
+	<<run statusCheck("Sydney")>>
+	<<run statusCheck("Robin")>>
+	<<person6>>
+	<<if _sydneyStatus.includes("corrupt") && _robinStatus.includes("unbelief")>>
+		悉尼和罗宾一起从布料下拱到你身边，和你贴了贴，然后将你抱住，以此表示感谢。
+	<<elseif _sydneyStatus.includes("corrupt") && !_robinStatus.includes("unbelief")>>
+		悉尼从布料下拱到你身边，和你贴了贴，然后将你抱住，以此表示感谢。但罗宾很快又陷入了赤裸的尴尬，但并没有试图离开你，反而感激地抱住了你。
+	<<elseif !_sydneyStatus.includes("corrupt") && _robinStatus.includes("unbelief")>>
+		罗宾从布料下挤到你身边，和你贴了贴，然后将你抱住，以此表示感谢。但悉尼很快又陷入了赤裸的尴尬，但并没有试图离开你，反而感激地抱住了你。
+	<<else>>
+		悉尼和罗宾很快又陷入了赤裸的尴尬，但并没有试图离开你，反而感激地抱住了你。
+	<</if>>
+	"要是没有你陪着，我肯定做不到的。"，罗宾和悉尼异口同声地说。<<npcincr Sydney love 10>><<npcincr Robin love 10>><<note "++ 悉尼与罗宾的好感" "green">><<arousal 10>><<garousal>>
+	<br><br>
+
+	<<run setRobinGrace(0)>>
+	<<set $grace to 0>>
+	<<set $temple_rank to "monk">>
+	<<set $sydney.rank to "monk">>
+	<<set $sydneySeen.pushUnique("initiate")>>
+	<<set $sydneySeen.pushUnique("monk")>>
+	<<set $robin_temple_rank to "monk">>
+	<<set $robinSeen.pushUnique("initiate")>>
+	<<set $robinSeen.pushUnique("monk")>>
+	<<set $temple_monk_days to 0>>
+	<<set $wardrobes.temple.unlocked to true>>
+	<<earnFeat "Defy the Night">>
+
+	<<link [[继续|Maplebirch Temple Vigil 15]]>><<clotheson>><<endevent>><<MaplebirchEndEvent>><<set $Maplebirch.phase = 1>><</link>>
+	<br>
+<<elseif $Maplebirch.phase is 2>>
+	当火焰无迹可寻，仅剩你脚边将熄的余烬时，耀日点亮了神殿之顶，圣洁的黎明驱散了黑夜。
+	<br><br>
+
+	三道钟声连鸣。约旦<<person1>>急匆匆地跑到你们跟前，将钟铃放下。一块温暖的布料盖在你和罗宾身上，遮住了你们的胴体。尽管烈焰熊熊，你却依然觉得很冷。是约旦和罗宾温暖了你。
+	<br><br>
+
+	“我就知道你们能做到！”<<he>>庆贺道，“通常我们仅允许一位见习教徒通过试炼。但你们如若一体般进入了火场。这没有违背圣典。祝贺你们！”其余的<<monks_and_nuns>>们也围了上来，微笑着送上贺词，并用<<person6>><<if $player.gender_appearance is "m" and $pronoun is "m">>兄弟<<elseif $player.gender_appearance is "f" and $pronoun is "f">>姐妹<<else>>兄弟姐妹<</if>>来称呼你们。你还在晕头转向。
+	<br><br>
+
+	<<run statusCheck("Robin")>>
+	<<person6>>
+	<<if _robinStatus.includes("unbelief")>>
+		罗宾从布料下挤到你身边，和你贴了贴，然后将你抱住，以此表示感谢。
+	<<else>>
+		罗宾很快又陷入了赤裸的尴尬，但并没有试图离开你，反而感激地抱住了你。
+	<</if>>
+	"要是没有你陪着，我肯定做不到的。"<<npcincr Robin love 10>><<gglove>><<arousal 10>><<garousal>>
+	<br><br>
+
+	<<set $grace to 0>>
+	<<set $temple_rank to "monk">>
+	<<set $robin_temple_rank to "monk">>
+	<<set $robinSeen.pushUnique("initiate")>>
+	<<set $robinSeen.pushUnique("monk")>>
+	<<set $temple_monk_days to 0>>
+	<<set $wardrobes.temple.unlocked to true>>
+	<<earnFeat "Defy the Night">>
+
+	<<link [[继续|Maplebirch Temple Vigil 15]]>><<clotheson>><<endevent>><<MaplebirchEndEvent>><<set $Maplebirch.phase = 2>><</link>>
+	<br>
+<<else>>
+	当火焰无迹可寻，仅剩你脚边将熄的余烬时，耀日点亮了神殿之顶，圣洁的黎明驱散了黑夜。
+	<br><br>
+
+	三道钟声连鸣。约旦<<person1>>急匆匆地跑到你跟前，将钟铃放下。一块温暖的布料盖在你身上，遮住了你的胴体。尽管烈焰熊熊，你却依然觉得很冷。是约旦温暖了你。
+	<br><br>
+
+	“我就知道你能做到！”<<he>>庆贺道。其余的<<monks_and_nuns>>也围了上来，微笑着送上贺词，与你以<<sister>>相称。罗宾冲过来抱住你，结结巴巴地吐露着自己的自豪与幸福。<<person6>><<He>>似乎并不在意自己的失败，也不在意你的赤裸。你仍然头晕目眩。<<npcincr Robin love 5>><<glove>>
+	<br><br>
+
+	<<set $grace to 0>>
+	<<set $temple_rank to "monk">>
+	<<set $robinSeen.pushUnique("initiate")>>
+	<<set $robinSeen.pushUnique("monk")>>
+	<<set $temple_monk_days to 0>>
+	<<set $wardrobes.temple.unlocked to true>>
+	<<earnFeat "Defy the Night">>
+
+	<<link [[继续|Temple Vigil 15]]>><<clotheson>><<endevent>><<MaplebirchEndEvent>><</link>>
+	<br>
+<</if>>
+
+:: Maplebirch Temple Vigil 15
+<<effects>>
+<<if $Maplebirch.phase is 1>>
+	<<npc "Jordan" 1>><<npc "Sydney" 2>><<npc "Robin" 3>><<person1>>
+	<<generateTemple 4>>
+	约旦领你们回到地下，来到了一个点着壁炉的小房间。<<He>>示意你坐下。悉尼和罗宾则同另一位<<person4>><<monk>>一起，跟随在你身后。<<person4>><<monk>>的手上拿着你们褪下的衣物。
+	<br><br>
+
+	"神殿现在是你的家了。我们有很多东西给你看，但不用着急。等你准备好了，我们再向你介绍。"
+	<br><br>
+	<<person1>><<He>>停在门口，回头对你笑了笑。"真高兴你们俩都能加入我们。"
+	<br><br>
+
+	悉尼和罗宾又抱住你，然后离开了。
+<<elseif $Maplebirch.phase is 2>>
+	<<npc "Jordan" 1>><<npc "Robin" 2>><<person1>>
+	<<generateTemple 3>>
+	约旦领你们回到地下，来到了一个点着壁炉的小房间。<<He>>示意你坐下。罗宾则同另一位<<person3>><<monk>>一起，跟随在你身后。<<person3>><<monk>>的手上拿着你们褪下的衣物。
+	<br><br>
+
+	"神殿现在是你的家了。我们有很多东西给你看，但不用着急。等你准备好了，我们再向你介绍。"
+	<br><br>
+	<<person1>><<He>>停在门口，回头对你笑了笑。"真高兴你们俩都能加入我们。"
+	<br><br>
+
+	罗宾又抱住你，然后离开了。
+<</if>>
+<br><br>
+<<link [[继续|Temple Cloister]]>><<endevent>><<MaplebirchEndEvent>><</link>>
+<br>
+
+:: Maplebirch Temple Vigil End
+<<effects>>
+
+<<person1>>
+<<His>>的双臂温暖得让人沉溺。<<he>>为你裹上衣服。事先烘烤过的衣服同<<His>>的怀抱般温暖。“哦，我的孩子，”<<he>>说道，“你未能通过试炼，但我希望下周你能再试一次。来，让我给你穿好衣服。”
+<br><br>
+
+<<if $Maplebirch.phase is 1>>
+	"我们还提供热巧克力，"<<he>>一边小声补充道，一边领着你和悉尼还有罗宾离开回廊，“这是圣典外的福利。”
+<<elseif $Maplebirch.phase is 2>>
+	"我们还提供热巧克力，"<<he>>一边小声补充道，一边领着你和罗宾离开回廊，“这是圣典外的福利。”
+<</if>>
+<br><br>
+
+<<link [[继续|Maplebirch Temple Vigil End 2]]>><<clotheson>><</link>>
+<br>
+
+
+:: Maplebirch Temple Vigil End 2
+<<effects>><<set $outside to 0>>
+
+房间不大，壁炉里生着温暖舒适的炉火。约旦递给你一杯热气腾腾的巧克力。热气沁入你的手心，几乎让你感到疼痛，但你并不介意。<<pain -50>><<lllpain>>
+<br><br>
+
+<<pass 15>>
+约旦陪伴着你，直到你不再颤抖，随后领着你朝神殿的正殿走去。
+<br><br>
+
+<<link [[继续|Temple]]>><<endevent>><<MaplebirchEndEvent>><</link>>
+<br>

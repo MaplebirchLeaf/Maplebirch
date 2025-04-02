@@ -1,0 +1,7 @@
+		<br>
+	<</if>>
+    <<if $RobinTempleInvitation === "ask" && $robinromance === 1>>
+		<<socialiseicon "ask">><<link [[询问罗宾为什么叹气|Temple Robin Invitation]]>><</link>><<MaplebirchHint>>
+		<br>
+	<</if>>
+	<br>

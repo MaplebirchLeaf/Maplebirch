@@ -1,0 +1,141 @@
+:: MaplebirchNPCs [widget]
+
+<!-- 传递的参数包括NNPC名称、变量类型和值（+/-）-->
+<<widget "Maplebirchnpcincr">>
+	<<set _nam to _args[0]>>
+	<<set _var to _args[1]>>
+	<<set _val to _args[2]>>
+	<<if _args[3]>>
+		<<set _cheat to _args[3]>>
+	<</if>>
+
+	<<set _i to $NPCNameList.indexOf(_nam)>>
+
+	<<switch _var>>
+
+	<<case heresy>>
+		<<set $NPCName[_i].heresy += _val>>
+		<<if _val > 0>>
+			<<set $NPCName[_i].moronity -= _val>>
+			<<set $NPCName[_i].truth -= _val>>
+			<<set $NPCName[_i].fraud -= _val>>
+		<</if>>
+		<<VivianfourthCheck>>
+	<<case moronity>>
+		<<set $NPCName[_i].moronity += _val>>
+		<<if _val > 0>>
+			<<set $NPCName[_i].heresy -= _val>>
+			<<set $NPCName[_i].truth -= _val>>
+			<<set $NPCName[_i].fraud -= _val>>
+		<</if>>
+		<<VivianfourthCheck>>
+	<<case truth>>
+		<<set $NPCName[_i].truth += _val>>
+		<<if _val > 0>>
+			<<set $NPCName[_i].heresy -= _val>>
+			<<set $NPCName[_i].moronity -= _val>>
+			<<set $NPCName[_i].fraud -= _val>>
+		<</if>>
+		<<VivianfourthCheck>>
+	<<case fraud>>
+		<<set $NPCName[_i].fraud += _val>>
+		<<if _val > 0>>
+			<<set $NPCName[_i].heresy -= _val>>
+			<<set $NPCName[_i].moronity -= _val>>
+			<<set $NPCName[_i].truth -= _val>>
+		<</if>>
+		<<VivianfourthCheck>>
+	<<case dom>>
+		<<set $NPCName[_i].dom += _val>>
+		<<if _nam === "Vivian">>
+			<<if $NPCName[_i].dom <= 0>>
+				<<set $NPCName[_i].dom = 0>>
+			<</if>>
+			<<if $NPCName[_i].dom >= 200>>
+				<<set $NPCName[_i].dom = 200>>
+			<</if>>
+		<</if>>
+	<<case love>>
+		<<set $NPCName[_i].love += _val>>
+		<<if _nam === "Vivian">>
+			<<if $NPCName[_i].love <= -10>>
+				<<set $NPCName[_i].love = -10>>
+			<</if>>
+			<<if $NPCName[_i].love >= 150>>
+				<<set $NPCName[_i].love = 150>>
+			<</if>>
+		<</if>>
+	<<case holiness>>		
+		<<set $NPCName[_i].holiness += _val>>
+		<<if $NPCName[_i].holiness >= 200>>
+			<<set $NPCName[_i].holiness = 200>>
+		<</if>>
+		<<if $NPCName[_i].holiness <= 0>>
+			<<set $NPCName[_i].holiness = 0>>
+		<</if>>
+	<<case lost>>
+		<<set $NPCName[_i].maplebirch_lost += _val>>
+		<<if $NPCName[_i].maplebirch_lost >= 100>>
+			<<set $NPCName[_i].maplebirch_lost = 100>>
+		<</if>>
+		<<if $NPCName[_i].maplebirch_lost <= 0>>
+			<<set $NPCName[_i].maplebirch_lost = 0>>
+		<</if>>
+		<<if C.npc.Vivian.maplebirch_lost !== 0>>
+		<<set $NPCName[_i].lust += _val>>
+			<<if $NPCName[_i].lust >= 100>>
+				<<set $NPCName[_i].lust = 100>>
+			<</if>>
+			<<if $NPCName[_i].lust <= 0>>
+				<<set $NPCName[_i].lust = 0>>
+			<</if>>
+		<</if>>
+	<<default>>
+		<span class="red">NPCINCR 错误 - 未知变量  _var</span>
+		<br><br>
+	<</switch>>
+<<Maplebirchrelationshipclamp>>
+<</widget>>
+
+<<widget "Maplebirchrelationshipclamp">>
+	<<set _i to $NPCNameList.indexOf("Robin")>>
+    <<set $NPCName[_i].holiness = Math.clamp($NPCName[_i].holiness, 0, 200)>>
+	<<set _i to $NPCNameList.indexOf("Vivian")>>
+	<<set $NPCName[_i].maplebirch_lost = Math.clamp($NPCName[_i].maplebirch_lost, 0, 100)>>
+	<<set $NPCName[_i].lust = Math.clamp($NPCName[_i].lust, 0, 100)>>
+	<<set $NPCName[_i].love = Math.clamp($NPCName[_i].love, -10, 150)>>
+	<<set $NPCName[_i].dom = Math.clamp($NPCName[_i].dom, 0, 200)>>
+	<<set $NPCName[_i].heresy = Math.clamp($NPCName[_i].heresy, 0, 150)>>
+	<<set $NPCName[_i].moronity = Math.clamp($NPCName[_i].moronity, 0, 150)>>
+	<<set $NPCName[_i].truth = Math.clamp($NPCName[_i].truth, 0, 150)>>
+	<<set $NPCName[_i].fraud = Math.clamp($NPCName[_i].fraud, 0, 150)>>
+	<<set $NPCName[_i].trauma = Math.clamp($NPCName[_i].trauma, 0, 150)>>
+<</widget>>
+
+<<widget "VivianfourthCheck">>
+	<<if $NPCName[_i].heresy >= 150>>
+		<<set $NPCName[_i].heresy = 150>>
+	<</if>>
+	<<if $NPCName[_i].heresy <= 0>>
+		<<set $NPCName[_i].heresy = 0>>
+	<</if>>
+	<<if $NPCName[_i].moronity >= 150>>
+		<<set $NPCName[_i].moronity = 150>>
+	<</if>>
+	<<if $NPCName[_i].moronity <= 0>>
+		<<set $NPCName[_i].moronity = 0>>
+	<</if>>
+	<<if $NPCName[_i].truth >= 150>>
+		<<set $NPCName[_i].truth = 150>>
+	<</if>>
+	<<if $NPCName[_i].truth <= 0>>
+		<<set $NPCName[_i].truth = 0>>
+	<</if>>
+	<<if $NPCName[_i].fraud >= 150>>
+		<<set $NPCName[_i].fraud = 150>>
+	<</if>>
+	<<if $NPCName[_i].fraud <= 0>>
+		<<set $NPCName[_i].fraud = 0>>
+	<</if>>
+	<<set $NPCName[_i].trauma = $NPCName[_i].heresy + $NPCName[_i].moronity + $NPCName[_i].truth + $NPCName[_i].fraud>>
+<</widget>>

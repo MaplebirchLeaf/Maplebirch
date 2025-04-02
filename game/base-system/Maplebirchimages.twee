@@ -1,0 +1,51 @@
+:: Maplebirch Widget Icon Img [widget]
+
+<<widget "MaplebirchIcon">>
+  <<switch _args[0]>>
+	<<case "SydneyBunk">><<icon "Sydneyquarters.png">>
+  <<case "SydneyBed">><<icon "Sydneybed.png">>
+  <<case "gift">><<icon "Maplebirch_gift.png">>
+  <<case "RobinBunk">><<icon "Robinquarters.png">>
+  <<case "RobinBed">><<icon "RobinTemplebed.png">>
+  <<case "blood_lemon">><<icon "tending/blood_lemon.gif">>
+  <<case "help">><<icon "maplebirch_help.png">>
+  <<case "awareness">><<icon "maplebirch_awareness.png">>
+  <<case "lewd">><<icon "lust.png">>
+  <<case "desecrate">><<icon "maplebirch_desecrate.png">>
+  <<case "Maplebirch">><<icon "Maplebirch.png">>
+  <<case "wait">><<icon "loiter.gif">>
+  <!-- 湖中岛 -->
+  <<case "lakeisland">>
+    <<switch _args[1]>>
+      <<case "yourbed">>
+        <<switch $Maplebirch.lakeisland.yourbed>>
+          <<case "supersingle">><<icon "lake_island/maplebirch_singlebeddeluxe.png">>
+          <<case "single">><<icon "lake_island/maplebirch_singlebed.png">>
+          <<case "superdouble">><<icon "lake_island/maplebirch_doublebeddeluxe.png">>
+          <<case "double">><<icon "lake_island/maplebirch_doublebed.png">>
+          <<default>><<icon "lake_island/maplebirch_bed.png">>
+        <</switch>>
+      <<case "bed">>
+        <<switch $Maplebirch.lakeisland.bed>>
+          <<case "supersingle">><<icon "lake_island/maplebirch_singlebeddeluxe.png">>
+          <<case "single">><<icon "lake_island/maplebirch_singlebed.png">>
+          <<case "superdouble">><<icon "lake_island/maplebirch_doublebeddeluxe.png">>
+          <<case "double">><<icon "lake_island/maplebirch_doublebed.png">>
+          <<default>><<icon "lake_island/maplebirch_bed.png">>
+        <</switch>>
+      <<case "backyard">><<icon "lake_island/Maplebirch_island_backyard.png">>
+      <<case "backyard_snow">><<icon "lake_island/Maplebirch_island_backyard_snow.png">>
+      <<case "house">><<icon "lake_island/Maplebirch_island_house.png">>
+      <<case "house_snow">><<icon "lake_island/Maplebirch_island_house_snow.png">>
+      <<case "snow">><<icon "lake_island/Maplebirch_lakeisland_snow.png">>
+      <<default>><<icon "lake_island/Maplebirch_lakeisland.png">>
+    <</switch>>
+  <!-- 原版返回 -->
+  <<case "getouticon">>
+    <<switch _args[1]>>
+		  <<case "dig">><<icon "dig.png">>
+		  <<case "hole">><<icon "get_out_hole.png">>
+		  <<default>><<icon "get_out.png">>
+	  <</switch>>
+	<</switch>>
+<</widget>>
