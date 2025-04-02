@@ -1,0 +1,135 @@
+/*.wraith {
+	background: var(--150);
+	text-shadow: 0 0 7px var(--150), 0 0 22px var(--purple), 0 0 32px var(--purple);
+	background-clip: text;
+	-webkit-background-clip: text;
+	color: transparent;
+}
+.MaplebirchMod {
+    animation: lustful 180s linear infinite;  只保留渐变流动动画 
+    background: linear-gradient(-90deg, #FE9900, #F8D304, #BBF804, #01FF99, #BBF804, #F8D304, #FE9900);
+    background-size: 100% 100%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}*/
+
+.MaplebirchFallen {
+    background: linear-gradient(45deg, 
+        #5A5A5A 20%, 
+        #909090 50%, 
+        #3C3C3C 80%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    text-shadow: 
+        0 0 12px rgba(173, 216, 230, 0.4),  /* 冷光蓝调 */
+        0 0 25px rgba(105, 105, 105, 0.6),
+        0 0 40px rgba(169, 169, 169, 0.3);
+}
+
+.MaplebirchDemon {
+    background: linear-gradient(225deg, 
+        #8A2BE2 0%,      /* 深紫罗兰 */
+        #DA70D6 40%,     /* 兰花粉紫 */
+        #FF00FF 100%);   /* 品红高光 */
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    text-shadow: 
+        0 0 15px rgba(138, 43, 226, 0.5),  /* 紫色光晕 */
+        0 0 30px rgba(218, 112, 214, 0.7),
+        0 0 45px rgba(255, 0, 255, 0.4);
+}
+
+.MaplebirchAngel {
+    background: linear-gradient(135deg, 
+        #FFD700 10%,     /* 黄金色 */
+        #FFEC8B 35%,     /* 浅金 */
+        #FFA500 70%,     /* 橙金过渡 */
+        #FFD700 100%);   /* 循环增强 */
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    text-shadow: 
+        0 0 20px rgba(255, 215, 0, 0.5),  /* 金色光晕 */
+        0 0 35px rgba(255, 165, 0, 0.6),
+        0 0 50px rgba(255, 255, 0, 0.3);
+}
+
+.VivianHeresy {
+  color: #8B0000;
+  animation: Vivian-heresy-glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes Vivian-heresy-glow {
+  from {
+    text-shadow: 0 0 5px #8B0000, 0 0 10px #8B0000;
+  }
+  to {
+    text-shadow: 0 0 10px #5E1914, 0 0 20px #5E1914, 0 0 30px #5E1914;
+  }
+}
+
+.VivianTruth {
+  color: #B0C4DE;
+  text-shadow: 
+    0 0 3px rgba(176, 196, 222, 0.5),
+    0 0 6px rgba(255, 255, 255, 0.2);
+  animation: truth-pulse 4s ease-in-out infinite;
+}
+
+@keyframes truth-pulse {
+  0%, 100% { opacity: 0.95; }
+  50% { opacity: 1; text-shadow: 0 0 6px rgba(176, 196, 222, 0.7); }
+}
+
+.VivianMoronity {
+  color: #987606;
+  text-shadow: 
+    0 0 3px #5a3d5a,
+    0 0 6px #3a1f3a;
+}
+
+.VivianFraud {
+  color: #666666;
+  position: relative;
+  letter-spacing: 1px;
+}
+
+.Fraud::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #666666 30%, #666666 70%, transparent);
+  opacity: 0.5;
+  filter: blur(1px);
+}
+
+.winered {
+  color: #8B0000;
+}
+
+.azure {
+  color: #B0C4DE;
+}
+
+.tawny {
+  color: #987606;
+}
+
+.mediumgrey {
+  color: #666666;
+}
+
+.MaplebirchColor {
+    animation: lustful 180s linear infinite;
+    background: linear-gradient(-90deg, #FF0000, #FF7F00, #FFFF00, #00FF00, #00FFFF, #0000FF, #8B00FF);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+

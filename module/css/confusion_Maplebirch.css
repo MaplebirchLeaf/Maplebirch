@@ -1,0 +1,18 @@
+.confusion {
+    position: relative;
+    display: inline-block;
+    font-family: 'Courier New', monospace;
+    color: #8A2BE2;
+    white-space: nowrap;
+}
+/* 通过CSS生成固定内容 */
+.confusion::before {
+    content: "s̴'̶u̵h̶n̵s̶h̶u̴g̵g̴o̸t̸h̴"; /* 固定内容 */
+    position: absolute;
+	letter-spacing: -11px; 
+    width: 100%;        /* 继承父级宽度 */
+    height: 80%;
+    color: #8B0000;  
+    overflow: hidden;
+    text-shadow: 0 0 1px #8B0000, 0 0 1px #8B0000;
+}

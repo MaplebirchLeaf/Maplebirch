@@ -1,0 +1,790 @@
+{
+  "name": "Maplebirch",
+  "version": "0.1.2.6",
+  "styleFileList": [
+    "module/css/options_Maplebirch.css",
+    "module/css/confusion_Maplebirch.css",
+    "module/css/item_Maplebirch.css"
+  ],
+  "scriptFileList": [
+    "scriptEarly/SFRegist.js",
+    "game/03-JavaScript/MaplebirchText.js",
+    "game/03-JavaScript/MaplebirchTraits.js",
+    "game/03-JavaScript/MaplebirchTime.js",
+    "game/03-JavaScript/MaplebirchSettings.js",
+    "game/overworld-town/special-robin/RobinTempleTest.js",
+    "game/MaplebirchNPCs/MaplebirchNPCs.js",
+    "game/MaplebirchNPCs/Karasveil/Karasveil.js",
+    "game/MaplebirchNPCs/Igniharp/Igniharp.js",
+    "game/MaplebirchNPCs/Noctyaph/Noctyaph.js",
+    "game/MaplebirchNPCs/Vivian/Vivian.js",
+    "game/overworld-forest/loc-LakeIsland/LakeIsandSettings.js"
+  ],
+  "tweeFileList": [
+    "game/overworld-town/loc-temple/SydneyBunk.twee",
+    "game/base-system/Maplebirchimages.twee",
+    "game/MaplebirchCompatibility.twee",
+    "game/overworld-town/special-robin/templeRobin.twee",
+    "game/base-system/MaplebirchSetting.twee",
+    "game/overworld-town/loc-temple/RobinTempleEvents.twee",
+    "game/overworld-town/loc-temple/RobinTempleRitual.twee",
+    "game/overworld-town/loc-temple/RobinTempleAnguish.twee",
+    "game/overworld-town/loc-temple/RobinTempleExamination.twee",
+    "game/base-system/MaplebirchCoreCharacteristics.twee",
+    "game/base-clothing/MaplebirchInit.twee",
+    "game/MaplebirchNPCs/MaplebirchNPCs.twee",
+    "game/base-system/MaplebirchOptions.twee",
+    "game/overworld-town/loc-temple/RobinBunk.twee",
+    "game/overworld-town/loc-temple/TempleConfusionExamination.twee",
+    "game/MaplebirchNPCs/Vivian/VivianSetting.twee",
+    "game/overworld-forest/loc-lake/VivianRuinPlinth.twee",
+    "game/base-combat/MaplebirchCombat.twee",
+    "game/MaplebirchNPCs/Vivian/VivianCombatSpeech.twee",
+    "game/overworld-forest/loc-LakeIsland/LakeCenterCabin.twee",
+    "game/overworld-forest/loc-LakeIsland/LakeIslandVivianEvent.twee",
+    "game/overworld-town/special-sydney/MaplebirchSydney.twee"
+  ],
+  "imgFileList": [],
+  "additionDir": [
+    "MaplebirchModImg",
+    "MaplebirchParasiteModImg"
+  ],
+  "scriptFileList_inject_early": [
+    
+  ],
+  "additionFile": [
+    "MaplebirchModImg/imgFileListFile.json",
+    "MaplebirchParasiteModImg/imgFileListFile.json",
+    "game/overworld-town/loc-temple/TempleBunkadjust.txt",
+    "game/base-system/MaplebirchBunkSleep.txt",
+    "game/overworld-town/special-robin/Robinoptions.txt",
+    "game/overworld-town/special-robin/getRobinClothes.txt",
+    "game/overworld-town/special-robin/RobinTempleTime.txt",
+    "game/overworld-town/special-sydney/SydneySchedule.txt",
+    "game/overworld-town/loc-temple/RobinTempleExamination.txt",
+    "game/overworld-town/loc-temple/SydneyPureCheck.txt",
+    "game/overworld-town/loc-temple/RobinConfessionReply.txt",
+    "game/overworld-town/loc-temple/Temple_Confess_Forgive.txt",
+    "game/overworld-town/loc-temple/Temple_Confess_Forgive_Robin.txt",
+    "game/overworld-town/loc-temple/Temple_Confess_Repent_Robin.txt",
+    "game/overworld-town/loc-temple/Temple_Confess_Contrition_Robin.txt",
+    "game/overworld-town/loc-temple/Temple_Confess_Purge_Robin.txt",
+    "game/overworld-town/special-robin/initRobinClothes.txt",
+    "game/base-combat/MaplebirchtakeVirginity_1.txt",
+    "game/base-combat/MaplebirchtakeVirginity_2.txt",
+    "game/base-combat/MaplebirchTempleVirginity_1.txt",
+    "game/base-combat/MaplebirchTempleVirginity_2.txt",
+    "game/overworld-town/loc-temple/TempleConfusionExamination.txt",
+    "game/overworld-forest/loc-lake/VivianMeet.txt",
+    "game/base-clothing/MaplebirchInitClothes.txt",
+    "game/base-combat/MaplebirchCombatSpeech.txt",
+    "game/MaplebirchNPCs/MaplebirchNPCi18ninit.txt",
+    "game/MaplebirchNPCs/MaplebirchNPCi18nName.txt",
+    "game/MaplebirchNPCs/MaplebirchnpcValue.txt",
+    "game/overworld-forest/loc-LakeIsland/LakeCenterIsland.txt",
+    "game/MaplebirchNPCs/NPCEjaculationInit.txt",
+    "game/base-system/MaplebirchJournal.txt",
+    "game/base-system/MaplebirchSideState.txt",
+    "game/overworld-forest/loc-LakeIsland/LakeCenterIsland_snow.txt",
+    "game/overworld-town/special-robin/RobinOptionsTime.txt",
+    "game/overworld-forest/loc-LakeIsland/LakeIslandWardrobe.txt"
+  ],
+  "addonPlugin": [
+    {
+      "modName": "ModdedClothesAddon",
+      "addonName": "ModdedClothesAddon",
+      "modVersion": "^1.1.0",
+      "params": {
+
+      }
+    },
+    {
+      "modName": "TweeReplacer",
+      "addonName": "TweeReplacerAddon",
+      "modVersion": "1.0.0",
+      "params": [
+        {
+          "passage": "Temple Sydney Rescue",
+          "findString": "你们一起走回神殿的主厅。你花了好长时间才说服悉尼你没有什么大碍。<<if $sydneyromance is 1>><<he>>亲了亲你的脸颊，然后回去工作了。<<else>><<he>>向你挥手告别，离开的时候转身又看了你一眼。<</if>>",
+          "replace": "你们一起走回神殿的主厅。你花了好长时间才说服悉尼你没有什么大碍。<<if $sydneyromance is 1>><<he>>亲了亲你的脸颊，然后回去工作了。<<else>><<he>>向你挥手告别，离开的时候转身又看了你一眼。<</if>>\n<<SydneyBunkChat>>",
+          "_comment": "悉尼宿舍前置"
+        },
+        {
+          "passage": "Temple Quarters",
+          "findString": "<</if>>\n\t\t<<if Time.dayState is \"night\">>",
+          "replace": "<<MaplebirchTemplebunk>>\n\t\t<</if>>\n\t\t<<if Time.dayState is \"night\">>",
+          "_comment": "悉尼与罗宾宿舍"
+        },
+        {
+          "passage": "Temple Quarters",
+          "findString": "<<else>>\n\t\t\t你藏在床铺下以保护自尊。",
+          "replace": "<<MaplebirchTemplebunk>>\n\t\t<<else>>\n\t\t\t你藏在床铺下以保护自尊。",
+          "_comment": "悉尼与罗宾宿舍"
+        },
+        {
+          "passage": "Temple Bunk",
+          "findString": "<<mirroricon>><<link [[镜子|Temple Mirror]]>><<preMirror>><<endevent>><</link>>\n<br><br>",
+          "replace": "<<mirroricon>><<link [[镜子|Temple Mirror]]>><<preMirror>><<endevent>><</link>>\n<br><br><<MaplebirchTemplebunk>>",
+          "_comment": "悉尼与罗宾宿舍"
+        },
+        {
+          "passage": "Temple Sleep",
+          "findString": "<<wakingEffects $sleepHoursTotal>>",
+          "replace": "<<temple_sydney_bunk_sleep_1>>\n\t<<wakingEffects $sleepHoursTotal>>",
+          "_comment": "神殿悉尼宿舍睡觉"
+        },
+        {
+          "passage": "Temple Sleep",
+          "findString": "<<sleepeffects>>",
+          "replace": "<<maplebirch_temple_bunk_sleep_2>>\n\t<<sleepeffects>>\n\t<<maplebirch_temple_bunk_sleep_3>>",
+          "_comment": "神殿宿舍睡觉事件"
+        },
+        {
+          "passage": "Temple Sleep",
+          "findString": "<<set $wardrobe_location to \"temple\">>",
+          "replaceFile": "game/overworld-town/loc-temple/TempleBunkadjust.txt",
+          "_comment": "神殿宿舍睡觉事件"
+        },
+        {
+          "passage": "Widgets Sleep",
+          "findString": "\t\t\t<<case \"temple\">>",
+          "replaceFile": "game/base-system/MaplebirchBunkSleep.txt",
+          "_comment": "神殿罗宾和悉尼睡觉部件"
+        },
+        {
+          "passage": "Widgets Sydney",
+          "findString": "\t\t\t\t<<set $sydney_templeWork to \"pray\">>\n\t\t<</switch>>",
+          "replace": "\t\t\t\t<<set $sydney_templeWork to \"pray\">>\n\t\t<</switch>>\n\t\t<<if $Maplebirch.sydney.retention is true>><<set $sydney_templeWork to \"sleep\">><<elseif Time.weekDay is 1 && Time.hour is 0>><<set $sydney_templeWork to \"sleep\">><</if>>",
+          "_comment": "悉尼周六睡觉修改"
+        },
+        {
+          "passage": "Traits",
+          "findString": "name: \"承诺仪式：<<= $templePromised.replace('Sydney','悉尼')>>\",",
+          "replace": "name: \"<<MaplebirchTemplePromised>>\",",
+          "_comment": "悉尼承诺誓言修改"
+        },
+        {
+          "passage": "Traits",
+          "findString": "has: $templePromised isnot \"\" and $player.virginity.temple is true,",
+          "replace": "has: ($Maplebirch.templePromised isnot \"\" || $templePromised isnot \"\") and $player.virginity.temple is true,",
+          "_comment": "悉尼承诺誓言修改"
+        },
+        {
+          "passage": "Traits",
+          "findString": "name: \"破碎的承诺：<<= $templePromised.replace('Sydney','悉尼')>>\",",
+          "replace": "name: \"<<MaplebirchTemplePromisedBroken>>\",",
+          "_comment": "悉尼承诺誓言修改"
+        },
+        {
+          "passage": "Traits",
+          "findString": "has: $templePromised isnot \"\" and $player.virginity.temple isnot true,",
+          "replace": "has: ($Maplebirch.templePromised isnot \"\" || $templePromised isnot \"\") and $player.virginity.temple isnot true,",
+          "_comment": "悉尼承诺誓言修改"
+        },
+        {
+          "passage": "Widgets",
+          "findString": "<<if $npc.length is 1 and ($npc[0] is \"Robin\" and C.npc.Robin.dom lte 10 and $debug is 1) or ($npc[0] is \"Sydney\" and C.npc.Sydney.purity gte 50)>>",
+          "replace": "<<if $npc.length is 1 && ($npc[0] is \"Robin\" && $robinromance is 1 && (C.npc.Robin.trauma gte 80 || $RobinRitual === 1)) || ($npc[0] is \"Sydney\" && C.npc.Sydney.purity gte 50) || isVivianSub()>>",
+          "_comment": "NPC顺从条件"
+        },
+        {
+          "passage": "Robin Bath Sex Finish",
+          "findString": "罗宾低头盯着你的身体。\"我们得再洗一次澡了，\"<<he>>开玩笑说。在接下来的时间里，你们两个互相帮助对方把身体清洗干净了。<<wash>>",
+          "replace": "<<robinFinishMaplebirch>><<RobinTempleInvitation_1>>\n罗宾低头盯着你的身体。\"我们得再洗一次澡了，\"<<he>>开玩笑说。在接下来的时间里，你们两个互相帮助对方把身体清洗干净了。<<wash>>",
+          "_comment": "罗宾孤儿院浴室邀请"
+        },
+        {
+          "passage": "Robin Mischief Sex Finish",
+          "findString": "<<Hes>>沉默了几秒钟，然后紧张地笑了起来。\"那个……\"<<he>>说，\"我很高兴走进来的是你，而不是别人。那会很尴尬的。\"",
+          "replace": "<<robinFinishMaplebirch>><<RobinTempleInvitation_1>>\n<<Hes>>沉默了几秒钟，然后紧张地笑了起来。\"那个……\"<<he>>说，\"我很高兴走进来的是你，而不是别人。那会很尴尬的。\"",
+          "_comment": "罗宾房间自卫邀请"
+        },
+        {
+          "passage": "Robin Room Bed Sex Finish",
+          "findString": "<<if $orgasmcurrent is 0 and not playerChastity()>>",
+          "replace": "<<robinFinishMaplebirch>><<RobinTempleInvitation_1>>\n<<if $orgasmcurrent is 0 and not playerChastity()>>",
+          "_comment": "罗宾房间的床邀请"
+        },
+        {
+          "passage": "Bed Robin Sex Finish",
+          "findString": "<<His>>闭上了眼睛，平稳地进入了梦乡。",
+          "replace": "<<robinFinishMaplebirch>><<RobinTempleInvitation_1>>\n<<His>>闭上了眼睛，平稳地进入了梦乡。",
+          "_comment": "罗宾你的床邀请"
+        },
+        {
+          "passage": "Canteen Robin Sex Finish",
+          "findString": "罗宾靠在你身上，气喘吁吁，汗珠滴落在<<his>>赤裸的身体上。\"不敢相信，我们居然在这里做了这件事。\"",
+          "replace": "<<robinFinishMaplebirch>><<RobinTempleInvitation_1>>\n罗宾靠在你身上，气喘吁吁，汗珠滴落在<<his>>赤裸的身体上。\"不敢相信，我们居然在这里做了这件事。\"",
+          "_comment": "罗宾食堂邀请"
+        },
+        {
+          "passage": "Robin Unwrap Sex Finish",
+          "findString": "\"圣诞快乐，\"罗宾轻声说，随后<<He>>吻了一下你的脸颊，\"我知道这很突然，但我希望你能开心。\"",
+          "replace": "<<robinFinishMaplebirch>><<RobinTempleInvitation_1>>\n\"圣诞快乐，\"罗宾轻声说，随后<<He>>吻了一下你的脸颊，\"我知道这很突然，但我希望你能开心。\"",
+          "_comment": "罗宾圣诞节邀请"
+        },
+        {
+          "passage": "Robin Bush Sex Finish",
+          "findString": "\"我不敢相信我们在这里做了这种事。\"",
+          "replace": "<<robinFinishMaplebirch>><<RobinTempleInvitation_1>>\n\"我不敢相信我们在这里做了这种事。\"",
+          "_comment": "罗宾推到？邀请"
+        },
+        {
+          "passage": "Robin Cinema Sex Finish",
+          "findString": "\"我不敢相信我们在这里做了这种事。\"",
+          "replace": "<<robinFinishMaplebirch>><<RobinTempleInvitation_1>>\n\"我不敢相信我们在这里做了这种事。\"",
+          "_comment": "罗宾电影院邀请"
+        },
+        {
+          "passage": "Widgets Robin",
+          "findString": "\n\t\t<br>\n\t<</if>>\n\t<br>",
+          "replaceFile": "game/overworld-town/special-robin/Robinoptions.txt",
+          "_comment": "罗宾神殿询问"
+        },
+        {
+          "passage": "Widgets Named Npcs",
+          "findString": "\t\t\t\t\t<<case \"halloween\">>",
+          "replaceFile": "game/overworld-town/special-robin/getRobinClothes.txt",
+          "_comment": "罗宾神殿衣服"
+        },
+        {
+          "passage": "Robin's Room Entrance",
+          "findString": "<<elseif $christmas_robin_lewd is 1>>",
+          "replaceFile": "game/overworld-town/special-robin/RobinTempleTime.txt",
+          "_comment": "罗宾房间纸条"
+        },
+        {
+          "passage": "Widgets Sydney",
+          "findString": "<<elseif $daily.sydney.punish is 1>>",
+          "replaceFile": "game/overworld-town/special-sydney/SydneySchedule.txt",
+          "_comment": "悉尼地点更新"
+        },
+        {
+          "passage": "Temple",
+          "findString": "<<set $outside to 0>><<set $location to \"temple\">><<sydneySchedule>><<temple_effects>><<effects>>",
+          "replace": "<<set $outside to 0>><<set $location to \"temple\">><<sydneySchedule>><<temple_effects>><<effects>>\n<<RobinTempleTestTip>><<run statusCheck(\"Robin\")>>",
+          "_comment": "罗宾神殿测试提示与罗宾信息检测"
+        },
+        {
+          "passage": "Temple",
+          "findString": "\t<<wolficon>><<link [[离开 (0:01)|Wolf Street]]>><<pass 1>><</link>>",
+          "replace": "<<RobinTempleTest>>\n\t<<wolficon>><<link [[离开 (0:01)|Wolf Street]]>><<pass 1>><</link>>",
+          "_comment": "罗宾神殿测试结果询问"
+        },
+        {
+          "passage": "Orphanage",
+          "findString": "<<initnpc Robin>>",
+          "replace": "<<initnpc Robin>><<set $robinFirstSeen to \"orphanage\">><<run $Maplebirch.robinSeen.pushUnique(\"orphanage\")>>",
+          "_comment": "罗宾孤儿院初次相遇"
+        },
+        {
+          "passage": "Canteen",
+          "findString": "<<initnpc Robin>>",
+          "replace": "<<initnpc Robin>><<set $robinFirstSeen to \"canteen\">><<run $Maplebirch.robinSeen.pushUnique(\"canteen\")>>",
+          "_comment": "罗宾食堂初次相遇"
+        },
+        {
+          "passage": "Shopping Centre",
+          "findString": "<<initnpc Robin>>",
+          "replace": "<<initnpc Robin>><<set $robinFirstSeen to \"shopping_Centre\">><<run $Maplebirch.robinSeen.pushUnique(\"shopping_Centre\")>>",
+          "_comment": "罗宾购物中心初次相遇"
+        },
+        {
+          "passage": "Park",
+          "findString": "\t<<elseif C.npc.Robin.init is 0 and Time.season is \"winter\" and Time.isWeekEnd() and between(Time.hour, 9, 16) and $exposed lte 0 and !$possessed>>",
+          "replace": "\t<<elseif C.npc.Robin.init is 0 and Time.season is \"winter\" and Time.isWeekEnd() and between(Time.hour, 9, 16) and $exposed lte 0 and !$possessed>>\n\t\t<<set $robinFirstSeen to \"park\">><<run $Maplebirch.robinSeen.pushUnique(\"park\")>>",
+          "_comment": "罗宾公园初次相遇"
+        },
+        {
+          "passage": "Beach",
+          "findString": "\t<<elseif C.npc.Robin.init is 0 and Time.season isnot \"winter\" and Time.isWeekEnd() and between(Time.hour, 9, 16)>>",
+          "replace": "\t<<elseif C.npc.Robin.init is 0 and Time.season isnot \"winter\" and Time.isWeekEnd() and between(Time.hour, 9, 16)>>\n\t\t<<set $robinFirstSeen to \"beach\">><<run $Maplebirch.robinSeen.pushUnique(\"beach\")>>",
+          "_comment": "罗宾沙滩初次相遇"
+        },
+        {
+          "passage": "Robin Forest Costume Buy",
+          "findString": "<<robinForestCostumeOptions>>",
+          "replace": "<<MaplebirchCheck>>\n<<robinForestCostumeOptions>>",
+          "_comment": "罗宾异装检测"
+        },
+        {
+          "passage": "Temple",
+          "findString": "<<if $temple_rank isnot undefined and $temple_rank isnot \"prospective\">>",
+          "replace": "<<robinTempleBench>>\n\t<<if $temple_rank isnot undefined and $temple_rank isnot \"prospective\">>",
+          "_comment": "罗宾神殿长椅"
+        },
+        {
+          "passage": "Temple Vigil 10",
+          "findString": "<<if $sydneyromance is 1 or C.npc.Sydney.love gte 90>>",
+          "replace": "<<robin_anguish_temple>>\n<<if $sydneyromance is 1 or C.npc.Sydney.love gte 90>>",
+          "_comment": "罗宾神殿苦难审判"
+        },
+        {
+          "passage": "Temple",
+          "findString": "<<elseif C.npc.Sydney.init is 1 and C.npc.Sydney.virginity.temple isnot true and $templePromised isnot \"Sydney\">>",
+          "replaceFile": "game/overworld-town/loc-temple/RobinTempleExamination.txt",
+          "_comment": "罗宾每月贞洁检测"
+        },
+        {
+          "passage": "Sydney Temple Pure",
+          "findString": "<<if !_sydneyStatus.includes(\"pure\")>>",
+          "replaceFile": "game/overworld-town/loc-temple/SydneyPureCheck.txt",
+          "_comment": "悉尼承诺誓言对话修改"
+        },
+        {
+          "passage": "Temple Confess",
+          "findString": "<<if _sydney_location is \"temple\" and $sydney_templeWork is \"pray\" and !$daily.sydneyConfession and C.npc.Sydney.init is 1 and $confessionsTaken gte 5>>",
+          "replace": "<<TempleRobinConfession>>\n<<if _sydney_location is \"temple\" and $sydney_templeWork is \"pray\" and !$daily.sydneyConfession and C.npc.Sydney.init is 1 and $confessionsTaken gte 5>>",
+          "_comment": "罗宾神殿忏悔室"
+        },
+        {
+          "passage": "Temple Confess",
+          "findString": "<<elseif $temple_confessor_intro>>",
+          "replaceFile": "game/overworld-town/loc-temple/RobinConfessionReply.txt",
+          "_comment": "罗宾忏悔室修改"
+        },
+        {
+          "passage": "Temple Confess Forgive",
+          "findString": "<<if $attendant isnot \"no_sin_generic\" and $attendant isnot \"sydney_promised\">>",
+          "replaceFile": "game/overworld-town/loc-temple/Temple_Confess_Forgive.txt",
+          "_comment": "罗宾忏悔室宽恕修改"
+        },
+        {
+          "passage": "Temple Confess Forgive",
+          "findString": "<<case \"winter\">>",
+          "replaceFile": "game/overworld-town/loc-temple/Temple_Confess_Forgive_Robin.txt",
+          "_comment": "罗宾忏悔室宽恕"
+        },
+        {
+          "passage": "Temple Confess Forgive",
+          "findString": "<<case \"winter\">>",
+          "replaceFile": "game/overworld-town/loc-temple/Temple_Confess_Repent_Robin.txt",
+          "_comment": "罗宾忏悔室忏悔"
+        },
+        {
+          "passage": "Temple Confess Contrition",
+          "findString": "<<case \"winter\">>",
+          "replaceFile": "game/overworld-town/loc-temple/Temple_Confess_Contrition_Robin.txt",
+          "_comment": "罗宾忏悔室赎罪"
+        },
+        {
+          "passage": "Temple Confess Purge",
+          "findString": "<<case \"winter\">>",
+          "replaceFile": "game/overworld-town/loc-temple/Temple_Confess_Purge_Robin.txt",
+          "_comment": "罗宾忏悔室净化"
+        },
+        {
+          "passage": "gameStartOnly",
+          "findString": "<<set $passageCount to 0>>",
+          "replace": "<<set $passageCount to 0>>\n\t<<run maplebirchStartOnly()>>",
+          "_comment": "新存档初始化"
+        },
+        {
+          "passage": "Widgets variablesVersionUpdate",
+          "findString": "<<set $custom_eyecolours to _newEyecolours>>\n\t<</if>>",
+          "replace": "<<set $custom_eyecolours to _newEyecolours>>\n\t<</if>><<run maplebirchReloadVariables()>>",
+          "_comment": "读存档初始化"
+        },
+        {
+          "passage": "Widgets Named Npcs",
+          "findString": "\"maleTown1\", \"femaleTown1\", \"maleWarm1\", \"femaleWarm1\", \"coldPuffer\", \"pyjamas\"",
+          "replaceFile": "game/overworld-town/special-robin/initRobinClothes.txt",
+          "_comment": "罗宾神殿长袍init"
+        },
+        {
+          "passage": "Widgets Clothing Init",
+          "findString": "<<init_npc_clothes>>",
+          "replace": "<<init_npc_clothes>>\n\t<<maplebirch_npc_clothes>>",
+          "_comment": "新添NPC衣物"
+        },
+        {
+          "passage": "Temple Vigil 3",
+          "findString": "<<if $sydneySeen is undefined>>",
+          "replace": "<<robin_anguish_talk_1>>\n<<if $sydneySeen is undefined>>",
+          "_comment": "罗宾苦难审判文本_1"
+        },
+        {
+          "passage": "Temple Vigil Undress",
+          "findString": "<<if $sydney.glasses is \"glasses\">>",
+          "replace": "<<robin_anguish_talk_2>>\n<<if $sydney.glasses is \"glasses\">>",
+          "_comment": "罗宾苦难审判文本_2"
+        },
+        {
+          "passage": "Temple Vigil 7",
+          "findString": "<<gwillpower>><<willpower 1>>",
+          "replace": "<<robin_anguish_talk_3>>\n<<gwillpower>><<willpower 1>>",
+          "_comment": "罗宾苦难审判文本_3"
+        },
+        {
+          "passage": "Temple Vigil 7",
+          "findString": "<span class=\"red\">你开始想要加入他们。</span>然而，就在那转身的那一瞬，有人抓住你的手腕，将你拉了回来。是悉尼。<span class=\"green\">腕间多出的温暖，给了你继续下去的勇气，</span>再多坚持一小会儿。",
+          "replace": "<span class=\"red\">你开始想要加入他们。</span>然而，就在那转身的那一瞬，有人抓住你的手腕，将你拉了回来。是悉尼<<robin_anguish_talk_4>>。<span class=\"green\">腕间多出的温暖，给了你继续下去的勇气，</span>再多坚持一小会儿。",
+          "_comment": "罗宾苦难审判文本_4"
+        },
+        {
+          "passage": "Temple Vigil 7",
+          "findString": "只有不到三分之一的人还留在这里。<<person2>><<person>>紧握着<<his>>的十字架，而<<person3>><<person>>则默默地念着另一段祷文。悉尼紧紧地抱住你，你回应般地用麻木而颤抖的双臂环住了<<person6>><<him>>。<<His>>的肌肤冰冷，但冷不过这无情的漫漫寒夜。",
+          "replace": "只有不到三分之一的人还留在这里。<<person2>><<person>>紧握着<<his>>的十字架，而<<person3>><<person>>则默默地念着另一段祷文。悉尼<<robin_anguish_talk_4>>紧紧地抱住你，你回应般地用麻木而颤抖的双臂环住了<<person6>><<him>><<if [\"initiate\"].includes(V.robin_temple_rank)>>们<</if>>。<<His>>的肌肤冰冷，但冷不过这无情的漫漫寒夜。",
+          "_comment": "罗宾苦难审判文本_4X"
+        },
+        {
+          "passage": "Temple Vigil 8",
+          "findString": "仿佛被某种新的恐怖所震悚，<<person3>><<person>>停止了祷告。悉尼捂住<<person6>>耳朵，大声地喘着气。而后你也听到了。微风中传来诡异的低语。你无法理解这些话语，但它们却引起了某种原始的恐惧。",
+          "replace": "仿佛被某种新的恐怖所震悚，<<person3>><<person>>停止了祷告。悉尼<<robin_anguish_talk_4>>捂住<<person6>>耳朵，大声地喘着气。而后你也听到了。微风中传来诡异的低语。你无法理解这些话语，但它们却引起了某种原始的恐惧。",
+          "_comment": "罗宾苦难审判文本_4XX"
+        },
+        {
+          "passage": "Temple Vigil 10",
+          "findString": "悉尼咕哝着些什么，你只听清一点。\"……只是燃尽污秽罢了……不会真的造成伤害……\"尽管这么说，<<person6>>但看起来<<he>>自己也不信。",
+          "replace": "<<robin_anguish_talk_5>>\n悉尼咕哝着些什么，你只听清一点。\"……只是燃尽污秽罢了……不会真的造成伤害……\"尽管这么说，<<person6>>但看起来<<he>>自己也不信。",
+          "_comment": "罗宾苦难审判文本_5"
+        },
+        {
+          "passage": "Temple Vigil 8",
+          "findString": "你们四人一组，抱团取暖，赤裸的手臂相互环绕着。因为缺少衣物而产生的羞耻与尴尬，统统被抛诸脑后。在透骨的寒意中，没人有余力考虑这些感受。",
+          "replace": "你们<<if [\"initiate\"].includes(V.robin_temple_rank)>>五<<else>>四<</if>>人一组，抱团取暖，赤裸的手臂相互环绕着。因为缺少衣物而产生的羞耻与尴尬，统统被抛诸脑后。在透骨的寒意中，没人有余力考虑这些感受。",
+          "_comment": "罗宾苦难审判文本_5X"
+        },
+        {
+          "passage": "Temple Vigil 8",
+          "findString": "恐惧支配着你，<span class=\"green\">但若仅仅是恐惧，还无法摧垮你的信念。</span>你和<<person2>><<person>>、<<person3>><<person>>还有悉尼挤在一起。现在只剩你们了。",
+          "replace": "恐惧支配着你，<span class=\"green\">但若仅仅是恐惧，还无法摧垮你的信念。</span>你和<<person2>><<person>>、<<person3>><<person>>还有悉尼<<if [\"initiate\"].includes(V.robin_temple_rank)>>和罗宾<</if>>挤在一起。现在只剩你们了。",
+          "_comment": "罗宾苦难审判文本_5XX"
+        },
+        {
+          "passage": "Widgets Combat",
+          "findString": "\t\t\t\t\t\t<<if $templePromised isnot $_taker>>",
+          "replace": "\t\t\t\t\t\t<<if $templePromised isnot $_taker && $Maplebirch.templePromised isnot $_taker>>",
+          "_comment": "保持贞洁部件_1"
+        },
+        {
+          "passage": "Widgets Combat",
+          "findString": "\t\t\t\t\t<<case \"kiss\">><<purity -10>>\n\t\t\t\t<</switch>>\n\t\t\t<</if>>",
+          "replaceFile": "game/base-combat/MaplebirchtakeVirginity_1.txt",
+          "_comment": "保持贞洁部件_2"
+        },
+        {
+          "passage": "Widgets Combat",
+          "findString": "\t\t<</if>>\n\t<</if>>\n<</widget>>\n\n<<widget \"takeTempleVirginity\">>",
+          "replaceFile": "game/base-combat/MaplebirchtakeVirginity_2.txt",
+          "_comment": "保持贞洁部件_3"
+        },
+        {
+          "passage": "Widgets Combat",
+          "findString": "\t\t\t<!-- Do nothing -->\n\t\t<<else>>",
+          "replaceFile": "game/base-combat/MaplebirchTempleVirginity_1.txt",
+          "_comment": "神殿贞洁部件_1"
+        },
+        {
+          "passage": "Widgets Combat",
+          "findString": "\t\t<</if>>\n\t<</if>>\n<</widget>>\n\n<<widget \"takeHandholdingVirginity\">>",
+          "replaceFile": "game/base-combat/MaplebirchTempleVirginity_2.txt",
+          "_comment": "神殿贞洁部件_2"
+        },
+        {
+          "passage": "Widgets Combat",
+          "findString": "\t\t<<if ($_vType is \"vaginal\" or $_vType is \"penile\") and $_npc.virginity.temple is true and $templePromised isnot $_npc.fullDescription>>",
+          "replace": "\t\t<<if ($_vType is \"vaginal\" or $_vType is \"penile\") and $_npc.virginity.temple is true and ($templePromised isnot $_npc.fullDescription || $Maplebirch.templePromised isnot $_npc.fullDescription)>>",
+          "_comment": "NPC贞洁部件"
+        },
+        {
+          "passage": "Widgets",
+          "findString": "</span>\n\t<<else>>\n\t\t<span class=\"red\">",
+          "replace": "</span>\n\t<<elseif $Maplebirch.templePromised is _args[0]>><span class=\"lblue\">但你依旧纯洁。</span><<else>>\n\t\t<span class=\"red\">",
+          "_comment": "失去贞洁文本部件"
+        },
+        {
+          "passage": "Widgets",
+          "findString": "\t\t<<if $templePromised isnot $NPCList[$vaginatarget].fullDescription>>",
+          "replace": "\t\t<<if $templePromised isnot $NPCList[$vaginatarget].fullDescription && $Maplebirch.templePromised isnot $NPCList[$vaginatarget].fullDescription>>",
+          "_comment": "阴道被强奸部件"
+        },
+        {
+          "passage": "Widgets",
+          "findString": "\t\t<<if $templePromised isnot $NPCList[$penistarget].fullDescription>>",
+          "replace": "\t\t<<if $templePromised isnot $NPCList[$penistarget].fullDescription && $Maplebirch.templePromised isnot $NPCList[$penistarget].fullDescription>>",
+          "_comment": "阴茎被强奸部件"
+        },
+        {
+          "passage": "Doctor Harper's Office Camera Molestation",
+          "findString": "\t<<if ($player.virginity.vaginal isnot true or $player.virginity.penile isnot true) and $templePromised is \"\">>",
+          "replace": "\t<<if ($player.virginity.vaginal isnot true or $player.virginity.penile isnot true) and ($templePromised is \"\" && $Maplebirch.templePromised is \"\")>>",
+          "_comment": "哈珀办公室修改"
+        },
+        {
+          "passage": "Temple Confess Self Vow",
+          "findString": "<<if $templePromised>>",
+          "replace": "<<if $templePromised || $Maplebirch.templePromised>>",
+          "_comment": "神殿忏悔自我誓言"
+        },
+        {
+          "passage": "Widgets Temple",
+          "findString": "\t\t<<if $templePromised isnot \"\">>",
+          "replace": "\t\t<<if $templePromised isnot \"\" || $Maplebirch.templePromised isnot \"\">>>>",
+          "_comment": "神殿对话部件"
+        },
+        {
+          "passage": "Temple",
+          "findString": "<<if $templePromised is \"Sydney\">>",
+          "replaceFile": "game/overworld-town/loc-temple/TempleConfusionExamination.txt",
+          "_comment": "混乱仪式每月不洁惩罚"
+        },
+        {
+          "passage": "Lake Ruin Plinth",
+          "findString": "<<elseif $tentacledisable is \"f\" and $hallucinations gte 2 and !_bmoon>>",
+          "replaceFile": "game/overworld-forest/loc-lake/VivianMeet.txt",
+          "_comment": "森林湖维安初遇"
+        },
+        {
+          "passage": "Widgets Named Npcs",
+          "findString": "<<case Jordan>><<set $NPCName[_i].outfits.pushUnique(\"maleRobe\", \"femaleRobe\")>>",
+          "replaceFile": "game/base-clothing/MaplebirchInitClothes.txt",
+          "_comment": "NPC名单衣物添加"
+        },
+        {
+          "passage": "Widgets Speech",
+          "findString": "\t\t<<case \"Sydney\">>\n\t\t\t<<speech-sydney>>",
+          "replaceFile": "game/base-combat/MaplebirchCombatSpeech.txt",
+          "_comment": "战斗NPC文本添加"
+        },
+        {
+          "passage": "Statistics",
+          "findString": ".replace(\"Niki\",\"尼奇\")",
+          "replaceFile": "game/MaplebirchNPCs/MaplebirchNPCi18nName.txt",
+          "all": true,
+          "_comment": "i18nNPC名字注入"
+        },
+        {
+          "passage": "Widgets Settings",
+          "findString": ".replace(\"Niki\",\"尼奇\")",
+          "replaceFile": "game/MaplebirchNPCs/MaplebirchNPCi18nName.txt",
+          "all": true,
+          "_comment": "i18nNPC名字注入"
+        },
+        {
+          "passage": "Widgets Named Npcs",
+          "findString": "\t<<case \"Morgan\">>",
+          "replaceFile": "game/MaplebirchNPCs/MaplebirchnpcValue.txt",
+          "_comment": "NPC战斗基础数值数据"
+        },
+        {
+          "passage": "Temple Jordan",
+          "findString": "<<if $temple_harassed is 1>>",
+          "replace": "<<MB_oldTempleAsk>>\n\t<<if $temple_harassed is 1>>",
+          "_comment": "约旦森林湖废墟询问"
+        },
+        {
+          "passage": "Lake Ruin Plinth",
+          "findString": "<<if _leave>>\n\t<<if $museumAntiques.antiques.antiqueivorynecklace is \"notFound\">>",
+          "replace": "<<if _leave>>\n\t<<VivianLakeRuinHelp>>\n\t<<if $museumAntiques.antiques.antiqueivorynecklace is \"notFound\">>",
+          "_comment": "森林湖救援维安"
+        },
+        {
+          "passage": "Lake Depths",
+          "findString": "\t<<eventlakewater>>\n<<else>>",
+          "replaceFile": "game/overworld-forest/loc-LakeIsland/LakeCenterIsland.txt",
+          "_comment": "湖中岛路径"
+        },
+        {
+          "passage": "Widgets Ejaculation",
+          "findString": "\t\t\t<<elseif $npc[$npcrow.indexOf(_nn)] is \"Alex\">>",
+          "replaceFile": "game/MaplebirchNPCs/NPCEjaculationInit.txt",
+          "_comment": "NPC射精文本注入"
+        },
+        {
+          "passage": "Widgets Journal",
+          "findString": "\t\t\t<<if $brothel_escortjob isnot undefined>>",
+          "replaceFile": "game/base-system/MaplebirchJournal.txt",
+          "_comment": "时效性日志注入"
+        },
+        {
+          "passage": "Temple Mass Angel",
+          "findString": "<<sydneyMass>>",
+          "replace": "<<sydneyMass>>\n<<robinTempleMass>>",
+          "all": true,
+          "_comment": "罗宾弥撒剧情"
+        },
+        {
+          "passage": "Temple Mass Demon",
+          "findString": "<<sydneyMass>>",
+          "replace": "<<sydneyMass>>\n<<robinTempleMass>>",
+          "all": true,
+          "_comment": "罗宾弥撒剧情"
+        },
+        {
+          "passage": "Temple Mass Fallen Angel",
+          "findString": "<<sydneyMass>>",
+          "replace": "<<sydneyMass>>\n<<robinTempleMass>>",
+          "all": true,
+          "_comment": "罗宾弥撒剧情"
+        },
+        {
+          "passage": "Temple Mass",
+          "findString": "<<sydneyMass>>",
+          "replace": "<<sydneyMass>>\n<<robinTempleMass>>",
+          "all": true,
+          "_comment": "罗宾弥撒剧情"
+        },
+        {
+          "passage": "mobileStats",
+          "findString": "<<mobileStatsColor \"allure\">>",
+          "replaceFile": "game/base-system/MaplebirchSideState.txt",
+          "_comment": "恐惧值侧边栏"
+        },
+        {
+          "passage": "Lake Depths Ice",
+          "findString": "<<if !Time.schoolDay and Weather.isSnow and Time.dayState is \"day\">>",
+          "replaceFile": "game/overworld-forest/loc-LakeIsland/LakeCenterIsland_snow.txt",
+          "_comment": "冬日湖心岛路径"
+        },
+        {
+          "passage": "Lake Ruin Plinth",
+          "findString": "<<if $museumAntiques.antiques.antiqueivorynecklace is \"notFound\">>",
+          "replace": "<<VivianLakeRuinDes>>\n<<if $museumAntiques.antiques.antiqueivorynecklace is \"notFound\">>",
+          "_comment": "森林湖废墟基座室维安描述"
+        },
+        {
+          "passage": "Widgets Named Npcs",
+          "findString": "\t<<getNNPCClothes _nam>>\n<</widget>>",
+          "replace": "\t<<getNNPCClothes _nam>>\n\t<<MaplebirchgetNNPCClothes _nam>>\n<</widget>>",
+          "_comment": "模组npc服饰位置"
+        },
+        {
+          "passage": "Widgets Robin",
+          "findString": "\t<<if Time.schoolDay and Time.hour is 8>>",
+          "replaceFile": "game/overworld-town/special-robin/RobinOptionsTime.txt",
+          "_comment": "罗宾房间到点去神殿"
+        },
+        {
+          "passage": "Widgets Wardrobe",
+          "findString": "\t\t<<case \"Farm Wardrobe\">>",
+          "replaceFile": "game/overworld-forest/loc-LakeIsland/LakeIslandWardrobe.txt",
+          "_comment": "湖心岛衣柜"
+        },
+        {
+          "passage": "Widgets Sydney",
+          "findString": "<</if>>\n\t\t\t<<case \"shop\">>",
+          "replace": "<</if>><<maplebirch_temple_retention>>\n\t\t\t<<case \"shop\">>",
+          "_comment": "悉尼神殿挽留"
+        },
+        {
+          "passage": "Widgets Ejaculation-ROBIN",
+          "findString": "<<elseif $NPCList[_nn].penis is \"vagina\">>",
+          "replace": "<<elseif $NPCList[_nn].penis is \"vagina\">>\n\t\t\t<<set $Maplebirch.daily.robin.cum to true>>",
+          "_comment": "罗宾射精变量"
+        },
+        {
+          "passage": "Widgets Ejaculation-ROBIN",
+          "findString": "<<elseif $NPCList[_nn].vagina is \"penis\">>",
+          "replace": "<<elseif $NPCList[_nn].vagina is \"penis\">>\n\t\t\t\t<<set $Maplebirch.daily.robin.robinCum to true>>",
+          "_comment": "罗宾射精变量"
+        }
+      ]
+    },
+    {
+      "modName": "ModLoader DoL ImageLoaderHook",
+      "addonName": "ImageLoaderAddon",
+      "modVersion": "^2.3.0",
+      "params": []
+    },
+    {
+      "modName": "ReplacePatcher",
+      "addonName": "ReplacePatcherAddon",
+      "modVersion": "1.0.0",
+      "params": {
+        "js": [
+          {
+            "from": "if (V.schoolBlocked) delete V.schoolBlocked;",
+            "to": "fragment.append(wikifier(\"maplebirch_daily_reset\"));\n\tif (V.schoolBlocked) delete V.schoolBlocked;",
+            "fileName": "time.js",
+            "_comment": "每天6点时刷新"
+          },
+          {
+            "from": "else if (!between(Time.hour, 7, 20))",
+            "to": "else if (isMaplebirchTime(\"RobinTempleTime\")) {\n\t\tT.robin_location = \"temple\";\n\t} else if (!between(Time.hour, 7, 20))",
+            "fileName": "ingame.js",
+            "_comment": "罗宾神殿地点工作时间与承诺仪式地点检测"
+          },
+          {
+            "from": "getRobinLocation();",
+            "to": "getRobinLocation();\n\t\t\t\t\tmaplebirchRobinCheck();",
+            "fileName": "named-npc.js",
+            "_comment": "新增罗宾检测"
+          },
+          {
+            "from": "\tif (V.syndromewolves === 1) V.wolfcavepatrol = 1;",
+            "to": "fragment.append(wikifier(\"maplebirch_weekly_reset\"));\n\tif (V.syndromewolves === 1) V.wolfcavepatrol = 1;",
+            "fileName": "time.js",
+            "_comment": "每周刷新"
+          },
+          {
+            "from": "condition: () => Weather.bloodMoon && Weather.isSnow,\n\t\t\t\timage: \"bloodmoon.png\",",
+            "to": "condition: () => Weather.bloodMoon && !Weather.isSnow,\n\t\t\t\timage: \"bloodmoon.png\",",
+            "fileName": "location-images.js",
+            "_comment": "纠正原版森林湖废墟血月贴图错误（如原版修复后删"
+          },
+          {
+            "from": "condition: () => Weather.bloodMoon && !Weather.isSnow,\n\t\t\t\timage: \"bloodmoon_snow.png\",",
+            "to": "condition: () => Weather.bloodMoon && Weather.isSnow,\n\t\t\t\timage: \"bloodmoon_snow.png\",",
+            "fileName": "location-images.js",
+            "_comment": "纠正原版森林湖废墟血月贴图错误（如原版修复后删"
+          },
+          {
+            "from": "\tlandfill: {",
+            "to": "\tlake_island: {folder: \"lake_island\",base: {default: {condition: () => !Weather.bloodMoon && !Weather.isSnow,image: \"base.png\",animation: {frameDelay: 3000,cycleDelay: () => 5000,},},snow: {condition: () => !Weather.bloodMoon && Weather.isSnow,image: \"snow.png\",animation: {frameDelay: 3000,cycleDelay: () => 5000,},},bloodmoon: {condition: () => Weather.bloodMoon && !Weather.isSnow,image: \"bloodmoon.png\",animation: {frameDelay: 300,cycleDelay: () => 0,},},bloodmoon_snow: {condition: () => Weather.bloodMoon && Weather.isSnow,image: \"bloodmoon_snow.png\",animation: {frameDelay: 300,cycleDelay: () => 0,},},},emissive: {blood: {condition: () => Weather.bloodMoon,image: \"emissive_blood.png\",animation: \"bloodmoon\",color: \"#e63e3e\",},},reflective: {mask: {condition: () => !Weather.bloodMoon,image: \"reflective.png\",},water: {condition: () => !Weather.bloodMoon,image: \"water.png\",alpha: 0.5,animation: {frameDelay: 1000,cycleDelay: () => 0,},},},},\n\tlandfill: {",
+            "fileName": "location-images.js",
+            "_comment": "湖中岛侧边栏图像"
+          }
+        ]
+      }
+    },
+    {
+      "modName": "BeautySelectorAddon",
+      "addonName": "BeautySelectorAddon",
+      "modVersion": "^2.0.0",
+      "params": {
+       "types": [
+        {
+         "type": "MaplebirchModImg（秋枫白桦mod图片，请勿禁用，无顺序要求）",
+         "imgFileListFile": "MaplebirchModImg/imgFileListFile.json"
+        },
+        {
+          "type": "MaplebirchParasiteModImg（秋枫白桦mod寄生虫空白图替换法）",
+          "imgFileListFile": "MaplebirchParasiteModImg/imgFileListFile.json"
+         }
+       ]
+      }
+     }
+  ],
+  "dependenceInfo": [
+    {
+      "modName": "TweeReplacer",
+      "version": ">=1.0.0"
+    },
+    {
+      "modName": "ModdedClothesAddon",
+      "version": "^1.1.0"
+    },
+    {
+      "modName": "ModLoader DoL ImageLoaderHook",
+      "version": "^2.19.0"
+    },
+    {
+      "modName": "Simple Frameworks",
+      "version": ">=2.0.0"
+    },
+    {
+      "modName": "ReplacePatcher",
+      "version": "^1.0.0"
+    },
+    {
+      "modName": "ModdedFeatsAddon",
+      "version": "^1.0.0"
+    },
+    {
+      "modName": "GameVersion",
+      "version": ">=0.5.3.7"
+    }
+  ]
+}
+          
