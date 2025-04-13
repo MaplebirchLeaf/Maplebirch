@@ -3,7 +3,7 @@
 <<widget "RobinBunkChat">>
 	/* 神殿晋升，罗宾过审判， */
 	<<MaplebirchMoreLoveInterests>>
-    <<if ["monk"].includes($robin_temple_rank) && !$RobinBunkChat && $Maplebirch.loveInterest.includes("Robin")>>
+    <<if ["monk"].includes($Maplebirch.robin.rank) && !$RobinBunkChat && $Maplebirch.loveInterest.includes("Robin")>>
         <br><br>
         <span class="teal"><i>在你走时，你细心地留意到了罗宾在神殿的床铺位置。</i></span>
         <<set $RobinBunkChat to true>>
@@ -155,8 +155,8 @@
 		<</switch>>
 		<<sleepeffects>>
 	<</if>>
-	<<if _sleepinterruptSydney && !$Maplebirch.Sydneyattack>>
-		<<set $Maplebirch.Sydneyattack = 1>>
+	<<if _sleepinterruptSydney && !$Maplebirch.sydney.attack>>
+		<<set $Maplebirch.sydney.attack = 1>>
 		<<npc Sydney>><<person1>>
 		<<if $bus is "temple_sydney_bed">>
 			<<run statusCheck("Sydney")>>
@@ -245,12 +245,12 @@
 				<br>
 			<</if>>
 		<</if>>
-	<<elseif _sleepinterruptRobin && !$Maplebirch.Robinattack>>
-		<<set $Maplebirch.Robinattack = 1>>
+	<<elseif _sleepinterruptRobin && !$Maplebirch.robin.attack>>
+		<<set $Maplebirch.robin.attack = 1>>
 		<<npc Robin>><<person1>>
 		<<if $bus is "temple_robin_bed">>
 			<<run statusCheck("Robin")>>
-			<<if (Time.weekDay === 1 && Time.hour <= 6) && $rng gte 50 && C.npc.Robin.dom gte 80 && C.npc.Robin.lust gte 60 && _robinStatus.includes("unbelief")>>
+			<<if (Time.weekDay === 1 && Time.hour <= 6) && $rng gte 50 && C.npc.Robin.dom gte 80 && C.npc.Robin.lust gte 60 && _robinStatus.includes("desert")>>
 				你醒了过来，感觉有个
 				<<if $NPCList[0].vagina isnot "none" && $NPCList[0].penis isnot "none">>坚硬的柱状体和湿湿的东西<<elseif $NPCList[0].penis isnot "none">>坚硬的柱状体<<else>>湿湿的东西<</if>>
 				压在你屁股上。你想等着罗宾说话，但迎接你的只有沉默。你看向罗宾，发现<<He>>还在沉沉的睡觉。<<His>>正双臂环抱着你，干蹭着你。<<arousal 600 "bottom">><<garousal>>
@@ -279,7 +279,7 @@
 					紧贴着你的背。
 				<</if>>
 				<br><br>
-				<<if _robinStatus.includes("unbelief")>>
+				<<if _robinStatus.includes("desert")>>
 					“可以吗？”<<He>>在你耳边低语。
 				<<else>>
 					“原来是你啊”罗宾叹了一口气，<<his>>的呼吸拂过你的脖子。”
@@ -387,9 +387,9 @@
 
 	<<elseif (Time.weekDay === 1 && Time.hour <= 6) && !$Maplebirch.RobinTime>>
 		<<npc Robin>><<person1>>
-		<<if !$Maplebirch.RobinTime && !$Robin_frequencyalready>>
+		<<if !$Maplebirch.RobinTime && !$Maplebirch.frequencyalready.robin>>
 			<<set $robin_bed_frequency += 1>>
-			<<set $Robin_frequencyalready = 1>>
+			<<set $Maplebirch.frequencyalready.robin = 1>>
 		<</if>>
 		罗宾安静地蜷在<<He>>的床铺上。
 		<<if (Time.weekDay === 1 && Time.hour <= 6) && !$Maplebirch.RobinTime>>

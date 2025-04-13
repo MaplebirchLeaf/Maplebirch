@@ -44,7 +44,7 @@
         你看到这里的环境很像狼街中的神殿，或许可以去问一问森林湖中的废墟由来。
     <</if>>
 <</if>>
-<<if hasSexStat("promiscuity", 5)>>
+<<if hasSexStat("promiscuity", 6)>>
     <br><br>
     <span class="purple">一个邪恶的想法在你的脑中浮现</span>
 <</if>>
@@ -64,7 +64,7 @@
     <</if>>
 <</if>>
 <<if hasSexStat("promiscuity", 6)>>
-    <<MaplebirchIcon "awareness">><<link [[`亵渎<<He>>`|Vivian Ruin Plinth Sex]]>><<loxygen>><<set $sexstart to 1>><<set $Maplebirch.vivian.LakeRuinattack = 1>><</link>><<promiscuous6>><<note "世界腐化度？" "purple">>
+    <<MaplebirchIcon "awareness">><<link [[`亵渎<<He>>`|Vivian Ruin Plinth Sex]]>><<loxygen>><<set $sexstart to 1>><</link>><<promiscuous6>><<note "世界腐化度？" "purple">>
     <br>
 <</if>>
 
@@ -168,7 +168,11 @@
 
 :: Vivian Ruin Plinth Sex Finish
 <<underwater>><<effects>><<lakeeffects>>
-<<set $world_corruption_hard += 1>>
+<<if !$Maplebirch.vivianSeen.includes("involuntary sex") && (C.npc.Vivian.virginity.penile !== true || C.npc.Vivian.virginity.vaginal !== true)>>
+    <<set $Maplebirch.vivianSeen.pushUnique("involuntary sex")>>
+    <<set $world_corruption_hard += 1>>
+<</if>>
+<<set $world_corruption_soft += 15>>
 <i><span class="lewd">你将心中的欲望狠狠发泄。</span></i><<Maplebirchnpcincr Vivian lost 20>><<ggvlost>>
 <br><br>
 <<if $enemyarousal gte $enemyarousalmax>>
@@ -253,19 +257,24 @@
 <<He>>领着你从湖下废墟的基座室里游到了森林湖的湖面上，在湖面上你们大口的喘气。你听到<<He>>的嘴里发出一串沙哑、不协调的语句，你隐隐约约能听懂<<He>>在说些什么，
 “现…现在是…是什么时候，我大概沉…沉睡了多长时…间？”
 <br><br>
-<<if $Maplebirch.vivian.LakeRuinattack === 1>> 维安从你身上感受到了恐惧，<<He>>有些害怕地看着你。<<else>>维安有些警惕地看着你，但<<He>>还是呼了口气。<<Maplebirchnpcincr Vivian love 1>><</if>>
-<<He>>的眼睛重新望向天空，似乎已经很久没有见过日晖与星辰了。<<He>>感慨着，牵着你的手在湖面上摸索着一条道路。<<takeHandholdingVirginity "Vivian" "romantic">>
+<<if $Maplebirch.vivianSeen.includes("Ruin Plinth Sex")>>
+    维安从你身上感受到了恐惧，<<He>>有些害怕地看着你。
+<<else>>
+    维安有些警惕地看着你，但<<He>>还是呼了口气。<<Maplebirchnpcincr Vivian love 1>>
+    <br><br>
+    <<He>>的眼睛重新望向天空，似乎已经很久没有见过日晖与星辰了。<<He>>感叹着，不自觉地<span class="gold">牵住了你的手</span>在湖面上摸索着一条道路。<<takeHandholdingVirginity "Vivian" "romantic">><<arousal 1000>><<stress -6>><<ggarousal>><<lstress>>
+<</if>>
 <br><br>
 在路上<<He>>不时地对你说些什么，
 <<if $englishtrait >= 3 && $historytrait >= 2>>
-    你依稀听出维安说的语言是来自于几百年前，你感觉<<He>>的样貌似乎从未改变。维安说<<He>>是来自神殿众多教徒的一员，但现在<<He>>或许已经与这个身份无关了。
+    你依稀听出维安说的语言是来自于几百年前，你感觉<<He>>的样貌似乎从未改变。维安说<<He>>曾是来自<span class="gold">神殿众多教徒的一员</span>，但现在<<He>>或许已经与这个身份无关了。
     <br><br>
     “我…我曾在神殿的历史圣物中翻阅到很久以前有一座更古老的神殿”，你感觉维安有些适应了，说话没有那么违和。
-    <<He>>继续说着：“关于缘由，我曾在森林中撞见过一位苍白美丽的身影从我身前飘过，这深深地吸引了我的好奇心。我为此专研群书只为寻求那段历史的真相，但我不慎陷入了幻境。
+    <<He>>继续说着：“关于缘由，我曾在森林中撞见过一位<span class="wraith">苍白美丽的身影</span>从我身前飘过，这深深地吸引了我的好奇心。我为此专研群书只为寻求那段历史的真相，但我不慎陷入了幻境。
     <br><br>
     那时我在基座室中，我随身的携带一件古物在此发生共鸣。之后，我的眼中闪过白光使我在梦境中度过一段又一段的人生，但这些又像碎片般藏在潜意识中，我不明白我现在是否还是曾经的自己。
     <br><br>
-    在梦中那年，年轻的我在教堂中喃喃地祈祷，突然一阵光晕袭来将我唤醒。”，这是<<He>>突然摸了摸自己的脸有些差异，<<He>>能感觉到<<He>>的样貌竟变成了梦中的样子。
+    在梦中时，我在教堂中喃喃地祈祷着，突然一阵光晕袭来将我唤醒。”，这是<<He>>突然摸了摸自己的脸有些差异，<<He>>能感觉到<<He>>的样貌竟变成了梦中的样子。
 <<else>>
     你有些听不懂维安在说些什么。<<note "语文与历史等级不足" "teal">>
 <</if>>

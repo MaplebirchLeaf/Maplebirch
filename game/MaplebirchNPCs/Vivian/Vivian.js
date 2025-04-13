@@ -9,6 +9,7 @@ NamedNPC.add(
   .Init('f', 'teen')
   .setValue('insecurity', 'skill')
   .setValue('maplebirch_lost', 100)
+  .setBreasts(4, "坚挺的乳房", "坚挺的乳房")
   .setPenis(4,"宏伟肉棒")
   .setColour('pale', 'amber', 'white')
   .isImportant()
@@ -41,26 +42,25 @@ NamedNPC.add(
 window.vivianStatusCheck = function() {
   C.npc = C.npc || {};
   C.npc.Vivian = C.npc.Vivian || {};
+  
   const vivian = C.npc.Vivian;
-  //维安数值
-  maplebirchVivianValue();
 
   if (vivian.maplebirch_lost !== 0) {
-    // 维安头衔
-    C.npc['Vivian'].title = '迷失者';
-    C.npc['Vivian'].title_lan = { EN: 'The Lost', CN: '迷失者' };
+    V.Maplebirch.vivian.state = "lost";
+  } else if (V.Maplebirch.vivian.clothes === "scarecrow") {
+    V.Maplebirch.vivian.state = "hermit";
   } else {
-    // 维安头衔
-    C.npc['Vivian'].title = '森林湖隐者';
-    C.npc['Vivian'].title_lan = { EN: 'Forest Lake Hermit', CN: '森林湖隐者' };
-    // 维安理智数据
-    if (!V.HermitValue_Lock) {
-      vivian.dom = 200;
-      V.HermitValue_Lock = true; 
-    }
+    V.Maplebirch.vivian.state = "";
   }
-  // 维安位置额外
+
+  // 维安数值
+  maplebirchVivianValue();
+  // 维安位置
   maplebirchVivianLocations();
+  // 维安头衔
+  maplebirchVivianTitle();
+
+  
 
 };
 
@@ -179,12 +179,7 @@ window.maplebirchVivianValue = function() {
   vivian.truth = vivian.truth || 0;
   vivian.fraud = vivian.fraud || 0;
   vivian.exhibitionism = vivian.exhibitionism || 0;
-  vivian.heresy = Math.clamp(vivian.heresy, 0, 150);
-  vivian.moronity = Math.clamp(vivian.moronity, 0, 150);
-  vivian.truth = Math.clamp(vivian.truth, 0, 150);
-  vivian.fraud = Math.clamp(vivian.fraud, 0, 150);
-  vivian.exhibitionism = Math.clamp(vivian.exhibitionism, 0, 100);
-
+  
   if (vivian.exhibitionism >= 95) {
     MB.vivian.exhibitionismtrait = 6;
   } else if (vivian.exhibitionism >= 75) {
@@ -201,15 +196,42 @@ window.maplebirchVivianValue = function() {
     MB.vivian.exhibitionismtrait = 0;
   }
 
+  if (!V.HermitValue_Lock && vivian.maplebirch_lost === 0) {
+    vivian.dom = 200;
+    V.HermitValue_Lock = true; 
+  }
+
+  vivian.heresy = Math.clamp(vivian.heresy, 0, 150);
+  vivian.moronity = Math.clamp(vivian.moronity, 0, 150);
+  vivian.truth = Math.clamp(vivian.truth, 0, 150);
+  vivian.fraud = Math.clamp(vivian.fraud, 0, 150);
+  vivian.exhibitionism = Math.clamp(vivian.exhibitionism, 0, 100);
 
 };
 
 window.maplebirchVivianLocations = function() {
-  const vivian = C.npc.Vivian;
 
-  if (vivian.maplebirch_lost !== 0) {
-    T.vivian_location = "ruin";
-  } else if (V.Maplebirch.vivian.clothes === "scarecrow") {
-    T.vivian_location = "island";
+  switch (V.Maplebirch.vivian.state) {
+    case "lost": 
+      T.vivian_location = "ruin";
+      break;
+    case "hermit":
+      T.vivian_location = "island";
+      break;
   }
+
 };
+
+window.maplebirchVivianTitle = function() {
+
+  switch (V.Maplebirch.vivian.state) {
+    case "lost":
+      C.npc['Vivian'].title = '迷失者';
+      C.npc['Vivian'].title_lan = { EN: 'the lost', CN: '迷失者'};
+      break;
+    case "hermit":
+      C.npc['Vivian'].title = '森林湖隐者';
+      C.npc['Vivian'].title_lan = { EN: 'forest lake hermit', CN: '森林湖隐者'};
+      break;
+  }
+}

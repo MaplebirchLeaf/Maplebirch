@@ -1,6 +1,6 @@
 
     <<elseif $Maplebirch.templePromised is "Robin">>
-        <<set $robin_examination = true>>
+        <<set $Maplebirch.robin.examination = true>>
 		<<npc Jordan>><<person1>>
 		<<if Time.dayState isnot "night" and Time.dayState isnot "dusk">>
 			那人影转过身来——是约旦。“我的孩子，”<<he>>说，“是时候进行贞洁检查了。
@@ -21,7 +21,7 @@
 		<br>
 		<<link [[承认自己的不洁|Robin Temple Test Admission]]>><<npcincr Robin love -10>><</link>><<llllove>>
 		<br>
-    <<elseif ["initiate", "monk"].includes(V.robin_temple_rank) and C.npc.Robin.virginity.temple isnot true and $templePromised isnot "Robin">>
+    <<elseif ["initiate", "monk"].includes(V.Maplebirch.robin.rank) and C.npc.Robin.virginity.temple isnot true and $Maplebirch.templePromised isnot "Robin">>
 		<<npc Jordan>><<person1>>
 		<<if Time.dayState isnot "night" and Time.dayState isnot "dusk">>
 			那个人影转过身来——是约旦，<<he>>正抓着罗宾的手臂。“我的孩子，”<<he>>说，“<span class="red">罗宾没有通过<<nnpc_his "Robin">>的贞操检查。</span>

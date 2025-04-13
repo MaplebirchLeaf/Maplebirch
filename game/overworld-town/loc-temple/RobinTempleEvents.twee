@@ -3,19 +3,20 @@
 <<widget "robinFinishMaplebirch">>
 	<<run statusCheck("Robin")>>
 	<<set _robin = C.npc.Robin>>
-	<<if ["initiate", "monk"].includes(V.robin_temple_rank)>>
+	<<if ["initiate", "monk"].includes(V.Maplebirch.robin.rank)>>
 		<<set $Maplebirch.robin.sexTotal += 1>>
-		<<set $Maplebirch.daily.robin.sex += 1>>
-		<<set $Maplebirch.robin.sex = ($Maplebirch.robin.sex || 0) + 1>><<set $Maplebirch.robin.sexTotal += 1>>
-		<<if (($penisfucked is 1 and ($penisstate isnot "otheranus" or $temple_rank isnot undefined)) or $vaginafucked is 1 or $anusfucked is 1) and $templePromised isnot "Robin">>
+		<<set $robin.sexTotal = $Maplebirch.robin.sexTotal>>
+		<<set $Maplebirch.daily.robin.sex = ($Maplebirch.daily.robin.sex || 0) + 1>>
+		<<set $Maplebirch.robin.sex = ($Maplebirch.robin.sex || 0) + 1>>
+		<<if (($penisfucked is 1 and ($penisstate isnot "otheranus" or $temple_rank isnot undefined)) or $vaginafucked is 1 or $anusfucked is 1) and $Maplebirch.templePromised isnot "Robin">>
 			<br>
-			"我们……可能有麻烦了，我们实在是太粗心了。"
+			“我们……可能有麻烦了，我们实在是太粗心了。”
 		<</if>>
 		<<if $orgasmcurrent is 0>>
 			<br>
 			<<if playerChastity()>>
 				<<He>>低头看着你的$worn.genitals.cn_name_cap。
-				<<if _robinStatus.includes("unbelief")>>
+				<<if _robinStatus.includes("desert")>>
 					"你没有高潮。我不知道我在你穿着<<if $worn.genitals.name is "chastity parasite">>……这个<<else>>$worn.genitals.cn_name_cap<</if>>的情况下能做多少，我不擅长处理这个，毕竟<<if _robinChastity>>一直都是<<else>>之前都是<</if>>交给你的，对不起。"
 				<<else>>
 					"你……感觉还好么？我不知道我怎样在你穿着<<if $worn.genitals.name is "chastity parasite">>……这个<<else>>$worn.genitals.cn_name_cap<</if>>的情况下取悦你，我不像你那般擅长这个……"
@@ -24,39 +25,17 @@
 			<<else>>
 				<<He>>低头看着你，
 				<<switch _robinStatus>>
-					<<case "belief">>
+					<<case "belief" "belief lust">>
 						然后显得有些焦虑。"对不起，我已经加入神殿了。但是……"<<He>>深吸一口气，"我也想让你感觉舒服。"
-					<<case "unbelief">>
+					<<case "desert" "desert lust">>
 						脸红了起来。"神殿的守则放一边好了，我才不会认真遵守呢。"<<He>>看起来都是为了你。
 					<<default>>
-						/* Nothings */
-				<</switch>>
-				<br>
+						/*Nothings */
+				<</switch>>	
 			<</if>>
-			<br>
+			<br><br>
+			<<robinChastityMessage>>
 		<</if>>
-		<<if $Maplebirch.robin.sexTotal >= 3 && _robingenitalsStatus = "Lust" && $Maplebirch.robin.chastitybelt is true>>
-			<<set $Maplebirch.robin.Chastityask = $Maplebirch.daily.robin.Chastityask || 0>>
-			<<set $Maplebirch.robin.Chastityask += 1>>
-			<<if $Maplebirch.robin.Chastityask >= 3 && _robin.holiness >= 200>>
-				<<set $Maplebirch.robin.Chastityask = 3>>
-			<<elseif $Maplebirch.robin.Chastityask >= 2>>
-				<<set $Maplebirch.robin.Chastityask = 2>>
-			<</if>>
-			<<switch $Maplebirch.robin.Chastityask>>
-				<<case 1>>
-					<span class="teal">“我感觉这个带子有些烦人了。”罗宾吐槽道。</span>
-				<<case 2>>
-					<span class="purple">“我们得想个办法不用装这个带子！”罗宾在认真思考着。</span>
-					<<set $Maplebirch.robin.ChastityRemoveIntro = true>>
-				<<case 3>>
-					<span class="lblue">“我有主意了，我找了一种可以不用穿带子的情况！”罗宾似乎很开心。</span>
-					<<set $Maplebirch.robin.ChastityRemoveIntro = true>>
-				<<default>>
-					/* Nothings */
-			<</switch>>
-		<</if>>
-		<br><br>
 	<</if>>
 <</widget>>
 
@@ -77,7 +56,7 @@
 							<br>
 						<</if>>
 						<br><br>
-						<<MaplebirchIcon "getouticon">><<link [[离开|Temple]]>><<endevent>><<set $eventskip to 1>><</link>>
+						<<MaplebirchIcon "getouticon">><<link [[离开|Temple]]>><<endevent>><<MaplebirchEndEvent>><<set $eventskip to 1>><</link>>
 						<br>
 					<<case "anguish">>
 						罗宾打起精神，“我要为今晚的守夜做准备了，祝我好运吧！”<<He>>吻了一口你的脸颊，然后离开了。
@@ -153,8 +132,8 @@
 		<<socialiseicon>><<link [[罗宾有什么事要告诉你|Robin Temple Chastity Delete]]>><<handheldon 1>><</link>>
 	<</if>>
 	<<if $location is "temple" and _robin.trauma lt 80 and (!$daily.robin.walk or ($halloween_robin is 1 and $halloween_robin_costume is "ghost") or ( _robin.love gte 20 and $money gte 1500 and !$daily.robin.cinema)) and $passage isnot "Robin Walk" and $exposed lte 0>>
-		<<walkicon>><<link [[一起出门|Maplebirch Robin Walk]]>><<set $Maplebirch.phase = 1>><<handheldon 1>><</link>>
-		<br>
+		<<walkicon>><<link [[一起出门|Maplebirch Robin Walk]]>><<handheldon 1>><<unset _walk>><<MaplebirchEndEvent>><<set $Maplebirch.phase = 1>><</link>>
+		<br><!-- $Maplebirch.phase这里是从神殿出发的 -->
 	<</if>>
 	<<if $location is "temple" and $temple_spear_mission is 1 and !$robinSeen.includes("spearMission") and $robinromance is 1 and !$spear_vessel>>
 		<<socialiseicon "ask">><<link [[询问<<him>>在想些什么|Robin Temple Spear]]>><<handheldon 1>><</link>>
@@ -181,19 +160,19 @@
 			<</if>>
 		<</if>>
 	<</if>>
-	<<if $location is "temple" and $Maplebirch.robin.ChastityRemoveIntro>> /* $robinChastityRemoveIntro 拆除罗宾贞操带剧情 */
-		<<if $Maplebirch.robin.ChastityRemoveIntro>>
-			<<lockicon "unlock">><<link [[询问<<nnpc_He>>移除贞操锁的事 (0:15)|Robin Chastity Remove Intro]]>><<pass 15>><<handheldon 1>><<set $Maplebirch.phase = 1>><</link>>
-			<br>
-		<<elseif $Maplebirch.robin.ChastityRemovePure and $Maplebirch.templePromised isnot "Robin" and !$Maplebirch.temple_evaluation>>
+	<<if $location is "temple" && $Maplebirch.robin.chastitybelt is true>> /* $robinChastityRemoveIntro 拆除罗宾贞操带剧情 */
+		<<if $Maplebirch.robin.ChastityRemovePure && $Maplebirch.templePromised isnot "Robin" && !$Maplebirch.temple_evaluation>>
 			<<socialiseicon "ask">><<link [[询问诺言|Robin Temple Pure]]>><<handheldon 1>><</link>>
+			<br>
+		<<elseif $Maplebirch.robin.ChastityRemoveIntro>>
+			<<lockicon "unlock">><<link [[询问<<nnpc_He "Robin">>移除贞操锁的事 (0:15)|Robin Chastity Remove Intro]]>><<pass 15>><<handheldon 1>><<set $Maplebirch.phase = 1>><</link>>
 			<br>
 		<<else>>
 			/* Do Nothing */
 		<</if>>
 	<</if>>
-	<<if $location is "temple" and $Maplebirch.robin.chastitybelt is false>>
-		<<lockicon>><<link [[希望<<nnpc_He>>能装上贞操锁 (0:15)|Robin Chastity Remove Intro]]>><<pass 15>><<handheldon 1>><<set $Maplebirch.phase = 2>><</link>>
+	<<if $location is "temple" && $Maplebirch.robin.chastitybelt is false>>
+		<<lockicon>><<link [[希望<<nnpc_He "Robin">>能装上贞操锁 (0:15)|Robin Chastity Remove Intro]]>><<pass 15>><<handheldon 1>><<set $Maplebirch.phase = 2>><</link>>
 	<</if>>
 <</widget>>
 
@@ -371,7 +350,7 @@
 <</widget>>
 
 <<widget "robinTempleBench">>
-	<<if ["initiate", "monk"].includes(V.robin_temple_rank)>>
+	<<if ["initiate", "monk"].includes(V.Maplebirch.robin.rank)>>
 		<<run statusCheck("Robin")>>
 		<<if C.npc.Robin.init is 1 and $exposed lte 0>>
 			<<if _robin_location is "temple">>
@@ -567,7 +546,9 @@
 	<<if _args[0] isnot 'short' and ((C.npc.Robin.virginity.penile is true and C.npc.Robin.gender is "m") or (C.npc.Robin.virginity.vaginal is true and C.npc.Robin.gender is "f"))>>
 		<<set _text_output += "童贞 ">>
 	<</if>>
-	<<if C.npc.Robin.gender is "m">>
+	<<if C.npc.Robin.gender is "h">>
+		<<set _text_output += "阴茎和小穴">>
+	<<elseif C.npc.Robin.gender is "m">>
 		<<set _text_output += "阴茎">>
 	<<else>>
 		<<set _text_output += "小穴">>
@@ -597,7 +578,7 @@
 				我们今天做了亲密行为，我现在感觉很罪恶。”
 			<</if>>
 		<</addinlineevent>>
-	<<elseif $Maplebirch.templePromised is "Robin" and $Maplebirch.robin.sexTotal gte 3>>
+	<<elseif $Maplebirch.templePromised is "Robin" and $robin.sexTotal gte 3>>
 		<<addinlineevent "confession_robin_promised_2" 3>>
 			<<npc Robin>><<person1>><<set $attendant to "robin_promised">>
 			<<set $Maplebirch.daily.robinConfession to true>>
@@ -612,7 +593,7 @@
 
 			“我爱人和我。我们进行了承诺仪式，但是……我们之间的亲密行为真的是很罪恶。”
 		<</addinlineevent>>
-	<<elseif $robinromance gte 1 and $Maplebirch.robin.sexTotal gte 1>>
+	<<elseif $robinromance gte 1 and $sexTotal gte 1>>
 		<<addinlineevent "confession_robin_romance" 2>>
 			<<npc Robin>><<person1>><<set $attendant to "robin_romance">>
 			<<set $Maplebirch.daily.robinConfession to true>>
@@ -638,7 +619,7 @@
 			<</if>>
 			一个<<personsimple>>的声音向你问候。"请宽恕我，<<sister>>，我犯下了罪过。”<<he>>说道。
 
-			<<if _robinStatus.includes("unbelief")>>
+			<<if _robinStatus.includes("desert")>>
 				"我心怀疑虑。我与他人结成誓约，因此我们理所应当地想做就做。但如果我们中的任何一个违背誓言，和别人在一起，我们都会受到惩罚。要是因为自愿出轨，我可以理解。但要是我们中的任何一个被袭击了呢？这个小镇到处都是坏人，很多东西都想钻进去伤害别人。"
 				<br><br>
 
@@ -680,7 +661,7 @@
 <<widget "robinLewd">>
 	<<if !$robinSeen.includes("lewd")>>
 		<<set $robinSeen.pushUnique("lewd")>>
-		<<if _robinStatus.includes("unbelief")>>
+		<<if _robinStatus.includes("desert")>>
 			"<span class="green">自从我加入神殿以来已经等了太久了。</span>我没想过能再和你一起做这件事。"
 		<<else>>
 			"<span class="green">我加入神殿后没想做过这样的事情，</span>我很害怕。"你花了些时间去安慰<<him>>，告诉<<him>>如果需要的话，你会停下来的。<<he>>最后同意了。"我……我相信你。"
@@ -689,15 +670,23 @@
 <</widget>>
 
 <<widget "robinExpose">>
-	<<if C.npc.Robin.chastity.penis.includes("chastity belt") or C.npc.Robin.chastity.vagina.includes("cchastity belt")>>
+	<<if C.npc.Robin.chastity.penis.includes("chastity belt") or C.npc.Robin.chastity.vagina.includes("chastity belt")>>
 		<<if $robinChastityKnown>>
-			<<if $npcSub or $combat isnot 1>>你瞥见了<<his>>受保护的<<robinGenitals "short">>.<</if>>
+			<<if $npcSub or $combat isnot 1>>你瞥见了<<his>>受保护的<<MaplebirchGenitals "Robin" "short">>.<</if>>
+			<<if $robinAnalShieldComment>>
+				<<unset $robinAnalShieldComment>>
+				<<if _robinStatus.includes("desert")>>
+					“<span class="gold">我找约旦<<print sexSwitch("Jordan","修女","修士",)>>把我的护肛板拿掉了。</span>”
+				<<else>>
+					“我……<span class="gold">我为你把护肛板拆掉了……</span>”
+				<</if>>
+			<</if>>
 		<<else>>
 			<<set $robinChastityKnown to true>>
 			<<if $npcSub or $combat isnot 1>><span class="lewd">你看见了<<him>>身上的贞操带。</span> <</if>>"我……应该提前告诉你的，抱歉。"
 		<</if>>
 	<<else>>
-		你可以清楚地看到<<his>>的<<robinGenitals>>。
+		你可以清楚地看到<<his>>的<<MaplebirchGenitals "Robin">>。
 	<</if>>
 <</widget>>
 
@@ -745,7 +734,7 @@
 <</widget>>
 
 <<widget "robinTempleMass">>
-<<if ["initiate", "monk"].includes(V.robin_temple_rank)>>
+<<if ["initiate", "monk"].includes(V.Maplebirch.robin.rank)>>
 	<<if !$robinSeen.includes("mass") and !$robinSeen.includes("initiate")>>
 		<<endevent>><<npc "Robin">><<person1>>
 		<<set $robinSeen.pushUnique("mass")>>
@@ -793,6 +782,36 @@
 		<br><br>
 	<</if>>
 <</if>>
+<</widget>>
+
+<<widget "robinChastityMessage">>
+	<<set $robinChastityKnown to true>>
+	<<if $robinromance is 1 && $Maplebirch.robin.chastitybelt is true>>
+		<<if _robinStatus.includes("lust") && C.npc.Robin.dom >= 60 && C.npc.Robin.chastity.anus.includes("anal shield")>>
+			<span class="lewd"><<He>>看着<<his>>的贞操带显得有些郁闷。</span>
+		<<elseif _robinStatus.includes("lust") && C.npc.Robin.dom >= 85>>
+			<<He>>有些怀念以前的日子。
+			<<if _robinStatus.includes("desert")>>
+				<span class="gold">“我们得想个办法不用装这个带子！”</span>罗宾在认真思考着。
+				<<set $Maplebirch.robin.ChastityRemoveIntro = true>>
+			<<elseif _robinStatus.includes("belief")>>
+				<span class="gold">“我有主意了，我找了一种可以不用装带子的情况！”</span>罗宾似乎很开心。
+				<<set $Maplebirch.robin.ChastityRemoveIntro = true>>
+				<<set $Maplebirch.robin.Chastityask = true>>
+			<<else>>
+				<span class="teal">“我感觉这个带子有些烦人了。”罗宾吐槽道。</span>
+			<</if>>
+		<<else>>
+			<span class="lblue"><i>希望罗宾能拆除或者装上贞操锁需要根据<<nnpc_He "Robin">>的神殿信仰来决定的。</i></span>
+		<</if>>
+		<br><br>
+	<</if>>
+<</widget>>
+
+<<widget "MaplebirchMancombatRobin">>
+	<<if $_npc.fullDescription is "Robin">>
+		<<robinExpose>>
+	<</if>>
 <</widget>>
 
 :: Temple Robin
@@ -879,13 +898,13 @@
 <br>
 
 :: Temple Robin Pray
-<<set $outside to 0>><<set _robinPray to true>><<run statusCheck("Robin")>><<temple_effects>><<effects>><<set $corruptionEvent to 1>>
+<<set $outside to 0>><<set _robinPray to true>><<run statusCheck("Robin")>><<temple_effects>><<effects>>
 <<switch $phase>>
 	<<case 2>>
 		你祈祷救赎。你的思绪飘向你对未来的希望，以及事情如何能变得更好。
 		<br><br>
 		一个小时过去了，你感觉轻松了一些。
-		<<if _robinStatus.includes("corrupt")>>/* 未定义变量 */
+		<<if _robinStatus.includes("desert")>>
 			罗宾似乎对什么事感到焦虑。
 		<<else>>
 			罗宾似乎很开心能有一个一起祷告的伙伴。
@@ -899,7 +918,7 @@
 			<<gtrauma>><<gstress>><<trauma 6>><<stress 6>>
 			<br><br>
 		<</if>>
-		<<if _robinStatus.includes("corrupt")>>/* 未定义变量 */
+		<<if _robinStatus.includes("desert")>>
 			你注意到罗宾也在做一样的事。
 		<<else>>
 			罗宾深深地吸了一口气，似乎在努力无视某种可怕的事物。
@@ -1031,7 +1050,7 @@
 
 		你听到一声沉重的打击，那个<<person>>突然颤抖着皱起脸。片刻后，一个表情严厉的<<person2>><<monk>>出现在门缝那，挡住了你的视线。<<He>>把门合上了。
 		<br><br>
-		<<if _robinStatus.includes("unbelief")>>
+		<<if _robinStatus.includes("desert")>>
 			罗宾咯咯地笑了起来。“让戒徒受戒，对吗？”
 		<<else>>
 			罗宾看向了别的方向。
@@ -1048,7 +1067,7 @@
 
 		那个年轻<<monk>>戴着眼罩，嘴则被布堵住了。年长的<<person2>><<monk>>拽着绳子引导着<<person3>><<his>>前进。“直到你忏悔为止——”他们穿过一扇侧门，从你们的视线中消失，只留下这句话徘徊萦绕在此处。
 		<br><br>
-		<<if _robinStatus.includes("unbelief")>>
+		<<if _robinStatus.includes("desert")>>
 			罗宾摇了摇头，“这里的其他见习教徒都应该好好学学如何小心行事。”<<person1>>
 		<<else>>
 			罗宾紧张地四处张望。
@@ -1135,7 +1154,7 @@
 	<</if>>
 	<br><br>
 
-	<<if _robinStatus.includes("unbelief")>>
+	<<if _robinStatus.includes("desert")>>
 		“你处境危险，而我作为你的爱人却无法提供丝毫帮助或保护你，我怎么能不担心呢！？”罗宾沮丧地看着你，<<his>>的眼中含泪。“我无法想象你离开后会是什么样子。如果你在那里发生了什么事怎么办？最坏的情况是，你可能会……你……”
 	<<else>>
 		“我……我知道……但我还是很担心。”罗宾用担忧的目光看着你，<<his>>的眼中含泪。“我不知道你会离开多久，我不知道你在那里会不会没事，我不知道……如果你……”
@@ -1160,14 +1179,14 @@
 
 <<if $phase is 0>>
 	你坐在罗宾旁边的长凳上，朝<<him>>摇尾巴。你把尾巴放在<<He>>身边，轻轻地拍了拍它，此时<<him>>睁开了一只眼睛。
-	<<if _robinStatus.includes("unbelief")>>
+	<<if _robinStatus.includes("desert")>>
 		"我想打个盹了。"
 	<<else>>
 		"我……我或许该休息一下了。"
 	<</if>>
 	<br><br>
 	<<He>>躺在长凳上，用你的尾巴当枕头。<<He>>才勉强小睡了一会儿，你们两个就被一个修士骂了。
-	<<if _robinStatus.includes("unbelief")>>
+	<<if _robinStatus.includes("desert")>>
 		<<He>>一边叹气一边坐起来，"下次吧。它很蓬松，很舒服。"
 	<<else>>
 		<<He>>又睡眼惺忪地坐了起来。“谢谢你……至少它是个很棒的枕头。”
@@ -1175,7 +1194,7 @@
 	<<npcincr Robin lust 1>><<arousal 300>><<grlust>><<garousal>>
 <<elseif $phase is 1>>
 	你跪在罗宾身边，轻靠着<<his>>的膝盖。<<He>>轻轻地抚摸着你的头，微笑着看着你。
-	<<if _robinStatus.includes("unbelief")>>
+	<<if _robinStatus.includes("desert")>>
 		“想偷看一眼吗？”
 	<<else>>
 		“在快速地祷告吗？”
@@ -1183,13 +1202,13 @@
 	你把头伸向<<him>>，<<he>>又抚摸了一会。片刻后，你坐回<<him>>身边。“感觉舒服吗？”
 <<elseif $phase is 2>>
 	你充满爱意地依偎进罗宾的胳膊，打搅了<<his>>的祈祷。
-	<<if _robinStatus.includes("unbelief")>>
+	<<if _robinStatus.includes("desert")>>
 		“啊，你好呀，”<<he>>微笑着说，
 	<<else>>
 		“嘿！我在祈祷呢！”<<he>>噘着嘴说，
 	<</if>>
 	然后把手放在你的头上，轻轻地挠你的耳朵。在你被抚摸的时候，你躺在长凳上，发出咕噜咕噜的声音。
-	<<if _robinStatus.includes("unbelief")>>
+	<<if _robinStatus.includes("desert")>>
 		“我要不要也戴上一个试试？”
 	<<else>>
 		“我很惊讶神职人员居然让你戴着这对耳朵。”
@@ -1197,14 +1216,14 @@
 	你恢复正常坐姿。
 <<elseif $phase is 3>>
 	你为罗宾啁啾着鸟鸣。一些修士注意到了，驻足聆听。你唱完后，罗宾和修士们都为你鼓掌。
-	<<if _robinStatus.includes("unbelief")>>
+	<<if _robinStatus.includes("desert")>>
 		“很好听啊，你在床上的时候也能更动听的。”<<He>>朝你露出淫邪的微笑。
 	<<else>>
 		“太好听了，你想加入唱诗班吗？”<<He>>朝你高兴地微笑。
 	<</if>>
 <<elseif $phase is 4>>
 	你无言地用脑袋撞了一下罗宾的肩膀。<<He>>睁开一只眼睛，冲你微笑。
-	<<if _robinStatus.includes("unbelief")>>
+	<<if _robinStatus.includes("desert")>>
 		“这耳朵真可爱。要我给你买连体睡衣吗？”
 	<<else>>
 		“你的耳朵很可爱，但其他人可能会误会你的角。”
@@ -1225,7 +1244,12 @@
 <<switch $phase>>
 	<<case 2>>
 		你告诉罗宾你在为救赎祈祷，还有更美好的未来。
-		<<if _robinStatus.includes("unbelief")>>
+		<<if $Maplebirch.robin.beliefRollover is 1>>
+			<<unset $Maplebirch.robin.beliefRollover>>
+			<<He>>转过头来，对你温柔地笑了笑，然后又别过去。“我……在想你给予我的美好。”<<He>>十指相扣，“关于我自己。我……我曾经忘记了我现在是神殿的一员，而在这里与你一起祈祷……让我重新回想起……现在的职责……”
+			<br><br>
+			<<He>>又笑了，表情看上去明朗起来。"<span class="gold">我想我找回了你当初带给我的选择。</span>谢谢你。"
+		<<elseif _robinStatus.includes("desert")>>
 			<<He>>的表情仿佛希望能和你一样。
 		<<else>>
 			<<He>>开心地对你笑了笑。
@@ -1233,7 +1257,7 @@
 	<<case 3>>
 		你开始指出你周围不对劲的地方，一些<<monks>>眼斜着看向了你。
 		<br><br>
-		<<if _robinStatus.includes("unbelief")>>
+		<<if _robinStatus.includes("desert")>>
 			<<He>>似乎意识到了什么，但最后摇了摇头，继续低头祈祷。
 		<<else>>
 			<<He>>似乎没有理解，只是担忧地看着你。
@@ -1241,7 +1265,7 @@
 	<<case 4>>
 		你向罗宾讲述了你内心深处的不安——他们评论着你过小的阴茎的样子一一浮现在了你的面前。
 		<br><br>
-		<<if _robinStatus.includes("unbelief")>>
+		<<if _robinStatus.includes("desert")>>
 			<<He>>用胳膊挽着你，"我知道了。如果这让你好受一点的话，我会说我真心觉得它很可爱。不要去理会其他人，他们不懂得欣赏。"
 		<<else>>
 			<<He>>有些脸红，低头看着地面。"我……呃，我们还在神殿。"
@@ -1256,7 +1280,7 @@
 	<<case 5>>
 		你向罗宾讲述了你内心深处的不安——他们评论着你偏小的阴茎的样子一一浮现在了你的面前。
 		<br><br>
-		<<if _robinStatus.includes("unbelief")>>
+		<<if _robinStatus.includes("desert")>>
 			<<He>>用胳膊挽着你，"我知道了。如果这让你好受一点的话，我会说我真心觉得它很可爱。不要去理会其他人，他们不懂得欣赏。"
 		<<else>>
 			<<He>>有些脸红，低头看着地面。"我……呃，我们还在神殿。"
@@ -1271,7 +1295,7 @@
 	<<case 6>>
 		你向罗宾讲述了你内心深处的不安——他们评论着你偏大的阴茎的样子一一浮现在了你的面前。
 		<br><br>
-		<<if _robinStatus.includes("unbelief")>>
+		<<if _robinStatus.includes("desert")>>
 			<<He>>用胳膊挽着你，"我知道了，如果这会让你好受一点的话，我会说我真心觉得它令人印象深刻，你应该自豪才对，他们只是嫉妒。"
 		<<else>>
 			<<He>>有些脸红，低头看向地面。"我……呃，我觉得那……非常，呃……适合……如果这让你感觉好一点的话。"
@@ -1287,7 +1311,7 @@
 	<<case 7>>
 		你向罗宾讲述了你内心深处的不安——他们评论着你的平胸的样子一一浮现在了你的面前。
 		<br><br>
-		<<if _robinStatus.includes("unbelief")>>
+		<<if _robinStatus.includes("desert")>>
 			<<He>>用胳膊环着你，“我知道了。如果会让你好受一点的话，我真心的认为没什么好担心的，你很可爱。”
 		<<else>>
 			<<He>>有些脸红，低头看向地面。"我……呃，我们还在神殿。"
@@ -1302,7 +1326,7 @@
 	<<case 8>>
 		你向罗宾讲述了你内心深处的不安——他们评论着你偏小的乳房的样子一一浮现在了你的面前。
 		<br><br>
-			<<if _robinStatus.includes("unbelief")>>
+			<<if _robinStatus.includes("desert")>>
 				<<He>>用胳膊环着你，"我知道了。如果会让你好受一点的话，我真心认为它们很可爱，别听其他人的，那些人没品味。"
 			<<else>>
 				<<He>>有些脸红，低头看向地面。"我……呃，我们还在神殿。"
@@ -1318,7 +1342,7 @@
 	<<case 9>>
 		你向罗宾讲述了你内心深处的不安——他们评论着你偏大的乳房的样子一一浮现在了你的面前。
 		<br><br>
-			<<if _robinStatus.includes("unbelief")>>
+			<<if _robinStatus.includes("desert")>>
 				<<He>>用胳膊搂着你。"我想我明白了，不知道这样会不会让你好受些，我认为它们真的很不错，你应该骄傲才对。"
 			<<else>>
 				<<He>>瞬间脸红，低头看向地面。"我……呃，我觉得它们的大小非常……合适……如果这会让你感觉好一点的话。"
@@ -1335,7 +1359,7 @@
 		你把手放在肚子上，告诉罗宾你的不安和羞耻。
 		<br><br>
 			<<if getPregnancyObject().fetus[0].father is "Robin">>
-			<<if _robinStatus.includes("unbelief")>>
+			<<if _robinStatus.includes("desert")>>
 				<<He>>一只胳膊搭在你肩上。“换我来，我肯定会不停炫耀的。‘嘿，大家快来看！我<<nnpc_girlfriend "Robin">>把我操怀孕了！’”<<He>>轻抚你的孕肚，吮了口你的脸颊。你不禁笑出声来。<<stress -6>><<lstress>>
 			<<else>>
 				<<He>>的脸刷的一下变得通红。"有、有什么好羞愧的呢，亲爱的？我……我对我们的孩子很兴奋！你不是吗？"
@@ -1343,7 +1367,7 @@
 			<<acceptance "pregnancy" 20>>
 			<br><br>
 		<<else>>
-			<<if _robinStatus.includes("unbelief")>>
+			<<if _robinStatus.includes("desert")>>
 				<<He>>悲伤地朝你笑了笑。"是啊，真是操蛋。别人会不停羞辱你，因为你未婚先孕，而你只能……你只能尽你所能。为你的孩子。"
 			<<else>>
 				<<He>>眨了眨眼睛。"未婚先孕确实是罪孽……但没有罪孽，自然也不会有救赎。既然你爱着你的孩子，那我认为你必然能够完成救赎！"
@@ -1817,62 +1841,82 @@
 <<set $outside to 0>><<effects>><<run statusCheck("Robin")>>
 <<npc Robin>><<person1>>
 <<set $Maplebirch.daily.robin.ask += 1>>
-<<if $Maplebirch.phase === 1>>
-	你开口对罗宾说，“你可以把贞操带取下来吗？”
-	<<if $Maplebirch.robin.Chastityask === 3>>
-		罗宾微笑地看着你说：“我在神殿的工作中了解到他们允许两名信徒可以……许下……承诺，结为伴侣，只要……他们的爱被认定是纯洁无瑕的。”<<He>>的脸上染上了红晕。
-		“在爱恋之上，又离结婚差一步。<i><span class="teal">这并不会保护两人的纯洁不受任何影响，只是免除了伴侣之间守洁的义务。</span></i>”
-		<br><br>
-		“我……我想和你结为伴侣。我爱你，我想……我们这么也可以一起在神殿工作了，让你……”<<He>>别过脸。
-		<br><br>
-		“我知道这事关重大，我也在想这是否为时过早。<i><span class="lblue">等下次我们在神殿，我们就向<<print sexSwitch("Jordan","姐妹","兄弟",)>>约旦申请吧。</span></i>
-		我想，你一定也会同意的把。”罗宾的手不自觉地捂住自己地脸。<<He>>缓缓坐下，试图继续祈祷。
-		<<set $Maplebirch.robin.ChastityRemovePure to true>>
-	<<else>>
-		<br><br>
-		罗宾有些吃惊，但还是回答：“我会试着和约旦<<print sexSwitch("Jordan","修女","修士",)>>说的。
-		<<if _robinStatus === "unbelief">>
-			<<set $Maplebirch.robin.ChastityDel = true>>
-			<<set $Maplebirch.robin.ChastityDel = true>>
-		<</if>>
-	<</if>>
-<<elseif $Maplebirch.phase === 2>>
-	你开口对罗宾说，“你可以把贞操带穿上去吗？”
-	<br><br>
-	罗宾有些愕然，但还是回答：“我会试着和约旦<<print sexSwitch("Jordan","修女","修士",)>>说的。
-	<<if Time.dayState is "night" or Time.dayState is "dusk">>
-		“但我们得等到约旦回来……所以，大概要明天去了。”
-		<br><br>
-		<<robintempleOptions>>
-	<<else>>
-		<<if $Maplebirch.templePromised is "Robin">>
-    		约旦见你们走来，露出了微笑。“欢迎回来。” <<He>>紧紧握住了你的手。
-    		<br>
-    		“尽管我们已经相互连结，我还是希望佩戴贞操锁保持誓言。”
-    		<br><br>
-    		约旦静静地看着你们，微微点了点头。"请随我来。"
-    		<br><br>
-    		<<link [[继续|Temple Robin Reset Chastity 2]]>><<pass 5>><<MaplebirchEndEvent>><</link>>
-		<<else>>
-			<<switch _robinStatus>>
-  				<<case "belief">>
-  					“如果我再戴上这东西，我会被大家承认是虔诚的，对吗？”
-  				<<case "unbelief">>
-  					“你知道的，我对这些不是很在意，但是我在意你的选择！”
-  				<<default>>
-  					“如果我再戴上这东西，我会被大家承认是虔诚的，对吗？”
-  			<</switch>>
-  			<br><br>
-  			你看着<<He>>走向约旦。在简短的对话后，约旦带着<<He>>去到了一个小房间。
-  			<<link [[继续|Temple Robin Reset Chastity Alt]]>><<pass 5>><<MaplebirchEndEvent>><</link>>
-		<</if>>
-	<</if>>
-<</if>>
 <<if $Maplebirch.daily.robin.ask >= 3>>
-	<span class"teal">如果你这样一直这样让我拆穿贞操带，我真的会生气的！</span>
+	<span class="teal">如果你这样一直这样让我拆穿贞操带，我真的会生气的！</span>
+	<br><br>
+	<<if $location is "temple">>
+		<<robintempleOptions>>
+	<<elseif $location is "home">>
+		<<robinoptions>>
+	<</if>>
+<<else>>
+	<<if $Maplebirch.phase === 1>>
+		你开口对罗宾说，“你可以把贞操带取下来吗？”
+		<<if $Maplebirch.robin.Chastityask>>
+			罗宾微笑地看着你说：“我在神殿的工作中了解到他们允许两名信徒可以……许下……承诺，结为伴侣，只要……他们的爱被认定是纯洁无瑕的。”<<He>>的脸上染上了红晕。
+			“在爱恋之上，又离结婚差一步。<i><span class="teal">这并不会保护两人的纯洁不受任何影响，只是免除了伴侣之间守洁的义务。</span></i>”
+			<br><br>
+			“我……我想和你结为伴侣。我爱你，我想……我们这么也可以一起在神殿工作了，让你……”<<He>>别过脸。
+			<br><br>
+			“我知道这事关重大，我也在想这是否为时过早。<i><span class="lblue">等下次我们在神殿，我们就向<<print sexSwitch("Jordan","姐妹","兄弟",)>>约旦申请吧。</span></i>
+			我想，你一定也会同意的把。”罗宾的手不自觉地捂住自己地脸。<<He>>缓缓坐下，试图继续祈祷。
+			<<set $Maplebirch.robin.ChastityRemovePure to true>>
+		<<else>>
+			<br><br>
+			罗宾有些吃惊，但还是回答：“我会试着和约旦<<print sexSwitch("Jordan","修女","修士",)>>说的。
+			<<if _robinStatus.includes("desert")>>
+				<<set $Maplebirch.robin.ChastityDel = true>>
+				<<set $Maplebirch.robin.ChastityDel = true>>
+			<</if>>
+		<</if>>
+		<br><br>
+		<<if $location is "temple">>
+			<<robintempleOptions>>
+		<<elseif $location is "home">>
+			<<robinoptions>>
+		<</if>>
+	<<elseif $Maplebirch.phase === 2>>
+			你开口对罗宾说，“你可以把贞操带穿上去吗？”
+			<br><br>
+		<<if $location is "temple">>
+			罗宾有些愕然，但还是回答：“我会试着和约旦<<print sexSwitch("Jordan","修女","修士",)>>说的。”
+			<<if Time.dayState is "night" or Time.dayState is "dusk">>
+				“但我们得等到约旦回来……所以，大概要明天去了。”
+				<br><br>
+				<<robintempleOptions>>
+			<<else>>
+				<<if $Maplebirch.templePromised is "Robin">>
+					约旦见你们走来，露出了微笑。“欢迎回来。” <<He>>紧紧握住了你的手。
+					<br>
+					“尽管我们已经相互连结，我还是希望佩戴贞操锁保持誓言。”
+					<br><br>
+					约旦静静地看着你们，微微点了点头。"请随我来。"
+					<br><br>
+					<<link [[继续|Temple Robin Reset Chastity 2]]>><<pass 5>><<MaplebirchEndEvent>><</link>>
+				<<else>>
+					<<switch _robinStatus>>
+						<<case "belief">>
+							“如果我再戴上这东西，我会被大家承认是虔诚的，对吗？”
+						<<case "desert" "desert lust">>
+							“你知道的，我对这些不是很在意，但是我在意你的选择！”
+						<<default>>
+							“如果我再戴上这东西，我会被大家承认是虔诚的，对吗？”
+					<</switch>>
+					<br><br>
+					你看着<<He>>走向约旦。在简短的对话后，约旦带着<<He>>去到了一个小房间。
+					<<link [[继续|Temple Robin Reset Chastity Alt]]>><<pass 5>><<MaplebirchEndEvent>><</link>>
+				<</if>>
+			<</if>>
+		<<elseif $location is "home">>
+			罗宾有些愕然，但还是回答：“但我们得到<span class="gold">神殿</span>找约旦<<print sexSwitch("Jordan","修女","修士",)>>。”
+			<<if Time.dayState is "night" or Time.dayState is "dusk">>
+				“约旦大概不在神殿了……所以，大概要明天去了。”
+				<br><br>
+				<<robinoptions>>
+			<</if>>
+		<</if>>
+	<</if>>
 <</if>>
-<br><br>
-
 
 :: Temple Confess Purge Robin
 <<temple_effects>><<effects>>
@@ -1887,7 +1931,7 @@
 <br><br>
 
 <<He>>停了下来。
-<<if _robinStatus.includes("unbelief")>>
+<<if _robinStatus.includes("desert")>>
 	"你真的差点骗到我了。"
 <<else>>
 	"为、为什么你要说刚才那种话？其实我觉得，还挺有趣的。"
@@ -1919,12 +1963,12 @@
 <<if $Maplebirch.phase is 1>>
 	罗宾认出了你的声音后，似乎松了口气。
 <</if>>
-<<if _robinStatus.includes("unbelief")>>
+<<if _robinStatus.includes("desert")>>
 	"你可真是欲求不满！"<<He>>走出了隔间，"谢谢你，<<sister>>，谢谢你的宽恕。"<<He>>稍微观察了一下周围，走出了隔间，确保没人在看。你替<<him>>打开了你这侧的门。
 	<br><br>
 
 	<<He>>在你旁边的长凳上坐下，你锁上了门。
-	<<if $robin_temple_rank is "initiate">>
+	<<if $Maplebirch.robin.rank is "initiate">>
 		"亲爱的<<sister>>，你能不能帮帮这个淘气的见习教徒进行忏悔？"
 	<<else>>
 		"你能深切的告诉我犯了那些罪吗？"
@@ -1939,7 +1983,7 @@
 	<br><br>
 
 	<<He>>在你旁边的长凳上坐下。
-	<<if _robingenitalsStatus.includes("Lust")>>
+	<<if _robinStatus.includes("lust")>>
 		你将一只手放在<<his>>的胸前，温柔地将<<him>>推倒。<<He>>忍不住喘出一口气，抱住了你。
 		<<robinLewd>>
 		<br><br>
@@ -1967,7 +2011,7 @@
 			"等，等等！我……我真不知道要干什么……我还……"<<He>>微微颤抖着。
 			<br>
 			照顾到<<his>>的犹豫，你决定放慢节奏。
-			你开始隔着<<his>>的内裤<<handtext>>爱抚<<his>>的<<robinGenitals>><<if !$robinChastityKnown and _robinChastity>>，<span class="lewd">但你感觉到有什么东西阻碍了你</span><</if>>。<<He>>看起来非常的紧张，但没有试图去阻止你。<<He>>温柔地放开了你的手，然后把双腿分开，以便你更容易地接触。你脱下了<<his>>的内裤。
+			你开始隔着<<his>>的内裤<<handtext>>爱抚<<his>>的<<MaplebirchGenitals "Robin">><<if !$robinChastityKnown and _robinChastity>>，<span class="lewd">但你感觉到有什么东西阻碍了你</span><</if>>。<<He>>看起来非常的紧张，但没有试图去阻止你。<<He>>温柔地放开了你的手，然后把双腿分开，以便你更容易地接触。你脱下了<<his>>的内裤。
 			<br><br>
 			<<robinExpose>><<if _robinChastity>>隔着<<his>>的贞操带<</if>>，你毫不犹豫地给<<him>>带来想要的快感。随着你的触摸，<<he>>渐渐地<<if $NPCList[0].penis isnot "none" && $NPCList[0].vagina isnot "none">>勃起并且湿润<<elseif $NPCList[0].penis isnot "none">>勃起<<else>>湿润<</if>>了，脸红得无法直视你。你继续抚摸了一段时间，最后俯身在<<his>>的脖子上轻吻，引得<<he>>发出呻吟。
 			<<if _robinChastity>>
@@ -1993,9 +2037,8 @@
 <</if>>
 
 :: Temple Confess Robin Sex
-<<run statusCheck("Robin")>><<set $corruptionEvent to 1>>
+<<run statusCheck("Robin")>>
 <<if $sexstart is 1>>
-	<<set $corruptionEvent to 1>>
 	<<set $Maplebirch.robin.sex = ($Maplebirch.robin.sex || 0) + 1>><<set $Maplebirch.robin.sexTotal += 1>>
 	<<set $sexstart to 0>>
 	<<consensual>>
@@ -2005,7 +2048,7 @@
 	<<maninit>>
 	<<set $enemytrust += 500>>
 	<<set $enemyarousalmax to 600>>
-	<<if _robinStatus.includes("unbelief")>>
+	<<if _robinStatus.includes("desert")>>
 		<<set $enemyarousalmax += 100>>
 	<<elseif _robinStatus.includes("belief")>>
 		<<set $enemyarousalmax -= 100>>
@@ -2148,13 +2191,13 @@
 	罗宾松了口气。
 	<<switch _robinArousal>>
 		<<case "high">>
-			<<if _robinStatus.includes("unbelief")>>
+			<<if _robinStatus.includes("desert")>>
 				"时间刚刚好，来这边。"
 			<<else>>
 				"请……请快点，我……"
 			<</if>>
 		<<default>>
-			<<if _robinStatus.includes("unbelief")>>
+			<<if _robinStatus.includes("desert")>>
 				"接下来轮到我们享受了。"
 			<<else>>
 				"你还要……继续吗？"
@@ -2226,13 +2269,13 @@
 		<<set $mouthuse to 0>><<set $mouthstate to 0>><<set $mouthaction to 0>><<set $head to 0>>
 		<<switch _robinArousal>>
 			<<case "high">>
-				<<if _robinStatus.includes("unbelief")>>
+				<<if _robinStatus.includes("desert")>>
 					"可、可恶！"<<he>>低声说着，
 				<<else>>
 					<<He>>呜咽着，
 				<</if>>
 			<<default>>
-				<<if _robinStatus.includes("unbelief")>>
+				<<if _robinStatus.includes("desert")>>
 					"哦，不……"<<he>>低声说着，
 				<<else>>
 					"我会……保持安静的，"<<he>>低声说着，
@@ -2328,7 +2371,7 @@
 		"那边难道还有其他人吗？！"忏悔者听起来非常愤怒。
 		<br><br>
 
-		<<if _robinStatus.includes("unbelief")>>
+		<<if _robinStatus.includes("desert")>>
 			"是又如何。"罗宾嘲讽地回应。
 		<<else>>
 			沉默下来，罗宾尴尬地扫了你一眼。
@@ -2338,12 +2381,12 @@
 		"难以置信！这个地方太可怕了！"<<if $robinConfession.Pronoun is "m">>他<<else>>她<</if>>怒气冲冲地离开了隔间。<<grace -4>><<llgrace>>
 		<br><br>
 
-		<<if $corruptionRollover is 1>>
-			<<unset $corruptionRollover>>
+		<<if $Maplebirch.robin.desertRollover is 1>>
+			<<unset $Maplebirch.robin.desertRollover>>
 			"这……这真是太刺激了，"<<he>>低声咕哝着，"我从来没有感觉到这么兴奋。"<<He>>看向你的眼睛，"<span class="lewd">就像是新世界的大门打开了一样。</span>"
 		<<else>>
 			<<switch _robinStatus>>
-				<<case "unbelief">>
+				<<case "desert" "desert lust">>
 					"哈哈，我敢肯定<<if $robinConfession.Pronoun is "m">>他<<else>>她<</if>>一定是羡慕我了，"<<he>>自信地说着，露出一个得意的坏笑。
 				<<default>>
 					"对不起……我搞砸了，"<<he>>低声说着。
@@ -2351,8 +2394,8 @@
 		<</if>>
 	<<else>>
 		<<ejaculation>>
-		<<if $corruptionRollover is 1>>
-			<<unset $corruptionRollover>>
+		<<if $Maplebirch.robin.desertRollover is 1>>
+			<<unset $Maplebirch.robin.desertRollover>>
 			<<if $robinConfession.State isnot "">>
 				"这……这真是太刺激了，"<<he>>低声咕哝着，"我从来没有感觉到这么兴奋。"<<He>>看向你的眼睛，"<span class="lewd">就像是新世界的大门打开了一样。</span>"
 			<<else>>
@@ -2361,16 +2404,16 @@
 		<<else>>
 			<<if $robinConfession.State is "exposed">>
 				<<switch _robinStatus>>
-					<<case "unbelief">>
+					<<case "desert" "desert lust">>
 						"那人真是个傻子，对吧？<<if $robinConfession.Pronoun is "m">>他<<else>>她<</if>>肯定是嫉妒我了，"<<he>>自信地说着，露出一个得意的坏笑。
 					<<default>>
 						"抱歉……我搞砸了，"<<he>>低声说着。
 				<</switch>>
 			<<else>>
 				<<switch _robinStatus>>
-					<<case "belief">>
+					<<case "belief" >>
 						"对……对不起，"<<he>>低声说着。
-					<<case "unbelief">>
+					<<case "desert" "desert lust">>
 						"我从没觉得忏悔可以这么舒服，"<<he>>自信地说着，露出一个得意的坏笑。
 					<<default>>
 						"幸好隔间是隔音的，"<<he>>窃笑着。
@@ -2395,7 +2438,7 @@
 		"那边难道还有其他人吗？！"忏悔者听起来非常愤怒。
 		<br><br>
 
-		<<if _robinStatus.includes("unbelief")>>
+		<<if _robinStatus.includes("desert")>>
 			"爱哭鬼就哭吧。"罗宾嘲讽地回应。
 		<<else>>
 			沉默下来。罗宾尴尬地扫了你一眼。
@@ -2405,20 +2448,20 @@
 		"难以置信！这个地方太可怕了！"<<if $robinConfession.Pronoun is "m">>他<<else>>她<</if>>怒气冲冲地离开了隔间。<<grace -4>><<llgrace>>
 		<br><br>
 
-		<<if $corruptionRollover is 1>>
-			<<unset $corruptionRollover>>
+		<<if $Maplebirch.robin.desertRollover is 1>>
+			<<unset $Maplebirch.robin.desertRollover>>
 			"这……这真是太刺激了，"<<he>>低声咕哝着，"我从来没有感觉到这么兴奋。"<<He>>看向你的眼睛，"<span class="lewd">就像是新世界的大门打开了一样。</span>"
 		<<else>>
 			<<switch _robinStatus>>
-				<<case "unbelief">>
+				<<case "desert" "desert lust">>
 					"那人真是个傻子，对吧？<<if $robinConfession.Pronoun is "m">>他<<else>>她<</if>>肯定是嫉妒我了，"<<he>>自信地说着，露出一个得意的坏笑。
 				<<default>>
 					"抱歉……我搞砸了，"<<he>>低声说着。
 			<</switch>>
 		<</if>>
 	<<else>>
-		<<if $corruptionRollover is 1>>
-			<<unset $corruptionRollover>>
+		<<if $Maplebirch.robin.desertRollover is 1>>
+			<<unset $Maplebirch.robin.desertRollover>>
 			罗宾漏出一丝痛苦的呻吟，然后迅速用手捂住了自己的嘴巴。"这、这真的……"<<He>>盯着你的眼睛。可以不要粗暴地对待我吗？<span class="lewd">就像是一个新世界的大门打开了。</span>"
 		<<else>>
 			<<switch _robinStatus>>
@@ -2428,7 +2471,7 @@
 					<<else>>
 						"喂，喂！不要了！求你！"罗宾迅速和你分开了，"刚，刚才真的好痛……，但……"<<his>>脸红了，看向一边，"或……或许我们可以下次再做完……"
 					<</if>>
-				<<case "unbelief">>
+				<<case "unbelief" "unbeliefLust">>
 					罗宾喘着粗气和你分开了，"可以不要粗暴地对待我吗？"<<he>>说道，"不过，剩下的部分我们就等下次吧。"
 				<<default>>
 					"啊——！太痛了！"<<He>>迅速地和你分开了，
@@ -2443,7 +2486,7 @@
 		"停？停下什么？那边难道还有其他人吗？！"忏悔者听起来非常愤怒。
 		<br><br>
 
-		<<if _robinStatus.includes("unbelief")>>
+		<<if _robinStatus.includes("desert")>>
 			"爱哭鬼就哭吧。"罗宾嘲讽地回应。
 		<<else>>
 			沉默下来。罗宾尴尬地扫了你一眼。
@@ -2453,20 +2496,20 @@
 		"难以置信！这个地方太可怕了！"<<if $robinConfession.Pronoun is "m">>他<<else>>她<</if>>怒气冲冲地离开了隔间。<<grace -4>><<llgrace>>
 		<br><br>
 
-		<<if $corruptionRollover is 1>>
-			<<unset $corruptionRollover>>
+		<<if $Maplebirch.robin.desertRollover is 1>>
+			<<unset $Maplebirch.robin.desertRollover>>
 			"这……这真是太刺激了，"<<he>>低声咕哝着，"我从来没有感觉到这么兴奋。"<<He>>看向你的眼睛，"<span class="lewd">就像是新世界的大门打开了一样。</span>"
 		<<else>>
 			<<switch _robinStatus>>
-				<<case "belief">>
+				<<case "desert" "desert lust">>
 					"那人真是个傻子，对吧？<<if $robinConfession.Pronoun is "m">>他<<else>>她<</if>>肯定是嫉妒我了，"<<he>>自信地说着，露出一个得意的坏笑。
 				<<default>>
 					"抱歉……我搞砸了，"<<he>>低声说着。
 			<</switch>>
 		<</if>>
 	<<else>>
-		<<if $corruptionRollover is 1>>
-			<<unset $corruptionRollover>>
+		<<if $Maplebirch.robin.desertRollover is 1>>
+			<<unset $Maplebirch.robin.desertRollover>>
 			"停……停下了？但是我们才……"<<he>>失望地撅起嘴，"我们可以……之后继续这个吗？求你了？我……<span class="lewd">感觉我打开了新世界的大门，</span>我想看到更多。"
 		<<else>>
 			<<switch _robinStatus>>
@@ -2476,7 +2519,7 @@
 					<<else>>
 						罗宾紧张地看着你。"我没……做错什么，对吧？"
 					<</if>>
-				<<case "unbelief">>
+				<<case "unbelief" "unbeliefLust">>
 					罗宾不满地咕哝着撅起嘴，"太扫兴了！但行吧，我们可以下次。"
 				<<default>>
 					"行吧，我们停下。"<<He>>的眼里闪过一瞬失望。
@@ -2501,7 +2544,7 @@
 <<run statusCheck("Robin")>>
 <<if $phase is 2>>
 	<<switch _robinStatus>>
-		<<case "belief">>
+		<<case "desert" "desert lust">>
 			<<if !_robinChastity>>
 				<<pass 2>>“啊……哈啊……”<<He>>沉重地喘息着，用尽全身力气紧紧拥住你。“这……真是……”<<he>>低声说着。你搂着<<him>>，直到<<hes>>准备起身了。<<npcincr Robin lust 3>><<Maplebirchnpcincr Robin holiness -2>><<ggslust>><<lrholiness>>
 			<<else>>
@@ -2517,7 +2560,7 @@
 	<br><br>
 <</if>>
 
-<<if _robinStatus.includes("unbelief")>>
+<<if _robinStatus.includes("desert")>>
 	罗宾亲吻了你，准备离开。"我们很快会再见的。"<<He>>离开了隔间。
 <<else>>
 	你亲吻了罗宾的额头，<<he>>准备离开。"再、再见。"<<he>>说着，走了出去。
@@ -2528,49 +2571,294 @@
 <br>
 
 :: Maplebirch Robin Walk
-<<set $outside to 0>><<set $location to "home">><<effects>>
-<<if $speech_attitude is "meek">>
-	"你想去散步吗？"你问。
-<<elseif $speech_attitude is "bratty">>
-	"是时候出去锻炼锻炼了，"你提议。
-<<else>>
-	"我们去散会步吧，"你提议。
-<</if>>
-<br><br>
-<<if C.npc.Robin.trauma gte 40>>
-	罗宾微笑着点了点头。
-	<br><br>
-<<else>>
-	“好主意，”罗宾说，“那么你想去哪里呢？”
-	<br><br>
-<</if>>
-<<if !$daily.robin.walk>>
-	<<foresticon>><<link [[去森林 (0:30)|Robin Forest]]>><<pass 30>><<set $daily.robin.walk to 1>><</link>>
-	<br>
-<</if>>
-<<if C.npc.Robin.love gte 20 and $money gte 1500 and !$daily.robin.cinema>>
-	<<socialiseicon "cinema">><<link [[电影院 (£15 2:00)|Robin Walk Cinema]]>><<if Time.hour lt 12 and (Time.schoolDay or Time.isWeekEnd())>><<pass 15>><</if>><</link>>
-	<br>
-<</if>>
-<<if Time.hour is 20 and $loftTelescopeKnown and !$daily.watchingStar and !Weather.isOvercast>>
-	<img class="icon" src="img/icon/stars.jpg"><<link [[一起观星 (0:30)|Robin Walk Star]]>><<pass 30>><</link>>
-	<br>
-<</if>>
-<<if !Time.schoolTerm and !Time.isWeekEnd() and Time.hour lt 16 and $robinSwimsuit and !$daily.swimming and Weather.precipitation is "none" && window.modUtils.getMod('DomRobin')>>
-	<<beachicon>><<link [[一起去海边游泳 (0:50+)|Robin Walk Beach]]>><</link>>
-	<br>
-<</if>>
-<<if $halloween_robin is 1 and $halloween_robin_costume is "ghost" and !(Time.monthDay is 31 and Time.hour gte 16)>>
-	<!-- SANITY: Intentional mismatch between stated time and actual time. Extra time is passed later on in the event -->
-	<<if !$robin_forest_visited>>
-		<<foodicon "halloween">><<link [[去买万圣节服装 (0:30)|Robin Forest Shop]]>><<pass 10>><</link>>
+<<set $outside to 0>><<set $location to "temple">><<effects>>
+<<run statusCheck("Robin")>><<npc Robin>><<person1>>
+<<if !$Maplebirch.passage>>
+	<<set _passage = "Maplebirch Robin Walk">>
+	<<if $speech_attitude is "meek">>
+		"你想去散步吗？"你问。
+	<<elseif $speech_attitude is "bratty">>
+		"是时候出去锻炼锻炼了，"你提议。
 	<<else>>
-		<<foodicon "halloween">><<link [[去买万圣节服装 (0:20)|Robin Forest Shop]]>><<pass 10>><</link>>
+		"我们去散会步吧，"你提议。
 	<</if>>
-	<br>
+	<br><br>
+	<<if C.npc.Robin.trauma gte 40>>
+		罗宾微笑着点了点头。
+		<br><br>
+	<<else>>
+		“好主意，”罗宾说，“那么你想去哪里呢？”
+		<br><br>
+	<</if>>
 <</if>>
-<br>
-<<robintempleOptions>>
+<<switch $Maplebirch.passage>>
+	<<case "Robin Walk Cinema">>
+		<<if $speech_attitude is "meek">>
+			“去看电影怎么样？”你提议道。
+		<<elseif $speech_attitude is "bratty">>
+			“我们去看电影吧，也许我们可以度过一段美好的时间。”你提议道。
+		<<else>>
+			“我们去看电影吧？”你提议道。
+		<</if>>
+		<br><br>
+		<<if Time.weekDay is 1 and Time.hour lte 12 and $daily.massAttended isnot 1>>
+			“我真的很想陪你一起看电影，但能不能等到弥撒结束之后？”
+			<<set _walk to false>>
+		<<elseif Time.hour lte 6>>
+			“现在……去电影院有点早，不是吗？”<<nnpc_He "Robin">>打了个哈欠。
+		<<elseif Time.hour gte 21>>
+			“现在去电影院有点晚了，不是吗？”<<set _walk to false>>
+		<<elseif _robinStatus.includes("desert")>>
+			“当然，我什么时候都会陪你的！”<<set _walk to true>>
+		<<elseif $temple_garden gte 100 and $temple_quarters gte 100>>
+			“神殿现在已经没有我们的工作了。我们一起走到商业街吧！”<<set _walk to true>>
+		<<elseif $temple_garden gte 100>>
+			“花园已经被打理得很好了，我想我们偷偷溜走也不会被说吧！”<<set _walk to true>>
+		<<elseif $temple_quarters gte 100>>
+			“宿舍已经整理得很干净了，我想他们会让我们偷偷懒的！”<<set _walk to true>>
+		<<elseif $temple_garden gte 50 or $temple_quarters gte 50>>
+			<<nnpc_He "Robin">>似乎有些犹豫。“还有很多工作要做，但是……休息一下应该不会有问题。”<<set _walk to true>>
+		<<else>>
+			<<nnpc_He "Robin">>悲伤地摇了摇头。“对不起，我还有好多工作要做。”<<set _walk to false>>
+		<</if>>
+		<<if _walk is true>>
+			罗宾挥手告别了一群<<monks>>，<<if $robinromance is 1>>牵着你的手，<</if>>和你一起离开了。
+			<br><br>
+			<<pass 15>><<set $outside to 0>><<set $location to "town">>
+			<<set $daily.robin.cinema to 1>><<set _robin to statusCheck("Robin")>>
+			<<if _robin.outfits isnot undefined>>
+				<<if _robin.outfits.length gt 0 and _robin.outfits.some(x => x.includes("robinGift"))>>
+					<<set _robinOutfits to clone(_robin.outfits)>>
+					<<set _robinOutfits to _robinOutfits.filter(x => x.includes("robinGift")).random()>>
+					<<npcClothesName _robin _robinOutfits>><<npcClothesName $NPCList[0] _robin.clothes.set>>
+				<</if>>
+			<</if>>
+			<<set $daily.robin.walk to 2>><<money -1500 "robin">>
+			<<if (["robinGiftTuxedo", "robinGiftShirt"].includes(_robin.clothes.set) and _robin.pronoun is "m") or (["robinGiftSundress", "robinGiftGown"].includes(_robin.clothes.set) and _robin.pronoun is "f") or ["robinGiftKimono"].includes(_robin.clothes.set)>>
+				<<His>>的眼睛亮了，直接跳了起来。"我先去换衣服，"<<he>>边说边脱下<<his>>的<<print setup.npcClothesSets.find(item => item.name === _robin.clothes.set).clothes.upper.desc>>。
+				<<if $robinromance is 1>>
+					<<He>>看着你脸红了，"我不介意你看着我换衣服的。"<<glust>><<npcincr Robin lust 1>>
+				<<else>>
+					<<He>>像是想到了什么，脸红了起来。"你能转过去一下吗？"
+				<</if>>
+				<br><br>
+			<<elseif ((["robinGiftTuxedo", "robinGiftShirt"].includes(_robin.clothes.set) and _robin.pronoun is "f") or (["robinGiftSundress", "robinGiftGown"].includes(_robin.clothes.set) and _robin.pronoun is "m"))
+			and $robinromance is 1 and _robin.crossdress gte 5>>
+				<<His>>的眼睛亮了，直接跳了起来。"我先去换衣服，"<<he>>边说边脱下<<his>>的<<print setup.npcClothesSets.find(item => item.name === _robin.clothes.set).clothes.upper.desc>>。
+				"不知道会不会有人认出我。"<<He>>看向你，脸红了，"如果你想看我换衣服的话就看吧，我不介意。"<<glust>><<npcincr Robin lust 1>>
+				<br><br>
+			<<else>>
+				<<His>>激动得跳了起来，<<he>>的眼神里也满是兴奋的闪光。
+			<</if>>
+			<<if Weather.precipitation isnot "none">>
+				<<nnpc_He "Robin">>在出去前拿了把伞。
+			<</if>>
+			你们很快就到了商业街，电影院就矗立在购物中心的旁边，现在正在同步放映三部电影。
+			<br><br>
+			“我们要去看什么呢？”<<he>>问道，你注意到<<His>>的笑容稍有动摇，“我希望没有什么可怕的东西。”
+			<br><br>
+			<<link [[超级英雄电影 (1:30)|Robin Cinema Popcorn]]>><<set $phase to 0>><<pass 90>><<stress -12>><</link>><<lstress>>
+			<br>
+			<<link [[浪漫电影 (1:30)|Robin Cinema Popcorn]]>><<set $phase to 1>><<pass 90>><<stress -12>><</link>><<lstress>>
+			<br>
+			<<link [[恐怖电影 (1:30)|Robin Cinema Popcorn]]>><<set $phase to 2>><<pass 90>><<stress 6>><</link>><<gstress>>
+		<<else>>
+			<br>
+			<<robintempleOptions>>
+		<</if>>
+	<<case "Robin Forest">>
+		<<if $speech_attitude is "meek">>
+			“一起去森林怎么样？”你提议道。
+		<<elseif $speech_attitude is "bratty">>
+			“我们去森林吧，那里或许挺好玩的。”你提议道。
+		<<else>>
+			“我们去森林吧？”你提议道。
+		<</if>>
+		<br><br>
+		<<if Time.weekDay is 1 and Time.hour lte 12 and $daily.massAttended isnot 1>>
+			“我真的很想陪你一起去森林，但能不能等到弥撒结束之后？”
+			<<set _walk to false>>
+		<<elseif Time.hour lte 6>>
+			“现在……去森林有点早，不是吗？”<<nnpc_He "Robin">>打了个哈欠。
+		<<elseif Time.hour gte 22>>
+			“现在去森林有点晚了，不是吗？”<<set _walk to false>>
+		<<elseif _robinStatus.includes("desert")>>
+			“当然，我什么时候都会陪你的！”<<set _walk to true>>
+		<<elseif $temple_garden gte 100 and $temple_quarters gte 100>>
+			“神殿现在已经没有我们的工作了。我们一起去森林吧！”<<set _walk to true>>
+		<<elseif $temple_garden gte 100>>
+			“花园已经被打理得很好了，我想我们偷偷溜走也不会被说吧！”<<set _walk to true>>
+		<<elseif $temple_quarters gte 100>>
+			“宿舍已经整理得很干净了，我想他们会让我们偷偷懒的！”<<set _walk to true>>
+		<<elseif $temple_garden gte 50 or $temple_quarters gte 50>>
+			<<nnpc_He "Robin">>似乎有些犹豫。“还有很多工作要做，但是……休息一下应该不会有问题。”<<set _walk to true>>
+		<<else>>
+			<<nnpc_He "Robin">>悲伤地摇了摇头。“对不起，我还有好多工作要做。”<<set _walk to false>>
+		<</if>>
+		<<if _walk is true>>
+			<<set $location to "forest">><<set _robin to statusCheck("Robin")>>
+			罗宾挥手告别了一群<<monks>>，<<if $robinromance is 1>>牵着你的手，<</if>>和你一起离开了。
+			<br><br>
+			<<if Weather.precipitation isnot "none">>
+				<<nnpc_He "Robin">>在出去前拿了把伞。
+			<</if>>
+			你们很快就到了森林，毕竟路程很短。
+			<br><br>
+			<<set _passage to "Robin Forest">>
+			<<link [[继续|_passage]]>><<pass 10>><<set $daily.robin.walk to 1>><</link>>
+		<<else>>
+			<br>
+			<<robintempleOptions>>
+		<</if>>
+	<<case "Robin Walk Beach">>
+		“我们一起去海边游泳吧，正好今天天气不错。”你提议道。
+		<br><br>
+		<<if Time.weekDay is 1 and Time.hour lte 12 and $daily.massAttended isnot 1>>
+			“我真的很想陪你一起去海边，但能不能等到弥撒结束之后？”
+			<<set _walk to false>>
+		<<elseif _robinStatus.includes("desert")>>
+			“当然，我什么时候都会陪你的！”<<set _walk to true>>
+		<<elseif $temple_garden gte 100 and $temple_quarters gte 100>>
+			“神殿现在已经没有我们的工作了。我们一起去海边吧！”<<set _walk to true>>
+		<<elseif $temple_garden gte 100>>
+			“花园已经被打理得很好了，我想我们偷偷溜走也不会被说吧！”<<set _walk to true>>
+		<<elseif $temple_quarters gte 100>>
+			“宿舍已经整理得很干净了，我想他们会让我们偷偷懒的！”<<set _walk to true>>
+		<<elseif $temple_garden gte 50 or $temple_quarters gte 50>>
+			<<nnpc_He "Robin">>似乎有些犹豫。“还有很多工作要做，但是……休息一下应该不会有问题。”<<set _walk to true>>
+		<<else>>
+			<<nnpc_He "Robin">>悲伤地摇了摇头。“对不起，我还有好多工作要做。”<<set _walk to false>>
+		<</if>>
+		<<if _walk is true>>
+			<<set $daily.swimming to true>>
+			<<if $swimmingCount is undefined>>
+				<<set $swimmingCount to 0>>
+			<</if>>
+			<<set $swimmingCount += 1>>
+			<<set $dateCount.Total++>><<set $dateCount.Robin++>>
+			<<He>>点头说道：“我这就去做下准备。”
+			<br><br>
+			<<if $robinSwimsuit is "school">>
+				罗宾从宿舍的衣柜里翻出了学校泳装，<<his>>的表情似乎有些为难。
+			<<else>>
+				罗宾从宿舍的衣柜里翻出了你为<<him>>挑选的<<robinSwimwear>>，<<his>>的脸上露出了一丝不易察觉的微笑。
+			<</if>>
+			<br><br>
+			<<if !hasSwimmingSuit()>>
+				<span class="blue">你没有泳衣，不能直接去海滩。</span>
+			<<else>>
+				<<link [[直接去海滩(0:15)|Robin Beach Start]]>><<pass 15>><</link>>
+			<</if>>
+			<br>
+			<<link [[一起去购物中心挑选泳衣(0:30)|Robin Walk Beach Shopping]]>><<pass 30>><</link>>
+		<<else>>
+			<br>
+			<<robintempleOptions>>
+		<</if>>
+	<<case "Robin Forest Shop">>
+		
+		<<if !$robin_forest_visited>>
+			“你想去看看万圣节的服装吗？”你问。罗宾的眼睛亮了，<<he>>点了点头。
+			<br><br>
+			<<if Time.weekDay is 1 and Time.hour lte 12 and $daily.massAttended isnot 1>>
+				“我真的很想陪你一起去看看万圣节的服装，但能不能等到弥撒结束之后？”
+				<<set _walk to false>>
+			<<elseif _robinStatus.includes("desert")>>
+				“当然，我什么时候都会陪你的！”<<set _walk to true>>
+			<<elseif $temple_garden gte 100 and $temple_quarters gte 100>>
+				“神殿现在已经没有我们的工作了。我们一起去看看万圣节的服装吧！”<<set _walk to true>>
+			<<elseif $temple_garden gte 100>>
+				“花园已经被打理得很好了，我想我们偷偷溜走也不会被说吧！”<<set _walk to true>>
+			<<elseif $temple_quarters gte 100>>
+				“宿舍已经整理得很干净了，我想他们会让我们偷偷懒的！”<<set _walk to true>>
+			<<elseif $temple_garden gte 50 or $temple_quarters gte 50>>
+				<<nnpc_He "Robin">>似乎有些犹豫。“还有很多工作要做，但是……休息一下应该不会有问题。”<<set _walk to true>>
+			<<else>>
+				<<nnpc_He "Robin">>悲伤地摇了摇头。“对不起，我还有好多工作要做。”<<set _walk to false>>
+			<</if>>
+			<<if _walk is true>>
+				<<pass 5>><<set $outside to 1>><<set $location to "town">>
+				罗宾挥手告别了一群<<monks>>，<<if $robinromance is 1>>牵着你的手，<</if>>和你一起离开了。
+				<br><br>
+				<<if Weather.precipitation isnot "none">>
+					<<nnpc_He "Robin">>在出去前拿了把伞。
+				<</if>>
+				你们一起走到了商业街上。罗宾很熟悉各种店面，<<He>>兴奋地走在了你前面。但是到了地方后，<<He>>失望地把手和鼻子压在了商店的橱窗上。<<He>>看着空荡荡的橱窗。"卖完了……"<<he>>沮丧地说，但是下一秒<<His>>的表情又兴奋了起来，"我知道还有一家店！"<<He>>又跑走了。
+				<br><br>
+				你追了上去，但是你们去的每一家商店都缺货。罗宾不耐烦了，直接走进一间店询问店主原因。
+				<br><br>
+				"抱歉，"售货员回答道，"只要我们一推出那些商品就会被游客们抢购一空，即使我们抬高价格也没有用。"
+				<br><br>
+				你带着垂头丧气的罗宾离开了商店。
+				<br><br>
+				<<link [[道歉|Robin Forest Shop 2]]>><<set $phase to 0>><</link>>
+				<br>
+				<<link [[鼓励|Robin Forest Shop 2]]>><<set $phase to 1>><</link>>
+			<<else>>
+				<br>
+				<<robintempleOptions>>
+			<</if>>
+		<<else>>
+			“你还想找万圣节服装吗？”你问。
+			<br><br>
+			<<if Time.weekDay is 1 and Time.hour lte 12 and $daily.massAttended isnot 1>>
+				“我真的很想陪你一起去看看万圣节的服装，但能不能等到弥撒结束之后？”
+				<<set _walk to false>>
+			<<elseif _robinStatus.includes("desert")>>
+				“当然，我什么时候都会陪你的！”<<set _walk to true>>
+			<<elseif $temple_garden gte 100 and $temple_quarters gte 100>>
+				“神殿现在已经没有我们的工作了。我们一起去看看万圣节的服装吧！”<<set _walk to true>>
+			<<elseif $temple_garden gte 100>>
+				“花园已经被打理得很好了，我想我们偷偷溜走也不会被说吧！”<<set _walk to true>>
+			<<elseif $temple_quarters gte 100>>
+				“宿舍已经整理得很干净了，我想他们会让我们偷偷懒的！”<<set _walk to true>>
+			<<elseif $temple_garden gte 50 or $temple_quarters gte 50>>
+				<<nnpc_He "Robin">>似乎有些犹豫。“还有很多工作要做，但是……休息一下应该不会有问题。”<<set _walk to true>>
+			<<else>>
+				<<nnpc_He "Robin">>悲伤地摇了摇头。“对不起，我还有好多工作要做。”<<set _walk to false>>
+			<</if>>
+			<<if _walk is true>>
+				<<pass 5>><<set $outside to 1>><<set $location to "town">>
+				<<He>>点了点头，
+				挥手告别了一群<<monks>>，<<if $robinromance is 1>>牵着你的手，<</if>>和你一起离开了。
+				<br><br>
+				<<if Weather.precipitation isnot "none">>
+					<<nnpc_He "Robin">>在出去前拿了把伞。
+				<</if>>
+				<br><br>
+				你带着罗宾穿过镇上的街道，走进森林，来到了隐藏在树枝下的小商店。
+				<br><br>
+				<<link [[继续|Robin Forest Shop 4]]>><</link>>
+			<<else>>
+				<br>
+				<<robintempleOptions>>
+			<</if>>
+		<</if>>
+	<<default>>
+		<<if !$daily.robin.walk>>
+			<<foresticon>><<link [[去森林 (0:30)|_passage]]>><<set $Maplebirch.passage to "Robin Forest">><</link>>
+			<br>
+		<</if>>
+		<<if C.npc.Robin.love gte 20 and $money gte 1500 and !$daily.robin.cinema>>
+			<<socialiseicon "cinema">><<link [[电影院 (£15 2:00)|_passage]]>><<set $Maplebirch.passage to "Robin Walk Cinema">><</link>>
+			<br>
+		<</if>>
+		<<if !Time.schoolTerm and !Time.isWeekEnd() and Time.hour lt 16 and $robinSwimsuit and !$daily.swimming and Weather.precipitation is "none" && window.modUtils.getMod('DomRobin')>>
+			<<beachicon>><<link [[一起去海边游泳 (0:50+)|_passage]]>><<set $Maplebirch.passage to "Robin Walk Beach">><</link>>
+			<br>
+		<</if>>
+		<<if $halloween_robin is 1 and $halloween_robin_costume is "ghost" and !(Time.monthDay is 31 and Time.hour gte 16)>>
+			<!-- SANITY: Intentional mismatch between stated time and actual time. Extra time is passed later on in the event -->
+			<<if !$robin_forest_visited>>
+				<<foodicon "halloween">><<link [[去买万圣节服装 (0:30)|_passage]]>><<set $Maplebirch.passage to "Robin Forest Shop">><</link>>
+			<<else>>
+				<<foodicon "halloween">><<link [[去买万圣节服装 (0:20)|_passage]]>><<set $Maplebirch.passage to "Robin Forest Shop">><</link>>
+			<</if>>
+			<br>
+		<</if>>
+		<br>
+		<<robintempleOptions>>
+<</switch>>
 
 :: Robin Walk Temple
 <<set $outside to 1>><<set $location to "town">><<effects>>

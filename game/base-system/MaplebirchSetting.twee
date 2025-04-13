@@ -1,50 +1,61 @@
 :: Maplebirch Settings [widget]
 
-<!-- 每日6时刷新点，含有每日变量 -->
-<<widget "maplebirch_daily_reset">>
-    <<maplebirch_daily_unset>>
-    <<maplebirch_daily_set>>
-    <<RobinTempleValue>>
-<</widget>>
-<!-- 每日变量删除 -->
-<<widget "maplebirch_daily_unset">>
-    <<unset $Maplebirch.Sydneyattack>>
-    <<unset $Maplebirch.Robinattack>>
-    <<unset $frequencyalready>>
+<!-- 每日6时变量删除 -->
+<<widget "maplebirch_dawn_unset">>
+    <<unset $Maplebirch.sydney.retention>>
+    <<unset $Maplebirch.sydney.attack>>
+    <<unset $Maplebirch.robin.attack>>
+    <<unset $Maplebirch.frequencyalready>>
     <<unset $Maplebirch.SydneyTime>>
     <<unset $Maplebirch.RobinTime>>
-    <<unset $Maplebirch.daily>>
-    <<unset $Maplebirch.NPCcombat>>
-    <<unset $Maplebirch.sydney.retention>>
 <</widget>>
-<!-- 每日变量建立 -->
-<<widget "maplebirch_daily_set">>
+
+<!-- 每日6时变量建立 -->
+<<widget "maplebirch_dawn_set">>
+    <<set $Maplebirch.dawn = {}>>
+    <<set $Maplebirch.frequencyalready = $Maplebirch.frequencyalready || {}>>
+<</widget>>
+
+<!-- 每日12时变量删除 -->
+<<widget "maplebirch_daily_unset">>
     <<set $Maplebirch.daily = {}>>
 <</widget>>
-<!-- 每周刷新点，含有每周变量 -->
-<<widget "maplebirch_weekly_reset">>
-    <<maplebirch_weekly_unset>>
-    <<maplebirch_deekly_set>>
-    <<run weekDayBaileyRobinExempt()>>
-    <<run maplebirchDomRobinMoneyChange()>>
+
+<!-- 每日12时变量建立 -->
+<<widget "maplebirch_daily_set">>
+    <<set $Maplebirch.daily = {}>>
+    <!-- 罗宾12时每日变量 -->
+    <<set $Maplebirch.daily.robin = {}>>
+    <<set $Maplebirch.daily.robin.sex = 0>>
 <</widget>>
+
 <!-- 每周变量删除 -->
 <<widget "maplebirch_weekly_unset">>
     <<unset $Maplebirch.weely>>
 <</widget>>
+
 <!-- 每周变量建立 -->
-<<widget "maplebirch_deekly_set">>
+<<widget "maplebirch_weekly_set">>
     <<set $Maplebirch.weekly = {}>>
 <</widget>>
+
+<!-- 事件开始 -->
+<<widget "MaplebirchEvent">>
+    <<set $Maplebirch.event = 1>>
+    <<run maplebirchRandomNum()>>
+<</widget>>
+
 <!-- 临时变量删除 -->
 <<widget "MaplebirchEndEvent">>
-    <<unset $robin_examination>>
-    <<unset $robin_anguish>>
+    <<unset $Maplebirch.event>>
+    <<unset $Maplebirch.robin.examination>>
+    <<unset $Maplebirch.robin.anguish>>
     <<unset $Maplebirch.stage>>
     <<unset $Maplebirch.answer>>
     <<unset $Maplebirch.phase>>
     <<unset $Maplebirch.phase2>>
     <<unset $Maplebirch.temple_evaluation>>
+    <<unset $Maplebirch.passage>>
 <</widget>>
 
 <!-- 数字变量创建 -->
@@ -69,19 +80,22 @@
     <</for>>
   <</if>>
 <</widget>>
+
 <!-- 数字变量创建 -->
 <<widget "MaplebirchnumValue">>
     <!-- 罗宾相关变量 -->
     <<MaplebirchinitVar "Maplebirch.daily.robin.ask" 0>>
     <<MaplebirchinitVar "Maplebirch.robin.sexTotal" 0>>
     <<MaplebirchinitVar "Maplebirch.RobinDom" 0>>
-    <<MaplebirchinitVar "robintemplespeed" 0>>
+    <<MaplebirchinitVar "Maplebirch.robin.temple_speed" 0>>
     <!-- 悉尼相关变量 -->
-    <<MaplebirchinitVar "sydney_bed_frequency" 0>>
+    <<MaplebirchinitVar "Maplebirch.sydney.bed_frequency" 0>>
     <!-- 属性变量 -->
     <<MaplebirchinitVar "Maplebirch.Sanity" 1000>>
     <<MaplebirchinitVar "Maplebirch.fearmax" 10000>>
     <<MaplebirchinitVar "Maplebirch.fear" 0>>
+    <<MaplebirchinitVar "Maplebirch.memoryskill" 0>>
+    <<MaplebirchinitVar "Maplebirch.dissimilation" 0>>
     <!-- 湖中岛变量 -->
     <<MaplebirchinitVar "Maplebirch.lakeisland.decay" 100>>
     <<MaplebirchinitVar "Maplebirch.vivian.clean" 0>>
@@ -92,6 +106,7 @@
         <<set $Maplebirch.robinSeen.pushUnique("Transvestism")>>
     <</if>>
 <</widget>>
+
 <!-- 组变量创建 -->
 <<widget "MaplebirchgroupVariable">>
     <!-- 总组变量 -->
@@ -100,22 +115,71 @@
     <<set $Maplebirch.weekly = $Maplebirch.weekly || {}>>
     <<set $Maplebirch.daily = $Maplebirch.daily || {}>>
     <<set $Maplebirch.daily.robin = $Maplebirch.daily.robin || {}>>
+    <<set $Maplebirch.dawn = $Maplebirch.dawn || {}>>
     <!-- 悉尼相关变量 -->
     <<set $Maplebirch.sydney = $Maplebirch.sydney || {}>>
     <!-- 罗宾相关变量 -->
+    <<set $Maplebirch.robin = $Maplebirch.robin || {}>>
+    <<set $Maplebirch.robin.belief = $Maplebirch.robin.belief || "lock">>
+    <<set $Maplebirch.robin.desert = $Maplebirch.robin.desert || "lock">>
+    <<set $Maplebirch.robin.rank = $Maplebirch.robin.rank || "">>
     <<set $Maplebirch.Promised = $Maplebirch.Promised || []>>
     <<set $Maplebirch.robinSeen = $Maplebirch.robinSeen || []>>
-    <<set $robinFirstSeen = $robinFirstSeen || []>>
+    <<set $robinFirstSeen = $robinFirstSeen || "">>
     <<set $Maplebirch.templePromised = $Maplebirch.templePromised || "">>
     <!-- 湖中岛相关变量 -->
     <<set $Maplebirch.lakeisland = $Maplebirch.lakeisland || {}>>
+    <<set $Maplebirch.lakeisland.furniture = $Maplebirch.lakeisland.furniture || []>>
     <!-- 维安相关变量 -->
     <<set $Maplebirch.vivian = $Maplebirch.vivian || {}>>
+    <<set $Maplebirch.vivianSeen = $Maplebirch.vivianSeen || []>>
+    <<set $Maplebirch.vivian.items = $Maplebirch.vivian.items || []>>
+    <!-- 其它变量 -->
+    <<set $Maplebirch.MemoryChoose = $Maplebirch.MemoryChoose || "">>
+    <<set $Maplebirch.frequencyalready = $Maplebirch.frequencyalready || {}>>
 <</widget>>
+
 <!-- 全局临时递归检测 -->
 <<widget "MaplebirchStage">>
     <<set $Maplebirch.stage to (($Maplebirch.stage || 0) + 1)>>
 <</widget>>
+
+<!-- OX场景 -->
+<<widget "MaplebirchOrgasmLocation">>
+    <<orgasm>>
+	<<switch _args[0]>>
+        <<case "lakeislandTending">>
+            注意到你的痉挛，维安过来查看你的状况。然而，当<<nnpc_he "Vivian">>明白发生了什么事后，<<nnpc_he "Vivian">>停了下来，看着你从高潮的余韵之中缓过来。你的脸涨得通红，你们都避免眼神接触，努力装作什么都没发生。
+			<<gtrauma>><<gstress>><<trauma 6>><<stress 6>><<Maplebirchnpcincr Vivian lust 1>><<glust>>
+    <</switch>>
+	<<if $_hidden>>
+		随着痉挛消退，你重新控制住自己。希望噪音没有暴露你的藏身之处。
+	<</if>>
+	<<if $_quiet>>
+		你响亮的呻吟声回荡在空无一人的<<print $_quiet>>。当你的痉挛消退时，你希望声音没有引起别人注意。
+	<</if>>
+	<br><br>
+<</widget>>
+
+<!-- OX描述 -->
+<<widget "MaplebirchGenitals">>
+    <<set _text_output to "">>
+	<<if (C.npc[_args[0]].chastity.penis.includes("chastity") || C.npc[_args[0]].chastity.vagina.includes("chastity")) && _args[0] isnot 'short' && $vivianChastityKnown>>
+		<<set _text_output += "受保护的">>
+	<</if>>
+	<<if _args[1] isnot 'short' and ((C.npc[_args[0]].virginity.penile === true && C.npc[_args[0]].gender is "m") || (C.npc[_args[0]].virginity.vaginal === true && C.npc[_args[0]].gender === "f") || (C.npc[_args[0]].virginity.penile === true && C.npc[_args[0]].virginity.vaginal === true && C.npc[_args[0]].gender === "h"))>>
+		<<set _text_output += "童贞">>
+	<</if>>
+    <<if C.npc[_args[0]].gender is "h">>
+        <<set _text_output += "阴茎和小穴">>
+	<<elseif C.npc[_args[0]].gender is "m">>
+		<<set _text_output += "阴茎">>
+	<<else>>
+		<<set _text_output += "小穴">>
+	<</if>>
+    <<print _text_output>>
+<</widget>>
+
 <!-- 承诺仪式名称 -->
 <<widget "MaplebirchTemplePromised">>
     <<if setup.mbContains($Maplebirch.Promised, ["Robin", "Sydney"])>>
@@ -144,6 +208,12 @@
         <<if C.npc.Robin.lovestage < 5 && ["test_superslowly","test_slowly"].includes($RobinTempleInvitation)>>
             <<nnpc_He "Robin">>暂时将此事搁置了。<<note "多陪陪罗宾吧！" "teal">>
         <</if>></li>
+    <</if>>
+    <<if $RobinTempleInvitation is "ChastityTestfail">>
+        <li>罗宾 今日的神殿测试<span class="red">失败</span>了。</li>
+    <</if>>
+    <<if $RobinTempleInvitation is "ChastityTestsuccess">>
+        <li>罗宾 今日的神殿测试<span class="green">成功</span>了。</li>
     <</if>>
 <</widget>>
 

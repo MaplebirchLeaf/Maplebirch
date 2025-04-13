@@ -17,7 +17,7 @@
 		<</if>>
 		<br><br>
 
-		<<if _robinStatus.includes("unbelief")>>
+		<<if _robinStatus.includes("desert")>>
 			"我想我早就知道了，"<<he>>说道，"不过听到别人这么说还是挺好。谢谢你，<<sister>>。我会尽量记住的。"
 		<<else>>
 			"你说对了，"<<he>>说道。"当然是这样。非常感谢你，<<sister>>，感谢你让我走在正确的道路上。"

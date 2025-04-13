@@ -10,6 +10,7 @@ window.maplebirchRandomNum = function() {
 };
 // 读取存档时注入的数据
 window.maplebirchReloadVariables = function() {
+  
   // NPC注入npcNamelist
   setup.NPCNameList.pushUnique("Vivian");
   setup.NPCNameList_cn_name[0].pushUnique("维安");
@@ -28,6 +29,9 @@ window.maplebirchReloadVariables = function() {
   const fragment = document.createDocumentFragment();
   fragment.append(wikifier("MaplebirchgroupVariable"));
   fragment.append(wikifier("MaplebirchnumValue"));
+
+  // 版本更新
+  maplebirchVersionUpdate();
 };
 // 游戏开始时注入的数据
 window.maplebirchStartOnly = function() {
@@ -48,126 +52,61 @@ window.maplebirchStartOnly = function() {
   const fragment = document.createDocumentFragment();
   fragment.append(wikifier("MaplebirchgroupVariable"));
   fragment.append(wikifier("MaplebirchnumValue"));
+
+  // 版本更新
+  maplebirchVersionUpdate();
 };
 
-window.fearcoeff = function() {
-  // Sanity Modifiers
-  if (V.Maplebirch.Sanity >= 1000) {
-    T.sanityMod = 0.0;
-  } else if (V.Maplebirch.Sanity >= 700) {
-    T.sanityMod = 0.2;
-  } else if (V.Maplebirch.Sanity >= 450) {
-    T.sanityMod = 0.4;
-  } else if (V.Maplebirch.Sanity >= 250) {
-    T.sanityMod = 0.6;
-  } else if (V.Maplebirch.Sanity >= 100) {
-    T.sanityMod = 0.8;
-  } else if (V.Maplebirch.Sanity >= 50) {
-    T.sanityMod = 1.0;
-  } else if (V.Maplebirch.Sanity >= 1) {
-    T.sanityMod = 1.2;
-  } else {
-    T.sanityMod = 1.5;
-  }
+// 秋枫白桦版本变量更迭更新
+window.maplebirchVersionUpdate = function() {
+  const fragment = document.createDocumentFragment();
 
-   // Willpower Modifiers
-  let wpStages;
-  wpStages = V.willpowermax * [6/7, 5/7, 4/7, 3/7, 2/7, 1/7];
-  if (V.willpower >= wpStages[0]) {
-    T.willpowerMod = 0.0;
-  } else if (V.willpower >= wpStages[1]) {
-    T.willpowerMod = 0.2;
-  } else if (V.willpower >= wpStages[2]) {
-    T.willpowerMod = 0.4;
-  } else if (V.willpower >= wpStages[3]) {
-    T.willpowerMod = 0.6;
-  } else if (V.willpower >= wpStages[4]) {
-    T.willpowerMod = 0.8;
-  } else if (V.willpower >= wpStages[5]) {
-    T.willpowerMod = 1.0;
-  } else {
-    T.willpowerMod = 1.2;
-  }
-
-  // Control Modifiers
-  if (V.control >= V.controlmax) {
-    T.controlMod = 0.0;
-  } else if (V.control >= V.controlmax * 0.8) {
-    T.controlMod = 0.2;
-  } else if (V.control >= V.controlmax * 0.6) {
-    T.controlMod = 0.4;
-  } else if (V.control >= V.controlmax * 0.4) {
-    T.controlMod = 0.6;
-  } else if (V.control >= V.controlmax * 0.2) {
-    T.controlMod = 0.8;
-  } else if (V.control >= 1) {
-    T.controlMod = 1.0;
-  } else {
-    T.controlMod = 1.2;
-  }
-
-  // Stress Modifiers
-  if (V.stress >= V.stressmax) {
-    T.stressMod = 1.5;
-  } else if (V.stress >= V.stressmax * 0.8) {
-    T.stressMod = 1.3;
-  } else if (V.stress >= V.stressmax * 0.6) {
-    T.stressMod = 1.1;
-  } else if (V.stress >= V.stressmax * 0.4) {
-    T.stressMod = 0.9;
-  } else if (V.stress >= V.stressmax * 0.2) {
-    T.stressMod = 0.7;
-  } else if (V.stress >= 1) {
-    T.stressMod = 0.5;
-  } else {
-    T.stressMod = 0.0;
-  }
-
-  // Trauma Modifiers
-  if (V.trauma >= V.traumamax) {
-    T.traumaMod = 1.5;
-  } else if (V.trauma >= V.traumamax * 0.8) {
-    T.traumaMod = 1.3;
-  } else if (V.trauma >= V.traumamax * 0.6) {
-    T.traumaMod = 1.1;
-  } else if (V.trauma >= V.traumamax * 0.4) {
-    T.traumaMod = 0.9;
-  } else if (V.trauma >= V.traumamax * 0.2) {
-    T.traumaMod = 0.7;
-  } else if (V.trauma >= 1) {
-    T.traumaMod = 0.5;
-  } else {
-    T.traumaMod = 0.0;
-  }
+  fragment.append(wikifier("MaplebirchVariablesVersionUpdate"));
 };
 
+// 记忆技能
+window.maplebirchMemory = function(amount, choose) {
+  if (isNaN(amount)) paramError("memory", "amount", amount, "需要一个数字");
+  amount = Number(amount);
+
+  if (amount) {
+    if (choose === "wraith") {
+      V.Maplebirch.dissimilation += amount * (((1 - V.purity) / 500) + 1);
+    } else if (choose === "holy") {
+      V.Maplebirch.dissimilation += amount * ((V.purity / 500) + 1);
+    } else {
+      V.Maplebirch.memoryskill += amount * ((V.Maplebirch.Sanity / 250) + 1);
+    }
+  } 
+
+  maplebirchMemoryClamp();
+};
+DefineMacro("memory", maplebirchMemory);
+
+window.maplebirchMemoryClamp = function() {
+  V.Maplebirch.memoryskill = Math.clamp(V.Maplebirch.memoryskill, 0, 1000);
+};
+
+// 恐惧值相关
 window.fear = function(amount, multiplierOverride) {
-  if (isNaN(amount)) paramError("fear", "amount", amount, "Expected a number.");
-  if (multiplierOverride && isNaN(multiplierOverride)) paramError("fear", "multiplierOverride", multiplierOverride, "Expected a number.");
+  if (isNaN(amount)) paramError("fear", "amount", amount, "需要一个数字");
+  if (multiplierOverride && isNaN(multiplierOverride)) paramError("fear", "multiplierOverride", multiplierOverride, "需要一个数字");
   amount = Number(amount);
   multiplierOverride = Number(multiplierOverride);
 
-  fearcoeff();
-  let sumPositiveMods;
-  sumPositiveMods = T.sanityMod + T.willpowerMod + T.controlMod + T.stressMod + T.traumaMod;
-
-  let effectiveMultiplier;
-  let fearTier
-  let willRestore;
-  let controlRestore;
-
+  let stressMod = Math.clamp((V.stress / 50), 1, 200);
+  let traumaMod = Math.clamp((V.trauma / 25), 1, 200);
+  let controlMod = (Math.clamp(V.control / 5), 1, 200);
+  let willpowerMod = Math.clamp((V.willpower / 5), 1, 200);
+  let sanityMod = Math.clamp((V.Maplebirch.Sanity / 5), 1, 200);
+  
   if (amount) {
     if (multiplierOverride) {
       V.Maplebirch.fear += amount * multiplierOverride;
     } else if (amount > 0) {
-      fearTier = V.Maplebirch.fear < 2000 ? 1.0 : V.Maplebirch.fear < 5000 ? 0.9 : 0.8;
-      effectiveMultiplier = (sumPositiveMods * 12 * fearTier) + 0.1667;
-      V.Maplebirch.fear += amount * effectiveMultiplier;
-    } else {
-      willRestore = 1.2 - T.willpowerMod;
-      controlRestore = 1.2 - T.controlMod;
-      effectiveMultiplier = (willRestore + controlRestore) * 48.6125 + 0.1667;
-      V.Maplebirch.fear += amount * effectiveMultiplier * 2;
+      V.Maplebirch.fear += amount * (stressMod * 0.4 + traumaMod * 0.3 + (200 - sanityMod) * 0.2 + (200 - controlMod) * 0.1) * 0.8;
+    } else { 
+      V.Maplebirch.fear += amount * (sanityMod * 0.35 + willpowerMod * 0.3 + controlMod * 0.25 + (200 - stressMod) * 0.1) * 0.8;
     }
   }
     //睡眠障碍sleeptrouble，噩梦/梦魇nightmares，焦虑anxiety
@@ -198,9 +137,8 @@ window.fear = function(amount, multiplierOverride) {
 DefineMacro("fear", fear);
 
 window.fearClamp = function () {
-  if (V.Maplebirch.fear >= V.Maplebirch.fearmax) V.willpower -= (V.Maplebirch.fear - V.Maplebirch.fearmax) / 10;
+  if (V.Maplebirch.fear >= V.Maplebirch.fearmax) V.willpower -= (V.Maplebirch.fear - V.Maplebirch.fearmax) / 50;
 
   V.Maplebirch.fear = Math.clamp(V.Maplebirch.fear, 0, V.Maplebirch.fearmax);
-  V.Maplebirch.fear = Math.round(V.Maplebirch.fear);
 };
 DefineMacro("fearclamp", fearClamp);

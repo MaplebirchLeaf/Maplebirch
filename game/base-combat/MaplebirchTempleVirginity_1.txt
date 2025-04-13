@@ -1,4 +1,7 @@
-            <!-- Do nothing -->
-        <<else>>
+<<widget "takeTempleVirginity">>
+	<<if _args[1]>>
+		<<if _args[1] is "penile" and playerHasStrapon()>>
+			<!-- Do nothing -->
+		<<else>>
             <<set _maplevirginityProtected = $virginityProtected>>
             <<set _maplePlayerVirginityTemple = $player.virginity.temple>>

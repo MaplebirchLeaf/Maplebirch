@@ -113,8 +113,8 @@
 <</widget>>
 
 <<widget "maplebirch_temple_bunk_sleep_3">>
-	<<if _sleepinterruptSydney && !$Maplebirch.Sydneyattack>>
-		<<set $Maplebirch.Sydneyattack = 1>>
+	<<if _sleepinterruptSydney && !$Maplebirch.sydney.attack>>
+		<<set $Maplebirch.sydney.attack = 1>>
 		<<npc Sydney>><<person1>>
 		<<if $bus is "temple_sydney_bed">>
 			<<run statusCheck("Sydney")>>
@@ -203,12 +203,12 @@
 				<br>
 			<</if>>
 		<</if>>
-	<<elseif _sleepinterruptRobin && !$Maplebirch.Robinattack>>
-		<<set $Maplebirch.Robinattack = 1>>
+	<<elseif _sleepinterruptRobin && !$Maplebirch.robin.attack>>
+		<<set $Maplebirch.robin.attack = 1>>
 		<<npc Robin>><<person1>>
 		<<if $bus is "temple_robin_bed">>
 			<<run statusCheck("Robin")>>
-			<<if (Time.weekDay === 1 && Time.hour <= 6) && $rng gte 50 && C.npc.Robin.dom gte 80 && C.npc.Robin.lust gte 60 && _robinStatus.includes("unbelief")>>
+			<<if (Time.weekDay === 1 && Time.hour <= 6) && $rng gte 50 && C.npc.Robin.dom gte 80 && C.npc.Robin.lust gte 60 && _robinStatus.includes("desert")>>
 				你醒了过来，感觉有个
 				<<if $NPCList[0].vagina isnot "none" && $NPCList[0].penis isnot "none">>坚硬的柱状体和湿湿的东西<<elseif $NPCList[0].penis isnot "none">>坚硬的柱状体<<else>>湿湿的东西<</if>>
 				压在你屁股上。你想等着罗宾说话，但迎接你的只有沉默。你看向罗宾，发现<<He>>还在沉沉的睡觉。<<His>>正双臂环抱着你，干蹭着你。<<arousal 600 "bottom">><<garousal>>
@@ -237,7 +237,7 @@
 					紧贴着你的背。
 				<</if>>
 				<br><br>
-				<<if _robinStatus.includes("unbelief")>>
+				<<if _robinStatus.includes("desert")>>
 					“可以吗？”<<He>>在你耳边低语。
 				<<else>>
 					“原来是你啊”罗宾叹了一口气，<<his>>的呼吸拂过你的脖子。”
@@ -320,16 +320,16 @@
 
 	<<elseif isMaplebirchTime("SydneyTempleTime") && !$Maplebirch.SydneyTime>>
 		<<npc Sydney>><<person1>>
-		<<if !$Maplebirch.SydneyTime && !$frequencyalready>>
-			<<set $sydney_bed_frequency += 1>>
-			<<set $frequencyalready = 1>>
+		<<if !$Maplebirch.SydneyTime && !$Maplebirch.frequencyalready.sydney>>
+			<<set $Maplebirch.sydney.bed_frequency += 1>>
+			<<set $Maplebirch.frequencyalready.sydney = 1>>
 		<</if>>
 		悉尼安静地蜷在<<He>>的床铺上，枕头的边上还沾着些许口水。
 		<<if Time.weekDay is 1 && Time.hour is 5 && !$Maplebirch.SydneyTime>>
 			<<set $Maplebirch.SydneyTime to 1>>
 			<br><br>
 			<<set $sydney_bed to "none">>
-			<<if $sydney_bed_frequency < 2>>
+			<<if $Maplebirch.sydney.bed_frequency < 2>>
 				<<He>>把被褥整齐地叠在床铺上。<<covered>>悉尼惊讶地发现你躺在旁边睡着，赶忙把你喊起来。
 			<<else>>
 				悉尼害怕你着凉，<<He>>把被褥盖在你的身上后，独自离开了宿舍。
@@ -502,10 +502,32 @@
 
 :: Temple Sydney Sex Finish
 
-<<set $outside to 0>><<effects>>
+<<set $outside to 0>><<effects>><<run statusCheck("Sydney")>>
 <<if $enemyarousal gte $enemyarousalmax>>
 	<<ejaculation>>
-	悉尼翻了个身。<<lllust>><<npcincr Sydney lust -5>><<npcincr Sydney love 1>><<glove>>
+	<<if $corruptionRollover is 1>>
+		<<unset $corruptionRollover>>
+		“真、真是太不可思议了，”<<he>>喃喃道，“我好想……我好想再做一次。然后……一次又一次。”<<He>>直直盯着你。“<span class="lewd">我感觉一个新的世界向我敞开了。</span>”
+		<br><br>
+	<<else>>
+		<<switch _sydneyStatus>>
+			<<case "pure" "pureLust">>
+				“真、真是……不可思议，”<<he>>喃喃道，“也很罪恶……”
+			<<case "corrupt" "corruptLust">>
+				“我很高兴我的爱有了回报，”<<he>>脸上带着坏笑。
+			<<default>>
+				“偏偏在这个神殿里……”<<he>>咯咯地笑了起来。
+		<</switch>>
+	<</if>>
+	<<if _sydneyChastity and $sydneyChastityKnown>>
+		<<sydneyChastityMessage>><<npcincr Sydney lust 3>><<ggslust>>
+	<<else>>
+		<<npcincr Sydney lust -20>><<lllslust>>
+	<</if>>
+	<<npcincr Sydney purity -2>><<lspurity>>
+	<br>
+	<<sydneyFinish>>
+	悉尼翻了个身。<<npcincr Sydney love 1>><<glove>>
 	<<if $bus is "temple_sydney_bed">>
 		<<unset $sydney_bed>>
 	<<else>>
@@ -525,10 +547,28 @@
 	<</if>>
 	<br>
 <<elseif $enemyhealth lte 0>>
-	<<if $bus is "temple_sydney_bed">>
-		你一把将悉尼推下床，然后从另一边爬了下去。“你想要激烈到这种程度吗？”<<he>>说道，一边在床单下面动来动去。<<llove>><<npcincr Sydney love -1>>
+	<<if $bus is "temple_sydney_bed">>		
+		你一把将悉尼推下床，然后从另一边爬了下去。“你想要激烈到这种程度吗？”<<he>>说道。<<llove>><<npcincr Sydney love -1>>
 		<br><br>
-
+		<<if $corruptionRollover is 1>>
+			<<unset $corruptionRollover>>
+			悉尼漏出一丝痛苦的呻吟，然后迅速用手捂住了自己的嘴巴。“这、这真的……”<<He>>盯着你的眼睛，“我想我喜欢你这样粗暴地对待我。<span class="lewd">就像是一个新世界的大门打开了。</span>”
+		<<else>>
+			<<switch _sydneyStatus>>
+				<<case "pure" "pureLust">>
+					<<if $enemyarousal gte ($enemyarousalmax / 5) * 2>>
+						悉尼漏出一丝痛苦的呻吟，然后迅速用手捂住了自己的嘴巴。<<He>>羞愧地埋下了头，"已……已经够了……"
+					<<else>>
+						“喂，喂！不要了！求你！”悉尼迅速和你分开了。“那，那真的有点痛……我的意思是，我还是很喜欢的，但……”<<his>>脸红了，看向一边，“或……或许我们可以下次再做完……”
+					<</if>>
+				<<case "corrupt" "corruptLust">>
+					悉尼喘着粗气和你分开了，“我喜欢你粗暴地对我，”<<he>>窃笑道。
+				<<default>>
+					“哎呀！行了，有点太痛了！”<<He>>迅速地和你分开了，“我想我们得就我的承受度订一套指导方案了……”
+			<</switch>>
+		<</if>>
+		<<npcincr Sydney lust 5>><<gglust>>
+		<br><br>
 		<<tearful>>你回到自己的床铺。
 		<br><br>
 		<<clotheson>>
@@ -537,9 +577,30 @@
 		<<link [[继续|Temple Bunk]]>><<storeon "temple sydney bed" "check">><<if _store_check is 1>><<storeon "temple sydney bed">><<set $wardrobe_location to "temple">><<wardrobeSelection>><</if>><</link>>
 		<br>
 	<<else>>
-		你一把将悉尼推下床。“你想要激烈到这种程度吗？”<<he>>说道。太黑了，你看不见<<his>>的表情。<<He>>回自己的床铺去了。<<llove>><<npcincr Sydney love -1>>
+		你一把将悉尼推下床。“你想要激烈到这种程度吗？”<<he>>说道。
 		<br><br>
-
+		<<if $corruptionRollover is 1>>
+			<<unset $corruptionRollover>>
+			“停……停下了？但是我们才……”<<he>>失望地撅起嘴，“我们可以……之后继续这个吗？求你了？我……<span class="lewd">感觉我打开了新世界的大门，</span>我想看到更多。”
+		<<else>>
+			<<switch _sydneyStatus>>
+				<<case "pure" "pureLust">>
+					<<if $enemyarousal gte ($enemyarousalmax / 5) * 2>>
+						"不……不做了？但是我……我还……"<<he>>仍紧紧拥着你，话语开始变得断断续续，"好，好吧……"
+					<<else>>
+						悉尼紧张地看着你。"我没……做错什么，对吧？"
+					<</if>>
+				<<case "corrupt">>
+					悉尼撇了撇嘴，但还是和你分开了。“我们之后继续，”<<he>>说，“拜托……？”
+				<<case "corruptLust">>
+					悉尼不满地咕哝着撅起嘴，“太扫兴了！但行吧，我们可以下次。”
+				<<default>>
+					“噢，行，我们停下。”<<He>>的眼里闪过一瞬失望，但还是笑了笑。
+			<</switch>>
+		<</if>>
+		<<npcincr Sydney lust 5>><<npcincr Sydney purity 2>><<gglust>><<gspurity>>
+		<br><br>
+		太黑了，你看不见<<his>>的表情。<<He>>回自己的床铺去了。<<llove>><<npcincr Sydney love -1>>
 		<<tearful>>你尝试继续去睡觉。
 		<br><br>
 		<<clotheson>>
@@ -1005,16 +1066,77 @@
 
 <<if $enemyarousal gte $enemyarousalmax>>
 	<<ejaculation>>
-	悉尼把你拉到身前，将你紧紧地抱住。<<He>>咕哝了一声“晚安”，就进入了梦乡。<<lllust>><<npcincr Sydney lust -5>>
+	<<if $corruptionRollover is 1>>
+		<<unset $corruptionRollover>>
+		“真、真是太不可思议了，”<<he>>喃喃道，“我好想……我好想再做一次。然后……一次又一次。”<<He>>直直盯着你。“<span class="lewd">我感觉一个新的世界向我敞开了。</span>”
+		<br><br>
+	<<else>>
+		<<switch _sydneyStatus>>
+			<<case "pure" "pureLust">>
+				“真、真是……不可思议，”<<he>>喃喃道，“也很罪恶……”
+			<<case "corrupt" "corruptLust">>
+				“我很高兴我的爱有了回报，”<<he>>脸上带着坏笑。
+			<<default>>
+				“偏偏在这个神殿里……”<<he>>咯咯地笑了起来。
+		<</switch>>
+	<</if>>
+	<<if _sydneyChastity and $sydneyChastityKnown>>
+		<<sydneyChastityMessage>><<npcincr Sydney lust 3>><<ggslust>>
+	<<else>>
+		<<npcincr Sydney lust -20>><<lllslust>>
+	<</if>>
+	<<npcincr Sydney purity -2>><<lspurity>>
+	<br>
+	<<sydneyFinish>>
+	悉尼把你拉到身前，将你紧紧地抱住。<<He>>咕哝了一声“晚安”，就进入了梦乡。
 	<br><br>
 	<<tearful>>你紧紧地贴着<<He>>的身体。
 	<<set $sydneySomno to 1>>
 <<elseif $enemyhealth lte 0>>
-	悉尼懊恼地嘟着嘴抱怨。“这样真的一点意思都没有。”<<he>>说道，听起来很受伤。<<He>>躺了回去，背对着你。<<llove>><<gspurity>><<npcincr Sydney love -1>><<npcincr Sydney purity 1>>
+	<<if $corruptionRollover is 1>>
+		<<unset $corruptionRollover>>
+		悉尼漏出一丝痛苦的呻吟，然后迅速用手捂住了自己的嘴巴。“这、这真的……”<<He>>盯着你的眼睛，“我想我喜欢你这样粗暴地对待我。<span class="lewd">就像是一个新世界的大门打开了。</span>”
+	<<else>>
+		<<switch _sydneyStatus>>
+			<<case "pure" "pureLust">>
+				<<if $enemyarousal gte ($enemyarousalmax / 5) * 2>>
+					悉尼漏出一丝痛苦的呻吟，然后迅速用手捂住了自己的嘴巴。<<He>>羞愧地埋下了头，"已……已经够了……"
+				<<else>>
+					“喂，喂！不要了！求你！”悉尼迅速和你分开了。“那，那真的有点痛……我的意思是，我还是很喜欢的，但……”<<his>>脸红了，看向一边，“或……或许我们可以下次再做完……”
+				<</if>>
+			<<case "corrupt" "corruptLust">>
+				悉尼喘着粗气和你分开了，“我喜欢你粗暴地对我，”<<he>>说道，“不过，剩下的部分我们就等下次吧。”
+			<<default>>
+				“哎呀！行了，有点太痛了！”<<He>>迅速地和你分开了，“我想我们得就我的承受度订一套指导方案了……”
+		<</switch>>
+	<</if>>
+	<<npcincr Sydney lust 5>><<gglust>>
+	<br><br>
+	<<He>>躺了回去，背对着你。
 	<br><br>
 	<<tearful>>你翻了个身。
 	<<set $sydneySomno to 2>>
 <<else>>
+	<<if $corruptionRollover is 1>>
+		<<unset $corruptionRollover>>
+		“停……停下了？但是我们才……”<<he>>失望地撅起嘴，“我们可以……之后继续这个吗？求你了？我……<span class="lewd">感觉我打开了新世界的大门，</span>我想看到更多。”
+	<<else>>
+		<<switch _sydneyStatus>>
+			<<case "pure" "pureLust">>
+				<<if $enemyarousal gte ($enemyarousalmax / 5) * 2>>
+					"不……不做了？但是我……我还……"<<he>>仍紧紧拥着你，话语开始变得断断续续，"好，好吧……"
+				<<else>>
+					悉尼紧张地看着你。"我没……做错什么，对吧？"
+				<</if>>
+			<<case "corrupt">>
+				悉尼撇了撇嘴，但还是和你分开了。“我们之后继续，”<<he>>说，“拜托……？”
+			<<case "corruptLust">>
+				悉尼不满地咕哝着撅起嘴，“太扫兴了！但行吧，我们可以下次。”
+			<<default>>
+				“噢，行，我们停下。”<<He>>的眼里闪过一瞬失望，但还是笑了笑。
+		<</switch>>
+	<</if>>
+	<br><br>
 	悉尼用手捂着嘴。“这样子让我很难睡着啊，”<<he>>不好意思地坏笑道。
 	<br><br>
 	<<He>>把你拉到身前，抱着你。
@@ -1089,15 +1211,11 @@
 
 你等了好一会儿，直到确定悉尼入睡了，然后悄悄走进<<his>>的床铺。你发现<<he>>正仰躺着，<<his>>的被子随着<<his>>的呼吸而起伏。
 <br><br>
-
-	你扯开被子。<<He>>穿着一套<<print (_sydney.pronoun === "f" ? "修士服" : "修女服")>>。
-	<br><br>
-
-	你小心翼翼地不发出声音，把<<print (_sydney.pronoun === "f" ? "修士服" : "修女服")>>从<<his>>身上褪下，<span class="lewd">露出了<<his>>的_genitals。</span>
-
+你扯开被子。<<He>>穿着一套<<print (_sydney.pronoun === "f" ? "修士服" : "修女服")>>。
+<br><br>
+你小心翼翼地不发出声音，把<<print (_sydney.pronoun === "f" ? "修士服" : "修女服")>>从<<his>>身上褪下，<span class="lewd">露出了<<his>>的_genitals。</span>
 你把<<He>>的<<print (_sydney.pronoun === "f" ? "修士服" : "修女服")>>抱了起来，发现<<his>>没有穿内裤，你试着<span class="lewd">挑逗着<<He>>的_genitals。</span>
 <<promiscuity3>>
-
 突然，悉尼的手往股间探了探，突然意识到你干了什么。“我、我操，”<<he>>说着，脸颊涨红了。<<He>>伸手去抢<<his>>的<<print (_sydney.pronoun === "f" ? "修士服" : "修女服")>>，但是你从床边一下溜走了。
 <br><br>
 
@@ -1142,10 +1260,8 @@
 你踩在悉尼的被子上，站在<<him>>和衣柜之间。<<He>>扑向<<his>>的
 <<print (_sydney.pronoun === "f" ? "修士服" : "修女服")>>
 <<if $athleticsSuccess>>
-
 	<span class="green">但你一下把它们拿远了。</span><<He>>不得不同时用一只手遮住自己的大腿之间，因而处于劣势之中。<<glust>><<npcincr Sydney lust 5>>
 	<br><br>
-
 	<<if $speech_attitude is "meek">>
 		“你要为此惩罚我吗？”你揶揄道。
 	<<elseif $speech_attitude is "bratty">>
@@ -1154,10 +1270,8 @@
 		“你想要回来吗？”你问，“或许你可以拿什么来换它们？”
 	<</if>>
 	<br><br>
-
 	悉尼服软了。“你的目的已经达到了，”<<he>>的脸涨得通红。“可以把衣服还给我了。”
 	<br><br>
-
 	<<link [[归还|Temple Sydney Tease Give]]>><<npcincr Sydney love 1>><</link>><<glove>>
 	<br>
 	<<link [[要求演出|Temple Sydney Tease Demand]]>><<npcincr Sydney love -1>><<npcincr Sydney lust 10>><</link>><<llove>><<gglust>>
@@ -1165,7 +1279,6 @@
 <<else>>
 	<span class="red">你手上的东西被强行夺走了。</span><<gspurity>><<npcincr Sydney purity 1>>
 	<br><br>
-
 	<<if $speech_attitude is "meek">>
 		“我、我只是想让你明白被这么做是什么感觉，”你说，转身让<<him>>穿衣服。“我知道你在偷看我睡觉。”
 	<<elseif $speech_attitude is "bratty">>
@@ -1174,13 +1287,10 @@
 		“是你先开始的，”你边说，转身让<<him>>穿衣服，“我知道你喜欢偷看我睡觉。”
 	<</if>>
 	<br><br>
-
 	“我、我不明白你的意思，”悉尼撒谎说道。你觉得<<he>>肯定已经明白你的意思了。
 	<br><br>
-
 	你回到自己的床上。
 	<br><br>
-
 	<<link [[继续|Temple Bunk Bed]]>><<endevent>><</link>>
 <</if>>
 
@@ -1210,8 +1320,8 @@
 :: Temple Sydney Tease Demand
 <<effects>>
 <<set _sydney to C.npc.Sydney>>
-<<set _chest to (_sydney.pronoun is "f" ? _sydney.breastsdesc : "toned chest")>>
-<<set _genitals to (_sydney.penis isnot "none" ? _sydney.penisdesc : "pussy")>>
+<<set _chest to (_sydney.pronoun is "f" ? _sydney.breastsdesc : "健美的胸膛")>>
+<<set _genitals to (_sydney.penis isnot "none" ? _sydney.penisdesc : "小穴")>>
 
 <<if $speech_attitude is "meek">>
 	“我、我会的，”你说道，“但我要你给我表演一下。”

@@ -69,7 +69,6 @@
 <<if ["park","beach"].includes($robinFirstSeen)>>
 	<<set $Maplebirch._jordanScore += 5>>
 <</if>>
-<<set $robinFristSeen.pushUnique("nursery")>>
 <<npc "Jordan" 2>><<person2>><<generate3>><<person3>>
 “评估的重点会集中在你们之间的羁绊和对神殿的贡献上。”约旦一边解释，一边关上了身后的门。<<person2>><<He>>指引你们两人在一张华丽的桌前落了座，自己从斗篷里拿出一个小号笔记本。
 <<if $robinSeen.includes("evaluation")>>
@@ -123,7 +122,7 @@
 :: Robin Temple Pure 3
 <<effects>>
 
-<<if ["initiate", "monk"].includes($robin_temple_rank)>>
+<<if ["initiate", "monk"].includes($Maplebirch.robin.rank)>>
 	<<set $robinSeen.pushUnique("Protestant")>>
 <</if>>
 <<if $lemonadeUpgraded === 1 || $chocolateUpgraded === 1>>
@@ -250,13 +249,14 @@
 “当然。”
 <br>
 “很好。”又是一个停顿。
-
+<br><br>
 <<if $robinSeen.includes("punch")>>
 	“我记得有一次你进入神殿的时候鼻子上有一个新的淤伤，毕竟你的幸福是我的首要考虑，所以那是被……？”
 	<br>
 	“不！不，不是<<phim>>。”
 	<br>
 	“很好。”又是一个停顿。
+	<br><br>
 <</if>>
 <<if $robinSeen.includes("robinRape")>>
 	“我曾听到不好的传闻，你曾经在麋鹿街猥亵过<<phim>>吗？”
@@ -264,6 +264,7 @@
 	“对…对不起，我不是故意的，那是因为……”罗宾低下头显得有些难过。
 	<br>
 	“嗯…那的确有此事了。”又是一个停顿。
+	<br><br>
 <</if>>
 <<if $robinSeen.includes("Invitation")>>
 	“我对你加入神殿的原因感到好奇，你是为何加入神殿的？”
@@ -271,6 +272,7 @@
 	“是<<phim>>推荐我加入神殿的，<<phim>>对我述说了神殿的各种美好。”
 	<br>
 	“替我谢谢<<phim>>为神殿做出的贡献。”又是一个停顿。
+	<br><br>
 <</if>>
 <<if $robinSeen.includes("Transvestism")>>
 	“喜欢穿不同性别的衣装…这是你的癖好吗？”
@@ -278,6 +280,7 @@
 	“这…是<<phim>>鼓励我这么做的。”
 	<br>
 	“嗯，原来是这样。”又是一个停顿。
+	<br><br>
 <</if>>
 <<if $robinSeen.includes("DomUpgraded")>>
 	“我听说你在小镇卖食品，现在生意变多了是<<phim>>的功劳吗？”
@@ -285,6 +288,7 @@
 	“是的，<<phim>>经常来帮助我。”
 	<br>
 	“嗯，很好。”又是一个停顿。
+	<br><br>
 <</if>>
 <<if $robinSeen.includes("DomStargazing")>>
 	“我发现你晚上在神殿时喜欢看星空，这是你的爱好吗？”
@@ -292,6 +296,7 @@
 	“是的，我喜欢星星。为此<<phim>>还为我在孤儿院安装了望远镜。”
 	<br>
 	“非常好。”又是一个停顿。
+	<br><br>
 <</if>>
 <<if $robinSeen.includes("DomTutor")>>
 	“我有听说你在多瑙河街做家教？”
@@ -299,6 +304,7 @@
 	“没错，这是<<phim>>为我推荐的工作。”
 	<br>
 	“不错。”又是一个停顿。
+	<br><br>
 <</if>>
 <<if $robinSeen.includes("DomLiveStream")>>
 	“在神殿的有些兄弟姐妹们好像看过你的直播…”
@@ -306,6 +312,7 @@
 	“这也是我的工作，我和<<phim>>有时会在直播出境。”
 	<br>
 	“很时髦。”又是一个停顿。
+	<br><br>
 <</if>>
 <<if $robinSeen.includes("DomPhotography")>>
 	“我在空闲的时候在杂志中看到过你的摄影。”
@@ -313,6 +320,7 @@
 	“是的，<<phim>>告诉我摄影很棒！”
 	<br>
 	“我也挺喜欢你的照片集的。”又是一个停顿。
+	<br><br>
 <</if>>
 <<if $robinSeen.includes("Protestant")>>
 	“你感觉神殿现在怎么样？”
@@ -320,6 +328,7 @@
 	“我感觉很棒，特别是和<<phim>>在一起工作”
 	<br>
 	“继续保持。”又是一个停顿。
+	<br><br>
 <</if>>
 
 你继续伏在门上偷听。另一侧似乎有什么东西掉了下来，吓得你连忙准备跑回座位，直到你听见约旦的声音再次响起。

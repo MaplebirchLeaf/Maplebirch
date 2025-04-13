@@ -13,7 +13,7 @@
 		“疑虑是正常的。持有所疑是人之常情，全知则是神的领域。只要你不让疑虑吞噬自己，你就不会迷失。<<nnpc_brother "Robin">>，我原谅你，你也要原谅自己。”
 		<br><br>
 
-		<<if _robinStatus.includes("unbelief")>>
+		<<if _robinStatus.includes("desert")>>
 			“若焦虑把我吞噬呢？”<<he>>质疑道。“那又该如何，<<sister>>？我还能获得宽恕吗？”
 			<br><br>
 

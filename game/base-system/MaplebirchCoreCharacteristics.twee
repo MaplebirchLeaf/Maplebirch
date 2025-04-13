@@ -16,6 +16,36 @@
 	<<characteristic-box _MaplebirchSanityConfig>>
 <</widget>>
 
+<<widget "MaplebirchMemoryskill">>
+	<<switch $Maplebirch.MemoryChoose>>
+	<<case "wraith">>
+		<<set _memorytext = "<span class=\"purple\">Necrograph</span>">>
+		<<set _memorytext_cn = "<span class=\"purple\">溯亡录</span>">>
+	<<case "holy">>
+		<<set _memorytext = "<span class=\"gold\">Divinatus Oracle</span>">>
+		<<set _memorytext_cn = "<span class=\"gold\">灵谕</span>">>
+	<<default>>
+		<<set _memorytext = "Memory">>
+		<<set _memorytext_cn = "记忆">>
+	<</switch>>
+	<<set _isSpecialMemory = ["wraith","holy"].includes($Maplebirch.MemoryChoose) && $Maplebirch.memoryskill >= 1000>>
+	<<set _memoryConfig = 
+		{ 
+			name : "_memorytext",
+			cn_name: "_memorytext_cn",
+			displayType : _isSpecialMemory ? "none" : "grade",
+			currentValue : $Maplebirch.memoryskill,
+			modifier: 100, 
+			modTypes: { good: [], bad: [] },
+			...(_isSpecialMemory ? {meterColor: "green", secondValue: $Maplebirch.dissimilation, secondMeterColor: $Maplebirch.MemoryChoose === "wraith" ? "purple" : "gold"} : {}),
+			states : _detailedSkillGrades
+		}
+	>>
+	<<if $Maplebirch.memoryskill gte 0>>
+		<<characteristic-box _memoryConfig>>
+	<</if>>
+<</widget>>
+
 <<widget "fearcaption">>
 	<<if Number.isFinite($Maplebirch.fear)>>
 		<div id="fearcaption" @title="'恐惧：' + $Maplebirch.fear.toFixed(2)">

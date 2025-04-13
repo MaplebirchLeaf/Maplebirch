@@ -10,7 +10,7 @@ window.isMaplebirchTime = function(maplebirchtime) {
 };
 
 window.isRobinTempleTime = function() {
-  const isMaplebirchRobinRank= ["initiate", "monk"].includes(V.robin_temple_rank);
+  const isMaplebirchRobinRank= ["initiate", "monk"].includes(V.Maplebirch.robin.rank);
   if (!isMaplebirchRobinRank) return false;
 
   const maplebirchRobinTime = 
@@ -35,3 +35,35 @@ window.isSydneyTempleTime = function() {
     }
       return false;
 };
+
+// 午夜12时刷新
+window.dailyMaplebirchCheck = function() {
+  const fragment = document.createDocumentFragment();
+
+  fragment.append(wikifier("maplebirch_daily_unset"));
+  fragment.append(wikifier("maplebirch_daily_set"));
+  fragment.append(dailyMaplebirchNPCEffects());
+};
+
+// 每日6时刷新点，含有每日变量
+window.dailyMaplebirchReset =function() {
+  const fragment = document.createDocumentFragment();
+
+  fragment.append(wikifier("maplebirch_dawn_unset"));
+  fragment.append(wikifier("maplebirch_dawn_set"));
+};
+
+// 每周刷新点，含有每周变量
+window.weeklyMaplebirchReset =function() {
+  const fragment = document.createDocumentFragment();
+
+  fragment.append(wikifier("maplebirch_weekly_unset"));
+  fragment.append(wikifier("maplebirch_weekly_set"));
+  // 罗宾每周变量 
+  if (window.modUtils.getMod('DomRobin')) {
+    maplebirchDomRobinMoneyChange();
+  } else {
+    weekDayBaileyRobinExempt();
+  }
+};
+

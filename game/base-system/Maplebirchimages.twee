@@ -33,12 +33,20 @@
           <<case "double">><<icon "lake_island/maplebirch_doublebed.png">>
           <<default>><<icon "lake_island/maplebirch_bed.png">>
         <</switch>>
+      <<case "stair">><<icon "lake_island/maplebirch_stair.png">>
       <<case "backyard">><<icon "lake_island/Maplebirch_island_backyard.png">>
       <<case "backyard_snow">><<icon "lake_island/Maplebirch_island_backyard_snow.png">>
       <<case "house">><<icon "lake_island/Maplebirch_island_house.png">>
       <<case "house_snow">><<icon "lake_island/Maplebirch_island_house_snow.png">>
       <<case "snow">><<icon "lake_island/Maplebirch_lakeisland_snow.png">>
+      <<case "orchard">><<icon "lake_island/maplebirch_road_deep.png">>
       <<default>><<icon "lake_island/Maplebirch_lakeisland.png">>
+    <</switch>>
+  <!-- 西里斯庄园 -->
+  <<case "Sirris_monar">>
+    <<switch _args[1]>>
+      <<case "garden">><<icon "Sirris_manor/Maplebirch_sirris_garden.png">>
+      <<case "overgrown">><<icon "Sirris_manor/Maplebirch_sirris_garden_overgrown.png">>
     <</switch>>
   <!-- 原版返回 -->
   <<case "getouticon">>

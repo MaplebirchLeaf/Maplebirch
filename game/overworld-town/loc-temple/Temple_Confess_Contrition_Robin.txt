@@ -2,7 +2,7 @@
 		"什么？我没有打破自己的誓言，你难道要……？对不起，我该走了。祝你今天过得顺利，<<sister>>。"<<He>>离开了忏悔室。<<grace -2>><<lgrace>>
 	<<case "robin_doubt">>
 		<<run statusCheck("Robin")>>
-		<<if _robinStatus.includes("unbelief")>>
+		<<if _robinStatus.includes("desert")>>
 			"为什么？既然不是我违背的誓约，我就没必要去做什么。"
 		<<else>>
 			“为什么这么做……”<<He>>话音渐弱。“对不起，但是。我们都没有违背誓约，我的爱人也没有。我们不需要被净化。”

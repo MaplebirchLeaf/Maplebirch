@@ -1,7 +1,147 @@
+:: Lake Island Envents [widget]
+
+<<widget "lake_island_vivian_events">>
+    <<cleareventpool>>
+
+	/* 季节事件 */
+	<<if Time.season is "summer" and !Weather.isOvercast>>
+		<<addinlineevent "lake_island_vivian_summer_1">>
+			<<npc Vivian>><<person1>>
+			维安迎面吹着湖风，<<his>>擦了擦额头上的汗水，然后把目光转向天空，喘着气，"这天气有些热了。"
+			<br><br>
+			突然，一股风把<<He>>的长裙吹开了露出了<<He>>的<span class="lewd"><<if $Maplebirch.vivian.exhibitionismtrait < 4>>蓝白条纹内裤<<else>><<MaplebirchGenitals "Vivian">><</if>></span>。
+			<br><br>
+			<<link [[偷看|Lake Island Tending Vivian Summer]]>><<set $Maplebirch.phase to 1>><<arousal 300>><<Maplebirchnpcincr Vivian lust 1>><</link>><<garousal>><<glust>>
+			<br>
+			<<link [[无视|Lake Island Tending Vivian Summer]]>><<set $Maplebirch.phase to 2>><</link>>
+			<br>
+		<</addinlineevent>>
+	<</if>>
+
+	/* 一般事件 */
+	<<addinlineevent "lake_island_tending_vivian_general_1">>
+		<<npc Vivian>><<person1>>
+		你听到维安啊地大叫。你冲了过去，发现<<him>>仰面倒在地上。
+		<br><br>
+		“可恶，不小心摔了一跤。”<<he>>说道。
+		<br><br>
+		<<link [[伸手帮维安站起来|Lake Island Tending Vivian Arm]]>><<Maplebirchnpcincr Vivian love 1>><</link>><<glove>>
+		<br>
+		<<link [[捉弄<<his>>一下|Lake Island Tending Vivian Laugh Expense]]>><<stress -6>><</link>><<lstress>>
+		<br>
+		<<link [[回去工作|Lake Island Tending Vivian Back]]>><</link>>
+		<br>
+	<</addinlineevent>>
+
+	<<addinlineevent "lake_island_tending_vivian_general_2">>
+		<<npc Vivian>><<person1>>
+		<<if C.npc.Vivian.lust gte 10 and random(1, 2) is 2>>
+			你发现维安趁你不注意的时候，时不时在偷偷地看你。
+			<br><br>
+			<<link [[调情|Lake Island Tending Vivian Flirt]]>><</link>><<promiscuous3>>
+			<br>
+			<<link [[无视|Lake Island Tending Vivian Ignore]]>><</link>>
+			<br>
+		<<elseif $exposed gte 1>>
+			你发现维安趁你不注意的时候，时不时在偷偷地看你。<<garousal>><<arousal 600>>
+			<br><br>
+			<<link [[无视|Lake Island Tending Vivian Ignore]]>><<Maplebirchnpcincr Vivian lust 1>><</link>><<glust>>
+			<br>
+			<<link [[挑逗|Lake Island Tending Vivian Tease]]>><<Maplebirchnpcincr Vivian lust 1>><<arousal 1800>><<trauma -6>><</link>><<glust>><<ggarousal>><<ltrauma>>
+			<br>
+		<<else>>
+			维安从场地的另一边向你挥手。你也挥手打了个招呼。<<lstress>><<stress -6>>
+			<br><br>
+			<<destination_lake_island>>
+			<br>
+		<</if>>
+	<</addinlineevent>>
+
+	<<addinlineevent "lake_island_tending_vivian_general_3">>
+		你在维安旁边工作，你们一直聊着天。<<ltrauma>><<lstress>><<trauma -6>><<stress -6>>
+		<br><br>
+		<<destination_lake_island>>
+		<br>
+	<</addinlineevent>>
+
+	<<addinlineevent "lake_island_tending_vivian_general_4">>
+		<<npc Vivian>><<person1>>
+		你一边工作一边和维安聊天。<<He>>说着<<He>>在梦境中的人生。
+		<br><br>
+        <<link [[倾听 (0:10)|Lake Island Tending Vivian Listen]]>><<memory 1>><<pass 10>><<Maplebirchnpcincr Vivian love 1>><</link>><<glove>><<gmemory>>
+		<br>
+		<<link [[专注工作|Lake Island Tending Vivian Focus]]>><</link>>
+		<br>
+	<</addinlineevent>>
+
+	<<runeventpool>>
+<</widget>>
+
+<<widget "destination_lake_island">>
+	<<if $bus is "lake_island_fields">>
+		<<link [[继续|Lake Island Fields]]>><<endevent>><<MaplebirchEndEvent>><<set $eventskip to 1>><</link>>
+		<br>
+	<<else>>
+		<<link [[继续|Maplebirch Lake Center Island]]>><<endevent>><<MaplebirchEndEvent>><</link>>
+		<br>
+	<</if>>
+<</widget>>
+
+<!-- 维安初见事件 -->
 :: Lake Island Vivian Slap
 <<set $outside to 0>><<effects>>
 <<lake_island_effects>>
-
+<<if $Maplebirch.phase2 is 1>>
+    你扬起手掌，然后响亮地落在维安的屁股上。<<He>>痛呼出声，猛地回过了头。
+    <<promiscuity2>>
+    <<if $englishtrait >= 3 && $historytrait >= 2>>
+        “喂，白痴。你在做什么？”维安警惕地看着你，<<He>>没有想到你会直接闯进来。“你这样子真的会让我有些生气。好了，玩闹该结束了，可以请你离开这里吗？”
+    <<else>>
+        （*近代语言粗口*），你不知道维安在说什么，但你能感觉到<<He>>正在警惕地看着你。<<note "语文与历史等级不足" "teal">>
+    <</if>>
+    <br><br>
+    <<if $speech_attitude is "meek">>
+        你对<<He>>说你很抱歉，希望<<He>>可以原谅你。
+    <<elseif $speech_attitude is "bratty">>
+        你对<<He>>说你就是想找点乐子，但没有想到你是如此不喜欢。
+    <<else>>
+        你对<<He>>说你只是想开个玩笑，但没有想到你是如此不喜欢。
+    <</if>>
+    但维安鄙夷地看着你的眼神让你有些无地自容，<<He>>仍然没有原谅你的意思。
+    <br><br>
+    <<He>>的样子看起来真的生气了，你觉得自己最好还赶快离开木屋比较好。
+<<elseif $Maplebirch.phase2 is 2>>   
+    你的手慢慢地靠近维安，沿着<<He>>的臀部一路下滑，直至碰到<<his>>的<<nnpc_genitals "Vivian">>。
+    <br><br>
+    <<if $englishtrait >= 3 && $historytrait >= 2>>
+        “你，你在干什么？”维安看向你，正好捕捉到你在<<his>><<MaplebirchGenitals "Vivian">>上上下抚弄的手指。
+    <<else>>
+        （*近代语言*），你不知道维安在说什么，但你能看到<<He>>吃惊的眼神。<<note "语文与历史等级不足" "teal">>
+    <</if>>
+    <<promiscuity3>>
+    <<He>>有些迟疑没有缓过神来，你趁机继续你的侵犯，
+    <<if C.npc.Vivian.gender is "h">>
+        紧紧握住<<he>>的肉棒并搓揉着<<he>>的小穴，一边上下套弄摩擦着龟头，一边将手指滑入<<he>>的小穴。
+    <<elseif C.npc.Vivian.gender is "m">>
+        紧紧握住<<his>>的肉棒，开始上下套弄了起来。你用手指摩擦着龟头，开始逐渐用力，
+    <<else>>
+        搓揉着<<his>>的小穴，然后轻轻滑进一根手指，
+    <</if>>
+    <br><br>
+    <<He>>突然一阵呻吟，<<He>>急急忙忙捂住了嘴从你身边跳开。维安羞红着脸说：“
+    <<if $englishtrait >= 3 && $historytrait >= 2>>
+        “我不知道发生了什么……但你知道，我曾是个信徒请不要这样对我。好了现在你可以出去了吗？我要换衣服了。”
+        <<set _VivianClothes = true>>
+    <<else>>
+        （*近代语言*），你不知道维安在说什么，你一直盯着<<He>>羞红的脸。<<note "语文与历史等级不足" "teal">>
+    <</if>>
+<</if>>
+<br><br>
+<<if _VivianClothes is true && $exposed >= 1>>
+    <<link [[你说自己也想找一套衣服|Lake Island Vivian Clothes 2]]>><<set $Maplebirch.phase2 = 2>><</link>>
+    <br>
+<</if>>
+<<link [[离开|Maplebirch Lake Center Island]]>><<set $Maplebirch.phase = 3>><</link>>
 
 :: Lake Island Vivian Clothes
 <<set $outside to 0>><<effects>>
@@ -10,45 +150,648 @@
 你站在维安的身后看着<<He>>，<<He>>找了许久后开心地拿了一套衣服正要穿上时看见了你。
 <br><br>
 <<He>>被你吓了一跳，连连后退到墙边拽紧<<He>>的衣服。
-<<if $Maplebirch.vivian.LakeRuinattack>>
-    <<He>>的身体好像收到刺激般发颤，<<He>>不明白为什么会这样。<<He>>不可思议地看着自己的下体，突然发现自己好像失去了什么。<<awareness 1>><<gawareness>>
-    <br><br>
-    <span class="lewd">你清楚的知道自己做了什么而感到性奋。</span><<arousal 500>><<garousal>>
-    最后维安羞红了脸将你你请出了木屋外。
+<<if $englishtrait >= 3 && $historytrait >= 2>>
+    “你，你怎么在这里。”，维安惊愕地对你说，“你不知道在身后盯着别人地裸体很不礼貌码？”
 <<else>>
-    <<He>>害怕地看着你，但还是吐了口气。“如果可以，你可以在外面等我吗？” 
+    （*近代语言*），你不知道维安在说什么，但你能感觉到<<He>>正疑惑地看着你。<<note "语文与历史等级不足" "teal">>
 <</if>>
 <br><br>
-<<if hasSexStat("exhibitionism",5)>>
-    <<link [[你说想看着<<nnpc_He "Vivian">>穿|Lake Island Vivian Clothes 2]]>><</link>><<exhibitionist4>><<gvexhibitionism>>
+<<if $speech_attitude is "meek">>
+	“我……我在屋外有些害怕，”你对维安说，“所以我想在屋内等着你。”
+<<elseif $speech_attitude is "bratty">>
+	“我太无聊了，想看看你在屋内做些什么呢，”你挑逗地对维安说，“你的身材让我看得入迷。”
+<<else>>
+	“我想看看你在木屋做什么，”你对维安说，“然后我就在这呆着了。”
+<</if>>
+<br><br>
+<<He>>最终还是吐了口气。“如果可以，你可以在外面等我吗？这不会花太多时间的。”维安正推着你把你请出木屋。
+<br><br>
+<<if hasSexStat("exhibitionism",4)>>
+    <<link [[你说想看着<<nnpc_He "Vivian">>穿|Lake Island Vivian Clothes 2]]>><<set $Maplebirch.phase2 = 1>><<Maplebirchnpcincr Vivian exhibitionism 4>><</link>><<exhibitionist4>><<gvexhibitionism>>
     <br>
 <</if>>
-<br>
-<<link [[继续|Maplebirch Lake Center Island]]>><<set $Maplebirch.phase = 3>><</link>>
+<<if hasSexStat("exhibitionism",5)>>
+    <<link [[提议裸体|Lake Island Vivian Clothes 2]]>><<set $Maplebirch.phase2 = 3>><<Maplebirchnpcincr Vivian exhibitionism 5>><</link>><<exhibitionist5>><<gvexhibitionism>>
+    <br>
+<</if>>
+<<if $exposed >= 1>>
+    <<link [[你说自己也想找一套衣服|Lake Island Vivian Clothes 2]]>><<set $Maplebirch.phase2 = 2>><</link>>
+    <br>
+<</if>>
+<<link [[离开|Maplebirch Lake Center Island]]>><<set $Maplebirch.phase = 3>><</link>>
 
 
 :: Lake Island Vivian Clothes 2
 <<set $outside to 0>><<effects>>
 <<lake_island_effects>>
-<!-- 暂时无效 -->
-<<He>>被你的请求惊住了，
-<<if $Maplebirch.vivian.exhibitionismtrait >= 4>>
-    “好啊！，那你就好好看着我穿的过程吧。”维安挑逗着对你说道，维安慢慢地将稻草人裙缓缓地从<<He>>的脚跟往上提。
+<<if $Maplebirch.phase2 is 1>>
+    <<if $speech_attitude is "meek">>
+        “可、可以让我看着你穿吗”你说，边示意<<him>>穿衣服。
+    <<elseif $speech_attitude is "bratty">>
+        “不如找点乐子让我看着你穿吧。”你说着，边示意<<him>>穿衣服。
+    <<else>>
+        “我可以看着你穿吗”你边说，边示意<<him>>穿衣服。
+    <</if>>
     <br><br>
-    <<He>>穿到<<He>>的<<if C.npc.Vivian.vagina isnot "none" && C.npc.Vivian.penis isnot "none">>小穴还有<<print C.npc.Vivian.penisdesc>><<elseif C.npc.Vivian.penis isnot "none">><<print C.npc.Vivian.penisdesc>><<else>>小穴<</if>>时，
-    <<He>>故意放慢了动作。
+    <<He>>被你的请求惊住了，
+    <<if $Maplebirch.vivian.exhibitionismtrait >= 4>>
+        <!-- 暂时无效 -->
+        <<if $englishtrait >= 3 && $historytrait >= 2>>
+            “好啊！，那你就好好看着我穿的过程吧。”维安挑逗着对你说道，
+        <</if>>
+        维安慢慢地将稻草人裙缓缓地从<<He>>的脚跟往上提。
+        <br><br>
+        <<He>>穿到<<He>>的<<if C.npc.Vivian.vagina isnot "none" && C.npc.Vivian.penis isnot "none">>小穴还有<<print C.npc.Vivian.penisdesc>><<elseif C.npc.Vivian.penis isnot "none">><<print C.npc.Vivian.penisdesc>><<else>>小穴<</if>>时，
+        <<He>>故意放慢了动作。
+        <br>
+        你看到了<<He>>略显湿润的下体。<<arousal 1500>><<ggarousal>>
+        <br><br>
+        然后维安又慢慢的将<<He>>的稻草人衫穿在了<<He>>赤裸的上身。
+    <<else>>
+        <<if $englishtrait >= 3 && $historytrait >= 2>>
+            “你知道你在说什么吗？”维安有些生气，“我知道你帮了我，但是你得有个限度把！你……你快出去！”<<Maplebirchnpcincr Vivian love -2>><<llove>><i><<note "或许维安的暴露癖等级太低了。" "teal">></i>
+        <<else>>
+            （*近代语言*），你不知道维安在说什么，但你能感觉到<<He>>正愤怒地看着你。<<note "语文与历史等级不足" "teal">><<Maplebirchnpcincr Vivian love -2>><<llove>>
+        <</if>>
+        <br><br>
+        你只好从木屋中离开。
+    <</if>>
     <br>
-    你看到了<<He>>略显湿润的下体。<<arousal 1500>><<ggarousal>>
+<<elseif $Maplebirch.phase2 is 2>>
+    <<He>>皱了皱眉头看了你一会，维安的脸渐渐红了起来。
     <br><br>
-    然后维安又慢慢的将<<He>>的稻草人衫穿在了<<He>>赤裸的上身。
+    <<if $englishtrait >= 3 && $historytrait >= 2>>
+        “好吧！那我们一起在木屋找件衣服。”维安顶着羞红的脸对你指着一个方向，<<He>>好似示意着你去那个地方找。
+    <<else>>
+        （*近代语言*），你不知道维安在说什么，但你看<<He>>羞红的脸对你指着一个方向，<<He>>好似示意着你去那个地方找。<<note "语文与历史等级不足" "teal">>
+    <</if>>
     <br><br>
-<<else>>
-    “你知道你在说什么吗？”维安有些生气，“我知道你帮了我，但是你得有个限度把！你……你快出去！”<<Maplebirchnpcincr Vivian love -2>><<llove>>
+    <<run maplebirchRandomNum()>>
+    <<set _skulduggeryCheck = $Maplebirch.Rng * 10>>
+    <<if $skulduggery >= _skulduggeryCheck>>
+        <<set $skulduggerydifficulty = _skulduggeryCheck>>
+        <<link [[寻找一件完整的衣物 (0:05)|Lake Island Vivian Clothes 3]]>><<set $Maplebirch.phase2 = 1>><<pass 5>><</link>><<skulduggerydifficulty>>
+        <br>
+    <</if>>
+    <<link [[在木屋中寻找衣物 (0:05)|Lake Island Vivian Clothes 3]]>><<set $Maplebirch.phase = 2>><<pass 5>><</link>>
+    <br>
+<<elseif $Maplebirch.phase2 is 3>>
+    你向维安提出裸体的建议。
     <br><br>
-    <span class="teal"><i>维安把你“请”出了木屋。</i></span>
+    <<if $englishtrait >= 3 && $historytrait >= 2>>
+        维安摇了摇头对你说：“你想的真美。”，很明显<<He>>拒绝了你的提议。“如果你没什么事可以离开吗？”<<He>>看起来已经有些不耐烦了，推你的动作更用力了些。
+    <<else>>
+        维安摇了摇头不知道在说些什么，<<He>>看起来已经有些不耐烦了，但<<He>>推你的动作更用力了些。
+    <</if>>
     <br><br>
+    <span class="lblue">你被维安推出了木屋</span>
+    <br>
 <</if>>
-<<link [[继续|Maplebirch Lake Center Island]]>><<set $Maplebirch.phase = 3>><</link>>
+<br>
+<<link [[离开|Maplebirch Lake Center Island]]>><<set $Maplebirch.phase = 3>><</link>>
 
-:: Lake Island Vivian Slap Sex
+:: Lake Island Vivian Clothes 3
 <<set $outside to 0>><<effects>>
+<<lake_island_effects>>
+<<if $Maplebirch.phase2 is 1>>
+    <<skulduggerycheck>>
+    <<if $skulduggerysuccess is 1>>
+        <<skulduggeryuse>>
+        <i><span class="gold">你发现了一件稻草人衫和稻草人裙</span></i>
+        <br><br>
+        <<if $englishtrait >= 3 && $historytrait >= 2>>
+            不久，维安披着一件破旧的毛巾走了过来。“不好意思，我没有找到合身的衣物。”，<span class="green"><<He>>的眼睛注视着你手上的稻草人服装。</span>
+            <br><br>
+            “那个，就是你可以把你手上的衣服给我吗？你……你知道我现在真的很需要这身衣物。”，<<he>>乞求地看着你，希望你能将衣物给予给<<he>>。
+        <<else>>
+            不久，维安披着一件破旧的毛巾走了过来。<<He>>好像在比划着什么，<span class="green"><<He>>的眼睛注视着你手上的稻草人服装。</span>
+            <br><br>
+            你好像读懂<<He>>的意思了，<<He>>希望你将手中的衣物给予给<<He>><<note "语文与历史等级不足" "teal">>
+        <</if>>
+        <br><br>
+        <<link [[给予|Lake Island Vivian Clothes 4]]>><<set $Maplebirch.phase2 = 1>><</link>>
+        <br>
+        <<link [[拒绝|Lake Island Vivian Clothes 4]]>><<set $Maplebirch.phase2 = 2>><</link>>
+    <<else>>
+        <<skulduggeryuse>>
+        <i><span class="gold">你只找到一条破旧的毛巾</span></i>
+        <br><br>
+        你在周围实在没有找到其它完整地衣物，只好把这件毛巾披在身上。
+        <<towelup>>
+        <<set $Maplebirch.vivian.clothes = "scarecrow">><!-- 已穿 -->
+        不久，维安穿着一身稻草人服装走了出来，“好了，我们该从这肮脏的木屋中出来了。”维安开心地说。
+        <br><br>
+        <<link [[离开|Maplebirch Lake Center Island]]>><<set $Maplebirch.phase = 3>><</link>>
+    <</if>>
+<<elseif $Maplebirch.phase2 is 2>>
+    <<run maplebirchRandomNum()>>
+    <<if $Maplebirch.Rng === 1>>
+        <i><span class="gold">你发现了一件稻草人衫和稻草人裙</span></i>
+        <br><br>
+        <<if $englishtrait >= 3 && $historytrait >= 2>>
+            不久，维安披着一件破旧的毛巾走了过来。“不好意思，我没有找到合身的衣物。”，<span class="green"><<He>>的眼睛注视着你手上的稻草人服装。</span>
+            <br><br>
+            “那个，就是你可以把你手上的衣服给我吗？你……你知道我现在真的很需要这身衣物。”，<<he>>乞求地看着你，希望你能将衣物给予给<<he>>。
+        <<else>>
+            不久，维安披着一件破旧的毛巾走了过来。<<He>>好像在比划着什么，<span class="green"><<He>>的眼睛注视着你手上的稻草人服装。</span>
+            <br><br>
+            你好像读懂<<He>>的意思了，<<He>>希望你将手中的衣物给予给<<He>><<note "语文与历史等级不足" "teal">>
+        <</if>>
+        <br><br>
+        <<link [[给予|Lake Island Vivian Clothes 4]]>><<set $Maplebirch.phase2 = 1>><<Maplebirchnpcincr Vivian love 2>><</link>><<gglove>>
+        <br>
+        <<link [[拒绝|Lake Island Vivian Clothes 4]]>><<set $Maplebirch.phase2 = 2>><</link>>
+    <<else>>
+        <i><span class="gold">你只找到一条破旧的毛巾</span></i>
+        <br><br>
+        你在周围实在没有找到其它完整地衣物，只好把这件毛巾披在身上。
+        <<towelup>>
+        <<set $Maplebirch.vivian.clothes = "scarecrow">><!-- 已穿 -->
+        <<if $englishtrait >= 3 && $historytrait >= 2>>
+            不久，维安穿着一身稻草人服装走了出来，“好了，我们该从这肮脏的木屋中出来了。”维安开心地朝着屋外走去。
+        <<else>>
+            不久，维安穿着一身稻草人服装走了出来，<<He>>比划着动作然后朝着屋外走去。<<note "语文与历史等级不足" "teal">>
+        <</if>>
+        <br><br>
+        <<link [[离开|Maplebirch Lake Center Island]]>><<set $Maplebirch.phase = 3>><</link>>
+    <</if>>
+<</if>>
+
+:: Lake Island Vivian Clothes 4
+<<set $outside to 0>><<effects>>
+<<lake_island_effects>>
+<<if $Maplebirch.phase2 is 1>>
+    你把你手中的<span class="gold">稻草人服装</span>给予了维安。
+    <br><br>
+    <<if $englishtrait >= 3 && $historytrait >= 2>>
+        维安接过了衣服开心地朝着一个房间跑去，你看到<<He>>迅速地进入房间不一会就穿着稻草人服装走了出来。“哼哼，这次我不会给你机会了。”<<He>>嘟着嘴抱着手朝着屋外走去，“好了，我们该从这肮脏的木屋中出来了。”
+    <<else>>
+        维安接过了衣服开心地朝着一个房间跑去，你看到<<He>>迅速地进入房间不一会就穿着稻草人服装走了出来。你不知道<<He>>在说些什么，但你看到<<He>>嘟着嘴抱着手朝着屋外走去。<<note "语文与历史等级不足" "teal">>
+    <</if>>
+    <<set $Maplebirch.vivian.clothes = "scarecrow">><!-- 已穿 -->
+    <br><br>
+    你也该离开这间木屋了
+    <br><br>
+    <<link [[离开|Maplebirch Lake Center Island]]>><<set $Maplebirch.phase = 3>><</link>>
+<<elseif $Maplebirch.phase2 is 2>>
+    <span class="lewd">你拒绝将手中的衣物给维安，</span><<He>>看起来有些失望。
+    <br><br>
+    <<if $englishtrait >= 3 && $historytrait >= 2>>
+        <<He>>看着你手上的衣服说：“如果你把它们给我，我……我或许能满足你一个愿望。”<<He>>想了想又补充道，“但是不是所有都会实现哦。”你再次看了看你手中的<span class="gold">稻草人服装</span>。
+        <br><br>
+    <</if>>
+    <<link [[给予|Lake Island Vivian Clothes 5]]>><<Maplebirchnpcincr Vivian love 1>><<set $Maplebirch.phase2 = 1>><</link>><<glove>>
+    <br>
+    <<link [[挑逗|Lake Island Vivian Clothes 5]]>><<Maplebirchnpcincr Vivian lust 3>><<set $Maplebirch.phase2 = 2>><</link>><<athleticsdifficulty 600 950>><<glust>>
+    <br>
+<</if>>
+
+:: Lake Island Vivian Clothes 5
+<<set $outside to 0>><<effects>>
+<<lake_island_effects>>
+<<if $Maplebirch.phase2 is 1>>
+    你把手中的稻草人服装递了过去。<<He>>犹豫了一下，好像害怕这是个陷阱，然后一把把它们抢走了。
+    <br><br>
+    <<if $englishtrait >= 3 && $historytrait >= 2>>
+        <<if $speech_attitude is "meek">>
+            “我可以得到我的愿望了吗？”你说着，转身让<<him>>穿衣服。
+        <<elseif $speech_attitude is "bratty">>
+            “该你实现我的愿望了。”你说着，转身让<<him>>穿衣服。
+        <<else>>
+            “可以给予我一个愿望了吗？”你说着，转身让<<him>>穿衣服。
+        <</if>>
+        <br><br>
+        维安迅速地跑进房间把衣服穿好后出来对你说：“说吧，你想要什么愿望？过分的要求我可不会答应哦。”维安故意用有些愤怒的语气对你说。
+        <<set $Maplebirch.vivian.clothes = "scarecrow">><!-- 已穿 -->
+        <br><br>
+        <<link [[表示不需要|Lake Island Vivian Clothes 6]]>><<Maplebirchnpcincr Vivian love 2>><<set $Maplebirch.phase2 = 1>><</link>><<gglove>>
+        <br>
+        <<link [[要求演出|Lake Island Vivian Clothes 6]]>><<Maplebirchnpcincr Vivian love -1>><<set $Maplebirch.phase2 = 2>><</link>><<llove>>
+        <br>
+        <<if hasSexStat("promiscuity", 2)>>
+            <<link [[要求一个吻|Lake Island Vivian Clothes 6]]>><<set $Maplebirch.phase2 = 3>><<Maplebirchnpcincr Vivian love -1>><</link>><<promiscuous2>><<llove>><<kissvirginitywarning>><<note "这项行动会夺走<<his>>的初吻？" "red">>
+	    <</if>>
+    <<else>>
+        维安迅速地跑进房间把衣服穿好后出来后，你看<<He>>的脸有些愤怒。<<note "语文与历史等级不足" "teal">>
+        <br><br>
+        然后，<<He>>迅速地跑出了这肮脏的木屋。你觉得一夜该快点出去了。
+        <br><br>
+        <<link [[离开|Maplebirch Lake Center Island]]>><<set $Maplebirch.phase = 3>><</link>>
+    <</if>>
+<<elseif $Maplebirch.phase2 is 2>>
+    <span class="gold">你一下把它们拿远了。</span>“
+    <<if $speech_attitude is "meek">>
+        你可以从我手上拿走，拿……拿了我就给你！”你挑逗地对<<He>>说。
+    <<elseif $speech_attitude is "bratty">>
+        想要？你可以来抢啊！”你挑衅地对<<He>>说。
+    <<else>>
+        “或许，你可以来抢。”你挑逗地对<<He>>说。
+    <</if>>
+    <br><br>
+    维安趁着你说说话的时机试图抢你手中的衣物，
+    <<if $athleticsSuccess>>
+        <span class="green"><<He>>扑了个空。</span>
+        <<He>>不得不同时用一只手遮住自己的大腿之间，恳求着你。
+        <<if $speech_attitude is "meek">>
+            “你还想要吗？”你问道。
+        <<elseif $speech_attitude is "bratty">>
+            “这很有趣，”你说道。“不是吗？”
+        <<else>>
+            “你想要吗？”你问，“或许你可以拿什么来换它们？”
+        <</if>>
+	<br><br>
+    <<if $englishtrait >= 3 && $historytrait >= 2>>
+        “你的目的已经达到了，”<<he>>的脸涨得通红。“可以把衣服给我了。”
+    <<else>>
+        你看到维安涨红着脸。<<note "语文与历史等级不足" "teal">>
+    <</if>>
+	<br><br>
+	<<link [[给予|Lake Island Vivian Clothes 5]]>><<Maplebirchnpcincr Vivian love 1>><<set $Maplebirch.phase2 = 1>><</link>><<glove>>
+	<br>
+	<<link [[要求演出|Lake Island Vivian Clothes 6]]>><<Maplebirchnpcincr Vivian love -1>><<set $Maplebirch.phase2 = 2>><</link>><<llove>>
+    <<else>>
+        <span class="red">你手上的东西被强行夺走了。</span>
+        <<if $speech_attitude is "meek">>
+            “我、我只是想……”你吸了口气。“是我对不起了。”
+        <<elseif $speech_attitude is "bratty">>
+            “怎么样？很有趣吗？”你挑逗地说。
+        <<else>>
+            “噗，那我提前跟你说声抱歉了。”你对<<He>>说。
+        <</if>>
+        <br><br>
+        维安有些凶地看着你，然后维安迅速地跑进房间把衣服穿好。
+        <<set $Maplebirch.vivian.clothes = "scarecrow">><!-- 已穿 -->
+        <br><br>
+        <<link [[继续|Lake Island Vivian Clothes 6]]>><<set $Maplebirch.phase2 = 3>><</link>>
+    <</if>>
+<</if>>
+
+:: Lake Island Vivian Clothes 6
+<<set $outside to 0>><<effects>>
+<<lake_island_effects>>
+<<set _vivian to C.npc.Vivian>>
+<<set _chest to (_vivian.pronoun is "f" ? _vivian.breastsdesc : "健美的胸膛")>>
+<<set _genitals to (_vivian.penis isnot "none" ? _vivian.penisdesc : "小穴")>>
+<<if $Maplebirch.phase2 is 1>>
+    你对维安说你不需要<<He>>做什么，你只是想开个玩笑。
+    <br><br>
+    <<He>>一脸惊愕又不知所措地看着你，“额……好、好吧，那算我欠你一个人情吧。下次我会<i><span class="gold">免费</span>帮你一个忙</i>。”<<He>>在走之前看了你一眼，还是径直地走了出去。
+    <br><br>
+    你随后也跟在维安地身后走出了这处肮脏的木屋。
+    <br><br>
+    <<link [[离开|Maplebirch Lake Center Island]]>><<set $Maplebirch.phase = 3>><</link>>
+<<elseif $Maplebirch.phase2 is 2>>
+    <<if $speech_attitude is "meek">>
+        你祈求地对<<He>>说：“嗯，我……我希望你能我表演一下。”
+    <<elseif $speech_attitude is "bratty">>
+        “什么好呢？不如给我表演一下吧。”你挑逗地对<<He>>说。
+    <<else>>
+        “嗯……不如你给我表演一下。”你对着<<He>>说。
+    <</if>>
+    <br><br>
+    维安羞红了脸。<<He>>用力遮住自己，不自在地移开目光。<<He>>停顿了片刻，把手臂抬了起来。你欣赏了<<his>>的_genitals。你同样欣赏了<<his>>_chest。<<arousal 500>><<garousal>>
+    <br><br>
+    “满意了？”<<he>>问。
+    <<if !$Maplebirch.vivian.clothes is "scarecrow">>
+        你把稻草人衣物丢给了<<him>>。
+        <<set $Maplebirch.vivian.clothes = "scarecrow">><!-- 已穿 -->
+    <</if>>
+    “好了，我们该从这个地方出去了，这里真的很久没有打扫过了。”维安羞红着脸走出了木屋。
+    <br><br>
+    <<link [[离开|Maplebirch Lake Center Island]]>><<set $Maplebirch.phase = 3>><</link>>
+<<elseif $Maplebirch.phase2 is 3>>
+    <<MaplebirchMoreLoveInterests>>
+    <span class="lewd">你向维安索求一个吻。</span>
+    <<if $speech_attitude is "meek">>
+        你祈求地对<<He>>说：“可以亲、亲一下我吗？”
+    <<elseif $speech_attitude is "bratty">>
+        “或许我们可以亲吻一下。”你挑逗地对<<He>>说。
+    <<else>>
+        “那、我们可以亲一下吗”你对着<<He>>说。
+    <</if>>
+    <<promiscuity2>>
+    <<He>>的脸有些羞红，“我有时候很不理解你为什么要如此做，但既然这就是你的小愿望的话我想我应该还是能满足你的。”
+    <br><br>
+    <<if $Maplebirch.loveInterest.includes("Vivian")>>
+        <<He>>来到了你的身边，将你的头轻轻地抱住后<<He>>的嘴唇慢慢的靠近你直至<<He>>吻了下去。<<takeKissVirginity "Vivian" "romantic">>
+        <br><br><<pass 1>>
+        你们吻了足足一分钟后<<He>>松开了你喘了一口说：“这下你满意了吧，小鬼。我们现在谁也不欠谁了。”说着，维安便走出了木屋，<<He>>在走的时候你发现<<He>>的手在抓着衣襟颤抖着。<<Maplebirchnpcincr Vivian lust 3>><<gglust>>
+        <<set $Maplebirch.vivianSeen.pushUnique("involuntary kiss")>>
+        <br><br>
+        <<link [[离开|Maplebirch Lake Center Island]]>><<set $Maplebirch.phase = 3>><</link>>
+    <<else>>
+        <<set $seductiondifficulty to 10000>>
+        <<seductioncheck>>
+        <br><br>
+        在维安来到你身边时<<He>>顿了顿，“这……这感觉不太好，要不还是换个愿望怎么样？”
+        <<if $seductionrating gte $seductionrequired>>
+            <<seductionskilluptext>><<seductionskilluse>>
+            <<He>>看着你诱惑地身姿还是下定了决心来到了你的身边，<<He>>慢慢地把你的头抱住轻轻地吻了下去。<<takeKissVirginity "Vivian" "romantic">>
+            <<set $Maplebirch.vivianSeen.pushUnique("involuntary kiss")>>
+            <br><br>
+            亲完后<<He>>迅速地离开你羞红地说：“好了，我已经满足你的愿望了，现在我们谁也不欠着谁了。”<<He>>在说完后快步走出了木屋，<<He>>在走时你发现<<He>>在颤抖着。<<Maplebirchnpcincr Vivian lust 1>><<glust>>
+        <<else>>
+            最终<<He>>还是放弃了，“对不起，我实在做不到。我希望我们都能有更好的未来，你帮助了我这是我欠你的但你也调戏着我，我觉得我们已经两清了。”
+            <br><br>
+            随后<<He>>走向木屋的门，在出门时<<He>>对你说：“或许我们还是能成为互帮互助的伙伴的，我要去忙我的事了。”   
+        <</if>>
+        <br><br>
+        <<link [[离开|Maplebirch Lake Center Island]]>><<set $Maplebirch.phase = 3>><</link>>
+    <</if>>
+<</if>>
+
+:: Vivian Not Understand
+<<effects>><<lake_island_effects>><<MaplebirchEvent>>
+你告诉维安你一直听不懂<<He>>在说些什么。<<stress 6>><<gstress>>
+<br><br>
+<<He>>捂住了嘴巴有些郁闷，但还是点点头表示会学习近期的语言的。之后，<<He>>继续整理并重建这处地方，你看着维安在这里到处忙活着。
+<br><br>
+<<link [[继续|Maplebirch Lake Center Island]]>><<endevent>><<MaplebirchEndEvent>><<set $Maplebirch.lakeisland.lock = "lock">><</link>>
+<!-- 初见终止 -->
+
+<!-- 维安清理 -->
+:: Maplebirch Lake Center Island Clean
+<<effects>><<lake_island_effects>><<MaplebirchEvent>>
+<<npc Vivian>><<person1>>
+
+你来到维安的身边，
+<<if $Maplebirch.answer is 1>>
+    你把<span class="gold">羽毛掸子</span>交给维安，
+<</if>>
+<<if $Maplebirch.lakeisland.decay gte 75>>
+    <span class="purple">四周还是非常荒芜，还有很长的路要走。空气中弥漫着旧日的沉寂，藤蔓和苔藓依然盘踞在废墟之间。</span>
+<<elseif $Maplebirch.lakeisland.decay gte 50>>
+    <span class="blue">杂草被拔除，石径初露，维安的脚步声终于不会再被落叶吞没。但岛屿仍充满沉睡的回声，似乎远古的气息仍不愿散去。</span>
+<<elseif $Maplebirch.lakeisland.decay gte 25>>
+    <span class="lblue">岛上的面貌渐渐清晰，曾被遗忘的轮廓浮现。枯木已清，残垣已稳，偶尔还能看见微光在清晨的水雾中跃动。</span>
+<<elseif $Maplebirch.lakeisland.decay gte 1>>
+    <span class="teal">几乎恢复往昔光辉。湖风清爽，野花自发盛开，维安眼中的疲惫也少了几分。只有些微残迹提醒着这里曾是荒芜之地。</span>
+<<else>>
+    <span class="green">湖中岛已焕然一新。水波倒映着重生的大地，清晨鸟鸣取代了死寂。你和维安的努力，在此刻开花结果。</span>
+<</if>>
+<br><br>
+<<if $speech_attitude is "meek">>
+    “需要我帮忙吗？”你小心地问维安。
+<<elseif $speech_attitude is "bratty">>
+    “我们一起干活吧！”你跟<<He>>说
+<<else>>
+    “我来一起帮忙吧。”你对维安说。
+<</if>>
+维安转过头看着你露出微笑，“好啊！那一起来清理这片土地吧。”
+<<if Weather.precipitation is "rain">>
+	你忍受着雨水，帮助维安清除周边的杂草，将它们连根挖起，空出土地。
+<<elseif !Weather.isOvercast>>
+	<<if Time.dayState is "night">>
+	星星在你的头顶上闪烁，你帮助维安清除周边的杂草，将它们连根挖起，空出土地。
+	<<else>>
+	太阳炙烤着地面，你和维安奋力除草，将它们连根挖起，空出土地。
+	<</if>>
+<<elseif Weather.isSnow>>
+	寒风中，你和维安奋力除草，将它们连根挖起，空出土地。
+<<else>>
+	你帮助维安清除周边的杂草，将它们连根挖起，空出土地。
+<</if>>
+<<if $Maplebirch.Rng gte 51>>
+	维安叹着气：“好忙……真的好忙啊！”
+<<else>>
+	有些植物的根扎得很深，需要往下多挖一些才能全部拽出。
+<</if>>
+<br><br>
+<<if $Gravediggers_Shovel && window.modUtils.getMod('Terraria Expand Mod')>>
+	借助着这把<<icon "tool/Gravediggers_Shovel.png">>掘墓者铲子，你可以更轻松地清除丛生的杂草。<span class='green'>你的工作效率是原来的2倍</span>。
+    <<set _clean = Math.floor(($Maplebirch.Rng / 20) + 5)>>
+	<br><br>
+<<else>>
+    <<set _clean = Math.floor(($Maplebirch.Rng / 25) + 1)>>
+<</if>>
+<<set $Maplebirch.lakeisland.decay -= _clean>>
+
+<<if $arousal gte $arousalmax>>
+	<<MaplebirchOrgasmLocation "lakeislandTending">>
+<</if>>
+
+<<set _danger = Math.floor($Maplebirch.Rng)>>
+<<if _danger gte ((9900 - $allure) / 100)>>
+	<<lake_island_vivian_events>>
+<<else>>
+	<<link [[继续|Maplebirch Lake Center Island]]>><<endevent>><<MaplebirchEndEvent>><</link>>
+	<br>
+<</if>>
+
+:: Lake Island Tending Vivian Summer
+<<set $outside to 0>><<set $location to "lake_island">>
+<<effects>><<lake_island_effects>>
+<<if $Maplebirch.phase is 1>>
+    你偷看了一眼<<his>>的<<if $Maplebirch.vivian.exhibitionismtrait < 4>>蓝白条纹内裤<<else>><<MaplebirchGenitals "Vivian">><</if>>。在湿透的衣物下，完全暴露在你眼前。
+	<br><br>
+	“我想我得泡个澡了，”维安说完后走开了，你继续在工作着。
+	<br><br>
+	<<destination_lake_island>>
+<<elseif $Maplebirch.phase is 2>>
+    你别过头，专注于自己的工作。
+	<br><br>
+	<<destination_lake_island>>
+<</if>>
+
+:: Lake Island Tending Vivian Arm
+<<effects>><<lake_island_effects>>
+你帮维安站了起来。
+<<if Weather.precipitation is "rain">>
+	<<He>>擦去身上的泥。
+<<else>>
+	<<He>>把自己拍干净。
+<</if>>
+“谢谢，”<<he>>说道。“你也要小心点，不要像我一样不小心摔倒了。”
+<br><br>
+<<destination_lake_island>>
+
+:: Lake Island Tending Vivian Laugh Expense
+<<effects>><<lake_island_effects>>
+<<set _vivian to C.npc.Vivian>>
+
+<<if $speech_attitude is "meek">>
+	你站在维安身边笑出了声。
+<<elseif $speech_attitude is "bratty">>
+	你站在维安身边发出了一阵大笑，听起来甚至有些失控。
+<<else>>
+	你站在维安身边哈哈大笑。
+<</if>>
+<br><br>
+“你还要一直笑吗？”<<he>>说道，“真是谢谢你了。”<<Hes>>讽刺地说道。
+<br><br>
+<<if Weather.precipitation is "rain">>
+	<<He>>站起身，抹着身上的泥巴，试图把泥巴全擦掉。但<<He>>没能完全擦干净，这让你更加开心。看到<<his>>浑身是泥的样子，你笑得更欢了。
+	<<He>>瞪了你一眼，最后还是叹了口气。“随你便吧，我要继续我的工作了。”
+	<br><br>
+	你有些气喘吁吁，但还是回到了工作中。
+	<br><br>
+	<<destination_lake_island>>
+<<else>>
+	<<He>>就这样一动不动躺在草地上，凝视着上面的天空。“不得不承认，待在这里也不错。”
+	<br><br>
+	<<link [[坐下|Lake Island Tending Vivian Sit]]>><</link>>
+	<br>
+	<<link [[继续|Lake Island Tending Vivian Back]]>><</link>>
+	<br>
+<</if>>
+
+:: Lake Island Tending Vivian Sit
+<<effects>><<lake_island_effects>>
+<<set _vivian to C.npc.Vivian>>
+你坐在维安的身旁，仰望<<if Weather.name is "clear">>天空<<else>>云朵<</if>>。
+<<He>>说的没错。你的思绪变得宁静下来，就像此刻没有任何需要你担心的事一样。<<trauma -2>><<ltrauma>>
+<br><br>
+<<if _vivian.love gte 50>>
+	<<His>>的手不小心擦过你的手，然后迅速地拉开了。“对不起，我刚刚只是想撑着地。”<<He>>漫不经心地起身，“我要做这些该死的工作了。”
+	<br><br>
+	你回到工作中，但你总隐隐地觉得<<him>>可能有什么事。
+<<else>>
+	<<He>>继续躺在草地上注视着天空，“为什么我没有变化呢？”<<He>>在沉思着，然后看了眼时间便匆匆忙忙起身了。
+	<br><br>
+	你也起身回到了工作中。
+<</if>>
+<br><br>
+<<destination_lake_island>>
+
+:: Lake Island Tending Vivian Back
+<<effects>><<lake_island_effects>>
+你回到工作中，留下维安自己慢慢从笨拙中恢复过来。
+<br><br>
+<<destination_lake_island>>
+
+:: Lake Island Tending Vivian Flirt
+<<effects>><<lake_island_effects>>
+<<if $speech_attitude is "meek">>
+	"你、你不需要假装没在看，"你说道。
+<<elseif $speech_attitude is "bratty">>
+	"别做个胆小鬼，"你说，"想看就大胆地看。"
+<<else>>
+	"不要害羞，随便看吧，"你说道。
+<</if>>
+<<promiscuity3>>
+“我……我不是！”<<he>>抗议，但<<his>>的脸红说明了一切。过了一会儿，你又捕捉到了<<him>>偷瞄的眼神。
+<br><br>
+<<destination_lake_island>>
+
+:: Lake Island Tending Vivian Ignore
+<<effects>><<lake_island_effects>>
+你继续工作。将风光展现给维安随意打量。
+<br><br>
+<<destination_lake_island>>
+
+:: Lake Island Tending Vivian Tease
+<<effects>><<lake_island_effects>>
+你假装在调查靠近地面的东西，蹲下身子，慢慢地走进杂草中，维安就看不到你了。果然，<<he>>换了一个可以看得更清楚的位置，同时仍然假装忙于其他事情。
+<br><br>
+你再次移动位置遮蔽自己，但这次你冲进了杂草群中。你保持弯腰的姿势，绕后到你最后看到偷窥者的地方。
+<br><br>
+你发现<<him>>正盯着一排植物，正是你最后待的位置。<<He>>没有注意到你正偷偷靠近<<him>>。
+<br><br>
+<<link [[吓唬|Lake Island Tending Vivian Boo]]>><</link>>
+<br>
+<<if hasSexStat("promiscuity", 2)>>
+	<<link [[掀起维安的裙子|Lake Island Tending Vivian Skirt]]>><</link>><<promiscuous2>>
+	<br>
+<</if>>
+<<if hasSexStat("exhibitionism", 2)>>
+	<<link [[炫耀|Lake Island Tending Vivian Flaunt]]>><<Maplebirchnpcincr Vivian exhibitionism 2>><</link>><<exhibitionist2>><<gvexhibitionism>>
+	<br>
+<</if>>
+
+:: Lake Island Tending Vivian Boo
+<<effects>><<lake_island_effects>>
+“嘎嗷！”你大喊。听到你的声音，维安跳了起来，差点被绊倒。
+<br><br>
+“白痴，”<<he>>稳住自己，“你差点把我吓出心脏病。”
+<br><br>
+<<if $speech_attitude is "meek">>
+	“如果你想看别人，请不要偷偷摸摸，”你说，"我就在这儿。"你从<<him>>身边走过，回到了工作中。
+<<elseif $speech_attitude is "bratty">>
+	“这就是你作为一个鬼鬼祟祟的变态的下场，”你说道，"如果你想看，就正大光明点。"你走过<<him>>，回到了工作中。
+<<else>>
+	“你在看什么？”你说道，“比我更有趣的东西？我很惊讶。”你从<<him>>身边走过，回到了工作中。
+<</if>>
+<br><br>
+<<destination_lake_island>>
+
+:: Lake Island Tending Vivian Skirt
+<<effects>><<lake_island_effects>>
+你抓住并掀起维安的裙子，动作一气呵成。<<He>>赶紧用手压住大腿之间，但你早已瞥见了<<his>>那<<if $Maplebirch.vivian.exhibitionismtrait < 4>>蓝白条纹内裤<<else>><<MaplebirchGenitals "Vivian">><</if>>。
+<br><br>
+<<He>>举起<<his>>的铲子转身，正准备要攻击，但看到罪魁祸首时，<<he>>僵住了。
+<br><br>
+<<if $speech_attitude is "meek">>
+	“现在我知道送你什么礼物了，”你一边说，一边大步走开，<<he>>试图回应，但找不到合适的词语。
+<<elseif $speech_attitude is "bratty">>
+	“这是你应得的，”你说道，“变态。”你一边说，一边大步走开，<<he>>试图回应，但找不到合适的词语。
+<<else>>
+	“谁让你看我，”你说，“这样才公平。”你一边说，一边大步走开，<<he>>试图回应，但找不到合适的词语。
+<</if>>
+<br><br>
+<<destination_lake_island>>
+
+:: Lake Island Tending Vivian Flaunt
+<<effects>><<lake_island_effects>>
+<<if $speech_attitude is "meek">>
+	“嗨，你在找我吗？”你挥挥手，
+<<elseif $speech_attitude is "bratty">>
+	“你要找的东西在这儿，”你脸上露出得意的表情，
+<<else>>
+	“在找什么东西吗？还是在找什么人？”你开口问，
+<</if>>
+维安猛地转身。
+<<exhibitionism2>>
+“不要这样偷偷靠近别人，”<<he>>边说，边捂着胸口，"再说，我只是——"
+<br><br>
+<<He>>的话停住了——你靠近过去，展示了你<<lewdness>>。
+<<if Weather.precipitation is "rain">>
+	你的皮肤被雨水打湿，闪着晶莹的水珠。
+<<elseif Weather.precipitation is "snow">>
+	雪花在你的皮肤上融化，你的乳头挺立。
+<<else>>
+	你的皮肤在阳光下闪闪发光，汗水滴落下来。
+<</if>><<Maplebirchnpcincr Vivian lust 3>><<ggvlust>>
+<br><br>
+<<His>>的脸变红了。<<He>>试图把目光移开，但却僵住了。你对自己引起的反应感到满意，昂首阔步地回去工作了。
+<br><br>
+<<destination_lake_island>>
+
+:: Lake Island Tending Vivian Listen
+<<effects>><<lake_island_effects>>
+<<He>>抬头看着天空想起梦中的模样，“那个时候，我也在上学。我在修道院附属的学堂上学，我没有想到那一切都是幻境。”
+<br><br>
+维安低下头有些哀伤，“虽然回到了现实，但在幻境中的朋友们也都不在了。我不知道现在该怎么办，我的脑子很混乱，就像几个世界的人都住在我的身体中。”<<stress 6>><<gstress>>
+<br><br>
+<<link [[安慰维安|Lake Island Tending Vivian Comfort]]>><<set $Maplebirch.phase = 1>><<Maplebirchnpcincr Vivian love 1>><</link>><<glove>>
+<br>
+<<link [[继续|Lake Island Tending Vivian Comfort]]>><<set $Maplebirch.phase = 2>><</link>>
+
+:: Lake Island Tending Vivian Comfort
+<<effects>><<lake_island_effects>>
+<<if $Maplebirch.phase is 1>>
+    你安慰维安说：“
+    <<if $speech_attitude is "meek">>
+        我们能一起享受这新世界。”
+    <<elseif $speech_attitude is "bratty">>
+        别担心，我也是你的朋友！”
+    <<else>>
+        我会和你一起克服的。”
+    <</if>>
+    <br><br>
+    <<He>>听到你说的话后嘴角笑了一下，“好啊，那我们就一起迎接这新的世界吧……从头开始！”<<stress -6>><<trauma -6>><<lstress>><<ltrauma>>
+    <br><br>
+    你们回到了各自的工作。
+<<elseif $Maplebirch.phase is 2>>
+    你默默地倾听维安的说话，<<He>>又说了一会后沉默了。
+    <br><br>
+    <<He>>看上去不是很好但还是继续了手中的工作。
+<</if>>
+<br><br>
+<<destination_lake_island>>
+
+:: Lake Island Tending Vivian Focus
+<<effects>><<lake_island_effects>>
+你仍然专注于眼前的工作，而维安则继续自言自语着。
+<br><br>
+<<destination_lake_island>>
+<!-- 维安清理终止 -->

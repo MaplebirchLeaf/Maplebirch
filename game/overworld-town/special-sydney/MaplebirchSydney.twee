@@ -14,7 +14,6 @@
 <<if _sydneyStatus.includes("corruptLust")>>
     <<set $Maplebirch.sydney.retention = true>>
     悉尼的嘴角上扬，你感觉<<nnpc_he "Sydney">>已经按捺不住情绪了。<<nnpc_he "Sydney">>转头对西里斯说：“<<sydneymum>>，我今晚也能在神殿过夜吗。”
-    <br>
     西里斯看了看你和悉尼皱着眉头：“那随你吧，我先回家了。”随后，西里斯驾车离开了神殿。
     <br><br>
     你看了看悉尼的下体，发现<<nnpc_he "Sydney">>的股间已经略微湿润了。“你准备好今晚怎么过了吗？我的挚——爱——”悉尼挑逗地对你说道，“你知道今晚会发生什么的。”<<arousal 500>><<garousal>><<npcincr Sydney lust 5>><<gslust>>
@@ -23,7 +22,6 @@
 <<elseif _sydneyStatus.includes("corrupt")>>
     <<set $Maplebirch.sydney.retention = true>>
     悉尼有些惊讶，<<nnpc_he "Sydney">>没想到你会这么说，但<<nnpc_he "Sydney">>马上就理解了你的意思对你眨了眨眼睛。之后，<<nnpc_he "Sydney">>转头对西里斯说：“<<sydneymum>>，我今晚也能在神殿过夜吗。”
-    <br>
     西里斯看了看你和悉尼皱着眉头：“那随你吧，我先回家了。”随后，西里斯驾车离开了神殿。
     <br><br>
     “没想到你居然如此饥渴难耐，”在西里斯走后悉尼对你小声的抱怨道，“不过，我也喜欢。我在<span class="gold">宿舍</span>里等你哦。”<<npcincr Sydney purity -1>><<lspurity>><<arousal 500>><<garousal>>

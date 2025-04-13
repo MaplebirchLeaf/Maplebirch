@@ -39,6 +39,13 @@
             <<link [[增加恐惧|$passage]]>><<fear 6>><</link>>
             <br>
             <<link [[减少恐惧|$passage]]>><<fear -6>><</link>>
+            <br>
+            <<link [[增加记忆|$passage]]>><<memory 6>><</link>>
+            <br>
+            <<link [[减少记忆|$passage]]>><<memory -6>><</link>>
+        </div>
+         <div class="Maplebirchframe">
+            <<link [[加农田数量|$passage]]>><<add_plot lake_island earth 2 large>><</link>>
         </div>
         <div class="settingsToggleItemWide">
 			<span class="gold">维安</span>

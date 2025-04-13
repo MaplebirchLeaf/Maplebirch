@@ -69,3 +69,10 @@ maplebirchStatDisplay.create("lllfear", () => maplebirchStatDisplay.statChange("
 maplebirchStatDisplay.create("gfear", () => maplebirchStatDisplay.statChange("恐惧", 1, "red"));
 maplebirchStatDisplay.create("ggfear", () => maplebirchStatDisplay.statChange("恐惧", 2, "red"));
 maplebirchStatDisplay.create("gggfear", () => maplebirchStatDisplay.statChange("恐惧", 3, "red"));
+// 记忆技能栏
+maplebirchStatDisplay.create("lmemory", () => maplebirchStatDisplay.statChange("记忆", -1, "purple"));
+maplebirchStatDisplay.create("llmemory", () => maplebirchStatDisplay.statChange("记忆", -2, "purple"));
+maplebirchStatDisplay.create("lllmemory", () => maplebirchStatDisplay.statChange("记忆", -3, "purple"));
+maplebirchStatDisplay.create("gmemory", () => maplebirchStatDisplay.statChange("记忆", 1, "green"));
+maplebirchStatDisplay.create("ggmemory", () => maplebirchStatDisplay.statChange("记忆", 2, "green"));
+maplebirchStatDisplay.create("gggmemory", () => maplebirchStatDisplay.statChange("记忆", 3, "green"));

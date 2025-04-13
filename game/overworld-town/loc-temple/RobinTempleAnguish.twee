@@ -2,12 +2,12 @@
 
 <<widget "robin_anguish_temple">>
 	<<if (["initiate"].includes(V.robin_temple_rank) && ($robinromance === 1 || C.npc.Robin.love gte 90)) && ($sydneyromance is 1 or C.npc.Sydney.love gte 90)>>
-		<<templeicon "trialcontinue">><<link [[牵起罗宾与悉尼的手 (1:00)|Maplebirch Temple Vigil 11]]>><<set $Maplebirch.phase to 1>><<set $robin_anguish = true>><<pain 8>><</link>><<gpain>>
+		<<templeicon "trialcontinue">><<link [[牵起罗宾与悉尼的手 (1:00)|Maplebirch Temple Vigil 11]]>><<set $Maplebirch.phase to 1>><<set $Maplebirch.robin.anguish = true>><<pain 8>><</link>><<gpain>>
 		<<handholdingvirginitywarning>><<NPCvirginitywarning "Sydney" "handholding">>
 		<br>
 	<</if>>
     <<if ["initiate"].includes(V.robin_temple_rank) && ($robinromance === 1 || C.npc.Robin.love gte 90)>>
-		<<templeicon "trialcontinue">><<link [[牵起罗宾的手 (1:00)|Maplebirch Temple Vigil 11]]>><<set $Maplebirch.phase to 2>><<set $robin_anguish = true>><<pain 8>><</link>><<gpain>><<handholdingvirginitywarning>><<NPCvirginitywarning "Robin" "handholding">>
+		<<templeicon "trialcontinue">><<link [[牵起罗宾的手 (1:00)|Maplebirch Temple Vigil 11]]>><<set $Maplebirch.phase to 2>><<set $Maplebirch.robin.anguish = true>><<pain 8>><</link>><<gpain>><<handholdingvirginitywarning>><<NPCvirginitywarning "Robin" "handholding">>
 		<br>
 	<</if>>
 <</widget>>
@@ -220,11 +220,11 @@
 	疼痛包围着你，火焰的每一次舔舐都让你发颤。但没关系，因为在如此美丽的存在面前，生命本身得以欣喜若狂地消散殆尽。
 	<<run statusCheck("Robin")>>
 	<<run statusCheck("Sydney")>>
-	<<if !_sydneyStatus.includes("corrupt") && !_robinStatus.includes("unbelief")>>
+	<<if !_sydneyStatus.includes("corrupt") && !_robinStatus.includes("desert")>>
 		融为一体，你们一同凝视这宏伟壮大的美丽。
-	<<elseif !_sydneyStatus.includes("corrupt") && _robinStatus.includes("unbelief")>>
+	<<elseif !_sydneyStatus.includes("corrupt") && _robinStatus.includes("desert")>>
 		然而，存在某种矛盾。你察觉到了罗宾的探索欲，如同你自己的求知欲般，祈求着更深入的窥探与解答。
-	<<elseif _sydneyStatus.includes("corrupt") && !_robinStatus.includes("unbelief")>>
+	<<elseif _sydneyStatus.includes("corrupt") && !_robinStatus.includes("desert")>>
 		然而，存在某种矛盾。你察觉到了悉尼的求知欲，如同你自己的求知欲般，祈求着更深入的窥探与解答。
 	<<else>>
 		然而，存在某种矛盾。你察觉到了悉尼和罗宾的求知欲，如同你自己的求知欲般，祈求着更深入的窥探与解答。
@@ -235,7 +235,7 @@
 
 	疼痛包围着你，火焰的每一次舔舐都让你发颤。但没关系，因为在如此美丽的存在面前，生命本身得以欣喜若狂地消散殆尽。
 	<<run statusCheck("Robin")>>
-	<<if !_robinStatus.includes("unbelief")>>
+	<<if !_robinStatus.includes("desert")>>
 		融为一体，你们一同凝视这宏伟壮大的美丽。
 	<<else>>
 		然而，存在某种矛盾。你察觉到了罗宾的探索欲，如同你自己的求知欲般，祈求着更深入的窥探与解答。
@@ -268,11 +268,11 @@
 	<<run statusCheck("Sydney")>>
 	<<run statusCheck("Robin")>>
 	<<person6>>
-	<<if _sydneyStatus.includes("corrupt") && _robinStatus.includes("unbelief")>>
+	<<if _sydneyStatus.includes("corrupt") && _robinStatus.includes("desert")>>
 		悉尼和罗宾一起从布料下拱到你身边，和你贴了贴，然后将你抱住，以此表示感谢。
-	<<elseif _sydneyStatus.includes("corrupt") && !_robinStatus.includes("unbelief")>>
+	<<elseif _sydneyStatus.includes("corrupt") && !_robinStatus.includes("desert")>>
 		悉尼从布料下拱到你身边，和你贴了贴，然后将你抱住，以此表示感谢。但罗宾很快又陷入了赤裸的尴尬，但并没有试图离开你，反而感激地抱住了你。
-	<<elseif !_sydneyStatus.includes("corrupt") && _robinStatus.includes("unbelief")>>
+	<<elseif !_sydneyStatus.includes("corrupt") && _robinStatus.includes("desert")>>
 		罗宾从布料下挤到你身边，和你贴了贴，然后将你抱住，以此表示感谢。但悉尼很快又陷入了赤裸的尴尬，但并没有试图离开你，反而感激地抱住了你。
 	<<else>>
 		悉尼和罗宾很快又陷入了赤裸的尴尬，但并没有试图离开你，反而感激地抱住了你。
@@ -307,7 +307,7 @@
 
 	<<run statusCheck("Robin")>>
 	<<person6>>
-	<<if _robinStatus.includes("unbelief")>>
+	<<if _robinStatus.includes("desert")>>
 		罗宾从布料下挤到你身边，和你贴了贴，然后将你抱住，以此表示感谢。
 	<<else>>
 		罗宾很快又陷入了赤裸的尴尬，但并没有试图离开你，反而感激地抱住了你。

@@ -108,3 +108,142 @@ window.maplebirchStatusCheck = function(name) {
 		Errors.report(`getNNPC received an invalid name ${name}.`);
 	}
 };
+
+window.dailyMaplebirchNPCEffects = function() {
+  const fragment = document.createDocumentFragment();
+
+  // Robin
+  const robin = C.npc.Robin
+  if (robin.init === 1) {
+    statusCheck("Robin");
+    // 罗宾加入神殿速度
+    if (V.Maplebirch.robin.rank === "prospective") {
+      if (V.Maplebirch.Robin_pendant) {
+        V.Maplebirch.RobinDom += 3;
+      } else {
+        V.Maplebirch.RobinDom += 1;
+      }
+      V.Maplebirch.RobinDom = Math.clamp(V.Maplebirch.RobinDom, 0, 15);
+    } else {
+      V.Maplebirch.RobinDom = 0;
+    }
+    if (V.RobinTempleInvitation !== undefined) {
+      if (robin.lovestage >= 5 && ["test_superslowly","test_slowly"].includes(V.RobinTempleInvitation)) {
+        V.Maplebirch.robin.temple_speed += 1;
+      }
+      if (V.Maplebirch.robin.temple_speed === 3 && V.RobinTempleInvitation === "test_superslowly") {
+        V.Maplebirch.robin.temple_speed -= 3;
+        V.RobinTempleInvitation = "test_slowly";
+      } else if (V.Maplebirch.robin.temple_speed === 2 && V.RobinTempleInvitation === "test_slowly") {
+        V.Maplebirch.robin.temple_speed -= 2;
+        V.RobinTempleInvitation = "test_quickly";
+      } else if (V.Maplebirch.robin.temple_speed === 0 && V.RobinTempleInvitation === "test_quickly") {
+        V.RobinTempleInvitation = "templetest";
+      }
+    }
+    if (["ChastityTestfail","ChastityTestsuccess"].includes(V.RobinTempleInvitation)) {
+      V.RobinTempleInvitation = undefined;
+    }
+    // 罗宾护肛板
+    if (
+      V.robinromance === 1 &&
+      V.robinChastityKnown &&
+      robin.dom >= 60 &&
+      T.robinStatus.includes("lust") &&
+      robin.chastity.anus.includes("anal shield")
+    ) {
+      robin.chastity.anus = "";
+      V.robinAnalShieldComment = true;
+    }
+    if (["initiate", "monk"].includes(V.Maplebirch.robin.rank) || !V.robinmissing) {
+      dailyUpdateRobinValue();
+    }
+    // 罗宾头衔
+    switch (V.Maplebirch.robin.rank) {
+      case "prospective":
+        C.npc['Robin'].title = '孤儿-神殿候选者';
+        C.npc['Robin'].title_lan = { EN: 'orphan-prospective', CN: '孤儿-神殿候选者'};
+        break;
+      case "initiate":
+        C.npc['Robin'].title = '孤儿-见习教徒';
+        C.npc['Robin'].title_lan = { EN: 'orphan-initiate', CN: '孤儿-见习教徒'};
+        break;
+      case "monk":
+        if (C.npc.Robin.gender === "m") {
+          C.npc['Robin'].title = '孤儿-修士';
+          C.npc['Robin'].title_lan = { EN: 'orphan-Charles', CN: '孤儿-修士'};
+        } else {
+          C.npc['Robin'].title = '孤儿-修女';
+          C.npc['Robin'].title_lan = { EN: 'orphan-Charlene', CN: '孤儿-修女'};
+        }
+        break;
+      case "priest":
+        C.npc['Robin'].title = '孤儿-司祭';
+        C.npc['Robin'].title_lan = { EN: 'orphan-priest', CN: '孤儿-司祭'};
+        break;
+      default :
+        C.npc['Robin'].title = '孤儿';
+        C.npc['Robin'].title_lan = { EN: 'orphan', CN: '孤儿'};
+        break;
+    }
+
+  }
+
+  //Sydney
+  if (C.npc.Sydney.init === 1) {
+    statusCheck("Sydney");
+
+    // 悉尼头衔
+		if (T.sydneyStatus.includes("corrupt")) {
+      switch (V.sydney.rank) {
+        case "initiate":
+          C.npc['Sydney'].title = '堕落者-见习教徒';
+          C.npc['Sydney'].title_lan = { EN: 'fallen-initiate', CN: '堕落者-见习教徒'};
+          break;
+        case "monk":
+          if (C.npc.Sydney.gender === "m") {
+            C.npc['Sydney'].title = '堕落者-修士';
+            C.npc['Sydney'].title_lan = { EN: 'fallen-Charles', CN: '堕落者-修士'};
+          } else {
+            C.npc['Sydney'].title = '堕落者-修女';
+            C.npc['Sydney'].title_lan = { EN: 'fallen-Charlene', CN: '堕落者-修女'};
+          }
+          break;
+        case "priest":
+          C.npc['Sydney'].title = '堕落者-司祭';
+          C.npc['Sydney'].title_lan = { EN: 'fallen-priest', CN: '堕落者-司祭'};
+          break;
+      }
+    } else {
+      switch (V.sydney.rank) {
+        case "initiate":
+          C.npc['Sydney'].title = '虔信者-见习教徒';
+          C.npc['Sydney'].title_lan = { EN: 'faithful-initiate', CN: '虔信者-见习教徒'};
+          break;
+        case "monk":
+          if (C.npc.Sydney.gender === "m") {
+            C.npc['Sydney'].title = '虔信者-修士';
+            C.npc['Sydney'].title_lan = { EN: 'faithful-Charles', CN: '虔信者-修士'};
+          } else {
+            C.npc['Sydney'].title = '虔信者-修女';
+            C.npc['Sydney'].title_lan = { EN: 'faithful-Charlene', CN: '虔信者-修女'};
+          }
+          break;
+        case "priest":
+          C.npc['Sydney'].title = '虔信者-司祭';
+          C.npc['Sydney'].title_lan = { EN: 'faithful-priest', CN: '虔信者-司祭'};
+          break;
+      }
+    }
+
+  }
+
+  // Vivian
+  const vivian = C.npc.Vivian;
+  if (vivian.init === 1) {
+    maplebirchStatusCheck("Vivian");
+    vivian.exhibitionism -= 1;
+    vivian.dom += 1
+    maplebirchVivianValue();
+  }
+};

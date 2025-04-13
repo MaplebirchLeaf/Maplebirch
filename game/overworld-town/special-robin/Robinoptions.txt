@@ -4,4 +4,15 @@
 		<<socialiseicon "ask">><<link [[询问罗宾为什么叹气|Temple Robin Invitation]]>><</link>><<MaplebirchHint>>
 		<br>
 	<</if>>
+	<<if $location is "home" && $Maplebirch.robin.chastitybelt is true>> /* $robinChastityRemoveIntro 拆除罗宾贞操带剧情 */
+		<<if $Maplebirch.robin.ChastityRemoveIntro>>
+			<<lockicon "unlock">><<link [[询问<<nnpc_He "Robin">>移除贞操锁的事 (0:15)|Robin Chastity Remove Intro]]>><<pass 15>><<handheldon 1>><<set $Maplebirch.phase = 1>><</link>><<MaplebirchHint>>
+			<br>
+		<<else>>
+			/* Do Nothing */
+		<</if>>
+	<</if>>
+	<<if $location is "home" && $Maplebirch.robin.chastitybelt is false && ["initiate", "monk"].includes(V.Maplebirch.robin.rank)>>
+		<<lockicon>><<link [[希望<<nnpc_He "Robin">>能装上贞操锁 (0:15)|Robin Chastity Remove Intro]]>><<pass 15>><<handheldon 1>><<set $Maplebirch.phase = 2>><</link>><<MaplebirchHint>>
+	<</if>>
 	<br>

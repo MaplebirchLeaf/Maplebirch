@@ -500,9 +500,9 @@
 	你看着约旦在手上涂抹了更多的粉末。
 	<<if C.npc.Robin.gender is "m">>
 		<<if $player.penisExist>>
-			约旦给罗宾做着同样的工作，<<if _robingenitalsStatus.includes("Lust")>>在手指的抚弄下，<<person3>><<he>>的阴茎缓缓立起，罗宾把脸别向了一旁<<else>>但罗宾的阴茎丝毫没有反应<</if>>
+			约旦给罗宾做着同样的工作，<<if _robinStatus.includes("lust")>>在手指的抚弄下，<<person3>><<he>>的阴茎缓缓立起，罗宾把脸别向了一旁<<else>>但罗宾的阴茎丝毫没有反应<</if>>
 		<<else>>
-			<<He>>用两根食指夹住罗宾的阴茎，温柔地在上面套弄着。灰白色的粉末被均匀地涂抹在了柱身上，用以细致地检查里面包皮的状况。<<if _robingenitalsStatus.includes("Lust")>>只见阴茎缓缓立起，罗宾把脸别向了一旁<<else>>但罗宾的阴茎丝毫没有反应<</if>>。<<person3>>
+			<<He>>用两根食指夹住罗宾的阴茎，温柔地在上面套弄着。灰白色的粉末被均匀地涂抹在了柱身上，用以细致地检查里面包皮的状况。<<if _robinStatus.includes("lust")>>只见阴茎缓缓立起，罗宾把脸别向了一旁<<else>>但罗宾的阴茎丝毫没有反应<</if>>。<<person3>>
 		<</if>>
 	<<else>>
 		<<if $player.vaginaExist>>
@@ -517,7 +517,7 @@
 			<br><br>
 		<</if>>
 		<<person1>><<He>>在入口处涂抹上了灰色的粉末。
-		<<if _robingenitalsStatus.includes("Lust")>>
+		<<if _robinStatus.includes("lust")>>
 			你可以看出罗宾的身体在淫荡地回应着检验，尽管<<person3>><<his>>试图掩盖这件事。
 		<<else>>
 			罗宾的阴茎丝毫没有反应。
@@ -578,11 +578,11 @@
 <br><br>
 一个<<priest>>从长袍里拿出了口球，约旦则低头离开了房间。"为了赎罪，你们必须证明你们之间的羁绊依旧牢固。请不要动。"
 <br><br>
-<<if _robinStatus.includes("unbelief") && _sydneyStatus.includes("corrupt")>>
+<<if _robinStatus.includes("desert") && _sydneyStatus.includes("corrupt")>>
 	悉尼和罗宾走到你和<<monks>>的中间，努力想把你挡在身后。
 <<elseif _sydneyStatus.includes("corrupt")>>
     悉尼走到你和<<monks>>的中间，努力想把你挡在身后，而罗宾紧紧地搂着你。
-<<elseif _robinStatus.includes("unbelief")>>
+<<elseif _robinStatus.includes("desert")>>
     罗宾走到你和<<monks>>的中间，努力想把你挡在身后，而悉尼紧紧地搂着你。
 <<elseif>>
 	悉尼和罗宾把你搂得更紧了。
@@ -840,9 +840,9 @@
 	<<case 2>>
 		你把悉尼和罗宾拉近，往<<person1>><<his>>和<<person2>><<his>>屁股上一拧。这样似乎可以帮<<Maplebirch_anguish_He>>们忘掉疼痛。<<promiscuity2>>
 	<<case 3>>
-		你努力去触碰<<person1>><<his>>的<<sydneyGenitals>>和<<person2>><<his>>的<<robinGenitals>>，但<<Maplebirch_anguish_He>>们双目紧闭。<<promiscuity3>>
+		你努力去触碰<<person1>><<his>>的<<MaplebirchGenitals "Sydney">>和<<person2>><<his>>的<<MaplebirchGenitals "Robin">>，但<<Maplebirch_anguish_He>>们双目紧闭。<<promiscuity3>>
 	<<case 4>>
-		你把一只手掌压在<<person1>><<his>>的<<sydneyGenitals>>和<<person2>><<his>>的<<robinGenitals>>上，<<Maplebirch_anguish_He>>们忍着呻吟，疼痛似乎迅速消失了。<<promiscuity4>>
+		你把一只手掌压在<<person1>><<his>>的<<MaplebirchGenitals "Sydney">>和<<person2>><<his>>的<<MaplebirchGenitals "Robin">>上，<<Maplebirch_anguish_He>>们忍着呻吟，疼痛似乎迅速消失了。<<promiscuity4>>
 	<<case 5>>
 		不顾其他，你开始抚弄悉尼和罗宾。很快，<<Maplebirch_anguish_He>>们疼痛的哭喊转变成了愉悦的呻吟。<<promiscuity5>>
 	<</switch>>
@@ -853,9 +853,9 @@
 	<<case 2>>
 		你把悉尼拉近，往<<person1>><<his>>屁股上一拧。这样似乎可以帮<<his>>忘掉疼痛。<<promiscuity2>>
 	<<case 3>>
-		你努力去触碰<<person1>><<his>>的<<sydneyGenitals>>，但<<His>>双目紧闭。<<promiscuity3>>
+		你努力去触碰<<person1>><<his>>的<<MaplebirchGenitals "Sydney">>，但<<His>>双目紧闭。<<promiscuity3>>
 	<<case 4>>
-		你把一只手掌压在<<person1>><<his>>的<<sydneyGenitals>>上，<<He>>忍着呻吟，疼痛似乎迅速消失了。<<promiscuity4>>
+		你把一只手掌压在<<person1>><<his>>的<<MaplebirchGenitals "Sydney">>上，<<He>>忍着呻吟，疼痛似乎迅速消失了。<<promiscuity4>>
 	<<case 5>>
 		不顾其他，你开始抚弄悉尼。很快，<<person1>><<His>>疼痛的哭喊转变成了愉悦的呻吟。<<promiscuity5>>
 	<</switch>>
@@ -866,9 +866,9 @@
 	<<case 2>>
 		你把罗宾拉近，往<<person2>><<his>>屁股上一拧。这样似乎可以帮<<his>>忘掉疼痛。<<promiscuity2>>
 	<<case 3>>
-		你努力去触碰<<person2>><<his>>的<<robinGenitals>>，但<<His>>双目紧闭。<<promiscuity3>>
+		你努力去触碰<<person2>><<his>>的<<MaplebirchGenitals "Robin">>，但<<His>>双目紧闭。<<promiscuity3>>
 	<<case 4>>
-		你把一只手掌压在<<person2>><<his>>的<<robinGenitals>>上，<<He>>忍着呻吟，疼痛似乎迅速消失了。<<promiscuity4>>
+		你把一只手掌压在<<person2>><<his>>的<<MaplebirchGenitals "Robin">>上，<<He>>忍着呻吟，疼痛似乎迅速消失了。<<promiscuity4>>
 	<<case 5>>
 		不顾其他，你开始抚弄罗宾。很快，<<person2>><<His>>疼痛的哭喊转变成了愉悦的呻吟。<<promiscuity5>>
 	<</switch>>

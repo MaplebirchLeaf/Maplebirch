@@ -1,28 +1,89 @@
 :: Maplebirch Forest Lake Island [widget]
 
 <<widget "lake_island_effects">>
+	<<run maplebirchStatusCheck("Vivian")>>
     <<run maplebirchLakeIslandRestore()>>
     <<if !$Maplebirch.lakeisland.Hint>>
         <i><span class="teal">你解锁了森林湖中隐藏的小岛</span></i>
         <br><br>
     <</if>>
-    <<if $outside === 1>>
+    <<if $outside === 1 && !$Maplebirch.event>>
         <<switch _island_clean>>
             <<case "dirtiest">>
                 <span class="red">这个地方破败不堪，脏乱无比。已经很久没人打扫了。</span>
             <<case "dirtier">>
-                <span class="purple">墙皮剥落处积满蛛网，霉斑在角落无声蔓延。</span>
+                <span class="purple">杂草蔓延，藤蔓缠绕，仿佛大地自己都放弃了这里。</span>
             <<case "dirty">>
-                <span class="lblue">藤蔓从破碎的窗框探进屋内，沙砾与枯叶在石板缝中结成硬块。</span>
+                <span class="lblue">虽然仍旧荒凉，但你能看出清理的痕迹，一切开始有了转机。</span>
             <<case "clean">>
-                <span class="blue">野草在木屋周围生长，门廊堆积着被湖水卷上来的碎石。</span>
+                <span class="blue">大部分区域已经整理干净，偶有残留，但整体焕然一新。</span>
             <<case "cleaner">>
-                <span class="teal">后院的落叶散落在各地，细沙在门坎处铺成金色纹路。</span>
+                <span class="teal">这里已恢复了宁静与秩序，自然与人手的痕迹交织成新的生机。</span>
             <<case "cleanest">>
-                <span class="green">四周显着干净整洁，微风从湖面上袭来让人神清气爽。</span>
+                <span class="green">岛屿已然洁净如初，仿佛时间倒流，重现往昔荣耀。</span>
         <</switch>>
-    <br><br>
-    <</if>>
+		<<if _vivian_location === "island" && $Maplebirch.lakeisland.lock === "lock">>	
+			<<switch random(1,7)>>
+				<<case 1>>
+					维安勤恳地打扫着木屋的四周，<<nnpc_He "Vivian">>看到了你后微笑地向你招了招手
+				<<case 2>>
+					维安弯着腰，将藤蔓一缕缕地从墙角扯出，<<nnpc_He "Vivian">>的动作虽轻柔却坚定。
+				<<case 3>>
+					维安<<nnpc_He "Vivian">>正小心翼翼地清扫石阶上的落叶，每一下都仿佛唤醒沉睡多年的寂静。
+				<<case 4>>
+					维安挥舞着扫帚，把积尘从门廊边缘一寸寸推开，偶尔抬头望向远方的湖面。
+				<<case 5>>
+					维安<<nnpc_He "Vivian">>正整理着一堆倒塌的木板，手上沾满灰尘，神情却平静安详。
+				<<case 6>>
+					维安蹲在地上，用布细细擦拭长椅的表面，仿佛在照料某种珍贵的遗物。
+				<<case 7>>
+					维安<<nnpc_He "Vivian">>正哼着不知名的小调，将一丛乱石旁的杂草连根拔起，脸上挂着满足的微笑。
+			<</switch>>
+		<</if>>
+    	<br><br>
+		<<if $Maplebirch.lakeisland.lock === "lock">>
+			<<set _clearing to $Maplebirch.lakeisland.decay>>
+			<<set _percent = Math.floor((_clearing/100)*100)>>
+			湖中岛正在重建，
+			<<if $Maplebirch.lakeisland.decay lte 0>>
+				<span class="green">这里已经恢复了昔日的辉煌了。</span>
+				<div class="meter">
+				<<print '<div class="greenbar" style="width:' + _percent + '%"></div>'>>
+				</div>
+			<<elseif $Maplebirch.lakeisland.decay lte 20>>
+				<span class="teal">清风吹拂着整洁的庭院，只余细碎的苔迹提醒曾经的荒废。</span>
+				<div class="meter">
+				<<print '<div class="tealbar" style="width:' + _percent + '%"></div>'>>
+				</div>
+			<<elseif $Maplebirch.lakeisland.decay lte 40>>
+				<span class="lblue">杂乱已经大致清除，岛屿露出了原有的轮廓与宁静。</span>
+				<div class="meter">
+				<<print '<div class="lbluebar" style="width:' + _percent + '%"></div>'>>
+				</div>
+			<<elseif $Maplebirch.lakeisland.decay lte 60>>
+				<span class="blue">虽还有破败之处，但已有秩序可寻，一切都在慢慢好转。</span>
+				<div class="meter">
+				<<print '<div class="bluebar" style="width:' + _percent + '%"></div>'>>
+				</div>
+			<<elseif $Maplebirch.lakeisland.decay lte 80>>
+				<span class="purple">岛上依旧荒凉，藤蔓与灰尘肆意，但希望已悄然生根。</span>
+				<div class="meter">
+				<<print '<div class="purplebar" style="width:' + _percent + '%"></div>'>>
+				</div>
+			<<elseif $Maplebirch.lakeisland.decay lte 99>>
+				<span class="pink">这里几乎无人问津，曾经的痕迹被岁月掩埋，只剩轮廓可辨。</span>
+				<div class="meter">
+				<<print '<div class="pinkbar" style="width:' + _percent + '%"></div>'>>
+				</div>
+			<<else>>
+				<span class="red">杂乱与破败无处不在，这片土地仿佛被时间遗忘了。</span>
+				<div class="meter">
+				<<print '<div class="redbar" style="width:' + _percent + '%"></div>'>>
+				</div>
+			<</if>>
+			<br>
+		<</if>>
+    <</if>>	
 <</widget>>
 
 <<widget "maplebirch_lakeisland_sleep_options">>
@@ -137,7 +198,7 @@
         <<He>>说：“那间木屋是我为了研究湖下废墟曾设立的研究点，没想到已经过去这么久了……”，维安的有些沉思地低下头。突然<<He>>意识到自己没有穿任何衣物，<<He>><span class="gold"><<print C.npc.Vivian.breastsdesc>>和
         <<if C.npc.Vivian.vagina isnot "none" && C.npc.Vivian.penis isnot "none">>小穴还有<<print C.npc.Vivian.penisdesc>><<elseif C.npc.Vivian.penis isnot "none">><<print C.npc.Vivian.penisdesc>><<else>>小穴<</if>></span>
         完全暴露在空气中。<<arousal 1500>><<garousal>>
-		<br>
+		<br><br>
         <<He>>羞红着脸说：“我先进屋找找看有没有衣服，”
         <<if $exposed >= 1>>
             之后<<He>>突然看了你一眼有些羞涩的问道：“你也要找一身衣服穿穿吗。”
@@ -166,6 +227,7 @@
 <<lake_island_effects>>
 <<run maplebirchStatusCheck("Vivian")>>
 <<if $Maplebirch.phase === 2>>
+	<!-- 维安登场于湖中岛 -->
     你走到了维安进入的木屋前，你看到周围有些荒凉，真的已经很久没有被打理过了。
     <br><br>
     你看到这座岛居然还有两颗红树在顽强地生长。
@@ -176,25 +238,36 @@
     <<MaplebirchIcon "wait">><<link [[等待 (0:05)|Maplebirch Lake Center Island]]>><<pass 5>><<set $Maplebirch.phase = 3>><</link>>
 
 <<elseif $Maplebirch.phase === 3>>
-    <<set $Maplebirch.vivian.clothes = "scarecrow">>
-    你安静的在木屋前等待着，差不多过了五分钟左右维安穿着一套破旧的稻草人服装走了出来。
-    <<if $exposed >= 1>>
-        <<if $englishtrait >= 3 && $historytrait >= 2>>
-            <<He>>将一条毛巾递给了你，“没有找到好一点的衣服了，我是不会把我身上这件给你的！”
-        <<else>>
-            <<He>>将一条毛巾递给了你。
-        <</if>>
-        <<towelup>>
-    <</if>>
-    <br><br>
+	<!-- 维安湖中岛事件初结束 -->
+	<<if $Maplebirch.vivian.clothes isnot "scarecrow">>
+		<<set $Maplebirch.vivian.clothes = "scarecrow">>
+		你安静的在木屋前等待着，差不多过了五分钟左右维安穿着一套破旧的稻草人服装走了出来。
+		<<if $exposed >= 1>>
+			<<if $englishtrait >= 3 && $historytrait >= 2>>
+				<<He>>将一条毛巾递给了你，“没有找到好一点的衣服了，我是不会把我身上这件给你的！”
+			<<else>>
+				<<He>>将一条毛巾递给了你。
+			<</if>>
+			<<towelup>>
+		<</if>>
+		<br><br>
+	<</if>>
     <<if $englishtrait >= 3 && $historytrait >= 2>>
         “现在我要开始收拾这个肮脏的地方了，如果你想帮忙可以留下来帮我。”<<He>>朝着一个方向说着，“你要离开的话应该还记得来时的路吧，原路返回应该难不倒你。”
+		<br><br>
+		<<link [[继续|Maplebirch Lake Center Island]]>><<endevent>><<MaplebirchEndEvent>><<set $Maplebirch.lakeisland.lock = "lock">><</link>>
     <<else>>
         <<He>>朝着一个方向不知道说着什么，但你觉得你该离开了。<<note "语文与历史等级不足" "teal">>
+		<br><br>
+		<<link [[你说你一直听不懂<<nnpc_He "Vivian">>的话|Vivian Not Understand]]>><<MaplebirchEndEvent>><</link>>
     <</if>>
-    <br><br>
-    <span id="next"><<link [[继续|Maplebirch Lake Center Island]]>><<endevent>><<MaplebirchEndEvent>><</link>></span><<nexttext>>
 <<else>>
+	<!-- 事件缺失中 -->
+
+
+
+
+
     <br><br><<if Weather.isSnow>><<MaplebirchIcon "lakeisland" "house_snow">><<else>><<MaplebirchIcon "lakeisland" "house">><</if>>
     <<link [[进入木屋 (0:01)|Maplebirch Lake Island House]]>><<pass 1>><</link>><br>
     <<if V.Maplebirch.lakeisland.lock === "unlock">>
@@ -209,11 +282,26 @@
 	        <<fishingrod_held_icon>><<link [[在森林湖中岛钓鱼|Fishing Bitten]]>><<set $fishing_place to "lake_island">><</link>><br>
         <</if>>
     <<else>>
+		<br>
         <i><span class="teal">四周的设施荒废已久，一切都还没有开始运转。</span></i>
         <br>
         <<if !$Maplebirch.daily.islandclean>>
-            <<link [[帮助维安清理四周 (1:00)|Maplebirch Lake Center Island]]>><<pass 60>>
-            <<set $Maplebirch.daily.islandclean to true>><<set $Maplebirch.lakeisland.decay -= 15>><</link>>
+			<<if $worn.handheld.name is "feather duster">>
+				<<link [[将羽毛掸子给予维安 (1:00)|Maplebirch Lake Center Island Clean]]>><<pass 60>>
+            	<<set $Maplebirch.daily.islandclean to true>><<handheldruined>><<set $Maplebirch.answer to 1>><</link>>
+			<<else>>
+				<<farmicon "clear yard">><<link [[帮助维安清理四周 (1:00)|Maplebirch Lake Center Island Clean]]>><<pass 60>>
+				<<set $Maplebirch.daily.islandclean to true>><</link>>
+			<</if>>
+			<br><br>
+			<i>无论你是否帮忙，维安都会重建湖中岛，但如果你帮忙的话进度会更快。</i>
+		<<else>>
+			<br>
+			<<note "你今天已经帮维安清理过四周了" "teal">>
+			<<if !["feather duster"].includes($Maplebirch.vivian.items)>>
+				<br><br>
+				<i>如果带着<span class="gold">羽毛掸子</span>给维安或许会增加<<nnpc_He "Vivian">>清理的速度。</i>
+			<</if>>
         <</if>>
     <</if>>
     <br><br>
@@ -227,8 +315,8 @@
 :: Maplebirch Lake Island House
 <<set $outside to 0>><<set $wardrobe_location to "lake_island">><<effects>>
 <<lake_island_effects>>
-<<if V.Maplebirch.lakeisland.lock === "unlock">>
-	<span class="teal">木屋里都是脏乱的蜘蛛网，什么都没有。</span>
+<<if V.Maplebirch.lakeisland.lock === "lock">>
+	<span class="purple">木屋里除了脏乱的蜘蛛网，什么都没有。</span>
 	<br>
 <</if>>
 <<if $Maplebirch.phase === 2>>
@@ -238,29 +326,20 @@
 	<<link [[在维安的旁边站着等待 (0:03)|Lake Island Vivian Clothes]]>><<pass 5>><</link>>
 	<br>
 	<<if hasSexStat("promiscuity", 2)>>
-		<<link [[狠狠地拍<<nnpc_He "Vivian">>的屁股|Lake Island Vivian Slap]]>><</link>><<Maplebirchnpcincr Vivian love -1>><<promiscuous2>><<llove>>
+		<<link [[狠狠地拍<<nnpc_He "Vivian">>的屁股|Lake Island Vivian Slap]]>><<set $Maplebirch.phase2 = 1>><<Maplebirchnpcincr Vivian love -1>><</link>><<promiscuous2>><<llove>>
 		<br>
 	<</if>>
 	<<if hasSexStat("promiscuity", 3)>>
-		<<link [[边摸边打<<nnpc_He "Vivian">>的屁股|Lake Island Vivian Slap]]>><<Maplebirchnpcincr Vivian love 1>><<Maplebirchnpcincr Vivian lust 3>><</link>><<promiscuous3>><<glove>><<ggvlust>>
+		<<link [[抚弄<<nnpc_He "Vivian">>的下体|Lake Island Vivian Slap]]>><<set $Maplebirch.phase2 = 2>><<Maplebirchnpcincr Vivian lust 3>><</link>><<promiscuous3>><<ggvlust>>
 		<br>
 	<</if>>
-	<<if hasSexStat("promiscuity", 4)>>
-		<<link [[戏弄<<nnpc_He "Vivian">>的下体|Lake Island Vivian Slap]]>><<Maplebirchnpcincr Vivian lust 5>><</link>><<promiscuous4>><<gggvlust>>
-		<br>
-	<</if>>
-	<<if hasSexStat("promiscuity", 5)>>
-		<<link [[直接战斗！|Lake Island Vivian Slap Sex]]>><</link>><<promiscuous5>>
-		<br>
-	<</if>>
-	<<link [[离开木屋 (0:01)|Maplebirch Lake Center Island]]>><<pass 1>><<endevent>><</link>>
-
+	<<link [[离开木屋 (0:01)|Maplebirch Lake Center Island]]>><<pass 1>><</link>>
 <<else>>
     <<if V.Maplebirch.lakeisland.lock === "unlock">>
-    <<if $Maplebirch.lakeisland.yourbed>>
-    	<<MaplebirchIcon "lakeisland" "yourbed">><<link [[你的房间 (0:01)|Lake Island Bedroom]]>><<pass 1>><</link>>
-		<br>
-	<</if>>
+		<<if $Maplebirch.lakeisland.yourbed>>
+			<<MaplebirchIcon "lakeisland" "yourbed">><<link [[你的房间 (0:01)|Lake Island Bedroom]]>><<pass 1>><</link>>
+			<br>
+		<</if>>
     <<MaplebirchIcon "lakeisland" "bed">><<link [[维安的房间 (0:01)|Lake Island Vivian Bedroom]]>><<pass 1>><</link>>
 	<br>
     <</if>> 
@@ -300,7 +379,7 @@
     <<MaplebirchIcon "lakeisland" "yourbed">><<link [[你的房间 (0:01)|Lake Island Bedroom]]>><<pass 1>><</link>>
 <</if>>
 <br><br><!-- 暂时这个图标 -->
-<<main_hall_icon>><<link [[下楼 (0:01)|Maplebirch Lake Island House]]>><<pass 1>><</link>>
+<<MaplebirchIcon "lakeisland" "stair">><<link [[下楼 (0:01)|Maplebirch Lake Island House]]>><<pass 1>><</link>>
 
 :: Lake Island Vivian Bed
 <<set $bus to "lakeisland_vivian_bed">><<effects>><<lake_island_effects>>
@@ -372,7 +451,7 @@
 <br><br>
 <<MaplebirchIcon "lakeisland" "bed">><<link [[维安的房间 (0:01)|Lake Island Vivian Bedroom]]>><<pass 1>><</link>>
 <br><br><!-- 暂时这个图标 -->
-<<main_hall_icon>><<link [[下楼 (0:01)|Maplebirch Lake Island House]]>><<pass 1>><</link>>
+<<MaplebirchIcon "lakeisland" "stair">><<link [[下楼 (0:01)|Maplebirch Lake Island House]]>><<pass 1>><</link>>
 <br><br>
 <<if window.modUtils.getMod('Terraria Expand Mod')>>
     <<terraDebugLink>>
@@ -492,4 +571,24 @@
 
 <<gardenicon "plot">><<link [[农田 (0:02)|Lake Island Fields]]>><<pass 2>><<set $eventskip to 1>><</link>>
 <br><br>
-<<gardenicon "plot">><<link [[果园 (0:02)|Lake Island Orchard]]>><<pass 2>><<set $eventskip to 1>><</link>>
+<<MaplebirchIcon "lakeisland" "orchard">><<link [[果园 (0:02)|Lake Island Orchard]]>><<pass 2>><<set $eventskip to 1>><</link>>
+
+:: Lake Island Fields
+<<set $outside to 1>><<set $bus to "lakeisland_fields">><<effects>>
+<<plot_effects>>
+<<if !$Maplebirchtest>>
+	<!-- 地点 数量 种类 质量 大小 -->
+	<<plots_init lake_island 99 earth 2 large>>
+	<<set $Maplebirchtest = 1>>
+<</if>>
+<!-- 地点 种类 质量 大小 -->
+/%<<add_plot lake_island earth 2 large>>%/
+
+
+<<display_plot lake_island>>
+
+<<link [[返回 (0:02)|Maplebirch Lake Island Backyard]]>><<pass 2>><</link>>
+
+:: Lake Island Orchard
+
+<<link [[返回 (0:02)|Maplebirch Lake Island Backyard]]>><<pass 2>><</link>>

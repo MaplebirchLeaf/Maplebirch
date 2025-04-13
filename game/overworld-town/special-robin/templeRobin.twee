@@ -1,7 +1,7 @@
 :: Temple Robin Maplebirch [widget]
 
 <<widget "RobinTempleInvitation_1">>
-    <<if ["initiate", "monk"].includes($temple_rank) && !$RobinTempleInvitation && !$robin_temple_rank>>
+    <<if ["initiate", "monk"].includes($temple_rank) && !$RobinTempleInvitation && $Maplebirch.robin.rank is "">>
         <<if C.npc.Robin.love === 100 && (playerChastity("penis") || playerChastity("vagina") || playerChastity("anus") || playerChastity())>>
             之后，罗宾好奇地抚摸着你的$worn.genitals.cn_name_cap 表面，虽然<<nnpc_he "Robin">>隐藏得很好，你还是看到了<<nnpc_he "Robin">>眼中一闪而逝的遗憾。<<npcincr Robin dom -2>><<note "- 罗宾的自信" "lblue">>
             <br>
@@ -16,62 +16,27 @@
     <br><br>
 <</widget>>
 
-<<widget "RobinTempleValue">>
-    <<if ["initiate", "monk"].includes(V.robin_temple_rank) || !$robinmissing>>
-        <<run dailyUpdateRobinValue()>>
-    <</if>>
-    <<set $Maplebirch.daily.robin = {}>>
-    <<set $Maplebirch.daily.robin.sex = 0>>
-    <!-- 罗宾加入神殿速度 -->
-    <<if $RobinTempleTestDouble === true>>
-        <<if $Maplebirch.Robin_pendant>>
-            <<set $Maplebirch.RobinDom += 3>>
-        <<else>>
-            <<set $Maplebirch.RobinDom += 1>>
-        <</if>>
-        <<if $Maplebirch.RobinDom >= 15>>
-            <<set $Maplebirch.RobinDom = 15>>
-        <</if>>
-    <<else>>
-        <<set $Maplebirch.RobinDom = 0>>
-    <</if>>
-    <<if $RobinTempleInvitation !== undefined>>
-        <<set _robin to statusCheck("Robin")>>
-        <<if _robin.lovestage gte 5 && ["test_superslowly","test_slowly"].includes($RobinTempleInvitation)>>
-            <<set $robintemplespeed += 1>>
-        <</if>>
-        <<if $robintemplespeed === 3 && $RobinTempleInvitation === "test_superslowly">>
-            <<set $robintemplespeed -= 3>>
-            <<set $RobinTempleInvitation = "test_slowly">>
-        <<elseif $robintemplespeed === 2 && $RobinTempleInvitation === "test_slowly">>
-            <<set $robintemplespeed -= 2>>
-            <<set $RobinTempleInvitation = "test_quickly">>
-        <<elseif  $robintemplespeed === 0 && $RobinTempleInvitation === "test_quickly">>
-            <<set $RobinTempleInvitation = "templetest">>
-        <</if>>
-    <</if>>
-<</widget>>
-
 <<widget "RobinTimelinessPrint">>
-    <<if $RobinTempleInvitation === "templetest">>
-        <<set $Maplebirch.RobinTempleTime = "今日">>
-    <<elseif $RobinTempleInvitation === "test_quickly">>
-        <<set $Maplebirch.RobinTempleTime = "明日">>
-    <<elseif $RobinTempleInvitation === "test_slowly">>
-        <<if $robintemplespeed === 1>>
-            <<set $Maplebirch.RobinTempleTime = "二日后">>
-        <<else>>
-            <<set $Maplebirch.RobinTempleTime = "三日后">>
-        <</if>>
-    <<elseif $RobinTempleInvitation === "test_superslowly">>
-        <<if $robintemplespeed === 2>>
-            <<set $Maplebirch.RobinTempleTime = "四日后">>
-        <<elseif $robintemplespeed === 1>>
-            <<set $Maplebirch.RobinTempleTime = "五日后">>
-        <<else>>
-            <<set $Maplebirch.RobinTempleTime = "六日后">>
-        <</if>>
-    <</if>>
+    <<switch $RobinTempleInvitation>>
+        <<case "templetest">>
+            <<set $Maplebirch.RobinTempleTime = "今日">>
+        <<case "test_quickly">>
+            <<set $Maplebirch.RobinTempleTime = "明日">>
+        <<case "test_slowly">>
+            <<if $Maplebirch.robin.temple_speed === 1>>
+                <<set $Maplebirch.RobinTempleTime = "二日后">>
+            <<else>>
+                <<set $Maplebirch.RobinTempleTime = "三日后">>
+            <</if>>
+        <<case "test_superslowly">>
+            <<if $Maplebirch.robin.temple_speed === 2>>
+                <<set $Maplebirch.RobinTempleTime = "四日后">>
+            <<elseif $Maplebirch.robin.temple_speed === 1>>
+                <<set $Maplebirch.RobinTempleTime = "五日后">>
+            <<else>>
+                <<set $Maplebirch.RobinTempleTime = "六日后">>
+            <</if>>
+    <</switch>>
 <</widget>>
 
 <<widget "RobinTempleTestTip">>
@@ -91,16 +56,13 @@
     <</if>>
 <</widget>>
 
-<<widget "RobinChastityTestfail">>   
-    <<set $RobinTempleTestDouble = true>>
+<<widget "RobinChastityTestfail">>
+    <<set $Maplebirch.robin.rank = "prospective">>
     <<RobinChastityFrie>>
-
 <</widget>>
 
 <<widget "RobinChastityTestsuccess">>
-    <<set $Maplebirch.robin.sexTotal = 0>>
-    <<unset $RobinTempleTestDouble>>
-    <<set $robin_temple_rank = "initiate">>
+    <<set $Maplebirch.robin.rank = "initiate">>
     <<set C.npc.Robin.chastity.anus = "anal shield">>
     <<set C.npc.Robin.chastity.vagina = "chastity belt">>
     <<set C.npc.Robin.chastity.penis = "chastity belt">>

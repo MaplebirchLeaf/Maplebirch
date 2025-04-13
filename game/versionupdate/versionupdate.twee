@@ -1,0 +1,29 @@
+:: Maplebirch Version Update [widget]
+
+<<widget "MaplebirchVariablesVersionUpdate">>
+    <!-- v0.2.0.0 -->
+    <<if $robin_temple_rank>>
+        <<set $Maplebirch.robin.rank = $robin_temple_rank>>
+        <<unset $robin_temple_rank>>
+    <</if>>
+    <<if $frequencyalready>>
+        <<set $Maplebirch.frequencyalready = $frequencyalready>>
+        <<unset $frequencyalready>>
+    <</if>>
+    <<if $robin_examination>>
+        <<set $Maplebirch.robin.examination = $robin_examination>>
+        <<unset $robin_examination>>
+    <</if>>
+    <<if $robin_anguish>>
+        <<set $Maplebirch.robin.anguish = $robin_anguish>>
+        <<unset $robin_anguish>>
+    <</if>>
+    <<if $sydney_bed_frequency>>
+        <<set $Maplebirch.sydney.bed_frequency = $sydney_bed_frequency>>   
+        <<unset $sydney_bed_frequency>>
+    <</if>>
+    <<if $robintemplespeed>>
+        <<set $Maplebirch.robin.temple_speed = $robintemplespeed>>
+        <<unset $robintemplespeed>>
+    <</if>>
+<</widget>>

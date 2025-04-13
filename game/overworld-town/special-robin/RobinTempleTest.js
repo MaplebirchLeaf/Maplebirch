@@ -19,6 +19,9 @@ window.robinChastityCheck = function() {
       if (isRobinVirginity) {
         V.RobinChastitycheck = "fail";
         fragment.append(wikifier("RobinChastityTestfail"));
+        if (V.RobinChastityFire) {
+          fragment.append(wikifier("RobinChastityTestsuccess"));
+        }
       } else {
         V.RobinChastitycheck = "success";
         fragment.append(wikifier("RobinChastityTestsuccess"));
@@ -27,8 +30,14 @@ window.robinChastityCheck = function() {
     const fragment = document.createDocumentFragment();
       if (isRobinVirginity) {
         fragment.append(wikifier("RobinChastityTestfail"));
+        V.RobinTempleInvitation = "ChastityTestfail";
+        if (V.RobinChastityFire) {
+          fragment.append(wikifier("RobinChastityTestsuccess"));
+          V.RobinTempleInvitation = "ChastityTestsuccess";
+        }
     } else {
         fragment.append(wikifier("RobinChastityTestsuccess"));
+        V.RobinTempleInvitation = "ChastityTestsuccess";
     }
   } 
 };
@@ -41,23 +50,25 @@ window.setRobinGrace = function(value) {
 
 window.dailyUpdateRobinValue = function() {
   statusCheck("Robin");
-  if (T.robinStatus === "belief") {
+  if (T.robinStatus.includes("belief")) {
     setRobinHoliness(setRobinHoliness() + 1);
+  } else if (T.robinStatus.includes("desert")) {
+    setRobinHoliness(setRobinHoliness() - 1);
   }
   
   if (V.robin_grace === 100) return 100;
   if (typeof V.robin_grace !== "number") V.robin_grace = 0;
   let increment;
   if (Time.weekDay === 1) {
-    increment = 5;
-  } else if (!Time.schoolDay && !Time.isWeekEnd()) {
     increment = 3;
-  } else if (!Time.schoolDay) {
+  } else if (!Time.schoolDay && !Time.isWeekEnd()) {
     increment = 2;
-  } else {
+  } else if (!Time.schoolDay) {
     increment = 1;
+  } else {
+    increment = -1;
   }
-  if (V.Maplebirch.Robin_pendant) {
+  if (V.Maplebirch.Robin_pendant && increment >= 0) {
     increment *= 2;
   }
   setRobinGrace(V.robin_grace + increment);
@@ -86,19 +97,19 @@ window.setRobinHoliness = function(value) {
 
 window.isRobinTempleRitual = function() {
   return (
-    ["initiate", "monk"].includes(V.robin_temple_rank) && (V.isRobinTempleRitual === true)
+    ["initiate", "monk"].includes(V.Maplebirch.robin.rank) && (V.isRobinTempleRitual === true)
   );
 };
 
 window.isRobinTempleAnguish = function() {
   return (
-    ["initiate"].includes(V.robin_temple_rank) && (V.robin_anguish === true)
+    ["initiate"].includes(V.Maplebirch.robin.rank) && (V.Maplebirch.robin.anguish === true)
   );
 };
 
 window.isRobinTempleExamination = function() {
   return (
-    ["initiate", "monk"].includes(V.robin_temple_rank) && (V.robin_examination === true)
+    ["initiate", "monk"].includes(V.Maplebirch.robin.rank) && (V.Maplebirch.robin.examination === true)
   );
 };
 
@@ -123,7 +134,7 @@ window.maplebirchRobinCheck = function() {
         V.robin_templeWork = "quarters";
         break;
       case 21: case 22:
-        V.robin_templeWork = (Time.weekDay === 1 && V.robin_temple_rank === "initiate" ? "anguish" : "pray");
+        V.robin_templeWork = (Time.weekDay === 1 && V.Maplebirch.robin.rank === "initiate" ? "anguish" : "pray");
         break;
       case 23: case 0:
         V.robin_templeWork = (Time.weekDay === 7? "sleep" : "pray");
@@ -134,7 +145,7 @@ window.maplebirchRobinCheck = function() {
     if (Time.weekDay === 1 && Time.hour === 0) {
       V.robin_templeWork = "sleep";
     }
-  };
+  }
   /*  V.Maplebirch.dailey
   const fragment = document.createDocumentFragment();
 
@@ -142,24 +153,34 @@ window.maplebirchRobinCheck = function() {
 
   T.robin_location_message = T.robin_location;
 
-  if (robin.holiness >= 100) {
-    T.robinStatus = "belief";
-  } else if (robin.holiness < 100) {
-    T.robinStatus = "unbelief";
-  }
-  if (robin.lust >= 60) {
-    T.robingenitalsStatus = "Lust";
-  } else if (robin.lust < 60) {
-    T.robingenitalsStatus = "";
+  if (robin.holiness >= 120) {
+    if (robin.lust >= 60) {
+      T.robinStatus = "belief lust";
+    } else {
+      T.robinStatus = "belief";
+    }
+  } else if (robin.holiness < 80) {
+    if (robin.lust >= 60) {
+      T.robinStatus = "desert lust";
+    } else {
+      T.robinStatus = "desert";
+    }
+  } else {
+    if (robin.lust >= 60) {
+      T.robinStatus = "lust";
+    } else {
+      T.robinStatus = "";
+    }
   }
 
 	if (robin.chastity.penis.includes("chastity belt") || robin.chastity.vagina.includes("chastity belt")) {
     T.robinChastity = 1;
     V.Maplebirch.robin.chastitybelt = true;
   }
-	if (robin.virginity.vaginal && robin.virginity.penile) T.robinVirgin = 1;
-  if (T.robinStatus === "belief" && (robin.chastity.penis !== "chastity belt" || robin.chastity.vagina !== "chastity belt")) {
+	if (robin.virginity.vaginal && robin.virginity.penile) {T.robinVirgin = 1;}
+  if (robin.chastity.penis !== "chastity belt" || robin.chastity.vagina !== "chastity belt") {
     V.Maplebirch.robin.chastitybelt = false;
+    V.Maplebirch.robin.Chastityask = undefined;
   }
 };
 
@@ -167,7 +188,7 @@ const maplebirchRobinTempleWork = new TimeEvent('onHour', 'maplebirchRobinTemple
 
 maplebirchRobinTempleWork.Cond(() => {
   statusCheck("Robin");
-  return (T.robin_location === "temple" && ["initiate", "monk"].includes(V.robin_temple_rank) && V.temple_rank !== undefined && V.temple_rank !== "prospective");    
+  return (T.robin_location === "temple" && ["initiate", "monk"].includes(V.Maplebirch.robin.rank) && V.temple_rank !== undefined && V.temple_rank !== "prospective");    
 })
 
 maplebirchRobinTempleWork.Action(() => {
@@ -180,7 +201,7 @@ maplebirchRobinTempleWork.Action(() => {
 
 window.weekDayBaileyRobinExempt = function() {
   if (V.robin_grace === 100) return;
-  if (["monk"].includes(V.robin_temple_rank) && V.robin_grace >= 80) {
+  if (["monk"].includes(V.Maplebirch.robin.rank) && V.robin_grace >= 80) {
     V.robinmoney += 400;
     setRobinGrace(V.robin_grace - 10);
   }
