@@ -59,29 +59,36 @@ const MaplebirchNpcSetting = {
     },
   },
   Karasveil: {
-    /*important : () => true,*/
+    //important : () => true,
     love: { maxValue: 200 },
     lust: { maxValue: 200 },
     dom: { name: '<span class=\"MaplebirchFallen\">罪孽</span>', maxValue: 200, activeIcon: 'img/ui/Karasveil_Sin.png', color:'MaplebirchFallen'},
-    /*loveInterest : () => true,*/
+    //loveInterest : () => true,
   },
   Noctyaph: {
-    /*important : () => true,*/
+    //important : () => true,
     love: { maxValue: 200 },
     lust: { maxValue: 200 },
     dom: { name: '<span class=\"MaplebirchDemon\">傲慢</span>', maxValue: 200, activeIcon: 'img/ui/Noctyaph_Arrogant.png', color:'MaplebirchDemon'},
-    /*loveInterest : () => true,*/
+    //loveInterest : () => true,
   },
   Igniharp: {
-    /*important : () => true,*/
+    //important : () => true,
     love: { maxValue: 200 },
     lust: { maxValue: 200 },
     dom: { name: '<span class=\"MaplebirchAngel\">审判</span>', maxValue: 200, activeIcon: 'img/ui/Igniharp_Trial.png', color:'MaplebirchAngel'},
-    /*loveInterest : () => true,*/
+    //loveInterest : () => true,
   }
 };
 
-Object.assign(setup.ModNpcSetting, MaplebirchNpcSetting);
+window.maplebirchSFNPCInit = function()  {
+  NamedNPC.add(maplebirchVivianNPC());
+  NamedNPC.add(maplebirchIgniharpNPC());
+  NamedNPC.add(maplebirchKarasveilNPC());
+  NamedNPC.add(maplebirchNoctyaphNPC());
+
+  Object.assign(setup.ModNpcSetting, MaplebirchNpcSetting);
+};
 
 window.maplebirchStatusCheck = function(name) {
   if (V.NPCNameList.includes(name)) {

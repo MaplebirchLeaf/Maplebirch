@@ -99,6 +99,7 @@
     <!-- 湖中岛变量 -->
     <<MaplebirchinitVar "Maplebirch.lakeisland.decay" 100>>
     <<MaplebirchinitVar "Maplebirch.vivian.clean" 0>>
+    <<MaplebirchinitVar "Maplebirch.lakeisland.plot" 0>>
 <</widget>>
 
 <<widget "MaplebirchCheck">>
@@ -183,7 +184,7 @@
 <!-- 承诺仪式名称 -->
 <<widget "MaplebirchTemplePromised">>
     <<if setup.mbContains($Maplebirch.Promised, ["Robin", "Sydney"])>>
-        <span class="wraith"><span class="blue">承诺仪式：</span><span class="tentacle">合二为一</span></span>
+        <span class="wraith"><span class="blue">承诺仪式：</span><span class="tentacle">两者如一</span></span>
     <<elseif $Maplebirch.templePromised === "Robin">>
         承诺仪式：<<= $Maplebirch.templePromised.replace('Robin','罗宾')>>
     <<else>>
@@ -192,7 +193,7 @@
 <</widget>>
 <<widget "MaplebirchTemplePromisedBroken">>
     <<if setup.mbContains($Maplebirch.Promised, ["Robin", "Sydney"])>>
-        <span class="wraith"><span class="red">破碎的承诺：</span><span class="tentacle">合二为一</span></span>
+        <span class="wraith"><span class="red">破碎的承诺：</span><span class="tentacle">两者如一</span></span>
     <<elseif $Maplebirch.templePromised === "Robin">>
         破碎的承诺：<<= $Maplebirch.templePromised.replace('Robin','罗宾')>>
     <<else>>

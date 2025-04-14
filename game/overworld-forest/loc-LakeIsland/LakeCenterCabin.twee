@@ -22,7 +22,7 @@
             <<case "cleanest">>
                 <span class="green">岛屿已然洁净如初，仿佛时间倒流，重现往昔荣耀。</span>
         <</switch>>
-		<<if _vivian_location === "island" && $Maplebirch.lakeisland.lock === "lock">>	
+		<<if _vivian_location === "island" && $Maplebirch.lakeisland.lock is "lock">>	
 			<<switch random(1,7)>>
 				<<case 1>>
 					维安勤恳地打扫着木屋的四周，<<nnpc_He "Vivian">>看到了你后微笑地向你招了招手
@@ -41,7 +41,7 @@
 			<</switch>>
 		<</if>>
     	<br><br>
-		<<if $Maplebirch.lakeisland.lock === "lock">>
+		<<if $Maplebirch.lakeisland.lock is "lock">>
 			<<set _clearing to $Maplebirch.lakeisland.decay>>
 			<<set _percent = Math.floor((_clearing/100)*100)>>
 			湖中岛正在重建，
@@ -255,7 +255,7 @@
     <<if $englishtrait >= 3 && $historytrait >= 2>>
         “现在我要开始收拾这个肮脏的地方了，如果你想帮忙可以留下来帮我。”<<He>>朝着一个方向说着，“你要离开的话应该还记得来时的路吧，原路返回应该难不倒你。”
 		<br><br>
-		<<link [[继续|Maplebirch Lake Center Island]]>><<endevent>><<MaplebirchEndEvent>><<set $Maplebirch.lakeisland.lock = "lock">><</link>>
+		<<link [[继续|Maplebirch Lake Center Island]]>><<endevent>><<MaplebirchEndEvent>><<set $Maplebirch.lakeisland.lock to "lock">><</link>>
     <<else>>
         <<He>>朝着一个方向不知道说着什么，但你觉得你该离开了。<<note "语文与历史等级不足" "teal">>
 		<br><br>
@@ -270,24 +270,13 @@
 
     <br><br><<if Weather.isSnow>><<MaplebirchIcon "lakeisland" "house_snow">><<else>><<MaplebirchIcon "lakeisland" "house">><</if>>
     <<link [[进入木屋 (0:01)|Maplebirch Lake Island House]]>><<pass 1>><</link>><br>
-    <<if V.Maplebirch.lakeisland.lock === "unlock">>
-        <<if Weather.isSnow>><<MaplebirchIcon "lakeisland" "backyard_snow">><<else>><<MaplebirchIcon "lakeisland" "backyard">><</if>>
-        <<link [[前往后院 (0:02)|Maplebirch Lake Island Backyard]]>><<pass 2>><</link>>
-
-        <br>
-        <<note "地窖，还没写" "teal">>
-
-        <<if $Maplebirch.Fishinglock && getFishingRodObtainedList().length gt 0 and $fishing_place_lake_island_unlock && window.modUtils.getMod('Terraria Expand Mod')>><!-- 待联动 -->
-	        钓鱼<br>
-	        <<fishingrod_held_icon>><<link [[在森林湖中岛钓鱼|Fishing Bitten]]>><<set $fishing_place to "lake_island">><</link>><br>
-        <</if>>
-    <<else>>
+    <<if $Maplebirch.lakeisland.lock is "lock">>
 		<br>
         <i><span class="teal">四周的设施荒废已久，一切都还没有开始运转。</span></i>
         <br>
         <<if !$Maplebirch.daily.islandclean>>
 			<<if $worn.handheld.name is "feather duster">>
-				<<link [[将羽毛掸子给予维安 (1:00)|Maplebirch Lake Center Island Clean]]>><<pass 60>>
+				<<MaplebirchIcon "gift">><<link [[将羽毛掸子给予维安 (1:00)|Maplebirch Lake Center Island Clean]]>><<pass 60>>
             	<<set $Maplebirch.daily.islandclean to true>><<handheldruined>><<set $Maplebirch.answer to 1>><</link>>
 			<<else>>
 				<<farmicon "clear yard">><<link [[帮助维安清理四周 (1:00)|Maplebirch Lake Center Island Clean]]>><<pass 60>>
@@ -303,6 +292,17 @@
 				<i>如果带着<span class="gold">羽毛掸子</span>给维安或许会增加<<nnpc_He "Vivian">>清理的速度。</i>
 			<</if>>
         <</if>>
+	<<else>>
+        <<if Weather.isSnow>><<MaplebirchIcon "lakeisland" "backyard_snow">><<else>><<MaplebirchIcon "lakeisland" "backyard">><</if>>
+        <<link [[前往后院 (0:02)|Maplebirch Lake Island Backyard]]>><<pass 2>><</link>>
+
+        <br>
+        <<note "地窖，还没写" "teal">>
+
+        <<if $Maplebirch.Fishinglock && getFishingRodObtainedList().length gt 0 and $fishing_place_lake_island_unlock && window.modUtils.getMod('Terraria Expand Mod')>><!-- 待联动 -->
+	        钓鱼<br>
+	        <<fishingrod_held_icon>><<link [[在森林湖中岛钓鱼|Fishing Bitten]]>><<set $fishing_place to "lake_island">><</link>><br>
+        <</if>>
     <</if>>
     <br><br>
     <<if Weather.isSnow>>
@@ -315,7 +315,7 @@
 :: Maplebirch Lake Island House
 <<set $outside to 0>><<set $wardrobe_location to "lake_island">><<effects>>
 <<lake_island_effects>>
-<<if V.Maplebirch.lakeisland.lock === "lock">>
+<<if $Maplebirch.lakeisland.lock is "lock">>
 	<span class="purple">木屋里除了脏乱的蜘蛛网，什么都没有。</span>
 	<br>
 <</if>>
@@ -335,13 +335,13 @@
 	<</if>>
 	<<link [[离开木屋 (0:01)|Maplebirch Lake Center Island]]>><<pass 1>><</link>>
 <<else>>
-    <<if V.Maplebirch.lakeisland.lock === "unlock">>
+    <<if $Maplebirch.lakeisland.Bedroom>>
 		<<if $Maplebirch.lakeisland.yourbed>>
 			<<MaplebirchIcon "lakeisland" "yourbed">><<link [[你的房间 (0:01)|Lake Island Bedroom]]>><<pass 1>><</link>>
 			<br>
 		<</if>>
-    <<MaplebirchIcon "lakeisland" "bed">><<link [[维安的房间 (0:01)|Lake Island Vivian Bedroom]]>><<pass 1>><</link>>
-	<br>
+		<<MaplebirchIcon "lakeisland" "bed">><<link [[维安的房间 (0:01)|Lake Island Vivian Bedroom]]>><<pass 1>><</link>>
+		<br>
     <</if>> 
     
     <<MaplebirchIcon "getouticon">><<link [[离开 (0:01)|Maplebirch Lake Center Island]]>><<pass 1>><</link>>
@@ -570,25 +570,20 @@
 <<lake_island_effects>>
 
 <<gardenicon "plot">><<link [[农田 (0:02)|Lake Island Fields]]>><<pass 2>><<set $eventskip to 1>><</link>>
-<br><br>
+<br>
 <<MaplebirchIcon "lakeisland" "orchard">><<link [[果园 (0:02)|Lake Island Orchard]]>><<pass 2>><<set $eventskip to 1>><</link>>
+<br>
+<<MaplebirchIcon "getouticon">><<link [[返回 (0:02)|Maplebirch Lake Center Island]]>><<pass 2>><</link>>
 
 :: Lake Island Fields
 <<set $outside to 1>><<set $bus to "lakeisland_fields">><<effects>>
 <<plot_effects>>
-<<if !$Maplebirchtest>>
-	<!-- 地点 数量 种类 质量 大小 -->
-	<<plots_init lake_island 99 earth 2 large>>
-	<<set $Maplebirchtest = 1>>
-<</if>>
-<!-- 地点 种类 质量 大小 -->
-/%<<add_plot lake_island earth 2 large>>%/
 
 
 <<display_plot lake_island>>
 
-<<link [[返回 (0:02)|Maplebirch Lake Island Backyard]]>><<pass 2>><</link>>
+<<MaplebirchIcon "getouticon">><<link [[返回 (0:02)|Maplebirch Lake Island Backyard]]>><<pass 2>><</link>>
 
 :: Lake Island Orchard
 
-<<link [[返回 (0:02)|Maplebirch Lake Island Backyard]]>><<pass 2>><</link>>
+<<MaplebirchIcon "getouticon">><<link [[返回 (0:02)|Maplebirch Lake Island Backyard]]>><<pass 2>><</link>>

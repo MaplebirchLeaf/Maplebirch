@@ -1,13 +1,3 @@
-const robinChastityTest = new TimeEvent('onSec', 'robinChastityTest');
-
-robinChastityTest.Cond(() => {
-    return V.RobinTempleInvitation === "templetest" && (V.RobinChastitycheckTime === true || (Time.hour > 6 && Time.hour < 24));
-})
-
-robinChastityTest.Action(() => {
-    robinChastityCheck();
-});
-
 window.robinChastityCheck = function() {
   let isRobinVirginity = C.npc.Robin.virginity.vaginal !== true || C.npc.Robin.virginity.penile !== true;
   if (V.RobinChastitycheckTime === true) {
@@ -184,21 +174,6 @@ window.maplebirchRobinCheck = function() {
   }
 };
 
-const maplebirchRobinTempleWork = new TimeEvent('onHour', 'maplebirchRobinTempleWork');
-
-maplebirchRobinTempleWork.Cond(() => {
-  statusCheck("Robin");
-  return (T.robin_location === "temple" && ["initiate", "monk"].includes(V.Maplebirch.robin.rank) && V.temple_rank !== undefined && V.temple_rank !== "prospective");    
-})
-
-maplebirchRobinTempleWork.Action(() => {
-  if (V.robin_templeWork === "garden") {
-    V.temple_garden++;
-  } else if (V.robin_templeWork === "quarters") {
-    V.temple_quarters++;
-  }
-});
-
 window.weekDayBaileyRobinExempt = function() {
   if (V.robin_grace === 100) return;
   if (["monk"].includes(V.Maplebirch.robin.rank) && V.robin_grace >= 80) {
@@ -206,6 +181,7 @@ window.weekDayBaileyRobinExempt = function() {
     setRobinGrace(V.robin_grace - 10);
   }
 };
+
 // Dom罗宾周收入联动
 window.maplebirchDomRobinMoneyChange = function() {
   const fragment = document.createDocumentFragment();

@@ -1,43 +1,43 @@
 :: Robin Anguish Temple [widget]
 
 <<widget "robin_anguish_temple">>
-	<<if (["initiate"].includes(V.robin_temple_rank) && ($robinromance === 1 || C.npc.Robin.love gte 90)) && ($sydneyromance is 1 or C.npc.Sydney.love gte 90)>>
+	<<if (["initiate"].includes(V.Maplebirch.robin.rank) && ($robinromance === 1 || C.npc.Robin.love gte 90)) && ($sydneyromance is 1 or C.npc.Sydney.love gte 90)>>
 		<<templeicon "trialcontinue">><<link [[牵起罗宾与悉尼的手 (1:00)|Maplebirch Temple Vigil 11]]>><<set $Maplebirch.phase to 1>><<set $Maplebirch.robin.anguish = true>><<pain 8>><</link>><<gpain>>
 		<<handholdingvirginitywarning>><<NPCvirginitywarning "Sydney" "handholding">>
 		<br>
 	<</if>>
-    <<if ["initiate"].includes(V.robin_temple_rank) && ($robinromance === 1 || C.npc.Robin.love gte 90)>>
+    <<if ["initiate"].includes(V.Maplebirch.robin.rank) && ($robinromance === 1 || C.npc.Robin.love gte 90)>>
 		<<templeicon "trialcontinue">><<link [[牵起罗宾的手 (1:00)|Maplebirch Temple Vigil 11]]>><<set $Maplebirch.phase to 2>><<set $Maplebirch.robin.anguish = true>><<pain 8>><</link>><<gpain>><<handholdingvirginitywarning>><<NPCvirginitywarning "Robin" "handholding">>
 		<br>
 	<</if>>
 <</widget>>
 
 <<widget "robin_anguish_talk_1">>
-	<<if ["initiate"].includes(V.robin_temple_rank)>>
+	<<if ["initiate"].includes(V.Maplebirch.robin.rank)>>
 		你看到了罗宾。<<nnpc_he "Robin">>自信地朝你挥了挥手。
 	<</if>>
 <</widget>>
 
 <<widget "robin_anguish_talk_2">>
-	<<if ["initiate"].includes(V.robin_temple_rank)>>
+	<<if ["initiate"].includes(V.Maplebirch.robin.rank)>>
 		罗宾慢慢地把身上的衣服褪去，把<<nnpc_he "Robin">>的衣服交了出去。
 	<</if>>
 <</widget>>
 
 <<widget "robin_anguish_talk_3">>
-	<<if ["initiate"].includes(V.robin_temple_rank)>>
+	<<if ["initiate"].includes(V.Maplebirch.robin.rank)>>
 		一旁的罗宾看到后，也向你们这边赶来寻找你。
 	<</if>>
 <</widget>>
 
 <<widget "robin_anguish_talk_4">>
-	<<if ["initiate"].includes(V.robin_temple_rank)>>
+	<<if ["initiate"].includes(V.Maplebirch.robin.rank)>>
 		还有罗宾
 	<</if>>
 <</widget>>
 
 <<widget "robin_anguish_talk_5">>
-	<<if ["initiate"].includes(V.robin_temple_rank)>>
+	<<if ["initiate"].includes(V.Maplebirch.robin.rank)>>
 		罗宾闭着眼祈祷着，你只听清一点。“……这些都是虚假幻影罢了……怎么会对我造成伤害……这些甚至不如孤儿院的殴打……”尽管这么说，但是<<nnpc_he "Robin">>自己也不信。
 		<br><br>
 	<</if>>
@@ -286,7 +286,7 @@
 	<<set $sydney.rank to "monk">>
 	<<set $sydneySeen.pushUnique("initiate")>>
 	<<set $sydneySeen.pushUnique("monk")>>
-	<<set $robin_temple_rank to "monk">>
+	<<set $Maplebirch.robin.rank to "monk">>
 	<<set $robinSeen.pushUnique("initiate")>>
 	<<set $robinSeen.pushUnique("monk")>>
 	<<set $temple_monk_days to 0>>
@@ -317,7 +317,7 @@
 
 	<<set $grace to 0>>
 	<<set $temple_rank to "monk">>
-	<<set $robin_temple_rank to "monk">>
+	<<set $Maplebirch.robin.rank to "monk">>
 	<<set $robinSeen.pushUnique("initiate")>>
 	<<set $robinSeen.pushUnique("monk")>>
 	<<set $temple_monk_days to 0>>

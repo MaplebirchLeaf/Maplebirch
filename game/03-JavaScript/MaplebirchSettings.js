@@ -12,6 +12,7 @@ window.maplebirchRandomNum = function() {
 window.maplebirchReloadVariables = function() {
   
   // NPC注入npcNamelist
+  //maplebirchNPCInit();
   setup.NPCNameList.pushUnique("Vivian");
   setup.NPCNameList_cn_name[0].pushUnique("维安");
 	setup.NPCNameList_cn_name[1].pushUnique("维安");
@@ -35,7 +36,9 @@ window.maplebirchReloadVariables = function() {
 };
 // 游戏开始时注入的数据
 window.maplebirchStartOnly = function() {
+
   // NPC注入npcNamelist
+  //maplebirchNPCInit();
   setup.NPCNameList.pushUnique("Vivian");
   setup.NPCNameList_cn_name[0].pushUnique("维安");
 	setup.NPCNameList_cn_name[1].pushUnique("维安");

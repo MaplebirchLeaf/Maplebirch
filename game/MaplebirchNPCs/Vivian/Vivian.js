@@ -1,6 +1,6 @@
 // Vivian
-NamedNPC.add(
-  new NamedNPC(
+function maplebirchVivianNPC() {
+  return new NamedNPC(
     'Vivian',
     ['The Lost', '迷失者'],
     ['Vivian', '维安'],
@@ -37,7 +37,7 @@ NamedNPC.add(
     action: "aside",
     desc: "稻草人裙"})
   .setClothes("set","scarecrow")
-);
+};
 
 window.vivianStatusCheck = function() {
   C.npc = C.npc || {};
@@ -63,27 +63,6 @@ window.vivianStatusCheck = function() {
   
 
 };
-
-// 维安介绍文本
-Macro.add('VivianOpinion', {
-  handler: function () {
-    if (C.npc.Vivian.maplebirch_lost !== 0) {
-      if (C.npc.Vivian.maplebirch_lost >= 90) {
-        $(this.output).append('维安 <span class="red">完全迷失于幻境中。</span>');
-      } else if (C.npc.Vivian.maplebirch_lost >= 60) {
-        $(this.output).append('维安 <span class="blue">的意识正被幻境蚕食。</span>');
-      } else if (C.npc.Vivian.maplebirch_lost >= 30) {
-        $(this.output).append('维安 <span class="lblue">正努力挣脱幻境。</span>');
-      } else if (C.npc.Vivian.maplebirch_lost >= 10) {
-        $(this.output).append('维安 <span class="teal">对外界产生了反应。</span>');
-      } else {
-        $(this.output).append('维安 <span class="green">重新感受到了现实。</span>');
-      }
-    } else {
-      $(this.output).append('维安 <span class="green">感谢着你。</span>');
-    }
-  }
-});
 
 window.isVivianSub = function() {
   return (

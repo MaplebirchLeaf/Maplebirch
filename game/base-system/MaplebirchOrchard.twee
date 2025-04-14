@@ -1,0 +1,20 @@
+:: Maplebirch Orchard [widget]
+
+<!-- 农田升级限制 -->
+<<widget "maplebirch_plots_update">>
+    <<switch _args[0]>>
+        <<case lake_island>>
+            <<if $Maplebirch.lakeisland.plot >= 3>>
+                <<set _bed to "earth">>
+                <<set _quality to random(1,3)>>
+                <<set _size to "large">>
+                <<set $Maplebirch.lakeisland.plot = Math.clamp($Maplebirch.lakeisland.plot, 0, 6)>>
+            <</if>>
+        <<default>>
+            <<set _bed to either("earth", "water")>>
+            <<set _quality to random(1,4)>>
+            <<set _size to either("small", "medium", "large")>>
+    <</switch>>
+    <!-- 地点 种类 质量 大小 -->
+    <<add_plot _args[0] _bed _quality _size>>
+<</widget>>

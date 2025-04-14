@@ -1,5 +1,23 @@
 :: Maplebirch VivianSettings [widget]
 
+<<widget "VivianOpinion">>
+    <<if C.npc.Vivian.maplebirch_lost !== 0>>
+        <<if C.npc.Vivian.maplebirch_lost >= 90>>
+            维安 <span class="red">完全迷失于幻境中。</span>
+        <<elseif C.npc.Vivian.maplebirch_lost >= 60>>
+            维安 <span class="blue">的意识正被幻境蚕食。</span>
+         <<elseif C.npc.Vivian.maplebirch_lost >= 30>>
+            维安 <span class="lblue">正努力挣脱幻境。</span>
+        <<elseif C.npc.Vivian.maplebirch_lost >= 10>>
+            维安 <span class="teal">对外界产生了反应。</span>
+        <<else>>
+             维安 <span class="green">重新感受到了现实。</span>
+        <</if>>
+    <<else>>
+        维安 <span class="green">感谢着你。</span>
+    <</if>>
+<</widget>>
+
 <<widget "statsVivian">>
     <!-- 维安未来数据变动 -->
     <<set _vivianMod to (Math.floor(C.npc["Vivian"].maplebirch_lost / 5) + (Math.floor(C.npc["Vivian"].lust / 5)))>>
