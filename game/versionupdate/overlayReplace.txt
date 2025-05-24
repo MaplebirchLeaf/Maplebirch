@@ -1,0 +1,4 @@
+<<switch _key>>
+    <<case "maplebirchModHint">>
+	    <<replace #customOverlayTitle>><<titleMaplebirchModHint>><</replace>>
+	    <<replace #customOverlayContent>><<maplebirchModHint>><</replace>>

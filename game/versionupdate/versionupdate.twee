@@ -2,28 +2,196 @@
 
 <<widget "MaplebirchVariablesVersionUpdate">>
     <!-- v0.2.0.0 -->
-    <<if $robin_temple_rank>>
-        <<set $Maplebirch.robin.rank = $robin_temple_rank>>
-        <<unset $robin_temple_rank>>
+    <<if $Maplebirch>>
+        <<if $robin_temple_rank>>
+            <<set $Maplebirch.robin.rank = $robin_temple_rank>>
+            <<unset $robin_temple_rank>>
+        <</if>>
+        <<if $frequencyalready>>
+            <<set $Maplebirch.frequencyalready = $frequencyalready>>
+            <<unset $frequencyalready>>
+        <</if>>
+        <<if $robin_examination>>
+            <<set $Maplebirch.robin.examination = $robin_examination>>
+            <<unset $robin_examination>>
+        <</if>>
+        <<if $robin_anguish>>
+            <<set $Maplebirch.robin.anguish = $robin_anguish>>
+            <<unset $robin_anguish>>
+        <</if>>
+        <<if $sydney_bed_frequency>>
+            <<set $Maplebirch.sydney.bed_frequency = $sydney_bed_frequency>>   
+            <<unset $sydney_bed_frequency>>
+        <</if>>
+        <<if $robintemplespeed>>
+            <<set $Maplebirch.robin.temple_speed = $robintemplespeed>>
+            <<unset $robintemplespeed>>
+        <</if>>
+        <<if $Maplebirch.FruitSeeds_know>>
+            <<set $Maplebirch.FruitSeeds.know = $Maplebirch.FruitSeeds_know>>
+            <<unset $Maplebirch.FruitSeeds_know>>
+        <</if>>
+        <<if $Maplebirch.FruitSeeds && $Maplebirch.FruitSeeds.planted>>
+            <<set $Maplebirch.FruitSeeds.lake_island = $Maplebirch.FruitSeeds.lake_island || {}>>
+            <<set $Maplebirch.FruitSeeds.lake_island.planted = $Maplebirch.FruitSeeds.planted || []>>
+            <<unset $Maplebirch.FruitSeeds.planted>>
+        <</if>>
+        <<if $robin_grace>>
+            <<set $Maplebirch.robin.grace = $robin_grace>>
+            <<unset $robin_grace>>
+        <</if>>
+        <<if $RobinTempleInvitation>>
+            <<set $Maplebirch.robin.temple_invitation = $RobinTempleInvitation>>
+            <<unset $RobinTempleInvitation>>
+        <</if>>
     <</if>>
-    <<if $frequencyalready>>
-        <<set $Maplebirch.frequencyalready = $frequencyalready>>
-        <<unset $frequencyalready>>
-    <</if>>
-    <<if $robin_examination>>
-        <<set $Maplebirch.robin.examination = $robin_examination>>
-        <<unset $robin_examination>>
-    <</if>>
-    <<if $robin_anguish>>
-        <<set $Maplebirch.robin.anguish = $robin_anguish>>
-        <<unset $robin_anguish>>
-    <</if>>
-    <<if $sydney_bed_frequency>>
-        <<set $Maplebirch.sydney.bed_frequency = $sydney_bed_frequency>>   
-        <<unset $sydney_bed_frequency>>
-    <</if>>
-    <<if $robintemplespeed>>
-        <<set $Maplebirch.robin.temple_speed = $robintemplespeed>>
-        <<unset $robintemplespeed>>
-    <</if>>
+<</widget>>
+
+<<widget "maplebirchModHintContent">>
+	<h1>秋枫白桦Dol扩展mod（0.2.0.0版本）</h1>
+<ul>
+    <li><a href="#introduction">基本介绍</a></li>
+    <li><a href="#discussion">反馈与讨论方式</a></li>
+    <li><a href="#changelog">更新日志</a>
+        <ul>
+            <li><a href="#0200">v0.2.0.0</a></li>
+        </ul>
+    </li>
+    <li><a href="#details">详细内容介绍</a>
+        <ul>
+            <li><a href="#robinTemple">1. 罗宾-神殿线</a></li>
+            <li><a href="#templequarters">2. 神殿的恋爱对象宿舍</a></li>
+            <li><a href="#orchard">3. 新建立的果园系统</a></li>
+            <li><a href="#newAttribut">4. 新的属性</a></li>
+        </ul>
+    </li>
+    <li><a href="#thanks">模组致谢</a></li>
+    <li><a href="#JustPancake">未实现的功能构想</a></li>
+</ul>
+<h2 id="introduction">基本介绍</h2>
+<p>本模组是dol的综合扩展mod，制作方向是完善dol不足的地方以及全新的NPC与恋爱对象和更多的机制与内容。</p>
+<p>本模组从开始的只有悉尼的神殿宿舍开始制作，到现在0.2.0.0版本已经有了完整的神殿-罗宾线还有全新的水果树与浆果圃机制。</p>
+<p>接下来模组将会更新更多的内容，优化并不断完善，欢迎各位提供测试与建议。</p>
+
+<h2 id="discussion">反馈与讨论方式</h2>
+<p>bug反馈与讨论群群号：1039354581 密码：Dol的Maplebirch</p>
+<p>贴吧模组发布贴：[秋枫白桦Dol扩展mod模组介绍&更新日志存放处](https://tieba.baidu.com/p/9573884543?pid=151819492655&cid=0#151819492655) </p>
+<p>直接在模组的github仓库中提交issues或者在反馈群里述说。</p>
+
+<h2 id="changelog">更新日志</h2>
+<p>注意：更新日志只含0.04-alpha以及之后的版本，之前的内容请见<a href="#details">详细内容介绍</a>。</p>
+
+<h3 id="0200">v0.2.0.0</h3>
+<p>（注意0.2.0.0只适配0.5.4.x版本）</p>
+<h4>新增内容</h4>
+<ol>
+<li>新增加果园（果树与浆果）机制。</li>
+<li>完善并修复了罗宾-神殿线）</li>
+<li>修复了先前版本的bug</li>
+<li>新增果园的成就。</li>
+<li>将恋爱对象显示的属性变为6种，使得罗宾的神殿信仰属性得以显示。</li>
+</ol>
+<h4>问题修复</h4>
+<ol>
+<li>暂时封印维安与湖中岛相关内容。</li>
+<li>优化罗宾承诺仪式触发条件。</li>
+</ol>
+<h4>模组致谢</h4>
+<ol>
+<li>
+<p>感谢 泰拉拓展模组以及更多恋人模组得作者 苯环 的代码建议以及帮助</p>
+</li>
+<li>
+<p>感谢 dom罗宾模组制作者 零环零幻想 的代码思路。</p>
+</li>
+<li>
+<p>感谢 反馈群以及交流群提供的模组思路。</p>
+</li>
+<li>
+<p>感谢 模拟人生作者 丧心 提供最初的代码基础。</p>
+</li>
+</ol>
+
+<h2 id="details">详细内容介绍</h2>
+<h3 id="robinTemple">1.罗宾-神殿线</h3>
+<h4>简介</h4>
+<p>当PC加入神殿后，罗宾的好感到达100时穿戴贞操带与罗宾战斗时会触发检测，罗宾还需要一定的自信。</p>
+<h4>神殿考核</h4>
+<ul>
+    <li>罗宾前往神殿考核有时间检测，需要多陪陪罗宾。</li>
+    <li>罗宾拥有童贞时，100%可以通过神殿的考核，当罗宾失去童贞时，随着罗宾的自信的大小通过概率随之增大。如果罗宾考核失败后，如果日志没有提示罗宾加入神殿时间，将要重新邀请罗宾加入神殿。</li>
+    <li>罗宾加入后将会有神殿信仰属性，以及属于罗宾的恩典值并且会在周六晚上尝试苦难审判，在周日中午弥撒，并在假期的非周末的上午9点-下午15点在神殿工作。</li>
+    <li>罗宾加入神殿后将会穿上贞操带，护肛版。</li>
+    <li>罗（加入了Don罗宾后）罗宾的固定周收入会根据罗宾的恩典值添加。最大恩典100，每周固定收入+1000</li>
+</ul>
+<h4>苦难审判</h4>
+<p>PC可以在修女/修士晋升仪式时，帮助悉尼和罗宾完成苦难审判，如果没有PC的帮助，罗宾与悉尼将永远不会晋升。</p>
+<h4>承诺仪式</h4>
+<p>（此模块与Dom罗宾有联动）与悉尼同款的神殿承诺仪式，是新的承诺仪式坑位——（用于未来的双承诺仪式）</p>
+<p>PC需要和悉尼类似的前置条件使罗宾褪去贞操带</p>
+<h4>罗宾的神殿月度惩罚/罗宾与悉尼的神殿月度惩罚</h4>
+<p>在神殿每月一次的检测里，如果罗宾加入神殿后失去童贞被神殿发现，将会进行惩罚。（罗宾没有祈祷室）</p>
+<h4>罗宾的忏悔室</h4>
+<p>在罗宾加入神殿后，有概率在神殿的忏悔室遇到罗宾。</p>
+
+<h3 id="templequarters">2.神殿的恋爱对象宿舍</h3>
+<h4>简介</h4>
+<p>在神殿中添加了罗宾与悉尼的宿舍。</p>
+<h4>悉尼宿舍</h4>
+<p>前置条件：需要在悉尼的祈祷处晕倒。</p>
+<p>在西里斯接悉尼回家时，可以选择挽留悉尼。</p>
+<h4>罗宾宿舍</h4>
+<p>前置条件：需要在罗宾的祈祷处晕倒。</p>
+<p>夜间有遭遇战夜袭</p>
+
+<h3 id="orchard">3.新建立的果园系统</h3>
+<h4>简介</h4>
+<p>本模组建立了独特的果树机制以及浆果机制（新添加的葡萄以及蓝莓的种子暂无获取方式）</p>
+<h4>种子获取</h4>
+<p>拥有采摘条件的水果会根据护理技能的大小判断概率获得对应水果的种子</p>
+<p>香蕉吸芽可以在集市购买或者码头盗取</p>
+<p>樱桃和椰枣在超市购买（奸商皮埃尔）</p>
+<p>酸橙在神殿的花园中工作概率获得</p>
+<h4>果树的种植与收获</h4>
+<p>阶段分为 种子-幼芽-树苗-小树-树-大树</p>
+<p>种子以及幼芽需要浇水，树苗至大树需要施肥，具体条件可以注意游戏提示</p>
+<p>果树成熟之后会开始结果，果树会存储3天的果实量，在化肥不足时可以3天后再采摘</p>
+<p>小树至大树根据化肥的次数决定</p>
+<h4>浆果的种植与收获</h4>
+<p>阶段分为 种子-幼芽-花期-成丛</p>
+<p>种子每个阶段都需要浇水</p>
+<p>果树成熟之后会开始结果，会根据土壤的质量缩减结果的天数间隔</p>
+
+<h3 id="newAttribut">4.新的属性</h3>
+<h4>简介</h4>
+<p>本模组添加了许多暂时没有用的属性，包括理智属性、恐惧值、记忆技能。</p>
+
+<h2 id="thanks">模组致谢</h2>
+<ul>
+<li>
+<p>感谢 泰拉拓展模组以及更多恋人模组得作者 苯环 的代码建议以及帮助。</p>
+</li>
+<li>
+<p>感谢 dom罗宾模组制作者 零环零幻想 的代码思路。</p>
+</li>
+<li>
+<p>感谢 反馈群以及交流群提供的模组思路。</p>
+</li>
+<li>
+<p>感谢 模拟人生作者 丧心 提供最初的代码基础</p>
+</li>
+</ul>
+
+<h2 id="JustPancake">未实现的功能构想</h2>
+（画饼ing）
+<ol>
+    <li>三种神圣转化的增强。</li>
+    <li>维维安的幻境历史事件。</li>
+    <li>湖中岛的完善。</li>
+    <li>古董店。</li>
+    <li>恋爱对象的转化。</li>
+    <li>魔法系统</li>
+    <li>更多奇奇怪怪的功能。</li>
+</ol>
+
 <</widget>>

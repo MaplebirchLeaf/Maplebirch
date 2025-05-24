@@ -90,6 +90,8 @@
     <<MaplebirchinitVar "Maplebirch.robin.temple_speed" 0>>
     <!-- 悉尼相关变量 -->
     <<MaplebirchinitVar "Maplebirch.sydney.bed_frequency" 0>>
+    <!-- 维维安相关变量 -->
+    <<MaplebirchinitVar "Maplebirch.vivianromance" 0>>
     <!-- 属性变量 -->
     <<MaplebirchinitVar "Maplebirch.Sanity" 1000>>
     <<MaplebirchinitVar "Maplebirch.fearmax" 10000>>
@@ -108,7 +110,7 @@
     <</if>>
 <</widget>>
 
-<!-- 组变量创建 -->
+<!-- 字符串变量创建 -->
 <<widget "MaplebirchgroupVariable">>
     <!-- 总组变量 -->
     <<set $Maplebirch = $Maplebirch || {}>>
@@ -131,13 +133,30 @@
     <!-- 湖中岛相关变量 -->
     <<set $Maplebirch.lakeisland = $Maplebirch.lakeisland || {}>>
     <<set $Maplebirch.lakeisland.furniture = $Maplebirch.lakeisland.furniture || []>>
-    <!-- 维安相关变量 -->
+    <!-- 神殿相关变量 -->
+    <<set $Maplebirch.temple = $Maplebirch.temple || {}>>
+    <!-- 维维安相关变量 -->
     <<set $Maplebirch.vivian = $Maplebirch.vivian || {}>>
+    <<set $Maplebirch.vivian.bus = $Maplebirch.vivian.bus || "">>
     <<set $Maplebirch.vivianSeen = $Maplebirch.vivianSeen || []>>
     <<set $Maplebirch.vivian.items = $Maplebirch.vivian.items || []>>
+    <!-- 果园变量 记得写完后全部替换成对象变量 -->
+    <<set $Maplebirch.orchard = $Maplebirch.orchard || {}>>
+    <<set $Maplebirch.Fruit = $Maplebirch.Fruit || {}>>
+    <<set $Maplebirch.tendingvars = $Maplebirch.tendingvars || {}>>
+    <<set $Maplebirch.FruitSeeds = $Maplebirch.FruitSeeds || {}>>
+    <<set $Maplebirch.FruitSeeds.know = $Maplebirch.FruitSeeds.know || []>>
+    <<set $Maplebirch.FruitSeeds.unlock = $Maplebirch.FruitSeeds.unlock || []>>
+    <!-- 玩家变量 -->
+    <<set $Maplebirch.player = $Maplebirch.player || {}>>   
+    <<set $Maplebirch.player.items = $Maplebirch.player.items || {}>>
+    <<set $Maplebirch.player.effects = $Maplebirch.player.effects || []>>
     <!-- 其它变量 -->
+    <<set $Maplebirch.effect = $Maplebirch.effect || {}>>
     <<set $Maplebirch.MemoryChoose = $Maplebirch.MemoryChoose || "">>
     <<set $Maplebirch.frequencyalready = $Maplebirch.frequencyalready || {}>>
+    <<set $options.Maplebirch = $options.Maplebirch || {}>>
+    <<set $options.Maplebirch.ModHint = $options.Maplebirch.ModHint || true>>
 <</widget>>
 
 <!-- 全局临时递归检测 -->
@@ -150,7 +169,7 @@
     <<orgasm>>
 	<<switch _args[0]>>
         <<case "lakeislandTending">>
-            注意到你的痉挛，维安过来查看你的状况。然而，当<<nnpc_he "Vivian">>明白发生了什么事后，<<nnpc_he "Vivian">>停了下来，看着你从高潮的余韵之中缓过来。你的脸涨得通红，你们都避免眼神接触，努力装作什么都没发生。
+            注意到你的痉挛，维维安过来查看你的状况。然而，当<<nnpc_he "Vivian">>明白发生了什么事后，<<nnpc_he "Vivian">>停了下来，看着你从高潮的余韵之中缓过来。你的脸涨得通红，你们都避免眼神接触，努力装作什么都没发生。
 			<<gtrauma>><<gstress>><<trauma 6>><<stress 6>><<Maplebirchnpcincr Vivian lust 1>><<glust>>
     <</switch>>
 	<<if $_hidden>>
@@ -183,7 +202,7 @@
 
 <!-- 承诺仪式名称 -->
 <<widget "MaplebirchTemplePromised">>
-    <<if setup.mbContains($Maplebirch.Promised, ["Robin", "Sydney"])>>
+    <<if mbContains($Maplebirch.Promised, ["Robin", "Sydney"])>>
         <span class="wraith"><span class="blue">承诺仪式：</span><span class="tentacle">两者如一</span></span>
     <<elseif $Maplebirch.templePromised === "Robin">>
         承诺仪式：<<= $Maplebirch.templePromised.replace('Robin','罗宾')>>
@@ -192,7 +211,7 @@
     <</if>>
 <</widget>>
 <<widget "MaplebirchTemplePromisedBroken">>
-    <<if setup.mbContains($Maplebirch.Promised, ["Robin", "Sydney"])>>
+    <<if mbContains($Maplebirch.Promised, ["Robin", "Sydney"])>>
         <span class="wraith"><span class="red">破碎的承诺：</span><span class="tentacle">两者如一</span></span>
     <<elseif $Maplebirch.templePromised === "Robin">>
         破碎的承诺：<<= $Maplebirch.templePromised.replace('Robin','罗宾')>>
@@ -203,19 +222,52 @@
 
 <!-- 时效性日志 -->
 <<widget "MaplebirchTimeliness">>
-    <<if ["test_superslowly","test_slowly","test_quickly","templetest"].includes($RobinTempleInvitation)>>
+    <<if ["test_superslowly","test_slowly","test_quickly","templetest"].includes($Maplebirch.robin.temple_invitation)>>
         <<RobinTimelinessPrint>><li>
         罗宾 <span class="gold"><<print $Maplebirch.RobinTempleTime>></span> 或许在神殿进行测试。
-        <<if C.npc.Robin.lovestage < 5 && ["test_superslowly","test_slowly"].includes($RobinTempleInvitation)>>
+        <<if C.npc.Robin.lovestage < 5 && ["test_superslowly","test_slowly"].includes($Maplebirch.robin.temple_invitation)>>
             <<nnpc_He "Robin">>暂时将此事搁置了。<<note "多陪陪罗宾吧！" "teal">>
         <</if>></li>
     <</if>>
-    <<if $RobinTempleInvitation is "ChastityTestfail">>
+    <<if $Maplebirch.robin.temple_invitation is "ChastityTestfail">>
         <li>罗宾 今日的神殿测试<span class="red">失败</span>了。</li>
     <</if>>
-    <<if $RobinTempleInvitation is "ChastityTestsuccess">>
+    <<if $Maplebirch.robin.temple_invitation is "ChastityTestsuccess">>
         <li>罗宾 今日的神殿测试<span class="green">成功</span>了。</li>
     <</if>>
+<</widget>>
+
+<!-- 模组介绍 -->
+
+<<widget "maplebirchModHintMobile">>
+    <input type="button" class="saveMenuButton maplebirchModHintMobile" value="" onclick="maplebirchModHintClicked()">
+<</widget>>
+
+<<widget "maplebirchModHint">>
+	<<if !_maplebirchModHintFilter>>
+		<<set _maplebirchModHintFilter to "">>
+	<</if>>
+	<span class="searchButtons">
+		<<textbox "_maplebirchModHintTextbox" _maplebirchModHintFilter>>
+		<<button 搜索>>
+			<<run maplebirchModSearchButtonClicked()>>
+		<</button>>
+	</span>
+	<div id="maplebirchModHintContent">
+		<<maplebirchModHintContent>>
+	</div>
+<</widget>>
+
+<<widget "titleMaplebirchModHint">>
+	<<setupTabs>>
+	<div id="overlayTabs" class="tab">
+		<<closeButtonMobile>>
+		<<button "模组介绍">>
+			<<toggleTab>>
+			<<replace #customOverlayContent>><<maplebirchModHint>><</replace>>
+		<</button>>
+	</div>
+	<<closeButton>>
 <</widget>>
 
 <!-- 秋枫白桦面板设置 -->
@@ -227,30 +279,90 @@
 <</widget>>
 
 <<widget "MaplebirchSystemButton">>
-    <<if $Maplebirch.bag && $options.bag>>
-    	<<button "<<MaplebirchIcon \"Maplebirch\">>行囊袋">>
+    <<if $Maplebirch.bag && $options.Maplebirch.bag>>
+    	<<button "<<MaplebirchIcon \"Maplebirch\">>枫桦总控">>
     	    <<iModReplace "MaplebirchSystemOverlay">>
     	<</button>>
 	<</if>>
 <</widget>>
 
 <<widget "MaplebirchSystemOverlay">>
-	<<replace #customOverlayTitle>><<titleMaplebirchBag>><</replace>>
-	<<replace #customOverlayContent>><<MaplebirchBag1>><</replace>>
+	<<replace #customOverlayTitle>><<titleMaplebirch>><</replace>>
+	<<replace #customOverlayContent>><<MaplebirchItems>><</replace>>
 <</widget>>
 
-<<widget "titleMaplebirchBag">>
+<<widget "titleMaplebirch">>
 	<<setupTabs>>
 	<div id="overlayTabs" class="tab">
 		<<closeButtonMobile>>
-		<<button "行囊">>
+		<<button "面板">>
 			<<toggleTab>>
-			<<replace #customOverlayContent>><<MaplebirchBag1>><</replace>>
+			<<replace #customOverlayContent>><<MaplebirchItems>><</replace>>
 		<</button>>
 	</div>
 	<<closeButton>>
 <</widget>>
 
-<<widget "MaplebirchBag1">>
-    暂无。
+<<widget "MaplebirchItems">>
+    <div class="maplebirch-Grid ">
+        <div class="no-numberify" style=" align-self: center">
+            <div class="maplebirch-image-frame">
+                <img src="img/ui/maplebirch_Vitruvian.png">
+            </div>
+            <div class="maplebirch-image-frame">
+                <img src="img/ui/maplebirch_Vitruvian.png">
+            </div>
+        </div>
+        <div class="no-numberify" style="grid-column: 1 / -1; flex: 1;">
+            <span class="gold"><b>你目前的物品：</b></span>
+            <div class="maplebirch-inventory" id="ItemsMain">
+                <<for _key, _item range $Maplebirch.player.items>>
+                    <<capture _key, _item>>
+                        <<set $_isStackable to _item.type.includes('stackable')>>
+                        <div class="maplebirch-slot" id="ItemsSecondary">
+                            <<button '<mouse class="tooltip-image"><img class="maplebirch-tending_icon" @src="`img/misc/icon/maplebirch_items/` + _item.icon"><span><<print _item.description>></span></mouse><<if $_isStackable>><span class="maplebirch-count"><<print _item.amount>></span><</if>>'>>
+                                <<replace "#itemInfoTempSolid">>
+                                    <div id="itemInfoTemp">
+                                        <<set $_isLight to _item.type.includes('light') ? "wraith" : "">>
+                                        <img class="icon" @src="`img/misc/icon/maplebirch_items/` + _item.icon"><span @class="$_isLight">
+                                        <span @class="_item.quality"><b><<print window.modUtils.getMod('ModI18N') ? _item.cn_name : _item.name>></b></span>
+                                        </span><mouse class="tooltip linkBlue">(?)<span><<print _item.effect_description>></span></mouse>
+                                        <hr>
+                                        <<print _item.description>>
+                                        <hr>
+                                        <div class="maplebirchLinks" style="text-align: center" id="maplebirchitemlink">
+                                            <<maplebirchItemsLink _item>>
+                                        </div>
+                                    </div>
+                                <</replace>>
+                                <<run maplebirchItems.Show(_item, "ItemsMain", "ItemsSecondary", ".maplebirch-slot#ItemsSecondary")>>
+                            <</button>>
+                        </div>
+                    <</capture>>
+                <</for>>
+            </div>
+            <template id="itemInfoTempSolid"><div id="itemInfoTemp"></div></template>
+        </div>
+    </div>
+    
 <</widget>>
+
+<<widget "maplebirchItemsLink">>
+    <<set _item to _args[0]>>
+    <<if _item.type.includes('useable')>>
+        <<if $Maplebirch.player.effects.includes(_item.effect)>>
+            <<link "取消">>
+                <<run $Maplebirch.player.effects.delete(_item.effect)>>
+                <<replace "#maplebirchitemlink">><<maplebirchItemsLink _item>><</replace>>
+            <</link>>
+        <<else>>
+            <<link "启用">>
+                <<run $Maplebirch.player.effects.pushUnique(_item.effect)>>
+                <<replace "#maplebirchitemlink">><<maplebirchItemsLink _item>><</replace>>
+            <</link>>
+        <</if>>
+    <<else>>
+        /
+    <</if>>
+<</widget>>
+

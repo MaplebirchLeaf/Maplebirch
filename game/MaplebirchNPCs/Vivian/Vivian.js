@@ -2,8 +2,8 @@
 function maplebirchVivianNPC() {
   return new NamedNPC(
     'Vivian',
-    ['The Lost', '迷失者'],
-    ['Vivian', '维安'],
+    ['the Lost', '迷失者'],
+    ['Vivian', '维维安'],
     'human'
   )
   .Init('f', 'teen')
@@ -52,16 +52,28 @@ window.vivianStatusCheck = function() {
   } else {
     V.Maplebirch.vivian.state = "";
   }
-
-  // 维安数值
+  // 维维安数值
   maplebirchVivianValue();
-  // 维安位置
+  // 维维安位置
   maplebirchVivianLocations();
-  // 维安头衔
+  // 维维安头衔
   maplebirchVivianTitle();
-
   
-
+  if (T.vivian_location === "island" && !V.Maplebirch.lakeisland.lock === "lock") {
+    switch (Time.hour) {
+      case 18:
+        V.Maplebirch.vivian.bus = "bath";
+        break;
+      case 8:case 9:
+        V.Maplebirch.vivian.bus = "stroll";
+        break;
+      case 22:case 23:case 0:case 1:case 2:case 3:case 4:case 5:case 6:
+        V.Maplebirch.vivian.bus = "room";
+        break;
+      default:
+        V.Maplebirch.vivian.bus = "";
+    }
+  }
 };
 
 window.isVivianSub = function() {
@@ -70,7 +82,7 @@ window.isVivianSub = function() {
   );
 };
 
-// 维安属性变化
+// 维维安属性变化
 window.isVivianAttribute = function(attribute) {
   C.npc = C.npc || {};
   C.npc.Vivian = C.npc.Vivian || {};

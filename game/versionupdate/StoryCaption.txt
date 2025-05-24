@@ -1,0 +1,4 @@
+<<if $options.Maplebirch.ModHint>>
+    <<maplebirchModHintMobile>>
+<</if>>
+<<if $options.sidebarStats isnot "disabled">>

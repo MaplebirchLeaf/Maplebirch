@@ -1,8 +1,8 @@
 window.robinChastityCheck = function() {
-  let isRobinVirginity = C.npc.Robin.virginity.vaginal !== true || C.npc.Robin.virginity.penile !== true;
-  if (V.RobinChastitycheckTime === true) {
+  const isRobinVirginity = C.npc.Robin.virginity.vaginal !== true || C.npc.Robin.virginity.penile !== true;
+  if (V.RobinChastitycheckTime) {
+    delete V.RobinChastitycheckTime;
     V.RobinTempleTestTip = true;
-    V.RobinChastitycheckTime = undefined;
     V.RobinChastitycheckTime_lock = true;
     V.RobinChastityTestresult = true;
     const fragment = document.createDocumentFragment();
@@ -20,22 +20,22 @@ window.robinChastityCheck = function() {
     const fragment = document.createDocumentFragment();
       if (isRobinVirginity) {
         fragment.append(wikifier("RobinChastityTestfail"));
-        V.RobinTempleInvitation = "ChastityTestfail";
+        V.Maplebirch.robin.temple_invitation = "ChastityTestfail";
         if (V.RobinChastityFire) {
           fragment.append(wikifier("RobinChastityTestsuccess"));
-          V.RobinTempleInvitation = "ChastityTestsuccess";
+          V.Maplebirch.robin.temple_invitation = "ChastityTestsuccess";
         }
     } else {
         fragment.append(wikifier("RobinChastityTestsuccess"));
-        V.RobinTempleInvitation = "ChastityTestsuccess";
+        V.Maplebirch.robin.temple_invitation = "ChastityTestsuccess";
     }
   } 
 };
 
 window.setRobinGrace = function(value) {
-  if (V.robin_grace === 100) return 100;
-  if (typeof value === "number") {V.robin_grace = Math.max(0, Math.min(value, 100));}
-  return V.robin_grace;
+  if (V.Maplebirch.robin.grace === 100) return 100;
+  if (typeof value === "number") {V.Maplebirch.robin.grace = Math.max(0, Math.min(value, 100));}
+  return V.Maplebirch.robin.grace;
 };
 
 window.dailyUpdateRobinValue = function() {
@@ -46,8 +46,8 @@ window.dailyUpdateRobinValue = function() {
     setRobinHoliness(setRobinHoliness() - 1);
   }
   
-  if (V.robin_grace === 100) return 100;
-  if (typeof V.robin_grace !== "number") V.robin_grace = 0;
+  if (V.Maplebirch.robin.grace === 100) return 100;
+  if (typeof V.Maplebirch.robin.grace !== "number") V.Maplebirch.robin.grace = 0;
   let increment;
   if (Time.weekDay === 1) {
     increment = 3;
@@ -61,8 +61,8 @@ window.dailyUpdateRobinValue = function() {
   if (V.Maplebirch.Robin_pendant && increment >= 0) {
     increment *= 2;
   }
-  setRobinGrace(V.robin_grace + increment);
-  return V.robin_grace;
+  setRobinGrace(V.Maplebirch.robin.grace + increment);
+  return V.Maplebirch.robin.grace;
 };
 
 window.initRobinHoliness = function(initialValue = 0) {
@@ -87,7 +87,7 @@ window.setRobinHoliness = function(value) {
 
 window.isRobinTempleRitual = function() {
   return (
-    ["initiate", "monk"].includes(V.Maplebirch.robin.rank) && (V.isRobinTempleRitual === true)
+    ["initiate", "monk", "priest"].includes(V.Maplebirch.robin.rank) && (V.isRobinTempleRitual === true)
   );
 };
 
@@ -99,7 +99,7 @@ window.isRobinTempleAnguish = function() {
 
 window.isRobinTempleExamination = function() {
   return (
-    ["initiate", "monk"].includes(V.Maplebirch.robin.rank) && (V.Maplebirch.robin.examination === true)
+    ["initiate", "monk", "priest"].includes(V.Maplebirch.robin.rank) && (V.Maplebirch.robin.examination === true)
   );
 };
 
@@ -135,11 +135,9 @@ window.maplebirchRobinCheck = function() {
     if (Time.weekDay === 1 && Time.hour === 0) {
       V.robin_templeWork = "sleep";
     }
+  } else {
+    delete V.robin_templeWork;
   }
-  /*  V.Maplebirch.dailey
-  const fragment = document.createDocumentFragment();
-
-  fragment.append(wikifier("robinSchedule"));*/
 
   T.robin_location_message = T.robin_location;
 
@@ -174,20 +172,12 @@ window.maplebirchRobinCheck = function() {
   }
 };
 
-window.weekDayBaileyRobinExempt = function() {
-  if (V.robin_grace === 100) return;
-  if (["monk"].includes(V.Maplebirch.robin.rank) && V.robin_grace >= 80) {
-    V.robinmoney += 400;
-    setRobinGrace(V.robin_grace - 10);
-  }
-};
-
 // Dom罗宾周收入联动
 window.maplebirchDomRobinMoneyChange = function() {
   const fragment = document.createDocumentFragment();
-  if (V.weeklyMoneyFixedChange && V.robin_grace) {
+  if (V.weeklyMoneyFixedChange && V.Maplebirch.robin.grace) {
     fragment.append(wikifier("weeklymoneycheck"));
-    V.weeklyMoneyFixedChange += V.robin_grace * 10;
+    V.weeklyMoneyFixedChange += V.Maplebirch.robin.grace * 10;
 
     V.robinmoney += V.weeklyMoneyFixedChange + V.weeklyMoneyRandomChange - V.rentShouldPay;
     if (V.robinmoney < 0 && V.robinpaid !== 1) {

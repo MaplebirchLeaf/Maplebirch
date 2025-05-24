@@ -42,11 +42,12 @@ window.dailyMaplebirchCheck = function() {
 
   fragment.append(wikifier("maplebirch_daily_unset"));
   fragment.append(wikifier("maplebirch_daily_set"));
-  fragment.append(dailyMaplebirchNPCEffects());
+  dailyMaplebirchNPCEffects()
+  maplebirchFruit.DayCheck();
 };
 
 // 每日6时刷新点，含有每日变量
-window.dailyMaplebirchReset =function() {
+window.dawnMaplebirchCheck =function() {
   const fragment = document.createDocumentFragment();
 
   fragment.append(wikifier("maplebirch_dawn_unset"));
@@ -54,16 +55,12 @@ window.dailyMaplebirchReset =function() {
 };
 
 // 每周刷新点，含有每周变量
-window.weeklyMaplebirchReset =function() {
+window.weeklyMaplebirchCheck =function() {
   const fragment = document.createDocumentFragment();
 
   fragment.append(wikifier("maplebirch_weekly_unset"));
   fragment.append(wikifier("maplebirch_weekly_set"));
   // 罗宾每周变量 
-  if (window.modUtils.getMod('DomRobin')) {
-    maplebirchDomRobinMoneyChange();
-  } else {
-    weekDayBaileyRobinExempt();
-  }
+  if (window.modUtils.getMod('DomRobin')) {maplebirchDomRobinMoneyChange();}
 };
 

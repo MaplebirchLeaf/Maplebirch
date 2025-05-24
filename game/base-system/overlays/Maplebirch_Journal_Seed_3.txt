@@ -1,0 +1,18 @@
+					<<for _i to 0; _i lt _orchard_keys.length; _i++>>
+						<<set _tooltip to window.modUtils.getMod('ModI18N') ? setup.maplebirchFruiter[_orchard_keys[_i]].cn_name : setup.maplebirchFruiter[_orchard_keys[_i]].name>>
+						<<set _icon to setup.maplebirchFruiter[_orchard_keys[_i]].icon>>
+						<<if $Maplebirch.FruitSeeds.know.includes(setup.maplebirchFruiter[_orchard_keys[_i]].fruit_name + "_seed")>>
+							<div class="item" @tooltip="_tooltip">
+								<<icon `"maplebirch_fruits/" + _icon`>>
+							</div>
+						<<else>>
+							<div class="item unknown" tooltip="未知种子">
+								<<mysteryicon>>
+							</div>
+						<</if>>
+					<</for>>
+				</div>
+			</details>
+		<</if>>
+	<</if>>
+	<br>

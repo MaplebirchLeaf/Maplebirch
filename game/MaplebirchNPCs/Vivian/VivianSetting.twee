@@ -3,23 +3,23 @@
 <<widget "VivianOpinion">>
     <<if C.npc.Vivian.maplebirch_lost !== 0>>
         <<if C.npc.Vivian.maplebirch_lost >= 90>>
-            维安 <span class="red">完全迷失于幻境中。</span>
+            维维安 <span class="red">完全迷失于幻境中。</span>
         <<elseif C.npc.Vivian.maplebirch_lost >= 60>>
-            维安 <span class="blue">的意识正被幻境蚕食。</span>
+            维维安 <span class="blue">的意识正被幻境蚕食。</span>
          <<elseif C.npc.Vivian.maplebirch_lost >= 30>>
-            维安 <span class="lblue">正努力挣脱幻境。</span>
+            维维安 <span class="lblue">正努力挣脱幻境。</span>
         <<elseif C.npc.Vivian.maplebirch_lost >= 10>>
-            维安 <span class="teal">对外界产生了反应。</span>
+            维维安 <span class="teal">对外界产生了反应。</span>
         <<else>>
-             维安 <span class="green">重新感受到了现实。</span>
+             维维安 <span class="green">重新感受到了现实。</span>
         <</if>>
     <<else>>
-        维安 <span class="green">感谢着你。</span>
+        维维安 <span class="green">感谢着你。</span>
     <</if>>
 <</widget>>
 
 <<widget "statsVivian">>
-    <!-- 维安未来数据变动 -->
+    <!-- 维维安未来数据变动 -->
     <<set _vivianMod to (Math.floor(C.npc["Vivian"].maplebirch_lost / 5) + (Math.floor(C.npc["Vivian"].lust / 5)))>>
 	<<set _vivianHP to 200 + (15 * _vivianMod)>>
 <</widget>>
@@ -31,18 +31,18 @@
 <</widget>>
 
 <<widget "VivianLakeRuinHelp">>
-    <<if C.npc.Vivian.maplebirch_lost !== 0 && $VivianMeet>>
+    <<if C.npc.Vivian.maplebirch_lost !== 0 && $VivianMeet && $Maplebirch.lock>>/% 暂时封印 %/
         <<if !$Maplebirch.daily.Vivianhelp>>
             <<if !$VivianNameKnow>>
                 <<MaplebirchIcon "help">><<link [[救援<<nnpc_he "Vivian">>|Vivian Ruin Plinth Help]]>><<loxygen>><</link>><<MaplebirchHint>>
             <<else>>
-                <<MaplebirchIcon "help">><<link [[救援维安|Vivian Ruin Plinth Help]]>><<loxygen>><</link>><<MaplebirchHint>>
+                <<MaplebirchIcon "help">><<link [[救援维维安|Vivian Ruin Plinth Help]]>><<loxygen>><</link>><<MaplebirchHint>>
             <</if>>
         <<else>>
             <<if !$VivianNameKnow>>
                 <i><<note "四周的触手将那个<<nnpcboy \"Vivian\">>紧紧围住了" "teal">></i>
             <<else>>
-                <i><<note "四周的触手将维安紧紧围住了" "teal">></i>
+                <i><<note "四周的触手将维维安紧紧围住了" "teal">></i>
             <</if>>
         <</if>>
         <br>
@@ -51,7 +51,7 @@
 
 <<widget "VivianLakeRuinDes">>
     <<if C.npc.Vivian.maplebirch_lost !== 0 && $VivianMeet>>
-        <span class="lblue">那位琥珀色眼瞳与苍白发长色的<<nnpcboy "Vivian">>仍躺在基座室的矮柱上。</span>
+        <i>那位琥珀色眼瞳与苍白发长色的<<nnpcboy "Vivian">>仍躺在基座室的矮柱上。</i>
     <</if>>
 <</widget>>
 

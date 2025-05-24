@@ -1,13 +1,40 @@
 :: Maplebirch Orchard [widget]
 
+<!-- 酸橙核获取 -->
+<<widget "maplenirch_lime_seed_get">>
+	<<if _propCall is "lime" && !$Maplebirch.FruitSeeds.know.includes("lime_seed")>>
+		<<run $Maplebirch.FruitSeeds.know.pushUnique('lime_seed')>>
+	<</if>>
+<</widget>>
+
+<!-- 香蕉吸芽获取 -->
+<<widget "maplebirch_banana_sucker_buy">>
+	<<if $money gte 10000 && !$Maplebirch.FruitSeeds.know.includes("banana_seed")>>
+		<<if $sciencetrait gte 2>>
+			<<link [[购买香蕉的吸芽(£100)|Connudatus Street]]>><<money -10000>><<run $Maplebirch.FruitSeeds.know.pushUnique('banana_seed')>><</link>>
+			<br>
+		<<else>>
+			<span class="blue">更高的科学技能可以让你购买到香蕉的吸芽。</span>
+			<br>
+		<</if>><<MaplebirchHint>>
+	<</if>>
+<</widget>>
+
+<<widget "maplebirch_banana_sucker_steal">>
+	<<if !_dock_location && currentSkillValue('tending') gte 300 && !$Maplebirch.FruitSeeds.know.includes("banana_seed")>>
+		<<skul_dock_contents banana>>
+	<</if>>
+<</widget>>
+
 <!-- 农田升级限制 -->
 <<widget "maplebirch_plots_update">>
     <<switch _args[0]>>
         <<case lake_island>>
-            <<if $Maplebirch.lakeisland.plot >= 3>>
+            <<if $Maplebirch.lakeisland.plot < 6>>
                 <<set _bed to "earth">>
                 <<set _quality to random(1,3)>>
                 <<set _size to "large">>
+                <<set $Maplebirch.lakeisland.plot += 1>>
                 <<set $Maplebirch.lakeisland.plot = Math.clamp($Maplebirch.lakeisland.plot, 0, 6)>>
             <</if>>
         <<default>>
@@ -18,3 +45,566 @@
     <!-- 地点 种类 质量 大小 -->
     <<add_plot _args[0] _bed _quality _size>>
 <</widget>>
+
+<<widget "orchard_init">>
+	<<set $_fruiterInLocation to []>>
+	<<for _i to 0; _i lt _args[1]; _i++>>
+		<<set $_fruiterInLocation[_i] to clone(setup.maplebirchtending.fruiter_base)>>
+		<<set $_fruiterInLocation[_i].bed to _args[2]>>
+		<<set $_fruiterInLocation[_i].quality to _args[3]>>
+	<</for>>
+	<<set $Maplebirch.orchard[_args[0]] to $_fruiterInLocation>>
+<</widget>>
+
+<!-- 种植文本 -->
+<<widget "maplebirch_orchard_text">>
+	<<set $_plantedFruiter to setup.maplebirchFruiter[_orchardbed.fruiter]>>
+	<<switch _orchardbed.size>>
+		<<case "small">><<set $_size_text to window.modUtils.getMod('ModI18N') ? "小" : "small">>
+		<<case "large">><<set $_size_text to window.modUtils.getMod('ModI18N') ? "大" : "big">>
+		<<default>><<set $_size_text to "">>
+	<</switch>>
+	<<if _args[1] is false>>
+		<<switch _args[0]>>
+			<<case "seed">><<set $_orchard_text to "name">>
+			<<case "sprout">><<set $_orchard_text to "sprout_name">>
+			<<case "sapling">><<set $_orchard_text to "sapling_name">>
+			<<case "tree">><<set $_orchard_text to "tree_name">>
+			<<case "fruit">><<set $_orchard_text to "fruit_name">>
+		<</switch>>
+	<<elseif _args[1] is true>>
+		<<if ["small", "large", "medium"].includes(_args[0])>>
+			<<set $_orchard_text to "tree_name">>
+		<<else>>
+			<<set $_orchard_text to _args[0] + "_name">>
+		<</if>>
+	<</if>>
+	<<set $_output_text to window.modUtils.getMod('ModI18N') ? $_plantedFruiter['cn_' + $_orchard_text] : $_plantedFruiter[$_orchard_text]>>
+	<<if _args[0] is "tree" && _orchardbed.bed is "fruiter">>
+		<<print $_size_text + $_output_text>>
+	<<else>>
+		<<print $_output_text>>
+	<</if>>
+<</widget>>
+
+<!-- 季节通知 -->
+<<widget "maplebirch_tending_season_notice">>
+	<<set $_fruiter to _args[0]>>
+	<span class="blue">
+		<<set $_seasons to formatList($_fruiter.season, "和", false, "、")>>
+		<<print window.modUtils.getMod('ModI18N') ? $_fruiter.cn_name : $_fruiter.name>>只能在<<print $_seasons.replace("autumn", "秋天").replace("winter", "冬天").replace("spring", "春天").replace("summer", "夏天")>>进行种植。
+	</span>
+<</widget>>
+
+<!-- 耕种设置？ -->
+<<widget "tendingfruiterOptions">>
+	<<set _orchardbed to _args[0]>>
+
+	<<if currentSkillValue('tending') gte 1500>>
+		<<set _baseTime to 3>>
+		<<set _baseTiredness to 1>>
+	<<else>>
+		<<set $_ti to Math.clamp(Math.floor(currentSkillValue('tending') / 200), 0, 6)>>
+		<<set _baseTime to [30,25,20,15,10,5,4][$_ti]>>
+		<<set _baseTiredness to [6,5,4,3,2,1,1][$_ti]>>
+	<</if>>
+	<<set _baseTime *= _orchardbed.till is -1 ? 6 : 3>><<set _baseTiredness *= _orchardbed.till is -1 ? 4 : 2>>
+	<<set _timeString to getTimeString(_baseTime)>>
+
+	<<if _orchardbed.till is -1>>
+		<<if $leftarm is "bound" and $rightarm is "bound">>
+			<span class="red">你的手臂被捆绑住了，你无法进行修复。</span>
+			<br>
+		<<else>>
+			<<capture _baseTiredness _baseTime _orchardbed>>
+				<img class="maplebirch-tending-icon icon" src="img/misc/icon/hammer_nails.png">
+				<<link "修复 (_timeString)" $passage>>
+					<<set $Maplebirch.tendingvars.plot_tilled to true>>
+					<<tiredness _baseTiredness>><<physique _baseTiredness>>
+					<<pass _baseTime>><<grace 1>>
+					<<set _orchardbed.till to 1>>
+				<</link>><<gtiredness>><<ggrace>>
+			<</capture>>
+			<br>
+		<</if>>
+	<<elseif  _orchardbed.till is 0>>
+		<<if $leftarm is "bound" and $rightarm is "bound">>
+			<span class="red">你的手臂被捆绑住了，你无法进行耕种。</span>
+			<br>
+		<<else>>
+			<<capture _baseTiredness _baseTime _orchardbed>>
+				<img class="maplebirch-tending-icon icon" src="img/misc/icon/till.png">
+				<<link "耕土 (_timeString)" $passage>>
+					<<set $Maplebirch.tendingvars.plot_tilled to true>>
+					<<tiredness _baseTiredness>><<physique _baseTiredness>>
+					<<pass _baseTime>>
+					<<set _orchardbed.till to 1>>
+				<</link>><<gtiredness>>
+			<</capture>>
+			<br>
+		<</if>>
+	<</if>>
+	<<if $leftarm is "bound" and $rightarm is "bound">>
+		<span class="red">你的手臂被捆绑住了，你无法进行施肥。</span>
+		<br>
+	<<else>>
+		<<if $fertiliser.current gte 1 and _orchardbed.quality lt 4 and currentSkillValue('tending') gte 400 && _orchardbed.fertiliserDecayTime is 0>>
+			<<set _baseTimeFert to Math.floor(_baseTime * 0.5)>>
+			<<set _timeString to getTimeString(_baseTimeFert)>>
+			<<set _fertTiredness to Math.floor(_baseTiredness * 0.5)>>
+			<<capture _baseTimeFert _fertTiredness _orchardbed>>
+				<img class="maplebirch-tending-icon icon" src="img/misc/icon/fertiliser.png">
+				<<link "提升土壤质量 (_timeString)" $passage>>
+					/* 施肥 */
+					<<set $Maplebirch.tendingvars.fertiliser to true>>
+					<<tiredness _fertTiredness>><<physique _fertTiredness>>
+					<<pass _baseTimeFert>>
+					<<set $fertiliser.current-->><<set $fertiliser.used++>>
+					<<set _orchardbed.quality++>><<set _orchardbed.fertiliserDecayTime to 7>>
+					<!-- 园艺大师与土地质量衰减 -->
+					<<if !$backgroundTraits.includes("greenthumb")>>
+						<<if _orchardbed.baseQuality is undefined>>
+							<<set _orchardbed.baseQuality to clone(_orchardbed.quality - 1)>>
+						<</if>>
+						<<set _orchardbed.fertiliserDecay to 2>>
+					<</if>>
+				<</link>><<gtiredness>>
+			<</capture>>
+			<br>
+		<</if>>
+	<</if>>
+<</widget>>
+
+<!-- 水果种子设置？ -->
+<<widget "tendingfruiterSeedsOptions">>
+	<<set _location to _args[0]>>
+	<<set _orchardbed to _args[1]>>
+	<<set $Maplebirch.FruitSeeds[_location].planted = $Maplebirch.FruitSeeds[_location].planted || []>>
+	<<if $Maplebirch.FruitSeeds.know.length is 0>>
+		在野外寻找种子种植。
+	<</if>>
+	<<set $_FruitSeeds to []>>
+	<<set $_FruitSeeds to $Maplebirch.FruitSeeds.know.filter(x => !$Maplebirch.FruitSeeds[_location].planted.has(x))>>
+	<<for _plantType range $_FruitSeeds>>
+		<br>
+		<<set $_fruiter to setup.maplebirchFruiter[_plantType]>>
+		<!-- 记得写温室 -->
+		<<if $_fruiter.season.includes(Time.season)>>
+			<<set $_name to window.modUtils.getMod('ModI18N') ? $_fruiter.cn_name : $_fruiter.name>>
+			<!-- 比较土壤类型；检查目标床是否与种子的土壤类型兼容 -->
+			<<if $_fruiter.bed is _orchardbed.bed>>
+				<<set $_passTime to 30>>
+				<<set $_timeString to getTimeString($_passTime)>>
+				<<capture $_passTime _orchardbed _plantType>>
+					<<if $options.images is 1 and $_fruiter.icon>>
+						<img class="tending_icon" @src="`img/misc/icon/maplebirch_fruits/` + $_fruiter.icon">
+					<</if>>
+					<<link "播种$_name ($_timeString)" $passage>><<pass $_passTime>><<run maplebirchFruit.Plant(_location, _orchardbed, _plantType)>><</link>>
+				<</capture>>
+				<<if $statdisable is "f">>
+					<span class="orange">(<<print ($_fruiter.fruit_days)>>天)</span>
+				<</if>>
+			<<else>>
+				<span class="blue"><<print $_name>>仅能种植于<<print $_fruiter.bed.replace("fruiter","果树圃中").replace("water","水池中").replace("berry","浆果圃中")>>。</span>
+			<</if>>
+		<<else>>
+			<<maplebirch_tending_season_notice $_fruiter>>
+		<</if>>
+	<</for>>
+	<br>
+<</widget>>
+
+<!-- 果树清除 -->
+<<widget "tendingfruiterclear">>
+	<<set _location to _args[0]>>
+	<<set _orchardbed to _args[1]>>
+	<!-- 记得写温室 -->
+	<<set $_name to "<<maplebirch_orchard_text _orchardbed.size true>>">>
+	<<switch _orchardbed.size>>
+		<<case "large">>
+			<<set _tStatup to 5.5>>
+			<<set _passTime to 50>>
+		<<case "medium">>
+			<<set _tStatup to 3.5>>
+			<<set _passTime to 30>>
+		<<case "small">>
+			<<set _tStatup to 2>>
+			<<set _passTime to 15>>
+		<<case "sapling">>
+			<<set _tStatup to 1>>
+			<<set _passTime to 5>>
+		<<default>>
+			<<set _tStatup to 0>>
+			<<set _passTime to 0>>
+	<</switch>>
+	<<set $_timeString to getTimeString(_passTime)>>
+	<<capture _passTime _orchardbed _plantType>>
+		<<if !_orchardbed.lock>>
+			<img class="maplebirch-tending-icon icon" src="img/misc/icon/dig.png">
+			<<link "铲除$_name ($_timeString)" $passage>><<tiredness _tStatup>><<physique _tStatup>>
+			<<pass _passTime>><<run maplebirchFruit.Clear(_location, _orchardbed)>><</link>><<gtiredness>>
+			<br>
+		<</if>>
+	<</capture>>
+<</widget>>
+
+<!-- 种植后模块 -->
+<<widget "tending_fruiter">>
+	<<if _orchardbed.stage.between(1, 2) || (_orchardbed.bed === "berry" && _orchardbed.water === 0)>>
+		<<if _orchardbed.bed is "water">>
+			<br>
+		<<elseif _orchardbed.water is 1>>
+			<span class="green">这块土壤已经浇过水了。</span>
+			<br>
+		<<else>>
+			<span class="purple">这块土壤目前很干燥。</span>
+			<br>
+			<<maplebirch_tendingWaterPlot _orchardbed>>
+			<br>
+		<</if>>
+	<<elseif _orchardbed.stage.between(3, 4)>>
+		<<if _orchardbed.manure is 1>>
+			<span class="green">这棵树已经施过肥了。</span>
+			<br>
+		<<else>>
+			<<if $fertiliser.current gte 1>>
+				<span class="orange">这棵树目前需要施肥。</span>
+				<br>
+				<<maplebirch_tendingManurePlot _orchardbed>>
+				<br>
+			<<else>>
+				<span class="orange">这棵树目前需要施肥。</span>
+				<br>	
+			<</if>>			
+		<</if>>
+	<<elseif _orchardbed.stage is 5>>
+		<<if _orchardbed.bed is "berry">>
+			<span class="teal">这株莓丛的果实已经长满了。</span>
+			<br>
+		<<else>>
+			<<if _orchardbed.ripen gte 3>>
+				<span class="green">这棵树的果实已经结满了。</span>
+				<br>
+			<<else>>
+				<span class="teal">这棵树的果实目前还在结果。</span>
+				<br>
+			<</if>>
+		<</if>>
+	<<else>>
+		<br>
+	<</if>>
+<</widget>>
+
+<!-- 种树核心 -->
+<<widget "display_fruiter">>
+	<<set _location to _args[0]>>
+	<<set $_fruiterHere to $Maplebirch.orchard[_location]>>
+	<<set _water_needed to 0>>
+	<<set _manure_needed to 0>>
+	<<set $Maplebirch.FruitSeeds[_location] = $Maplebirch.FruitSeeds[_location] || {}>>
+	这里有<<number $_fruiterHere.length>>块可种植的<span class="orange">土壤</span>。    
+	<<if $fertiliser.current + $fertiliser.used gt 0>>
+		你现在有<<number $fertiliser.current>>袋肥料。
+	<</if>>
+	果实的收获的数量会随你护理技能的提升而增加。
+	<br><br>
+	<<set $_i to 0>>
+	<<for _orchardbed range $_fruiterHere>>
+		<<capture _orchardbed>>
+			<span class="gold"><<wordify_i $_i true>><<print _orchardbed.bed.replace("fruiter", "果树圃").replace("berry", "浆果圃")>>(<<display_quality _orchardbed>>)：</span>
+			<br>
+			<<if _orchardbed.stage gte 1>>
+				<<set $_plantedFruiter to setup.maplebirchFruiter[_orchardbed.fruiter]>>
+				<<if $_plantedFruiter is undefined>>
+					<<error {
+						message	: `无法从修改后的保存中访问属性。 (${_orchardbed.fruiter})`,
+					}>>
+					<<exitAll>>
+				<</if>>
+
+                <!-- 雷暴时(游戏暂未实装) -->
+                <<if Weather.name is "thunderStorm">>
+                    <<set _orchardbed.thunder to 1>>
+				<<elseif Weather.precipitation is "rain">>
+					<<set _orchardbed.water to 1>>
+				<</if>>
+			<</if>>
+
+			<<if _orchardbed.stage gte 5>>
+				<<if _orchardbed.bed is "fruiter">>
+					<span class="green"><<maplebirch_orchard_text "fruit" false>>已然成熟，<<maplebirch_orchard_text "tree" false>>的枝头挂满了饱满晶莹的果实。</span>
+				<<elseif _orchardbed.bed is "berry">>
+					<span class="green"><<maplebirch_orchard_text "tree" false>>中长满晶莹剔透了<<maplebirch_orchard_text "fruit" false>>，是时候该将它们采摘了。</span>
+				<</if>>
+				<<tending_fruiter>>
+				<<switch _orchardbed.size>>
+					<<case "small">><<set $_timeStr to "0:15">><<set _pass to 15>>
+					<<case "medium">> <<set $_timeStr to "0:30">><<set _pass to 30>>
+					<<case "large">><<set $_timeStr to "0:45">><<set _pass to 45>>
+					<<default>><<set $_timeStr to "0:15">><<set _pass to 15>>
+				<</switch>>
+
+				<<if $leftarm is "bound" and $rightarm is "bound">>
+					<span class="red">你的手臂被绑，无法进行采摘。</span>
+				<<else>>
+					<<if $options.images is 1 and $_plantedFruiter.icon>>
+						<!-- 血柠变种 -->
+						<<if _orchardbed.fruit is "lemon" && Weather.bloodMoon>>
+							<img class="tending_icon" @src="`img/misc/icon/tending/` + `blood_lemon.gif`">
+						<<else>>
+							<img class="tending_icon" @src="`img/misc/icon/maplebirch_fruits/` + $_plantedFruiter.icon">
+						<</if>>
+					<</if>>
+                    <!-- 这里有些问题 -->
+					<<link "摘取 ($_timeStr)" $passage>><<pass _pass>><<set $Maplebirch.Fruittending to true>><<Orchardharvest _orchardbed>><<set _orchardbed.stage to 4>><</link>>
+				<</if>>
+				<br>
+			<<elseif _orchardbed.stage is 4 >>
+				<<MaplebirchIcon "orchard" _orchardbed>>
+				<<if _orchardbed.bed is "fruiter">>
+					<span class="teal">枝繁叶茂的<<maplebirch_orchard_text "tree" false>>伫立在园林中，枝头上的<<maplebirch_orchard_text "fruit" false>>还有些青涩。</span>
+				<<elseif _orchardbed.bed is "berry">>
+					<span class="teal">悄然缀果的<<maplebirch_orchard_text "tree" false>>已经开始结果，豆大般的果实在丛中若隐若现。</span>
+				<</if>>
+				<<tending_fruiter>><<tendingfruiterclear _location _orchardbed>><<tendingfruiterOptions _orchardbed>>
+			<<elseif _orchardbed.stage is 3>>
+				<<MaplebirchIcon "orchard" _orchardbed>>
+				<<if _orchardbed.bed is "fruiter">>
+					<span class="lblue">茁壮的<<maplebirch_orchard_text "sapling" false>>已在土壤中扎根。</span>
+				<<elseif _orchardbed.bed is "berry">>
+					<span class="lblue">繁茂的<<maplebirch_orchard_text "sapling" false>>在园林中盛开。</span>
+				<</if>>
+				<<tending_fruiter>><<tendingfruiterclear _location _orchardbed>><<tendingfruiterOptions _orchardbed>>
+			<<elseif _orchardbed.stage is 2>>
+				<<MaplebirchIcon "orchard" _orchardbed>>
+				<span class="blue">娇嫩的<<maplebirch_orchard_text "sprout" false>>从土壤中萌发。</span>
+				<<tending_fruiter>><<tendingfruiterclear _location _orchardbed>><<tendingfruiterOptions _orchardbed>>
+			<<elseif _orchardbed.stage is 1>>
+				<<MaplebirchIcon "orchard" _orchardbed>>
+				<span class="blue">你在这里播下了<<maplebirch_orchard_text "seed" false>>。</span>
+				<<tending_fruiter>><<tendingfruiterOptions _orchardbed>>
+			<<else>>
+				<<if _orchardbed.till gte 1>>
+					土壤已准备好种植。
+					<<tendingfruiterSeedsOptions _location _orchardbed>>
+				<<else>>
+					<<if _orchardbed.till is -1>>
+						<span class="red">这片土壤尚未修复</span>
+					<<else>>
+						土壤已准备好耕种。
+					<</if>>
+					<br>
+					<<tendingfruiterOptions _orchardbed>>
+				<</if>>
+			<</if>>
+			<br>
+		<</capture>>
+		<<set $_i++>>
+	<</for>>
+
+	<<if _water_needed gte 1>>
+		<<set _orchardToWater to $_fruiterHere.filter(orchard => ((orchard.stage >= 1 && orchard.stage <= 2) || orchard.bed === "berry") && orchard.bed !== "water" && orchard.water === 0)>>
+		<<set _totalTimeToWater to 0>>
+		<<run _orchardToWater.forEach(orchard => _totalTimeToWater += setup.maplebirchtending.Time[orchard.size])>>
+		<<set $_time to getTimeString(_totalTimeToWater)>>
+		<<if !($leftarm is "bound" and $rightarm is "bound")>>
+			<img class="maplebirch-tending-icon icon" src="img/misc/icon/watering_can.gif">
+			<<link "给所有植物浇水 ($_time)" $passage>>
+				<<maplebirch_tendingWaterAllDryBeds _orchardToWater>><<tiredness _water_needed>><<physique _water_needed>><<tending _water_needed>>
+			<</link>><<gtiredness>><<gtending>>
+		<</if>>
+		<br>
+	<</if>>
+	<<if _manure_needed gte 1>>
+		<<set _orchardToManure to $_fruiterHere.filter(orchard => orchard.stage >= 3 && orchard.stage <= 4 && orchard.manure === 0)>>
+		<<set _totalTimeToManure to 0>>
+		<<run const times = Math.min($fertiliser.current, _orchardToManure.length);for (let i = 0; i < times; i++) {_totalTimeToManure += setup.maplebirchtending.Time[_orchardToManure[i].size];$fertiliser.current--;}>>
+		<<set $_time to getTimeString(_totalTimeToManure)>>
+		<<if !($leftarm is "bound" and $rightarm is "bound")>>
+			<img class="maplebirch-tending-icon icon" src="img/misc/icon/fertiliser.png">
+			<<link "给所有植物施肥 ($_time)" $passage>>
+				<<maplebirch_tendingManureAllDryBeds _orchardToManure>><<tiredness _manure_needed>><<physique _manure_needed>><<tending _manure_needed>>
+			<</link>><<gtiredness>><<gtending>>
+		<</if>>
+		<br>
+	<</if>>
+
+<</widget>>
+
+<!-- 一键浇水 -->
+<<widget "maplebirch_tendingWaterAllDryBeds">>
+	<<wearProp "watering can">>
+	<<set $_orchardToWater to _args[0]>>
+
+	<<for $_orchard range $_orchardToWater>>
+		<<capture $_orchard>>
+			<<switch $_orchard.size>>
+				<<case "seed">>
+					<<set $_orchard.wateringTime to 1>>
+				<<case "sprout">>
+					<<set $_orchard.wateringTime to 2>>
+				<<default>>
+					<span class="red">报错</span>
+			<</switch>>
+			<<set $_orchard.water to 1>>
+			<<set _waterTime to setup.maplebirchtending.Time[$_orchard.size]>>
+			<<pass _waterTime>><<event_trigger>>
+		<</capture>>
+	<</for>>
+	<<set $Maplebirch.tendingvars.all_orchard_watered to true>>
+<</widget>>
+
+<!-- 浇水 -->
+<<widget "maplebirch_tendingWaterPlot">>
+	<<set _orchardbed to _args[0]>>
+	<<set _water_needed += 1>>
+	<<switch _orchardbed.size>>
+		<<case "seed">>
+			<<set _tStatup to 1>><<set _tPass to 5>><<set _orchard_wateringTime to 1>>
+			<<set $_orchard_text to "<<maplebirch_orchard_text \"seed\" false>>">>
+		<<case "sprout">>
+			<<set _tStatup to 1.5>><<set _tPass to 10>><<set _orchard_wateringTime to 2>>
+			<<set $_orchard_text to "<<maplebirch_orchard_text \"sprout\" false>>">>
+		<<case "sapling">>
+			<<set _tStatup to 2>><<set _tPass to 15>>
+			<<set $_orchard_text to "<<maplebirch_orchard_text \"sapling\" false>>">>
+		<<case "tree">>
+			<<set _tStatup to 2.5>><<set _tPass to 20>>
+			<<set $_orchard_text to "<<maplebirch_orchard_text \"tree\" false>>">>
+	<</switch>>
+	
+	<<set $_time to getTimeString(_tPass)>>
+	<<if $leftarm is "bound" and $rightarm is "bound">>
+		<span class="red">你的手臂被捆绑住了，你无法为土地浇水。</span>
+	<<else>>
+		<<wearProp "watering can">>
+		<img class="maplebirch-tending-icon icon" src="img/misc/icon/watering_can.gif">
+		<<link "给$_orchard_text浇水 ($_time)" $passage>>
+			<<tending _tStatup>><<pass _tPass>><<set _orchardbed.water to 1>><<set $Maplebirch.tendingvars.plot_watered to true>>
+			<<tiredness _tStatup>><<physique _tStatup>><<set _orchardbed.wateringTime to _orchard_wateringTime>><<event_trigger>>
+		<</link>><<gtiredness>><<gtending>>
+	<</if>>
+<</widget>>
+
+<!-- 一键施肥 -->
+<<widget "maplebirch_tendingManureAllDryBeds">>
+	<<wearProp "hoe">>
+	<<set $_orchardToManure to _args[0]>>
+	<<set $_i to Math.min($fertiliser.current, _orchardToManure.length)>>
+	<<if $_i > 0>>
+		<<for $_orchard range $_orchardToManure>>
+			<<capture $_orchard>>
+				<<switch $_orchard.size>>
+					<<case "sapling">>
+						<<set $_orchard.manureTime to 6>>
+					<<case "small">>
+						<<set $_orchard.manureTime to 0>>
+					<<case "medium">>
+						<<set $_orchard.manureTime to 3>>
+					<<case "large">>
+						<<set $_orchard.manureTime to 9>>
+					<<default>>
+						<span class="red">报错</span>
+				<</switch>>
+				<<set $_orchard.manure to 1>><<set $fertiliser.current-->><<set $fertiliser.used++>>
+				<<set _manureTime to setup.maplebirchtending.Time[$_orchard.size]>>
+				<<pass _manureTime>><<event_trigger>>
+			<</capture>>
+			<<set $_i -->>
+		<</for>>
+	<</if>>
+	<<set $Maplebirch.tendingvars.all_orchard_manured to true>>
+<</widget>>
+
+<!-- 施肥 -->
+<<widget "maplebirch_tendingManurePlot">>	
+	<<set _orchardbed to _args[0]>>
+	<<set _manure_needed += 1>>
+	<<switch _orchardbed.size>>
+		<<case "sapling">>
+			<<set _tStatup to 2>><<set _tPass to 15>><<set _orchard_manureTime to 6>>
+			<<set $_orchard_text to "<<maplebirch_orchard_text \"sapling\" false>>">>
+		<<case "small">>
+			<<set _tStatup to 2.5>><<set _tPass to 20>><<set _orchard_manureTime to 0>>
+			<<set $_orchard_text to "<<maplebirch_orchard_text \"tree\" false>>">>
+		<<case "medium">>
+			<<set _tStatup to 3>><<set _tPass to 25>><<set _orchard_manureTime to 3>>
+			<<set $_orchard_text to "<<maplebirch_orchard_text \"tree\" false>>">>
+		<<case "large">>
+			<<set _tStatup to 3.5>><<set _tPass to 30>><<set _orchard_manureTime to 9>>
+			<<set $_orchard_text to "<<maplebirch_orchard_text \"tree\" false>>">>
+		<<case "tree">>
+			<<set _tStatup to 2.5>><<set _tPass to 20>>
+			<<set $_orchard_text to "<<maplebirch_orchard_text \"tree\" false>>">>
+		<<default>>
+			<span class="red">报错</span>
+	<</switch>>
+	<<set $_time to getTimeString(_tPass)>>
+	<<if $leftarm is "bound" and $rightarm is "bound">>
+		<span class="red">你的手臂被捆绑住了，你无法为果树施肥。</span>
+	<<else>>
+		<<wearProp "hoe">>
+		<img class="maplebirch-tending-icon icon" src="img/misc/icon/fertiliser.png">
+		<<link "为$_orchard_text施肥 ($_time)" $passage>>
+			<<set $fertiliser.current-->><<set $fertiliser.used++>>
+			<<tending _tStatup>><<pass _tPass>><<set _orchardbed.manure to 1>><<set $Maplebirch.tendingvars.orchard_manureed to true>>
+			<<tiredness _tStatup>><<physique _tStatup>><<set _orchardbed.manureTime to _orchard_manureTime>><<event_trigger>>
+		<</link>><<gtiredness>><<gtending>>
+	<</if>>
+<</widget>>
+
+<<widget "maplebirch_plot_effects">>
+	<<if $Maplebirch.tendingvars.gardeners>>
+		<span class="gold">花大量的时间在土地上劳作会让你成为园艺大师。</span>
+		<br>
+	<</if>>
+	<<if $Maplebirch.tendingvars.plot_watered>>
+		你给种植圃浇水，<span class="gold">你得到了良好的锻炼。</span>
+		<br>
+	<<elseif $Maplebirch.tendingvars.all_plots_watered>>
+		你给种植圃浇水，<span class="gold">你得到了良好的锻炼。</span>
+		<br>
+	<</if>>
+	<<if $Maplebirch.tendingvars.orchard_manureed>>
+		你给种植圃施肥，<span class="gold">你得到了良好的锻炼。</span>
+		<br>
+	<<elseif $Maplebirch.tendingvars.all_orchard_manured>>
+		你给种植圃施肥，<span class="gold">你得到了良好的锻炼。</span>
+		<br>
+	<</if>>
+	<<if $Maplebirch.tendingvars.harvest>>
+		你收获了<<number $Maplebirch.tendingvars.harvest_amount>>颗<span class="gold"><<print $Maplebirch.tendingvars.harvest_name>></span>。
+		<br>
+	<</if>>
+	<<if $Maplebirch.tendingvars.fertiliserDecay>>
+		土壤的质量恢复成原来的样子了。
+	<</if>>
+	<<if $Maplebirch.tendingvars.plot_tilled>>
+		<<wearProp "hoe">>
+		你开始清除杂草，耕耘土地。这确实很辛苦，但当你完成之后你就可以进行种植了。
+		<span class="gold">你得到了良好的锻炼。</span>
+		<br>
+	<</if>>
+	<<if $Maplebirch.tendingvars.fertiliser>>
+		<<wearProp "hoe">>
+		你开始往土壤中混入一些肥料。这确实很辛苦，但当你完成之后土壤就变得肥沃了。
+		<span class="gold">你得到了良好的锻炼。</span>
+	<</if>>
+	<<if $Maplebirch.tendingvars.plot_planted>>
+		你把种子种在适温的土壤里。
+		<br>
+	<</if>>
+	<<if Weather.precipitation is "rain">>
+		<span class="green">雨水淋湿了土地。</span>
+		<br>
+	<</if>>
+	<br>
+	<<run maplebirchFruit.Unset()>>
+<</widget>>
+
+:: Docks banana sucker
+<<effects>>
+你揣着几株香蕉吸芽，离开了集装箱。
+<br><br>
+<<link [[继续|Docks Sneak]]>><<set $eventskip to 1>><</link>>
+<br>

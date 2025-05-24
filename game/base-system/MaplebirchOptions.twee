@@ -2,59 +2,15 @@
 
 <<widget "MaplebirchOptions">>   
 <div class="settingsHeader options"><span class="MaplebirchMod">秋枫白桦拓展</span></div>
+  <div class="settingsGrid">
     <div class="settingsToggleItem">
-	    <label><<MaplebirchIcon "Maplebirch">><<checkbox "$options.bag" false true autocheck>>秋枫白桦行囊袋</label><mouse class="tooltip linkBlue">(?)<span>如果拥有背包，开启后将在侧边栏启用枫桦背包。()</span></mouse>
+	  <label><<checkbox "$options.Maplebirch.ModHint" false true autocheck>>侧边栏模组介绍和设置</label><mouse class="tooltip linkBlue">(?)<span>选择后，隐藏侧边栏时会显示枫叶。</span></mouse>
     </div>
-<<if $debug is 1>>
-    <div class="MaplebirchGrid">
-    <b>秋枫白桦模组的debug通道：</b><br>
+    <div class="settingsToggleItem">
+    <label><<checkbox "$options.Maplebirch.icon" false true autocheck>>卧室强制座椅图标</label><mouse class="tooltip linkBlue">(?)<span>如果启用孤儿院的座椅图标将会强制启用。</span></mouse>
     </div>
-        <div class="Maplebirchframe">
-            <<link [[一键进入苦难审判|Temple Vigil]]>><</link>>
-            <br>
-            <<link [[一键进入罗宾承诺仪式|Robin Temple Pure]]>><</link>>
-            <br>
-            <<link [[一键进入罗宾月度惩罚|Robin Temple Test]]>><</link>>
-            <br>
-            <<link [[一键进入混乱月度惩罚|Maplebirch Temple Confusion Examination]]>><</link>>
-            <br>
-            <<link [[一键进入湖心岛|Maplebirch Lake Center]]>><</link>>
-            <br>
-            <<link [[一键进入湖心岛你的房间|Lake Island Bedroom]]>><</link>>
-        </div>
-        <div class="Maplebirchframe">
-            <<link [[增加神殿信仰|$passage]]>><<Maplebirchnpcincr Robin holiness 1>><</link>>
-            <br>
-            <<link [[增加异端|$passage]]>><<Maplebirchnpcincr Vivian heresy 1>><</link>>
-            <br>
-            <<link [[增加痴愚|$passage]]>><<Maplebirchnpcincr Vivian moronity 1>><</link>>
-            <br>
-            <<link [[增加真理|$passage]]>><<Maplebirchnpcincr Vivian truth 1>><</link>>
-            <br>
-            <<link [[增加诡谲|$passage]]>><<Maplebirchnpcincr Vivian fraud 1>><</link>>
-        </div>
-         <div class="Maplebirchframe">
-            <<link [[一键崩溃|$passage]]>><<set $Maplebirch.Sanity = 0>><<set $willpower = 0>><<set $stress = 10000>><<set $trauma = 5000>><<set $control = 0>><</link>>
-            <br>
-            <<link [[增加恐惧|$passage]]>><<fear 6>><</link>>
-            <br>
-            <<link [[减少恐惧|$passage]]>><<fear -6>><</link>>
-            <br>
-            <<link [[增加记忆|$passage]]>><<memory 6>><</link>>
-            <br>
-            <<link [[减少记忆|$passage]]>><<memory -6>><</link>>
-        </div>
-         <div class="Maplebirchframe">
-            <<link [[加农田数量|$passage]]>><<add_plot lake_island "earth" 3 "large">><</link>>
-        </div>
-        <div class="settingsToggleItemWide">
-			<span class="gold">维安</span>
-			<<numberStepper "<<symbol love>>好感" `C.npc.Vivian.love` { callback: value => { C.npc.Vivian.love = value }, max: 150 }>>
-			<<numberStepper "<<symbol lust>>性欲" `C.npc.Vivian.lust` { callback: value => { C.npc.Vivian.lust = value } }>>
-			<<VivianTraitsControl>>
-		</div>
-<</if>>
-
+  </div>
+  <<maplebirch_debug>>
 <hr>
 <</widget>>
 
@@ -129,4 +85,66 @@
 		<<default>><<set _symbol to _args[0]>>
 	<</switch>>
 	<span class="icon-container"><img class="icon" @src='"img/ui/" + _symbol + ".png"'></span>
+<</widget>>
+
+<<widget "maplebirch_debug">>
+  <<if $debug is 1>>
+    <div class="maplebirch-Grid" style="display: grid">
+    <b>秋枫白桦模组的debug通道：</b>
+      <div class="Maplebirchframe">
+          <<link [[一键进入苦难审判|Temple Vigil]]>><</link>>
+          <br>
+          <<link [[一键进入罗宾承诺仪式|Robin Temple Pure]]>><</link>>
+          <br>
+          <<link [[一键进入罗宾月度惩罚|Robin Temple Test]]>><</link>>
+          <br>
+          <<link [[一键进入混乱月度惩罚|Maplebirch Temple Confusion Examination]]>><</link>>
+          <br>
+          <<link [[一键进入湖心岛|Maplebirch Lake Center]]>><</link>>
+          <br>
+          <<link [[一键进入湖心岛你的房间|Lake Island Bedroom]]>><</link>>
+          <br>
+          <<link [[一键进入<<print $MaplebirchPassageTest>>|$MaplebirchPassageTest]]>><</link>>
+      </div>
+      <div class="Maplebirchframe">
+          <<link [[象牙项链|$passage]]>><<neckwear 23>><</link>>
+          <br>
+          <<link [[增加神殿信仰|$passage]]>><<Maplebirchnpcincr Robin holiness 1>><</link>>
+          <br>
+          <<link [[增加异端|$passage]]>><<Maplebirchnpcincr Vivian heresy 1>><</link>>
+          <br>
+          <<link [[增加痴愚|$passage]]>><<Maplebirchnpcincr Vivian moronity 1>><</link>>
+          <br>
+          <<link [[增加真理|$passage]]>><<Maplebirchnpcincr Vivian truth 1>><</link>>
+          <br>
+          <<link [[增加诡谲|$passage]]>><<Maplebirchnpcincr Vivian fraud 1>><</link>>
+      </div>
+        <div class="Maplebirchframe">
+          <<link [[一键崩溃|$passage]]>><<set $Maplebirch.Sanity = 0>><<set $willpower = 0>><<set $stress = 10000>><<set $trauma = 5000>><<set $control = 0>><</link>>
+          <br>
+          <<link [[增加恐惧|$passage]]>><<fear 6>><</link>>
+          <br>
+          <<link [[减少恐惧|$passage]]>><<fear -6>><</link>>
+          <br>
+          <<link [[增加记忆|$passage]]>><<memory 6>><</link>>
+          <br>
+          <<link [[减少记忆|$passage]]>><<memory -6>><</link>>
+      </div>
+        <div class="Maplebirchframe">
+          <<link [[加农田数量|$passage]]>><<add_plot lake_island "earth" 3 "large">><</link>>
+          <br>
+          <<link [[注入果园|$passage]]>><<orchard_init lake_island 3 fruiter 3>><</link>>
+          <br>
+          <<link [[种子获取测试|$passage]]>><<tending_pick apple 6 18>><</link>>
+          <br>
+          <<link [[获得所有种子|$passage]]>><<run maplebirchFruit.UnlockSeed()>><</link>>
+      </div>
+      <div class="settingsToggleItemWide">
+			<span class="gold">维维安</span>
+			<<numberStepper "<<symbol love>>好感" `C.npc.Vivian.love` { callback: value => { C.npc.Vivian.love = value }, max: 150 }>>
+			<<numberStepper "<<symbol lust>>性欲" `C.npc.Vivian.lust` { callback: value => { C.npc.Vivian.lust = value } }>>
+			<<VivianTraitsControl>>
+      </div>
+    </div>
+  <</if>>
 <</widget>>

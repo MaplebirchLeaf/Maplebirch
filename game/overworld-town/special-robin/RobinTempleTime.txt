@@ -1,4 +1,4 @@
-<<elseif _robin_location is "temple" || ($RobinTempleInvitation === "templetest" && Time.hour === 6)>>
+<<elseif _robin_location is "temple" || ($Maplebirch.robin.temple_invitation === "templetest" && Time.hour === 6)>>
 	<<if ((Time.weekDay === 7 && Time.hour gte 21) || (Time.weekDay === 1 && Time.hour lte 6))>>
 		你走到罗宾的房间门口，门上有张纸条："今晚在神殿过夜了！"
 	<<else>>

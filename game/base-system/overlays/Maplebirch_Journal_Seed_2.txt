@@ -1,0 +1,4 @@
+			<<for _i to 0; _i lt _orchard_keys.length; _i++>>
+				<<set _total += 1>>
+			<</for>>
+			<<if _collection is 0>>

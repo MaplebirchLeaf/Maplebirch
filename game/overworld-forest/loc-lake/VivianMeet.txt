@@ -1,6 +1,6 @@
-<<elseif !$Maplebirch.daily.Vivianhelp && !$VivianMeet>>
+<<elseif !$Maplebirch.daily.Vivianhelp && !$VivianMeet && !Weather.bloodMoon && $Maplebirch.lock>>/% 暂时封印 %/
     <<initnpc Vivian>><<set C.npc.Vivian.lust = 100>>
-    你看到一位<span class="amber">琥珀色眼瞳</span>和苍白色长发的<<nnpcboy "Vivian">>沉眠在湖泊废墟的基座上。<<nnpc_he "Vivian">>的眼睛一动不动，同时<<nnpc_he "Vivian">>嘴边还冒着气泡。
+    你看到一位<span class="amber">琥珀色</span>眼瞳和苍白色长发的<<nnpcboy "Vivian">>沉眠在湖泊废墟的基座上。<<nnpc_he "Vivian">>的眼睛一动不动，同时<<nnpc_he "Vivian">>嘴边还冒着气泡。
     <br><br>
     <span class="gold"><<nnpc_he "Vivian">>看起来被困住了，你着可以尝试去救<<nnpc_he "Vivian">></span>
     <br><br>

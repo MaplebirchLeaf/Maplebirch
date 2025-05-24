@@ -2,11 +2,10 @@
 
 <<widget "MaplebirchIcon">>
   <<switch _args[0]>>
-	<<case "SydneyBunk">><<icon "Sydneyquarters.png">>
-  <<case "SydneyBed">><<icon "Sydneybed.png">>
-  <<case "gift">><<icon "Maplebirch_gift.png">>
-  <<case "RobinBunk">><<icon "Robinquarters.png">>
-  <<case "RobinBed">><<icon "RobinTemplebed.png">>
+	<<case "SydneyBunk">><<icon "temple/Sydneyquarters.png">>
+  <<case "SydneyBed">><<icon "temple/Sydneybed.png">>
+  <<case "RobinBunk">><<icon "temple/Robinquarters.png">>
+  <<case "RobinBed">><<icon "temple/RobinTemplebed.png">>
   <<case "blood_lemon">><<icon "tending/blood_lemon.gif">>
   <<case "help">><<icon "maplebirch_help.png">>
   <<case "awareness">><<icon "maplebirch_awareness.png">>
@@ -14,25 +13,11 @@
   <<case "desecrate">><<icon "maplebirch_desecrate.png">>
   <<case "Maplebirch">><<icon "Maplebirch.png">>
   <<case "wait">><<icon "loiter.gif">>
+  <<case "temple_orchard">><<switch Weather.dayState>><<case "night">><<icon "temple/temple_orchard_night.png">><<default>><<icon "temple/temple_orchard.png">><</switch>>
   <!-- 湖中岛 -->
   <<case "lakeisland">>
     <<switch _args[1]>>
-      <<case "yourbed">>
-        <<switch $Maplebirch.lakeisland.yourbed>>
-          <<case "supersingle">><<icon "lake_island/maplebirch_singlebeddeluxe.png">>
-          <<case "single">><<icon "lake_island/maplebirch_singlebed.png">>
-          <<case "superdouble">><<icon "lake_island/maplebirch_doublebeddeluxe.png">>
-          <<case "double">><<icon "lake_island/maplebirch_doublebed.png">>
-          <<default>><<icon "lake_island/maplebirch_bed.png">>
-        <</switch>>
-      <<case "bed">>
-        <<switch $Maplebirch.lakeisland.bed>>
-          <<case "supersingle">><<icon "lake_island/maplebirch_singlebeddeluxe.png">>
-          <<case "single">><<icon "lake_island/maplebirch_singlebed.png">>
-          <<case "superdouble">><<icon "lake_island/maplebirch_doublebeddeluxe.png">>
-          <<case "double">><<icon "lake_island/maplebirch_doublebed.png">>
-          <<default>><<icon "lake_island/maplebirch_bed.png">>
-        <</switch>>
+      <<case "bed">><<icon "lake_island/maplebirch_bed.png">>
       <<case "stair">><<icon "lake_island/maplebirch_stair.png">>
       <<case "backyard">><<icon "lake_island/Maplebirch_island_backyard.png">>
       <<case "backyard_snow">><<icon "lake_island/Maplebirch_island_backyard_snow.png">>
@@ -40,6 +25,9 @@
       <<case "house_snow">><<icon "lake_island/Maplebirch_island_house_snow.png">>
       <<case "snow">><<icon "lake_island/Maplebirch_lakeisland_snow.png">>
       <<case "orchard">><<icon "lake_island/maplebirch_road_deep.png">>
+      <<case "kitchen">><<icon "lake_island/maplebirch_kitchen.png">>
+      <<case "book">><<icon "lake_island/maplebirch_book.png">>
+      <<case "study">><<icon "lake_island/maplebirch_study.png">>
       <<default>><<icon "lake_island/Maplebirch_lakeisland.png">>
     <</switch>>
   <!-- 西里斯庄园 -->
@@ -48,12 +36,33 @@
       <<case "garden">><<icon "Sirris_manor/Maplebirch_sirris_garden.png">>
       <<case "overgrown">><<icon "Sirris_manor/Maplebirch_sirris_garden_overgrown.png">>
     <</switch>>
+  <!-- 物品 -->
+  <<case "gift">>
+    <<switch _args[1]>>
+      <<case "pendant">>
+        <<switch _args[2]>>
+          <<case "stone">><<icon "clothes/stone_pendant.png">>
+          <<case "holy">><<icon "clothes/holy_pendant.png">>
+          <<case "dark">><<icon "clothes/dark_pendant.png">>
+        <</switch>>
+      <<case "duster">><<icon "clothes/feather_duster.png">>
+    <</switch>>
   <!-- 原版返回 -->
   <<case "getouticon">>
     <<switch _args[1]>>
+      <<case "orphanage">><<main_hall_icon>>
 		  <<case "dig">><<icon "dig.png">>
 		  <<case "hole">><<icon "get_out_hole.png">>
 		  <<default>><<icon "get_out.png">>
 	  <</switch>>
+  <!-- 果园 -->
+  <<case "orchard">>
+    <<set $_fruit to ["blackberry", "blueberry"].includes(_args[1].fruit) ? "berry" : _args[1].fruit>>
+    <<set $_name to ["small", "large", "medium"].includes(_args[1].size) ? "tree" : _args[1].size>>
+    <<if ["small", "large", "medium", "seed", "sprout"].includes(_args[1].size) && !(_args[1].fruit === "banana" && ["small", "large", "medium"].includes(_args[1].size))>>
+      <img class="tending_icon" @src="`img/misc/icon/maplebirch_fruits/maplebirch_` + $_name + `.png`">
+    <<else>>
+      <img class="tending_icon" @src="`img/misc/icon/maplebirch_fruits/maplebirch_` + $_fruit + `_` + $_name + `.png`">
+    <</if>>
 	<</switch>>
 <</widget>>

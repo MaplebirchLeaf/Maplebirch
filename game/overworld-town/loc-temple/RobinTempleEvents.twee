@@ -676,7 +676,7 @@
 			<<if $robinAnalShieldComment>>
 				<<unset $robinAnalShieldComment>>
 				<<if _robinStatus.includes("desert")>>
-					“<span class="gold">我找约旦<<print sexSwitch("Jordan","修女","修士",)>>把我的护肛板拿掉了。</span>”
+					“<span class="gold">我找约旦<<print sexSwitch("Jordan","姐妹","兄弟",)>>把我的护肛板拿掉了。</span>”
 				<<else>>
 					“我……<span class="gold">我为你把护肛板拆掉了……</span>”
 				<</if>>
@@ -809,7 +809,7 @@
 <</widget>>
 
 <<widget "MaplebirchMancombatRobin">>
-	<<if $_npc.fullDescription is "Robin">>
+	<<if _args[0] is "Robin">>
 		<<robinExpose>>
 	<</if>>
 <</widget>>
@@ -887,6 +887,8 @@
 	“啊，原来是罗宾！<<nnpc_He "Robin">>一直说<<nnpc_he "Robin">>要<span class="blue">做什么直播来着的</span>，是在孤儿院的家里吗？”
 <<elseif _robin_location_message === "danube">>
 	“啊，原来是罗宾！<<nnpc_He "Robin">>一直说<<nnpc_he "Robin">>要<span class="blue">做什么家教来着的</span>，是在<span class="gold">多瑙河街</span>吗？”
+<<elseif _robin_location_message === "orphanage">>
+	“啊，罗宾！我记得<<nnpc_He "Robin">>早些时候说要回家，应该是回<span class="gold">孤儿院</span>了吧。”
 <<else>>
 	“我也不知道罗宾去哪了。”
 <</if>>
@@ -1863,7 +1865,7 @@
 			<<set $Maplebirch.robin.ChastityRemovePure to true>>
 		<<else>>
 			<br><br>
-			罗宾有些吃惊，但还是回答：“我会试着和约旦<<print sexSwitch("Jordan","修女","修士",)>>说的。
+			罗宾有些吃惊，但还是回答：“我会试着和约旦<<print sexSwitch("Jordan","姐妹","兄弟",)>>说的。
 			<<if _robinStatus.includes("desert")>>
 				<<set $Maplebirch.robin.ChastityDel = true>>
 				<<set $Maplebirch.robin.ChastityDel = true>>
@@ -1879,7 +1881,7 @@
 			你开口对罗宾说，“你可以把贞操带穿上去吗？”
 			<br><br>
 		<<if $location is "temple">>
-			罗宾有些愕然，但还是回答：“我会试着和约旦<<print sexSwitch("Jordan","修女","修士",)>>说的。”
+			罗宾有些愕然，但还是回答：“我会试着和约旦<<print sexSwitch("Jordan","姐妹","兄弟",)>>说的。”
 			<<if Time.dayState is "night" or Time.dayState is "dusk">>
 				“但我们得等到约旦回来……所以，大概要明天去了。”
 				<br><br>
@@ -1908,7 +1910,7 @@
 				<</if>>
 			<</if>>
 		<<elseif $location is "home">>
-			罗宾有些愕然，但还是回答：“但我们得到<span class="gold">神殿</span>找约旦<<print sexSwitch("Jordan","修女","修士",)>>。”
+			罗宾有些愕然，但还是回答：“但我们得到<span class="gold">神殿</span>找约旦<<print sexSwitch("Jordan","姐妹","兄弟",)>>。”
 			<<if Time.dayState is "night" or Time.dayState is "dusk">>
 				“约旦大概不在神殿了……所以，大概要明天去了。”
 				<br><br>

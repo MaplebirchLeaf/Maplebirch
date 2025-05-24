@@ -1,0 +1,16 @@
+<<elseif $skul_dock[$bus].contents is "banana">>
+	<<if currentSkillValue('tending') gte 300>>
+		<<if $skul_dock[$bus].state is "known">>
+			你知道这些集装箱里肯定有可以带走的东西。你又撬开了一个集装箱，里面装满了香蕉的吸芽。你觉得你能用上它们，但只要拿走一部分就可以了。
+			<br><br>
+		<<else>>
+			你又搜刮了一个集装箱，里面装满了香蕉的吸芽。你觉得你能用上它们，但只要拿走一部分就可以了。
+			<br><br>
+		<</if>>
+		<<link [[拿走香蕉吸芽 (0:05)|Docks banana sucker]]>><<pass 5>><<crimeUp 200 "thievery">><<run $Maplebirch.FruitSeeds.know.pushUnique("banana_seed")>><</link>><<crime "thievery">><<MaplebirchHint>>
+	<<else>>
+		你又搜刮了一个集装箱，里面装满了奇怪的长条植株。
+		<br><br>
+	<</if>>
+	<br>
+<<elseif $skul_dock[$bus].contents is "equipment">>

@@ -1,0 +1,6 @@
+			<<for _i to 0; _i lt $Maplebirch.FruitSeeds.know.length; _i++>>
+				<<if Object.keys(setup.maplebirchFruiter).includes($Maplebirch.FruitSeeds.know[_i])>>
+					<<set _collection += 1>>
+				<</if>>
+			<</for>>
+			<<set _total to 0>>

@@ -14,7 +14,7 @@
                         <<set _sleepinterruptSydney to 1>>
                         <<set _sydneyWake to 1>>
                     <</if>>
-                <<elseif ["monk"].includes($Maplebirch.robin.rank) && $Maplebirch.Rng lt 50>>
+                <<elseif ["monk", "priest"].includes($Maplebirch.robin.rank) && $Maplebirch.Rng lt 50>>
                     <<if ((Time.weekDay === 1 && Time.hour lt 6) || (Time.weekDay === 7 && Time.hour gt 23)) && _robinStatus.includes("desert") && $Maplebirch.robinwake isnot 1>>
                         <<set $Maplebirch.robinwake to 1>>
                         <<set _sleepinterruptRobin to 1>>

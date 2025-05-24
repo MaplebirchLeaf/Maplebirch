@@ -31,7 +31,7 @@
 		<br><br>
 		<<monks>>把你叠好的衣服拿给你。
 		<<if $player.virginity.penile isnot true or $player.virginity.vaginal isnot true>>
-			<<if setup.mbContains($Maplebirch.Promised, ["Robin", "Sydney"])>>
+			<<if mbContains($Maplebirch.Promised, ["Robin", "Sydney"])>>
 				你获得了<span class="wraith"><span class="blue">承诺仪式：</span><span class="tentacle">合二为一</span></span>特质。
 			<<else>>
 				你获得了<span class="blue">贞洁誓言</span>特质。
@@ -911,7 +911,7 @@
 	<br><br>
 	<<monks>>把你叠好的衣服递给你。
 	<<if $player.virginity.penile isnot true or $player.virginity.vaginal isnot true>>
-		<<if setup.mbContains($Maplebirch.Promised, ["Robin", "Sydney"])>>
+		<<if mbContains($Maplebirch.Promised, ["Robin", "Sydney"])>>
 			你获得了<span class="wraith"><span class="blue">承诺仪式：</span><span class="tentacle">合二为一</span></span>特质。
 			<br><br>
 		<<else>>
@@ -973,7 +973,7 @@
 <br><br>
 
 <<if $player.virginity.penile isnot true or $player.virginity.vaginal isnot true>>
-	<<if setup.mbContains($Maplebirch.Promised, ["Robin", "Sydney"])>>
+	<<if mbContains($Maplebirch.Promised, ["Robin", "Sydney"])>>
 		你获得了<span class="wraith"><span class="blue">承诺仪式：</span><span class="tentacle">合二为一</span></span>特质。
 		<br><br>
 	<<else>>

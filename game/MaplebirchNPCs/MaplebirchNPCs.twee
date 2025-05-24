@@ -97,9 +97,9 @@
 				<<set $NPCName[_i].holiness += _val>>
 			<</if>>
 			<<if $Maplebirch.Rng <= 35>>
-				<<if $NPCName[_i].holiness <= 80>>
+				<<if $NPCName[_i].holiness <= 80 && $Maplebirch.robin.desert is "lock">>
 					<<set $Maplebirch.robin.desertEvent = 1>>
-				<<elseif $NPCName[_i].holiness >= 120>>
+				<<elseif $NPCName[_i].holiness >= 120 && $Maplebirch.robin.desert is "lock">>
 					<<set $Maplebirch.robin.beliefEvent = 1>>
 				<</if>>
 			<</if>>
@@ -116,7 +116,7 @@
 			<<if $NPCName[_i].holiness <= 80>>
 				<<if $Maplebirch.robin.desertEvent is 1>>
 					<<set $Maplebirch.robin.desertRollover = 1>>
-					<<set $Maplebirch.robin.belief = "unlock">>
+					<<set $Maplebirch.robin.desert = "unlock">>
 					<<set $Maplebirch.robin.belief = "lock">>
 					<<unset $Maplebirch.robin.beliefRollover>>
 				<<elseif $Maplebirch.robin.desert is "lock">>

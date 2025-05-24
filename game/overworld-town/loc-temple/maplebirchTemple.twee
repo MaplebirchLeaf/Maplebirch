@@ -1,0 +1,38 @@
+:: maplebirch temple Widgets [widget]
+
+<<widget "maplebirch_temple_orchard">>
+    <<if $Maplebirch.FruitSeeds.unlock.includes("temple")>>
+        <<MaplebirchIcon "temple_orchard">>
+        <<if Time.dayState is "night">>
+            <<note "你目前无法在园林工作" "teal">>
+        <<else>>
+            <<link [[神殿园林|Temple Orchard]]>><</link>>
+        <</if>>
+    <</if>>
+<</widget>>
+
+<<widget "maplebirch_temple_orchard_lock">>
+    <<if ["monk", "priest"].includes($temple_rank) && !$Maplebirch.temple.orchard && $temple_garden gte 100>>
+        <<set $_fruiter_name to window.modUtils.getMod('ModI18N') ? setup.maplebirchFruiter[V.Maplebirch.orchard.temple[0].fruiter].cn_tree_name : setup.maplebirchFruiter[V.Maplebirch.orchard.temple[0].fruiter].tree_name>>
+        你被安排跟着一位<<monk>>前往花园的另一处。
+        <br><br>
+        没花多少时间，<<monk>>就将你领到了一处茁壮的李子树前对你说：“这是我们神殿的果树，你现在可以在这里工作了，我们允许你种一些属于自己的植物。”
+        <br><br>
+        “现在，快跟着把这里收拾一下！”<<monk>>开始了手中的活，你也跟上前去一起收拾这处园林。<<physique 6>>
+        <br><br>
+        <<tending_text>>这没花多少时间。你昨完之后那位<<monk>>就自己先离开了，留你自己呆在这处园林中。
+		<br><br>
+        你在周围巡视着这片地方，你发现<span class="gold"><<print $_fruiter_name>></span>和<span class="gold">草莓丛</span>上还结着果实，<i>或许可以去摘点？</i>
+        <br><br><<run $Maplebirch.FruitSeeds.unlock.pushUnique("temple")>>
+        <<link [[继续|Temple Orchard]]>><</link>><<exitAll>>
+    <</if>>
+<</widget>>
+
+:: Temple Orchard
+<<set $outside to 1>><<set $location to "temple">><<temple_effects>><<effects>>
+你在神殿的园林中。
+<br>
+<<maplebirch_plot_effects>>
+<<display_fruiter temple>>
+<br>
+<<templeicon "garden">><<link [[返回花园|Temple Garden]]>><</link>>

@@ -1,6 +1,6 @@
     <<if $templePromised is "Sydney">>
     <</if>>
-    <<if setup.mbContains($Maplebirch.Promised, ["Robin", "Sydney"])>>
+    <<if mbContains($Maplebirch.Promised, ["Robin", "Sydney"])>>
         <<set $Maplebirch.robin.examination = true>>
 		<<npc Jordan>><<person1>>
 		<<if Time.dayState isnot "night" and Time.dayState isnot "dusk">>

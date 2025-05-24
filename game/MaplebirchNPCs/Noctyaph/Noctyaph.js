@@ -2,7 +2,7 @@
 function maplebirchNoctyaphNPC() {
   return new NamedNPC(
     'Noctyaph',
-    ['Fallen Seducer', '堕诱者'],
+    ['fallen seducer', '堕诱者'],
     ['Noctyaph', '诺克迪亚弗'],
     'angel'
   )
@@ -20,4 +20,5 @@ function maplebirchNoctyaphNPC() {
       handholding: true,
     }
   )
+  .setPregnancy()
 };

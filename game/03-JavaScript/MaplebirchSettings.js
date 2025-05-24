@@ -1,5 +1,8 @@
 // 检测数组含有多元素检测
-setup.mbContains = (arr, elements) => elements.every(e => arr.includes(e));
+window.mbContains = function(arr, elements) { 
+  return elements.every(e => arr.includes(e));
+};
+
 //随机数生成
 window.maplebirchRandomNum = function() {
   if (typeof V.Maplebirch.Rng !== 'number') {
@@ -8,56 +11,75 @@ window.maplebirchRandomNum = function() {
   V.Maplebirch.Rng = Math.floor(Math.random() * 100) + 1;
   return V.Maplebirch.Rng;
 };
+
 // 读取存档时注入的数据
 window.maplebirchReloadVariables = function() {
   
+  // 版本检测：const version = (s => +s.split('.').filter((c, i) => i || c !== '0').join(''));
+  // 版本更新
+  maplebirchVersionUpdate();
   // NPC注入npcNamelist
-  //maplebirchNPCInit();
   setup.NPCNameList.pushUnique("Vivian");
-  setup.NPCNameList_cn_name[0].pushUnique("维安");
-	setup.NPCNameList_cn_name[1].pushUnique("维安");
-  setup.NPCNameList.pushUnique("Karasveil");
-  setup.NPCNameList_cn_name[0].pushUnique("卡拉斯维尔");
-	setup.NPCNameList_cn_name[1].pushUnique("卡拉斯维尔");
   setup.NPCNameList.pushUnique("Igniharp");
-  setup.NPCNameList_cn_name[0].pushUnique("伊格尼哈普");
-	setup.NPCNameList_cn_name[1].pushUnique("伊格尼哈普");
+  setup.NPCNameList.pushUnique("Karasveil");
   setup.NPCNameList.pushUnique("Noctyaph");
-  setup.NPCNameList_cn_name[0].pushUnique("诺克迪亚弗");
-	setup.NPCNameList_cn_name[1].pushUnique("诺克迪亚弗");
+  // 汉化npc注入
+  if (window.modUtils.getMod('ModI18N')) maplebirchAddI18nNames();
   initCNPC();
 
   const fragment = document.createDocumentFragment();
   fragment.append(wikifier("MaplebirchgroupVariable"));
   fragment.append(wikifier("MaplebirchnumValue"));
 
-  // 版本更新
-  maplebirchVersionUpdate();
+  // 果园注入
+  maplebirchFruit.Init();
 };
 // 游戏开始时注入的数据
 window.maplebirchStartOnly = function() {
 
   // NPC注入npcNamelist
-  //maplebirchNPCInit();
   setup.NPCNameList.pushUnique("Vivian");
-  setup.NPCNameList_cn_name[0].pushUnique("维安");
-	setup.NPCNameList_cn_name[1].pushUnique("维安");
   setup.NPCNameList.pushUnique("Karasveil");
-  setup.NPCNameList_cn_name[0].pushUnique("卡拉斯维尔");
-	setup.NPCNameList_cn_name[1].pushUnique("卡拉斯维尔");
   setup.NPCNameList.pushUnique("Igniharp");
-  setup.NPCNameList_cn_name[0].pushUnique("伊格尼哈普");
-	setup.NPCNameList_cn_name[1].pushUnique("伊格尼哈普");
   setup.NPCNameList.pushUnique("Noctyaph");
-  setup.NPCNameList_cn_name[0].pushUnique("诺克迪亚弗");
-	setup.NPCNameList_cn_name[1].pushUnique("诺克迪亚弗");
+  // 汉化npc注入
+  if (window.modUtils.getMod('ModI18N')) maplebirchAddI18nNames();
 
   const fragment = document.createDocumentFragment();
   fragment.append(wikifier("MaplebirchgroupVariable"));
   fragment.append(wikifier("MaplebirchnumValue"));
 
-  // 版本更新
-  maplebirchVersionUpdate();
+  // 果园注入
+  maplebirchFruit.Init();
+};
+
+// i18n名字注入
+window.maplebirchAddI18nNames = function() {
+  const nameMap = {
+    Vivian: "维维安",
+    Karasveil: "卡拉斯维尔",
+    Igniharp: "伊格尼哈普",
+    Noctyaph: "诺克迪亚弗"
+};
+
+  Object.entries(nameMap).forEach(([enName, cnName]) => {
+  // 初始化目标结构（保持一维数组）
+    if (!setup.NPCNameList_cn_name[enName]) {
+      setup.NPCNameList_cn_name[enName] = [cnName, cnName]; 
+    }
+    const targetArray = setup.NPCNameList_cn_name[enName];
+    // 结构校验与修复
+    if (!Array.isArray(targetArray)) {
+      setup.NPCNameList_cn_name[enName] = [cnName, cnName];
+    }
+    // 安全添加中文名（直接操作一维数组）
+    [0, 1].forEach(index => {
+      if (typeof targetArray[index] !== 'string') {
+        targetArray[index] = cnName; // 强制替换为字符串
+      }
+      targetArray.pushUnique(cnName); // 如果允许重复可去掉
+    });
+  });
 };
 
 // 秋枫白桦版本变量更迭更新
@@ -67,81 +89,86 @@ window.maplebirchVersionUpdate = function() {
   fragment.append(wikifier("MaplebirchVariablesVersionUpdate"));
 };
 
-// 记忆技能
-window.maplebirchMemory = function(amount, choose) {
-  if (isNaN(amount)) paramError("memory", "amount", amount, "需要一个数字");
-  amount = Number(amount);
-
-  if (amount) {
-    if (choose === "wraith") {
-      V.Maplebirch.dissimilation += amount * (((1 - V.purity) / 500) + 1);
-    } else if (choose === "holy") {
-      V.Maplebirch.dissimilation += amount * ((V.purity / 500) + 1);
-    } else {
-      V.Maplebirch.memoryskill += amount * ((V.Maplebirch.Sanity / 250) + 1);
-    }
-  } 
-
-  maplebirchMemoryClamp();
-};
-DefineMacro("memory", maplebirchMemory);
-
-window.maplebirchMemoryClamp = function() {
-  V.Maplebirch.memoryskill = Math.clamp(V.Maplebirch.memoryskill, 0, 1000);
+window.maplebirchNPCData = function(statDefaults) {
+  // 在数组倒数第二的位置插入"holiness"
+  T.importantNpcStats.splice(T.importantNpcStats.length - 2, 0, "holiness");
+      
+  // 向statDefaults添加holiness属性
+  return statDefaults.holiness = {
+      name: "信仰",
+      value: T.npcData.holiness,
+      activeIcon: 'img/ui/sym_holiness.png',
+      color: 'white'
+  };
 };
 
-// 恐惧值相关
-window.fear = function(amount, multiplierOverride) {
-  if (isNaN(amount)) paramError("fear", "amount", amount, "需要一个数字");
-  if (multiplierOverride && isNaN(multiplierOverride)) paramError("fear", "multiplierOverride", multiplierOverride, "需要一个数字");
-  amount = Number(amount);
-  multiplierOverride = Number(multiplierOverride);
-
-  let stressMod = Math.clamp((V.stress / 50), 1, 200);
-  let traumaMod = Math.clamp((V.trauma / 25), 1, 200);
-  let controlMod = (Math.clamp(V.control / 5), 1, 200);
-  let willpowerMod = Math.clamp((V.willpower / 5), 1, 200);
-  let sanityMod = Math.clamp((V.Maplebirch.Sanity / 5), 1, 200);
-  
-  if (amount) {
-    if (multiplierOverride) {
-      V.Maplebirch.fear += amount * multiplierOverride;
-    } else if (amount > 0) {
-      V.Maplebirch.fear += amount * (stressMod * 0.4 + traumaMod * 0.3 + (200 - sanityMod) * 0.2 + (200 - controlMod) * 0.1) * 0.8;
-    } else { 
-      V.Maplebirch.fear += amount * (sanityMod * 0.35 + willpowerMod * 0.3 + controlMod * 0.25 + (200 - stressMod) * 0.1) * 0.8;
-    }
+// 注入原版Effect宏
+window.maplebirchEffectInit = function() {
+  const mod = V.Maplebirch;
+  const output = [];  
+  // effect 成就注入
+  const Feats = maplebirchFeatsCheck();
+  if (Feats.length > 0) {
+    output.push(...Feats.map(feat => ["earnFeat", feat]));
   }
-    //睡眠障碍sleeptrouble，噩梦/梦魇nightmares，焦虑anxiety
-      /*V.sleeptrouble = V.trauma >= 1 ? 1 : 0;
-      V.nightmares = V.trauma >= (V.traumamax / 10) * 1 ? 1 : 0;
-  
-      if (V.trauma >= (V.traumamax / 10) * 7) {
-        V.anxiety = 2;
-      } else if (V.trauma >= (V.traumamax / 10) * 2) {
-        V.anxiety = 1;
-      } else {
-        V.anxiety = 0;
-      }
-  
-      V.flashbacks = V.trauma >= (V.traumamax / 10) * 8 ? 1 : 0;
-  
-      if (V.trauma >= (V.traumamax / 10) * 6) {
-        V.panicattacks = 2;
-      } else if (V.trauma >= (V.traumamax / 10) * 4) {
-        V.panicattacks = 1;
-      } else {
-        V.panicattacks = 0;
-      }*/
+  // effect 文本元素注入
+  // 果园提醒处理
+  const orchard_text = maplebirchFruit.Remind();
+  if (orchard_text.length > 0 && !mod.effect.orchard) {
+    output.push(...orchard_text.map(item => ["text", "span", item.text, item.colour]));
+  }
 
-      //updateHallucinations(); 幻觉
-  fearClamp();
+  return output.length > 0 ? output : false;
 };
-DefineMacro("fear", fear);
 
-window.fearClamp = function () {
-  if (V.Maplebirch.fear >= V.Maplebirch.fearmax) V.willpower -= (V.Maplebirch.fear - V.Maplebirch.fearmax) / 50;
-
-  V.Maplebirch.fear = Math.clamp(V.Maplebirch.fear, 0, V.Maplebirch.fearmax);
+window.maplebirchEffectDel = function() {
+  const mod = V.Maplebirch;
+  if (maplebirchFruit.Remind()) mod.effect.orchard = true;
 };
-DefineMacro("fearclamp", fearClamp);
+
+// 来自DomRobin
+window.maplebirchModHintClicked = function() {
+  $.wiki("<<overlayReplace \"maplebirchModHint\">>");
+}
+
+window.maplebirchModSearchButtonClicked = function() {
+  // 点击搜索前，先清空之前的文本高亮
+  maplebirchModClearButtonClicked();
+  let value = T.maplebirchModHintTextbox;
+  if (!value || value.trim() === "") {
+    return;
+  }
+  value = value.trim();
+  let regex = new RegExp(value, 'g');
+  let prehtml = document.getElementById("maplebirchModHintContent").innerHTML;
+  let newHtml = prehtml.replace(regex, "<span class='gold searchResult'>" + value + '</span>');
+  document.getElementById("maplebirchModHintContent").innerHTML = newHtml;
+  let el = document.getElementsByClassName('searchResult');
+  if (el.length > 0) {
+    el[0].scrollIntoView();
+  } else {
+    let newElement = document.createElement('span');
+    newElement.style.color = "gold";
+    newElement.id = "noSearchResult";
+    let newContent = document.createTextNode("无结果");
+    // 添加文本节点 到这个新的 div 元素
+    newElement.appendChild(newContent);
+    let targetElement = document.getElementById('maplebirchModHintContent');
+    insertBefore(newElement, targetElement);
+  }
+}
+
+// 清空文本高亮
+window.maplebirchModClearButtonClicked = function() {
+  if (document.getElementById("noSearchResult")) {
+    $("#noSearchResult").remove();
+  }
+  let prehtml = document.getElementById("maplebirchModHintContent").innerHTML;
+  let newHtml = prehtml.replace(/(<\/?span.*?>)/gi, '');
+  document.getElementById("maplebirchModHintContent").innerHTML = newHtml;
+}
+
+// 在目标元素前面插入新元素
+function insertBefore(newElement, targetElement) {
+  targetElement.parentNode.insertBefore(newElement, targetElement);
+}

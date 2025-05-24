@@ -1,0 +1,4 @@
+            <<elseif $rng gte 50 && !$Maplebirch.FruitSeeds.know.includes("banana_seed")>>
+                <<set $skul_dock[_skul_dock_keys[_i]].contents to "banana">>
+                <<set _count++>>
+            <<elseif $rng gte 55 and $catsuit_found isnot true and $catsuit_spawned is undefined>>

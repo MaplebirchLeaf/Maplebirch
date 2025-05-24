@@ -1,0 +1,496 @@
+:: Maplebirch Furniture [widget]
+
+<<widget "maplebirch_furnitureList">>
+	<<set $Maplebirch.currentFurnishing to maplebirchFurniture.get($chosenFurnitureCategory)>>
+	<<if $chosenFurnitureCategory is "desk" and $Maplebirch.currentFurnishing is null>>
+		<<set $Maplebirch.currentFurnishing to maplebirchFurniture.set('desk','desk')>>
+	<</if>>
+	你在湖中岛目前的家具：
+	<<if $Maplebirch.currentFurnishing>>
+		<<furnitureicon $Maplebirch.currentFurnishing.iconFile>>
+		$Maplebirch.currentFurnishing.nameCap
+		<br>
+		<span class="description">$Maplebirch.currentFurnishing.description
+			<<if $Maplebirch.currentFurnishing.type>>
+				<<if $Maplebirch.currentFurnishing.type.includes('comfy')>>
+					<<= $chosenFurnitureCategory is 'bed' ? "提高睡眠质量。" : "提高你在房间桌上的学习效率。">>
+				<</if>>
+				<<if $Maplebirch.currentFurnishing.type.includes('double')>>有足够的空间来进行适当的夜间活动。<</if>>
+			<</if>>
+		</span>
+		<<if $chosenFurnitureCategory is "wardrobe">>
+			<span class="gold">湖中岛无法设置衣柜</span>
+		<</if>>
+	<<else>>
+		什么都没有。
+	<</if>>
+	<hr>
+	<<if !$Maplebirch.furnitureDowngrade>>
+		<div id="maplebirch-furnitureContainer">
+			<<maplebirch_generateFurnitureShopStock>>
+		</div>
+	<<else>>
+		<div id="furnitureDowngrade">
+			<<maplebirch_furnitureDowngrade>>
+		</div>
+	<</if>>
+<</widget>>
+
+<<widget "maplebirch_generateFurnitureShopStock">>
+	<<for $_key, $_furnishing range setup.furniture>>
+		<<set $_isInCategory to $_furnishing.category.includes($chosenFurnitureCategory)>>
+		<<set $_isDefault to $_furnishing.type.includes('starter')>>
+		<<set $_isCurrent to !(!$Maplebirch.currentFurnishing or $_key isnot $Maplebirch.currentFurnishing.id)>>
+		<<set $_isWardrobe to $_furnishing.showCheck is "isWardrobeHigherTier" ? false : true>>
+		<<set $_isShowing to $_furnishing.showCheck ? Furniture.showFn($_furnishing) : true>>
+		<<if $_isInCategory && !$_isDefault && !$_isCurrent && $_isShowing && $_isWardrobe>>
+			<div class="maplebirch-shopBlock no-numberify">
+				<<furnitureicon $_furnishing.iconFile>> $_furnishing.nameCap |
+				<<if $_furnishing.type>>
+					<<if $_furnishing.type.includes('comfy')>>舒适的 | <</if>>
+					<<if $_furnishing.type.includes('single')>>单人的 | <</if>>
+					<<if $_furnishing.type.includes('double')>>双人的 | <</if>>
+					<<if $_furnishing.type.includes('spacious')>>宽敞的 | <</if>>
+					<<if $_furnishing.type.includes('organiser')>>有条理的 | <</if>>
+				<</if>>
+				<<set $_cost to Furniture.setPrice($_furnishing.cost)>>
+				<<set $_name to $_furnishing.name>>
+				<<if $_furnishing.description>>
+					<<capture $_name>>
+						<mouse class="tooltip linkBlue">(?)<span>
+							$_furnishing.description
+							<<if $_furnishing.type && $_furnishing.type.includesAny('comfy','double')>>
+								<br>
+								<<if $_furnishing.type.includes('comfy')>>
+									<<if $chosenFurnitureCategory is 'bed'>>
+										<br>改善睡眠质量。
+									<<else>>
+										<br>让你在桌前处理项目更有效率。
+									<</if>>
+								<</if>>
+								<<if $_furnishing.type.includes('double')>><br>有足够的空间来进行适当的夜间活动。<</if>>
+							<</if>>
+						</span></mouse> |
+					<</capture>>
+				<</if>>
+				<<if $money gte $_cost>>
+					<<capture $_key $_furnishing $_cost>>
+						<<link [["£" + $_cost/100|Furniture Shop Catalogue]]>>
+							<<if ($_furnishing.tier or 0) lt (nullable($Maplebirch.currentFurnishing).tier or 0)>>
+								<<set $Maplebirch.furnitureDowngrade to {
+									key: $_key,
+									cost: $_cost,
+									name: $_furnishing.name,
+									nameCap: $_furnishing.nameCap,
+									iconFile: $_furnishing.iconFile,
+									type: $_furnishing.type,
+								}>>
+							<<else>>
+								<<money `-$_cost` "furniture">>
+								<<run maplebirchFurniture.set($_key, $chosenFurnitureCategory)>>
+								<<set $boughtfurniturename to $_furnishing.nameCap>>
+							<</if>>
+						<</link>>
+					<</capture>>
+				<<else>>
+					<span class="red"><<print "£"+$_cost/100>></span>
+				<</if>>
+			</div>
+		<</if>>
+	<</for>>
+	<<if $chosenFurnitureCategory is "wardrobe" and _wardrobe.tier is 2>>
+		你已经购买了最好的衣柜。
+	<</if>>
+<</widget>>
+
+<<widget "maplebirch_furnitureDowngrade">>
+	<<furnitureicon $Maplebirch.furnitureDowngrade.iconFile>>
+	<<print $Maplebirch.furnitureDowngrade.nameCap>>
+	<<if $Maplebirch.furnitureDowngrade.type && $Maplebirch.furnitureDowngrade.type.includesAny('comfy','double')>>
+		<<if $Maplebirch.furnitureDowngrade.type.includes('comfy')>><br>改善睡眠质量。<</if>>
+		<<if $Maplebirch.furnitureDowngrade.type.includes('double')>><br>足够的空间来进行适当的夜间活动。<</if>>
+	<</if>>
+	| <span class="blue">这可能是对你目前拥有的进行降阶。</span>
+	<br>
+	你仍要购买吗？
+	<br>
+	<<button [[否|Furniture Shop Catalogue]]>>
+		<<unset $Maplebirch.furnitureDowngrade>>
+	<</button>>
+	<<button [[是|Furniture Shop Catalogue]]>>
+		<<money `-$Maplebirch.furnitureDowngrade.cost` "furniture">>
+		<<run maplebirchFurniture.set($Maplebirch.furnitureDowngrade.key, $chosenFurnitureCategory)>>
+		<<set $boughtfurniturename to $Maplebirch.furnitureDowngrade.nameCap>>
+		<<unset $Maplebirch.furnitureDowngrade>>
+	<</button>>
+<</widget>>
+
+<<widget "maplebirch_paperList">>
+	<<set $Maplebirch.currentFurnishing to maplebirchFurniture.get($chosenFurnitureCategory)>>
+	<<if $chosenFurnitureCategory is "poster">>你湖中岛目前的书房：<<else>>你湖中岛目前的卧室：<</if>>
+	<<if $Maplebirch.currentFurnishing>>
+		<<set _maplebirch_premade to ["vines", "tentacles", "plainwhite", "cowgirls", "cow_girls", "hearts", "trees", "crosses", "cowgirl", "cow_girl", "cat", "puppy", "starry", "deep sea", "beach", "crabs", "flames", "stained glass", "audience", "bears", "vivian"].includes($Maplebirch.currentFurnishing.name)>>
+		<<set _maplebirch_icon to _maplebirch_premade ? $Maplebirch.currentFurnishing.id + "_" + $Maplebirch.currentFurnishing.name.replace(/ /g, '_') : ['dol', 'degrees of lewdity'].some(e => $Maplebirch.currentFurnishing.name.toLowerCase().includes(e)) ? $chosenFurnitureCategory + "_dol" : $chosenFurnitureCategory is "poster" ? "poster" : "wallpaper_custom">>
+		<<furnitureicon _maplebirch_icon>>
+		<<set $_label to $Maplebirch.currentFurnishing.nameCap is "Plainwhite" ? "Plain White".replace("Plain White","纯白") : $Maplebirch.currentFurnishing.nameCap.replace("_","").toUpperFirst().replace("Nostalgia","旧梦").replace("Cowgirl","牛女孩").replace("Bears","熊").replace("Audience","人影").replace("Stained glass","彩色玻璃").replace("Flames","火焰").replace("Crabs","螃蟹").replace("Beach","沙滩").replace("Deep sea","深海").replace("Starry","星空").replace("Cat","猫咪").replace("Puppy","小狗").replace("Vines","藤蔓").replace("Tentacles","触手").replace("Hearts","心形").replace("Trees","树木").replace("Crosses","十字架").replace("s","")>>
+		<<= $_label>>
+		<br>
+		<span class="description">
+			<<if $chosenFurnitureCategory is "wallpaper">>
+				<<switch $Maplebirch.currentFurnishing.name>>
+					<<case "vines">>
+						下流的绿色藤蔓在墙上蠕动。
+					<<case "tentacles">>
+						紫色的触手沿墙壁滑行。
+					<<case "plainwhite">>
+						普通的白色壁纸覆盖着墙壁。
+					<<case "wavywhite">>
+						波浪形图案的壁纸由白色渐变为黑色。
+					<<case "hearts">>
+						粉色的心形图案覆盖着墙壁。
+					<<case "cowgirls" "cow_girls">>
+						墙上贴着牛女孩跳舞的海报。
+					<<case "trees">>
+						墙上绿色的树木让你仿佛置身于森林。
+					<<case "crosses">>
+						金色的十字架覆盖着墙壁。
+					<<case "starry">>
+						整个墙壁都铺满了星空。
+					<<case "deep sea">>
+						你的四周全是一望无际的深蓝海洋。
+					<<case "beach">>
+						墙壁上布满了恬静的海滩景色。
+					<<case "crabs">>
+						墙上挂着可爱的螃蟹图案。
+					<<case "flames">>
+						四周全是火焰，问题不大。
+					<<case "stained glass">>
+						彩色玻璃图案覆盖着墙壁。
+					<<case "audience">>
+						人影围绕在你身边，你感觉好像有一群人在注视着。
+					<<case "bears">>
+						墙上挂着一个可爱的熊图案。
+					<<default>> /* Custom */
+						 $Maplebirch.currentFurnishing.name的图案覆盖着墙壁。
+						<<if _maplebirch_icon.includes("dol")>>
+							不知为何给你一种熟悉的感觉。
+						<<elseif $Maplebirch.currentFurnishing.name.startsWith('&lt;&lt')>>
+							<span class="black">你的作弊行为被抓到了！</span>
+						<</if>>
+				<</switch>>
+			<<else>>
+				<<switch $Maplebirch.currentFurnishing.name>>
+					<<case "cowgirl" "cow_girl">>
+						一张牛女孩的海报正贴在墙上。
+					<<case "cat">>
+						一张猫咪的海报正贴在墙上，下面写着一些字："永不言败"
+					<<case "puppy">>
+						墙上挂着一张可爱小狗海报。
+					<<case "vivian">>
+						一幅诡异的掉色画作被挂在墙上，一轮血月映照在图中。右下角的紫色触手生长着，左上角的圣光突破云层，仿佛还有什么在注视着这里。
+					<<default>> /* Custom */
+						一张$Maplebirch.currentFurnishing.name的海报被挂在墙上。
+						<<if _maplebirch_icon.includes("dol")>>
+							不知道为什么，你总感觉有一阵奇怪的熟悉感。
+						<<elseif $Maplebirch.currentFurnishing.name.startsWith('&lt;&lt;')>>
+							<span class="black">你的作弊行为被抓到了！</span>
+						<</if>>
+				<</switch>>
+			<</if>>
+		</span>
+	<<else>>
+		什么都没有。
+	<</if>>
+	<hr>
+	<div id="maplebirch-paperContainer">
+		<<maplebirch_generatePaperShopStock>>
+	</div>
+<</widget>>
+
+<<widget "maplebirch_generatePaperShopStock">>
+	<br>
+	<<set _maplebirch_availableHangings to $chosenFurnitureCategory is "wallpaper" ?  ["vines", "tentacles", "plainwhite", "cowgirls", "cow_girls", "hearts", "trees", "crosses", "starry", "deep sea", "beach", "crabs", "flames", "stained glass", "audience", "bears"] : ["cowgirl", "cow_girl", "cat", "puppy"]>>
+
+	<<if Time.dayState is "night" and Time.hour isnot 21 and $weekly.theft.furnitureShop>>
+		<span class="purple">你已经从商店里偷了东西。</span>你应该等一等再拿别的东西。
+		<br>
+	<<else>>
+		<<for $_key range _maplebirch_availableHangings>>
+			<<set $_icon to $chosenFurnitureCategory + "_" + $_key.replace(/ /g, '_')>>
+			<<set $_label to $_key is "plainwhite" ? "Plain White".replace("Plain White","纯白") : $_key.replace("_","").toUpperFirst().replace("Nostalgia","旧梦").replace("Cowgirl","牛女孩").replace("Bears","熊").replace("Audience","人影").replace("Stained glass","彩色玻璃").replace("Flames","火焰").replace("Crabs","螃蟹").replace("Beach","沙滩").replace("Deep sea","深海").replace("Starry","星空").replace("Cat","猫咪").replace("Puppy","小狗").replace("Vines","藤蔓").replace("Tentacles","触手").replace("Hearts","心形").replace("Trees","树木").replace("Crosses","十字架").replace("s","")>>
+			<<set $_cost to Furniture.setPrice(maplebirchFurniture.get($chosenFurnitureCategory, true).cost)>>
+			<<set $_isCurrent to !(!$Maplebirch.currentFurnishing or $_key isnot $Maplebirch.currentFurnishing.name)>>
+
+			<<if !$_isCurrent>>
+				<div class="maplebirch-shopBlock no-numberify">
+					<<furnitureicon $_icon>> $_label |
+					<<if Time.dayState is "night" and Time.hour isnot 21 and !$weekly.theft.furnitureShop>>
+						<<capture $_key>>
+							<<link [[盗窃|Furniture Shop Papers]]>>
+								<<run maplebirchFurniture.set($chosenFurnitureCategory, $chosenFurnitureCategory, {
+									name	: $_key,
+									nameCap	: $_key.toUpperFirst()
+								})>>
+								<<crimeUp 5 "petty">>
+								<<set $weekly.theft.furnitureShop to true>>
+							<</link>><<gcrime "petty">>
+						<</capture>>
+					<<elseif $money gte $_cost>>
+						<<capture $_key $_cost>>
+							<<link [["£" + $_cost/100|Furniture Shop Papers]]>>
+								<<money `-$_cost` "furniture">>
+								<<run maplebirchFurniture.set($chosenFurnitureCategory, $chosenFurnitureCategory, {
+									name	: $_key,
+									nameCap	: $_key.toUpperFirst()
+								})>>
+								<<set $boughtfurniturename to $_key>>
+								<<run Furniture.wardrobeUpdate()>>
+							<</link>>
+						<</capture>>
+					<<else>>
+						<span class="red"><<print "£"+$_cost/100>></span>
+					<</if>>
+				</div>
+			<</if>>
+		<</for>>
+		<br><br>
+		<<set $_customCost to Furniture.setPrice(maplebirchFurniture.get($chosenFurnitureCategory, true).cost) * 2>>
+		<<if Time.dayState isnot "night">>
+			<<capture $_customCost>>
+				<div class="maplebirch-shopBlock no-numberify">
+					<<if $money gte $_customCost>>
+						 定制：<<textbox "_customHanging" "">> |
+						<<link [['£' + $_cost / 50|Furniture Shop Papers]]>>
+							<<money `-$_customCost` "furniture">>
+							<<if _customHanging is "" or _customHanging is undefined>><<set _customHanging to "a custom design">><</if>>
+							<<set _normalisedName to Util.escape(_customHanging).replace(/\[/g, "&#91;").replace(/\]/g, "&#93;")>>
+							<<run maplebirchFurniture.set($chosenFurnitureCategory, $chosenFurnitureCategory, {
+								name	: _normalisedName,
+								nameCap	: _normalisedName.toUpperFirst()
+							})>>
+							<<set $boughtfurniturename to "custom">>
+							<<run Furniture.wardrobeUpdate()>>
+						<</link>>
+						<br>
+					<<else>>
+						自定义 | <span class="red"><<print "£"+$_cost/50>></span>
+					<</if>>
+				</div>
+			<</capture>>
+		<</if>>
+	<</if>>
+<</widget>>
+
+<<widget "maplebirch_wallpaper">>
+	<!-- 墙壁 -->
+	<<if _furniture.wallpaper>>
+	<br>
+	<<set _maplebirch_premadeWall to ["vines", "tentacles", "plainwhite", "cowgirls", "cow_girls", "hearts", "trees", "crosses"].includes(_furniture.wallpaper.name)>>
+	<<set _wallpaper to _maplebirch_premadeWall ? "wallpaper_" + _furniture.wallpaper.name : ['dol', 'degrees of lewdity'].some(e => _furniture.wallpaper.name.toLowerCase().includes(e)) ? "wallpaper_dol" : "wallpaper_custom">>
+
+	<<furnitureicon _wallpaper>>
+	<<switch _furniture.wallpaper.name>>
+		<<case "vines">>
+			下流的绿色藤蔓在墙上蠕动。
+			<<if $backgroundTraits.includes("plantlover")>>
+				像花蜜一样甜美的想法充斥着你的脑海。
+			<</if>>
+		<<case "tentacles">>
+			紫色的触手沿墙壁滑行。
+			<<if $demon gte 6>>
+				快乐的想法在你的脑海中掠过。
+			<</if>>
+		<<case "plainwhite">>
+			普通的白色壁纸覆盖着墙壁。
+		<<case "wavywhite">>
+			波浪形图案的壁纸由白色渐变为黑色。这是某种性暗示吗？
+		<<case "hearts">>
+			粉色的心形图案覆盖着墙壁。
+		<<case "cowgirls" "cow_girls">>
+			墙上贴着牛女孩跳舞的海报。
+		<<case "trees">>
+			墙上绿色的树木让你仿佛置身于森林。
+		<<case "crosses">>
+			金色的十字架覆盖着墙壁。
+		<<case "starry">>
+			整个墙壁都铺满了星空。
+		<<case "deep sea">>
+			你的四周全是一望无际的深蓝海洋。
+		<<case "beach">>
+			墙壁上布满了恬静的海滩景色。
+		<<case "crabs">>
+			墙上挂着可爱的螃蟹图案。
+		<<case "flames">>
+			四周全是火焰，问题不大。
+		<<case "stained glass">>
+			彩色玻璃图案覆盖着墙壁。
+		<<case "audience">>
+			人影围绕在你身边，你感觉好像有一群人在注视着。
+		<<case "bears">>
+			墙上挂着一个可爱的熊图案。
+		<<default>> /* 定制 */
+			_furniture.wallpaper.name的图案覆盖着墙壁。
+			<<if _wallpaper is "wallpaper_dol">>
+				不知为何给你一种熟悉的感觉。
+			<<elseif _furniture.wallpaper.name.startsWith('&lt;&lt')>>
+				<span class="black">你的作弊行为被抓到了！</span>
+			<</if>>
+	<</switch>>
+<<else>>
+	阴冷的墙壁将你与外界隔绝开来。
+<</if>>
+<</widget>>
+
+<<widget "maplebirch_Misc_Furniture">>
+	<!-- 杂项 家具 -->
+	<<set _desk to maplebirchFurniture.get('desk')>>
+	<<if _desk is null>>
+		<<set _desk to maplebirchFurniture.set('desk','desk')>>
+	<</if>>
+	<<set _chair to maplebirchFurniture.get('chair')>>
+	<<if _chair is null>>
+		<<set _chair to maplebirchFurniture.set('chair','chair')>>
+	<</if>>
+	<<maplebirch_deskText "icon">> <!-- 如果没有可用的桌面选项（读书、做项目等），桌面和图标将显示在此处 -->
+	<<maplebirch_tableText "icon">> <!-- 如果没有鱼缸可以放在自己的桌子或椅子上，桌子和椅子就会出现在这里 -->
+<</widget>>
+
+<<widget "maplebirch_deskText">>
+	<<if $studyBooks is undefined>>
+		<<set $studyBooks to {}>>
+		<<set $studyBooks.rented to "none">>
+		<<set $studyBooks.stolen to "none">>
+	<</if>>
+	<<set _desk to maplebirchFurniture.get('desk')>>
+	<<set _chair to maplebirchFurniture.get('chair')>>
+	<<set _projectOptions to [$scienceproject, $mathsproject].includes("ongoing")>><<if $photographyImageList isnot undefined and $photographyImageList.length>><<set _projectOptions to true>><</if>>
+	<<set _bookOptions to ($studyBooks.stolen is 'Raul and Janet' or $studyBooks.rented is 'Raul and Janet' or $studyBooks.stolen is 'Pinch' or $studyBooks.rented is 'Pinch')>>
+	<<set _wardrobe to maplebirchFurniture.get('wardrobe')>>
+	<<set _playOptions to ($englishPlay is 'ongoing' and $englishPlayRoles.Player isnot 'none')>>
+
+	<<if _projectOptions || _playOptions || _bookOptions || ($christmas_wrap is 1 && $christmas_gift_robin_wrapped isnot 1) || ($christmas_wrap is 1 && $christmas_gift is "clothes_unwrapped")>>
+		<<if _args[0] is "noicon">><<if $options.Maplebirch.icon is true>><<maplebirch_deskchairicon>><</if>>
+			你的_desk.nameCap和<<if _chair.name isnot "chair">><</if>>_chair.nameCap被放置在书房的窗前。
+			<br>
+			<<projectoptions>>
+			<<homeStudyOptions>><<if window.modUtils.getMod('DomRobin')>><<photographyImageOptions>><</if>>
+			<<christmas_options>>
+			<br>
+		<</if>>
+	<<else>>
+		<<if _args[0] is "icon">>
+			<br>
+			<<maplebirch_deskchairicon>>你的_desk.nameCap和<<if _chair.name isnot "chair">><</if>>_chair.nameCap被放置在书房的窗前。
+		<</if>>
+	<</if>>
+<</widget>>
+
+<<widget "maplebirch_tableText">>
+	<<set _table to maplebirchFurniture.get('table')>>
+	<<set _chair to maplebirchFurniture.get('chair')>>
+	<<if $pregnancyStats.parasiteDoctorEvents gte 2>>
+		<<if _args[0] is "noicon">>
+			<<if _table>>
+				<br><<if $options.Maplebirch.icon is true>><<bedroomtablechairicon>><</if>>
+				你的_table.nameCap<<if _chair and _chair.name isnot "chair">>和_chair.nameCap<<else>><</if>>位于墙边。
+				<br>
+			<<elseif _chair and _chair.name isnot "chair">>
+				<br>
+				你的_chair.nameCap紧靠着墙。
+				<br>
+			<<else>>
+				<br>
+				你的鱼缸放在地板上。
+				<br>
+			<</if>>
+			<<containersLink>>
+		<</if>>
+	<<else>>
+		<<if _args[0] is "icon">>
+			<<if _table>>
+				<br>
+				<<maplebirch_bedroomtablechairicon>>你的_table.nameCap<<if _chair and _chair.name isnot "chair">>和_chair.nameCap<<else>><</if>>紧挨在墙壁边上。
+			<<elseif _chair and _chair.name isnot "chair">>
+				<br>
+				<<maplebirch_bedroomtablechairicon>>_chair.nameCap紧挨在墙壁边上。
+			<</if>>
+		<</if>>
+	<</if>>
+<</widget>>
+
+<<widget "maplebirch_windowsill">>
+    <!-- 植物 -->
+	<<set _windowsill to maplebirchFurniture.get('windowsill')>>
+	<<if _windowsill>>
+		<br>
+		<<switch _windowsill.name>> /* 可以进一步扩展 */
+			<<case "ominous jar">> /* 未用过的 */
+				<<furnitureicon _windowsill.iconFile>>_windowsill.nameCap颇有气势地立在窗台上。
+			<<default>>
+				<<furnitureicon _windowsill.iconFile>>你的_windowsill.nameCap被放在了窗台上。
+		<</switch>>
+	<</if>>
+<</widget>>
+
+<<widget "maplebirch_poster">>
+	<<if _furniture.poster>>
+		<<set _premadePoster to ["cowgirl", "cow_girl", "cat", "puppy","vivian"].includes(_furniture.poster.name)>>
+		<<set _poster to _premadePoster ? "poster_" + _furniture.poster.name : ['dol', 'degrees of lewdity'].some(e => _furniture.poster.name.toLowerCase().includes(e)) ? "poster_dol" : "poster">>
+		<br>
+
+		<<furnitureicon _poster>>
+		<<switch _furniture.poster.name>>
+			<<case "cowgirl" "cow_girl">>
+				一张牛女孩的海报正贴在墙上。
+			<<case "cat">>
+				一张猫咪的海报正贴在墙上，下面写着一些字："永不言败"
+			<<case "puppy">>
+				墙上挂着一张可爱小狗海报。
+			<<case "vivian">>
+				一幅诡异的掉色画作被挂在墙上，一轮血月映照在图中。右下角的紫色触手生长着，左上角的圣光突破云层，仿佛还有什么在注视着这里。
+			<<default>> /* 定制 */
+				一张_furniture.poster.nameCap的海报被挂在墙上。
+				<<if _poster is "poster_dol">>
+					不知道为什么，你总感觉有一阵奇怪的熟悉感。
+				<<elseif _furniture.poster.name.startsWith('&lt;&lt;')>>
+					<span class="black">你的作弊行为被抓到了！</span>
+				<</if>>
+		<</switch>>
+	<</if>>
+<</widget>>
+
+<<widget "maplebirch_decoration">>
+    <!-- 装饰 -->
+    <<set _deco to maplebirchFurniture.get('decoration')>>
+    <<if _deco>>
+        <br>
+        <<switch _deco.name>>
+            <<case "large bear plushie">>
+                <<furnitureicon _deco.iconFile>>_deco.nameCap被放在角落里。
+            <<default>>
+                <<furnitureicon _deco.iconFile>>_deco.nameCap正挂在墙上。
+        <</switch>>
+    <</if>>
+<</widget>>
+
+<<widget "maplebirch_deskchairicon">>
+	<<if $options.images is 1>>
+		<<set $_desk to maplebirchFurniture.get('desk').iconFile>>
+		<<set $_chair to maplebirchFurniture.get('chair').iconFile2>>
+		<span>
+			<<if $_chair>><<icon `"furniture/" + $_chair + ".png"` "infront">><</if>>
+			<<if $_desk>><<icon `"furniture/" + $_desk + ".png"`>><</if>>
+		</span>
+	<</if>>
+<</widget>>
+
+<<widget "maplebirch_bedroomtablechairicon">>
+	<<if $options.images is 1>>
+		<<set $_table to maplebirchFurniture.get('table')>>
+		<<set $_chair to maplebirchFurniture.get('chair')>>
+		<span>
+			<<if $_table>><img class="icon infront" @src="'img/misc/icon/furniture/' + $_table.iconFile + '.png'"><</if>>
+			<<if $_chair>><img class="icon" @src="'img/misc/icon/furniture/' + $_chair.iconFile + '.png'"><</if>>
+		</span>
+	<</if>>
+<</widget>>

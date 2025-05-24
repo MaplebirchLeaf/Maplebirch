@@ -1,7 +1,11 @@
 		<br>
 	<</if>>
-    <<if $RobinTempleInvitation === "ask" && $robinromance === 1>>
+    <<if $Maplebirch.robin.temple_invitation === "ask" && $robinromance === 1>>
 		<<socialiseicon "ask">><<link [[询问罗宾为什么叹气|Temple Robin Invitation]]>><</link>><<MaplebirchHint>>
+		<br>
+	<</if>>
+	<<if $Maplebirch.robin.rank === "prospective" && !$Maplebirch.robin.temple_invitation>>
+		<<socialiseicon>><<link [[重新邀请罗宾加入神殿|Temple Robin Invitation Repeat]]>><</link>><<MaplebirchHint>>
 		<br>
 	<</if>>
 	<<if $location is "home" && $Maplebirch.robin.chastitybelt is true>> /* $robinChastityRemoveIntro 拆除罗宾贞操带剧情 */
@@ -12,7 +16,7 @@
 			/* Do Nothing */
 		<</if>>
 	<</if>>
-	<<if $location is "home" && $Maplebirch.robin.chastitybelt is false && ["initiate", "monk"].includes(V.Maplebirch.robin.rank)>>
+	<<if $location is "home" && $Maplebirch.robin.chastitybelt is false && ["initiate", "monk", "priest"].includes(V.Maplebirch.robin.rank)>>
 		<<lockicon>><<link [[希望<<nnpc_He "Robin">>能装上贞操锁 (0:15)|Robin Chastity Remove Intro]]>><<pass 15>><<handheldon 1>><<set $Maplebirch.phase = 2>><</link>><<MaplebirchHint>>
 	<</if>>
 	<br>

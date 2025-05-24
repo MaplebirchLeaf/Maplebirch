@@ -1,4 +1,4 @@
-    <<if Time.schoolDay and Time.hour is 8>>
+	<<if Time.schoolDay and Time.hour gte 8 and Time.hour lte 12>>
     <</if>>
     <<if isMaplebirchTime("RobinTempleTime")>>
 		<<if $Maplebirch.phase === 1>>
@@ -20,27 +20,43 @@
 					<<set _robinrequest to 1>>
 					“你……你愿意<<if $exposed gte 1 and _anyItemsInRoom>>换好衣服后<</if>>和我一起走吗？”<<he>>紧张地揉着胳膊问。
 					<br><br>
-         	       <<set _condition to getRobinWalkSchoolCondition()>>
-					<<if ["Robin's Room","Robin's Room Photography"].includes(_condition)>>
-       	            	<<wolficon>><<link [["换好校服，一起去神殿 (0:25)"|Robin Walk Temple]]>><<storeon _condition>><<run setRobinLocationOverride("temple", 9)>><<pass 25>><<handheldon 1>><</link>>
-                	    <br>
-                	<<elseif $exposed lt 1>>
-                	    <<wolficon>><<link [[去神殿 (0:20)|Robin Walk Temple]]>><<pass 20>><<npcincr Robin trauma -2>><<npcincr Robin love 1>><<handheldon 1>><</link>><<glove>><<lrtrauma>>
-					<<elseif _anyItemsInRoom>>
-                	    <<wolficon>><<link [[换好衣服，一起去神殿 (0:20)|Robin Walk Temple]]>><<storeon "Robin's Room">><<pass 20>><<npcincr Robin trauma -2>><<npcincr Robin love 1>><<handheldon 1>><</link>><<glove>><<lrtrauma>>
+					<<if window.modUtils.getMod('DomRobin')>>
+						<<set _condition to getRobinWalkSchoolCondition()>>
+						<<if ["Robin's Room","Robin's Room Photography"].includes(_condition)>>
+							<<wolficon>><<link [["换好校服，一起去神殿 (0:25)"|Robin Walk Temple]]>><<storeon _condition>><<run setRobinLocationOverride("temple", 9)>><<pass 25>><<handheldon 1>><</link>>
+							<br>
+						<<elseif $exposed lt 1>>
+							<<wolficon>><<link [[去神殿 (0:20)|Robin Walk Temple]]>><<pass 20>><<npcincr Robin trauma -2>><<npcincr Robin love 1>><<handheldon 1>><</link>><<glove>><<lrtrauma>>
+						<<elseif _anyItemsInRoom>>
+							<<wolficon>><<link [[换好衣服，一起去神殿 (0:20)|Robin Walk Temple]]>><<storeon "Robin's Room">><<pass 20>><<npcincr Robin trauma -2>><<npcincr Robin love 1>><<handheldon 1>><</link>><<glove>><<lrtrauma>>
+						<</if>>
+					<<else>>
+						<<if $exposed lt 1>>
+							<<wolficon>><<link [[去神殿 (0:20)|Robin Walk Temple]]>><<pass 20>><<npcincr Robin trauma -2>><<npcincr Robin love 1>><<handheldon 1>><</link>><<glove>><<lrtrauma>>
+						<<elseif _anyItemsInRoom>>
+							<<wolficon>><<link [[换好衣服，一起去神殿 (0:20)|Robin Walk Temple]]>><<storeon "Robin's Room">><<pass 20>><<npcincr Robin trauma -2>><<npcincr Robin love 1>><<handheldon 1>><</link>><<glove>><<lrtrauma>>
+						<</if>>
 					<</if>>
 				<<else>>
-					<<set _condition to getRobinWalkSchoolCondition()>>
-					<<if ["Robin's Room","Robin's Room Photography"].includes(_condition)>>
-                    	<<wolficon>><<link [["换好校服，一起去神殿 (0:25)"|Robin Walk Temple]]>><<storeon _condition>><<run setRobinLocationOverride("temple", 9)>><<pass 25>><<handheldon 1>><</link>>
-       	            	<br>
-       	        	<<elseif $exposed lt 1>>
-        	            <<wolficon>><<link [[去神殿(0:20)|Robin Walk Temple]]>><<pass 20>><<handheldon 1>><</link>>
-					<<elseif _anyItemsInRoom>>
-          	        	<<wolficon>><<link [[换好衣服，一起去神殿 (0:20)|Robin Walk Temple]]>><<storeon "Robin's Room">><<pass 20>><<handheldon 1>><</link>>
+					<<if window.modUtils.getMod('DomRobin')>>
+						<<set _condition to getRobinWalkSchoolCondition()>>
+						<<if ["Robin's Room","Robin's Room Photography"].includes(_condition)>>
+							<<wolficon>><<link [["换好校服，一起去神殿 (0:25)"|Robin Walk Temple]]>><<storeon _condition>><<run setRobinLocationOverride("temple", 9)>><<pass 25>><<handheldon 1>><</link>>
+							<br>
+						<<elseif $exposed lt 1>>
+							<<wolficon>><<link [[去神殿(0:20)|Robin Walk Temple]]>><<pass 20>><<handheldon 1>><</link>>
+						<<elseif _anyItemsInRoom>>
+							<<wolficon>><<link [[换好衣服，一起去神殿 (0:20)|Robin Walk Temple]]>><<storeon "Robin's Room">><<pass 20>><<handheldon 1>><</link>>
+						<</if>>
+					<<else>>
+						<<if $exposed lt 1>>
+							<<wolficon>><<link [[去神殿(0:20)|Robin Walk Temple]]>><<pass 20>><<handheldon 1>><</link>>
+						<<elseif _anyItemsInRoom>>
+							<<wolficon>><<link [[换好衣服，一起去神殿 (0:20)|Robin Walk Temple]]>><<storeon "Robin's Room">><<pass 20>><<handheldon 1>><</link>>
+						<</if>>
 					<</if>>
 				<</if>>
-					<br>
+				<br>
 			<<else>>
       	      罗宾看着墙上的钟。
 				<<if _robin.crossdress gte 2 and _robin.crossdress lte 4>>
@@ -49,30 +65,56 @@
 					“我要去神殿工作了。”<<he>>说，<<if $exposed lt 1>>“你愿意和我一起去吗？”<<else>>“你可能也需要换件衣服，”<<he>>脸红道。<</if>>
 				<</if>>
 				<br><br>
-				<<set _condition to getRobinWalkSchoolCondition()>>
-				<<if ["Robin's Room","Robin's Room Photography"].includes(_condition)>>
-       	        	<<wolficon>><<link [["换好校服，一起去神殿 (0:25)"|Robin Walk Temple]]>><<storeon _condition>><<run setRobinLocationOverride("temple", 9)>><<pass 25>><<handheldon 1>><</link>>
-        	        <br>
-       	     	<<elseif $exposed lt 1>>
-        	        <<wolficon>><<link [[去神殿 (0:15)|Robin Walk Temple]]>><<pass 15>><<handheldon 1>><</link>>
-					<br>
-				<<elseif _anyItemsInRoom>>
-      	          	<<wolficon>><<link [[换好衣服，一起去神殿 (0:15)|Robin Walk Temple]]>><<storeon "Robin's Room">><<pass 15>><<handheldon 1>><</link>>
-					<br>
+				<<if window.modUtils.getMod('DomRobin')>>
+					<<set _condition to getRobinWalkSchoolCondition()>>
+					<<if ["Robin's Room","Robin's Room Photography"].includes(_condition)>>
+						<<wolficon>><<link [["换好校服，一起去神殿 (0:25)"|Robin Walk Temple]]>><<storeon _condition>><<run setRobinLocationOverride("temple", 9)>><<pass 25>><<handheldon 1>><</link>>
+						<br>
+					<<elseif $exposed lt 1>>
+						<<wolficon>><<link [[去神殿 (0:15)|Robin Walk Temple]]>><<pass 15>><<handheldon 1>><</link>>
+						<br>
+					<<elseif _anyItemsInRoom>>
+						<<wolficon>><<link [[换好衣服，一起去神殿 (0:15)|Robin Walk Temple]]>><<storeon "Robin's Room">><<pass 15>><<handheldon 1>><</link>>
+						<br>
+					<</if>>
+				<<else>>
+					<<if $exposed lt 1>>
+						<<wolficon>><<link [[去神殿 (0:15)|Robin Walk Temple]]>><<pass 15>><<handheldon 1>><</link>>
+						<br>
+					<<elseif _anyItemsInRoom>>
+						<<wolficon>><<link [[换好衣服，一起去神殿 (0:15)|Robin Walk Temple]]>><<storeon "Robin's Room">><<pass 15>><<handheldon 1>><</link>>
+						<br>
+					<</if>>
 				<</if>>
 			<</if>>
-			<<if _robinrequest is 1>>
-				<<if $exposed gte 1 and (_anyItemsInRoom or $anyPhotograhyItemsInRoom)>>
-					<<MaplebirchIcon "getouticon">><<link [[穿好衣服并离开 (0:05)|Robin Room Leave]]>><<pass 5>><<storeon "Robin's Room">><<npcincr Robin trauma 1>><<npcincr Robin love -1>><<set $fromRobinRoom to true>><<set $phase to "templeRefuseTramua">><</link>><<grtrauma>><<llove>>
+			<<if window.modUtils.getMod('DomRobin')>>
+				<<if _robinrequest is 1>>
+					<<if $exposed gte 1 and (_anyItemsInRoom or $anyPhotograhyItemsInRoom)>>
+						<<MaplebirchIcon "getouticon">><<link [[穿好衣服并离开 (0:05)|Robin Room Leave]]>><<pass 5>><<storeon "Robin's Room">><<npcincr Robin trauma 1>><<npcincr Robin love -1>><<set $fromRobinRoom to true>><<set $phase to "templeRefuseTramua">><</link>><<grtrauma>><<llove>>
+					<<else>>
+						<<MaplebirchIcon "getouticon" "orphanage">><<link [[大厅|Robin Room Leave]]>><<npcincr Robin trauma 1>><<npcincr Robin love -1>><<set $fromRobinRoom to true>><<set $phase to "templeRefuseTramua">><</link>><<grtrauma>><<llove>>
+					<</if>>
 				<<else>>
-					<<MaplebirchIcon "getouticon">><<link [[离开|Robin Room Leave]]>><<npcincr Robin trauma 1>><<npcincr Robin love -1>><<set $fromRobinRoom to true>><<set $phase to "templeRefuseTramua">><</link>><<grtrauma>><<llove>>
+					<<if _anyItemsInRoom>>
+						<<MaplebirchIcon "getouticon">><<link [[穿好衣服并离开 (0:05)|Robin Room Leave]]>><<pass 5>><<storeon "Robin's Room">><<set $fromRobinRoom to true>><<set $phase to "templeRefuse">><</link>>
+					<<else>>
+						<<MaplebirchIcon "getouticon" "orphanage">><<link [[大厅|Robin Room Leave]]>><<set $fromRobinRoom to true>><<set $phase to "templeRefuse">><</link>>
+					<</if>>
 				<</if>>
 			<<else>>
-				<<if _anyItemsInRoom>>
-					<<MaplebirchIcon "getouticon">><<link [[穿好衣服并离开 (0:05)|Robin Room Leave]]>><<pass 5>><<storeon "Robin's Room">><<set $fromRobinRoom to true>><<set $phase to "templeRefuse">><</link>>
+				<<if _robinrequest is 1>>
+					<<if _anyItemsInRoom>>
+						<<MaplebirchIcon "getouticon">><<link [[穿好衣服并离开 (0:05)|Orphanage]]>><<pass 5>><<storeon "Robin's Room">><<npcincr Robin trauma 1>><<npcincr Robin love -1>><<set $fromRobinRoom to true>><<endevent>><</link>><<grtrauma>><<llove>>
+					<<else>>
+						<<MaplebirchIcon "getouticon" "orphanage">><<link [[大厅|Orphanage]]>><<npcincr Robin trauma 1>><<npcincr Robin love -1>><<set $fromRobinRoom to true>><<endevent>><</link>><<grtrauma>><<llove>>
+					<</if>>
 				<<else>>
-					<<MaplebirchIcon "getouticon">><<link [[离开|Robin Room Leave]]>><<set $fromRobinRoom to true>><<set $phase to "templeRefuse">><</link>>
+					<<if _anyItemsInRoom>>
+						<<MaplebirchIcon "getouticon">><<link [[穿好衣服并离开 (0:05)|Orphanage]]>><<pass 5>><<storeon "Robin's Room">><<set $fromRobinRoom to true>><<endevent>><</link>>
+					<<else>>
+						<<MaplebirchIcon "getouticon" "orphanage">><<link [[大厅|Orphanage]]>><<set $fromRobinRoom to true>><<endevent>><</link>>
+					<</if>>
 				<</if>>
 			<</if>>
 		<</if>>
-    <<elseif Time.schoolDay and Time.hour is 8>>
+	<<elseif Time.schoolDay and Time.hour gte 8 and Time.hour lte 12>>

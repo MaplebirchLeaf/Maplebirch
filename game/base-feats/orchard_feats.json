@@ -1,0 +1,18 @@
+{
+  "First Fruit Seed": {
+    "title": "果园的开端",
+    "desc": "生命的萌芽在指尖轻触时苏醒。",
+    "difficulty": 1,
+    "series": "",
+    "hint": "提示：获得一颗水果种子。",
+    "filter": ["All","General"]
+  },
+  "All Fruit Seed": {
+    "title": "果核图鉴",
+    "desc": "每一粒种子皆被唤醒，每一份甘甜皆被铭记。",
+    "difficulty": 2,
+    "series": "",
+    "hint": "提示：获得所有的水果种子。",
+    "filter": ["All","General"]
+  }
+}

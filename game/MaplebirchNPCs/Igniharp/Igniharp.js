@@ -2,7 +2,7 @@
 function maplebirchIgniharpNPC() {
   return new NamedNPC(
     'Igniharp',
-    ['The Inquisitor', '审判者'],
+    ['inquisitor', '审判者'],
     ['Igniharp', '伊格尼哈普'],
     'angel'
   )
@@ -20,4 +20,5 @@ function maplebirchIgniharpNPC() {
       handholding: true,
     }
   )
+  .setPregnancy()
 };

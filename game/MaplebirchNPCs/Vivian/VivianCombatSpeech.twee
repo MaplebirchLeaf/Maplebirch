@@ -17,7 +17,7 @@
 
 	<!-- 记得更新，分类 -->
 	<<if _vivian.maplebirch_lost !== 0>>
-    	<<set _vivianText to `维安安静地躺在基座上什么反应也没有。`>>
+    	<<set _vivianText to `维维安安静地躺在基座上什么反应也没有。`>>
 	<<else>>
 		<<if $speechNPCPenisVirgin is 1 or $speechNPCVaginaVirgin is 1>>
 			<<if $speechpenisvirgin is 1 or $speechvaginavirgin is 1 or $speechanusvirgin is 1>>	
@@ -61,8 +61,8 @@
 <<widget "ejaculation-vivian">>
 	<<set $ejaculating to 1>>
 	<<run maplebirchStatusCheck("Vivian")>>
-	<!-- 女性维安 -->
+	<!-- 女性维维安 -->
 	
-	<!-- 男性维安 -->	
+	<!-- 男性维维安 -->	
 
 <</widget>>

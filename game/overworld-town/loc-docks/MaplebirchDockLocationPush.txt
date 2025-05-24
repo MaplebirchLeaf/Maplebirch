@@ -1,0 +1,3 @@
+	<<elseif _dock_contents is "banana">>
+		<<skul_dock_location _dock_location>>附近有一个集装箱里，里面好像装着有什么植株。<span class="gold">你或许用得着。</span>你默默记住了它的位置。
+	<<elseif !_dock_contents>>

@@ -7,7 +7,7 @@
 <<if !$VivianNameKnow>>
     <i><span class="teal">你来到躺在基座上的<<nnpcboy "Vivian">>身边</span></i>
 <<else>>
-    <i><span class="teal">你来到维安的身边</span></i>
+    <i><span class="teal">你来到维维安的身边</span></i>
 <</if>>
 <br><br>
 <<if C.npc.Vivian.maplebirch_lost >= 90>> 
@@ -35,7 +35,7 @@
 <</if>>
 <br><br>
 <<if $Maplebirch.oldtemple>>
-    你从约旦那里了解到关于森林湖废墟中是千年前神殿的悲剧，传言这里现在有一只苍白幽灵在此游荡并且和血月息息相关。<span class="gold"><i>|或许可以使用关于血月的物品？</i></span>
+    你从约旦那里了解到关于森林湖废墟中是千年前神殿的悲剧，传言这里现在有一只苍白幽灵在此游荡并且和血月息息相关。<span class="gold">|<i>或许可以使用关于血月的物品？</i></span>
 <<else>>
     <<set $Maplebirch.oldtempleAsk to true>>
     <<if C.npc.Jordan.init === 1>>
@@ -130,12 +130,12 @@
 <br><br>
 <<if C.npc.Vivian.maplebirch_lost === 0>>
     <<He>>的身体突然活动了起来，你的身体被吓了一跳往后退去。之后，<<He>>的目光对视着你的眼睛，似乎想领着你朝基座室外游去。
-    不可思议的是四周的触手居然纷纷退开，为你们送行，但你并不知道维安想要将你带到那里。
+    不可思议的是四周的触手居然纷纷退开，为你们送行，但你并不知道维维安想要将你带到那里。
     <br><br>
 <</if>>
-<<if C.npc.Vivian.maplebirch_lost <= 50>>
+<<if C.npc.Vivian.maplebirch_lost <= 50 && !$VivianNameKnow>>
     <<set $VivianNameKnow = true>>
-    <i>在你离开时，你注意到的<<He>>胸口隐隐地被涂了几个字，<span class="gold">“维安”</span>。</i>
+    <i>在你离开时，你注意到<<He>>的胸口处有一串被锈蚀的银制十字架，上面隐隐刻上了几个字，<span class="gold">“维维安”</span>。</i>
     <br><br>
 <</if>>
 <<if _phase is 1>><<endWraith>><</if>>
@@ -177,10 +177,10 @@
 <br><br>
 <<if $enemyarousal gte $enemyarousalmax>>
     <<ejaculation>>
-    维安在基座上颤抖着。
+    维维安在基座上颤抖着。
     <br><br>
 <<elseif $enemyhealth lte 0>>
-    维安的身上被你打出了淤青。<<Maplebirchnpcincr Vivian love -5>><<llove>>
+    维维安的身上被你打出了淤青。<<Maplebirchnpcincr Vivian love -5>><<llove>>
     <br><br>
 <</if>>
 <<endcombat>>
@@ -254,29 +254,30 @@
 <<set $outside to 1>><<set $location to "lake_island">><<effects>>
 <<npc Vivian>><<person1>>
 
+<<run setup.loveInterestNpc.pushUnique("Vivian")>>
 <<He>>领着你从湖下废墟的基座室里游到了森林湖的湖面上，在湖面上你们大口的喘气。你听到<<He>>的嘴里发出一串沙哑、不协调的语句，你隐隐约约能听懂<<He>>在说些什么，
 “现…现在是…是什么时候，我大概沉…沉睡了多长时…间？”
 <br><br>
 <<if $Maplebirch.vivianSeen.includes("Ruin Plinth Sex")>>
-    维安从你身上感受到了恐惧，<<He>>有些害怕地看着你。
+    维维安从你身上感受到了恐惧，<<He>>有些害怕地看着你。
 <<else>>
-    维安有些警惕地看着你，但<<He>>还是呼了口气。<<Maplebirchnpcincr Vivian love 1>>
+    维维安有些警惕地看着你，但<<He>>还是呼了口气。<<Maplebirchnpcincr Vivian love 1>>
     <br><br>
     <<He>>的眼睛重新望向天空，似乎已经很久没有见过日晖与星辰了。<<He>>感叹着，不自觉地<span class="gold">牵住了你的手</span>在湖面上摸索着一条道路。<<takeHandholdingVirginity "Vivian" "romantic">><<arousal 1000>><<stress -6>><<ggarousal>><<lstress>>
 <</if>>
 <br><br>
 在路上<<He>>不时地对你说些什么，
 <<if $englishtrait >= 3 && $historytrait >= 2>>
-    你依稀听出维安说的语言是来自于几百年前，你感觉<<He>>的样貌似乎从未改变。维安说<<He>>曾是来自<span class="gold">神殿众多教徒的一员</span>，但现在<<He>>或许已经与这个身份无关了。
+    你依稀听出维维安说的语言是来自于几百年前，你感觉<<He>>的样貌似乎从未改变。维维安说<<He>>曾是来自<span class="gold">神殿众多教徒的一员</span>，但现在<<He>>或许已经与这个身份无关了。
     <br><br>
-    “我…我曾在神殿的历史圣物中翻阅到很久以前有一座更古老的神殿”，你感觉维安有些适应了，说话没有那么违和。
+    “我…我曾在神殿的历史圣物中翻阅到很久以前有一座更古老的神殿”，你感觉维维安有些适应了，说话没有那么违和。
     <<He>>继续说着：“关于缘由，我曾在森林中撞见过一位<span class="wraith">苍白美丽的身影</span>从我身前飘过，这深深地吸引了我的好奇心。我为此专研群书只为寻求那段历史的真相，但我不慎陷入了幻境。
     <br><br>
     那时我在基座室中，我随身的携带一件古物在此发生共鸣。之后，我的眼中闪过白光使我在梦境中度过一段又一段的人生，但这些又像碎片般藏在潜意识中，我不明白我现在是否还是曾经的自己。
     <br><br>
-    在梦中时，我在教堂中喃喃地祈祷着，突然一阵光晕袭来将我唤醒。”，这是<<He>>突然摸了摸自己的脸有些差异，<<He>>能感觉到<<He>>的样貌竟变成了梦中的样子。
+    在梦中时，我在教堂中喃喃地祈祷着，突然一阵光晕袭来将我唤醒。”，这是<<He>>突然摸了摸自己的脸有些差异，<<He>>能感觉到<<He>>的样貌竟还是梦中的模样。
 <<else>>
-    你有些听不懂维安在说些什么。<<note "语文与历史等级不足" "teal">>
+    你有些听不懂维维安在说些什么。<<note "语文与历史等级不足" "teal">>
 <</if>>
 <br><br>
-<span id="next"><<link [[继续|Maplebirch Lake Center]]>><<set $Maplebirch.phase = 2>><<pass 45>><<endevent>><</link>></span><<nexttext>>
+<span id="next"><<link [[继续|Maplebirch Lake Center]]>><<set $Maplebirch.phase = 2>><<pass 45>><<unset $VivianNameKnow>><<endevent>><</link>></span><<nexttext>>

@@ -3,7 +3,7 @@
 <<widget "RobinBunkChat">>
 	/* 神殿晋升，罗宾过审判， */
 	<<MaplebirchMoreLoveInterests>>
-    <<if ["monk"].includes($Maplebirch.robin.rank) && !$RobinBunkChat && $Maplebirch.loveInterest.includes("Robin")>>
+    <<if ["monk", "priest"].includes($Maplebirch.robin.rank) && !$RobinBunkChat && $Maplebirch.loveInterest.includes("Robin")>>
         <br><br>
         <span class="teal"><i>在你走时，你细心地留意到了罗宾在神殿的床铺位置。</i></span>
         <<set $RobinBunkChat to true>>
@@ -112,7 +112,7 @@
 									"我一定会好好地遵守誓言",
 									"挚爱，我想你了",
 									"妈妈，我想我想我找到命中注定了",
-									"我最爱的同修，<<pher>>今晚也在神殿吗")>>
+									"我挚爱的同修，<<pher>>今晚也在神殿吗")>>
 					<<case "corrupt" "corruptLust">>
 						“<<print either("宝贝，看我用马鞭怎么抽你",
 									"我会在身上写满涂鸦",
@@ -149,9 +149,32 @@
 				罗宾<<print either("将被子悄悄地盖在你的身上", "把头靠在你的旁边", "在身体突然颤抖地抱住了你")>>。
 			<<case 5>>
 				罗宾快掉下床铺了。你抱住<<nnpc_him "Robin">>的腰，把<<nnpc_him "Robin">>拉到身旁。
-			/*<<case 6>>
+			<<case 6>>
+				<<switch _robinStatus>>
+					<<case "belief" "belief lust">>
+						“<<print either("感谢我最好的朋友将我带到这里",
+									"孤儿院的大家都能来工作就好了",
+									"我一定会遵守这里的戒律的",
+									"我还要再加油努力",
+									"悉尼？<<nnpc_He 'Sydney'>>也在这吗",
+									"这里也有很多想我一样的孤儿",
+									"唱诗班，我相信我可以做到")>>
+					<<case "desert" "desert lust">>
+						“<<print either("这里让我的感觉不是很好",
+									"或许我想离开",
+									"这里还是有一些坏人",
+									"我想我更应该先保护我自己",
+									"我最好的朋友",
+									"贝利，能躲着<<nnpc_He 'Bailey'>>")>>	
+					<<case "lust" "">>
+						“<<print either("凯拉尔……下次不要再涂画书本了",
+									"（歌唱）",
+									"学校的功课也要努力学习",
+									"神殿还有好多工作要做",
+									"周末要记得摆摊子",
+									"如果我的时间能更多一点就好了")>>
 				<</switch>>
-				……”罗宾小声地说着梦话。	*/
+				……”罗宾小声地说着梦话。	
 		<</switch>>
 		<<sleepeffects>>
 	<</if>>

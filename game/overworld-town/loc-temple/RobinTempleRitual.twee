@@ -77,13 +77,13 @@
 	<<set $robinSeen.pushUnique("evaluation")>>
 <</if>>
 <br><br>
-<<if $robin_grace >= 90>>
+<<if $Maplebirch.robin.grace >= 90>>
 	<<He>>开始询问你们对神殿的贡献。<span class="green">罗宾的回答似乎让约旦很满意</span>，不一会儿<<He>>便转向了你，问了一些相同的问题。
 	<<set $Maplebirch._jordanScore += 10>>
-<<elseif $robin_grace >= 75>>
+<<elseif $Maplebirch.robin.grace >= 75>>
 	<<He>>开始询问你们对神殿的贡献。<span class="teal">罗宾的回答得到了约旦的认可</span>，不一会儿<<He>>便转向了你，问了一些相同的问题。
 	<<set $Maplebirch._jordanScore += 5>>
-<<elseif $robin_grace >= 60>>
+<<elseif $Maplebirch.robin.grace >= 60>>
 	<<He>>开始询问你们对神殿的贡献。<span class="lblue">罗宾的回答得到了约旦的承认</span>，不一会儿<<He>>便转向了你，问了一些相同的问题。
 	<<set $Maplebirch._jordanScore += 2>>
 <<else>>
@@ -1078,7 +1078,7 @@
 <br><br>
 罗宾飞扑而来，用尽全身力气抱住你，几乎要把你推倒。你听见几声轻微的抽泣，你的眼眶也湿润了。<<trauma -24>><<llltrauma>>
 <br><br>
-约旦笑了笑。“在等待戒指期间，我会为你们准备好仪式。现在请脱掉所有衣物。”罗宾有些迟疑，但跟在你后头脱了衣服。<<npcincr Robin lust 1>><<gslust>>
+约旦笑了笑。“在等待戒指期间，我会为你们准备好仪式。现在请脱掉所有衣物。”罗宾有些迟疑，但跟在你后头脱了衣服。<<npcincr Robin lust 1>><<grlust>>
 <br><br>
 <<person2>>
 <<if $Maplebirch.phase2 is 1>>

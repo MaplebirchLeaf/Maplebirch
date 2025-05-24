@@ -2,7 +2,7 @@
 function maplebirchKarasveilNPC() {
   return new NamedNPC(
     'Karasveil',
-    ['The Scapegoat', '替罪者'],
+    ['scapegoat', '替罪者'],
     ['Karasveil', '卡拉斯维尔'],
     'angel'
   )
@@ -20,4 +20,5 @@ function maplebirchKarasveilNPC() {
       handholding: true,
     }
   )
+  .setPregnancy()
 };

@@ -124,7 +124,7 @@ window.dailyMaplebirchNPCEffects = function() {
   if (robin.init === 1) {
     statusCheck("Robin");
     // 罗宾加入神殿速度
-    if (V.Maplebirch.robin.rank === "prospective") {
+    if (V.Maplebirch.robin.rank === "prospective" && V.Maplebirch.robin.temple_invitation) {
       if (V.Maplebirch.Robin_pendant) {
         V.Maplebirch.RobinDom += 3;
       } else {
@@ -134,22 +134,25 @@ window.dailyMaplebirchNPCEffects = function() {
     } else {
       V.Maplebirch.RobinDom = 0;
     }
-    if (V.RobinTempleInvitation !== undefined) {
-      if (robin.lovestage >= 5 && ["test_superslowly","test_slowly"].includes(V.RobinTempleInvitation)) {
+    if (V.Maplebirch.robin.temple_invitation !== undefined) {
+      if (robin.lovestage >= 5 && ["test_superslowly","test_slowly"].includes(V.Maplebirch.robin.temple_invitation)) {
         V.Maplebirch.robin.temple_speed += 1;
       }
-      if (V.Maplebirch.robin.temple_speed === 3 && V.RobinTempleInvitation === "test_superslowly") {
+      if (V.Maplebirch.robin.temple_speed === 3 && V.Maplebirch.robin.temple_invitation === "test_superslowly") {
         V.Maplebirch.robin.temple_speed -= 3;
-        V.RobinTempleInvitation = "test_slowly";
-      } else if (V.Maplebirch.robin.temple_speed === 2 && V.RobinTempleInvitation === "test_slowly") {
+        V.Maplebirch.robin.temple_invitation = "test_slowly";
+      } else if (V.Maplebirch.robin.temple_speed === 2 && V.Maplebirch.robin.temple_invitation === "test_slowly") {
         V.Maplebirch.robin.temple_speed -= 2;
-        V.RobinTempleInvitation = "test_quickly";
-      } else if (V.Maplebirch.robin.temple_speed === 0 && V.RobinTempleInvitation === "test_quickly") {
-        V.RobinTempleInvitation = "templetest";
+        V.Maplebirch.robin.temple_invitation = "test_quickly";
+      } else if (V.Maplebirch.robin.temple_speed === 0 && V.Maplebirch.robin.temple_invitation === "test_quickly") {
+        V.Maplebirch.robin.temple_invitation = "templetest";
       }
     }
-    if (["ChastityTestfail","ChastityTestsuccess"].includes(V.RobinTempleInvitation)) {
-      V.RobinTempleInvitation = undefined;
+    if (["ChastityTestsuccess"].includes(V.Maplebirch.robin.temple_invitation) || V.Maplebirch.robin.leave) {
+      delete V.Maplebirch.robin.temple_invitation;
+      delete V.Maplebirch.robin.leave;
+    } else if (["ChastityTestfail"].includes(V.Maplebirch.robin.temple_invitation)) {
+      V.Maplebirch.robin.temple_invitation = "test_superslowly";
     }
     // 罗宾护肛板
     if (
@@ -162,34 +165,34 @@ window.dailyMaplebirchNPCEffects = function() {
       robin.chastity.anus = "";
       V.robinAnalShieldComment = true;
     }
-    if (["initiate", "monk"].includes(V.Maplebirch.robin.rank) || !V.robinmissing) {
+    if (["initiate", "monk", "priest"].includes(V.Maplebirch.robin.rank) || !V.robinmissing) {
       dailyUpdateRobinValue();
     }
     // 罗宾头衔
     switch (V.Maplebirch.robin.rank) {
       case "prospective":
-        C.npc['Robin'].title = '孤儿-神殿候选者';
-        C.npc['Robin'].title_lan = { EN: 'orphan-prospective', CN: '孤儿-神殿候选者'};
+        C.npc['Robin'].title = 'orphan-prospective';
+        C.npc['Robin'].title_lan = { EN: 'orphan-prospective', CN: '孤儿-慕道者'};
         break;
       case "initiate":
-        C.npc['Robin'].title = '孤儿-见习教徒';
+        C.npc['Robin'].title = 'orphan-initiate';
         C.npc['Robin'].title_lan = { EN: 'orphan-initiate', CN: '孤儿-见习教徒'};
         break;
       case "monk":
         if (C.npc.Robin.gender === "m") {
-          C.npc['Robin'].title = '孤儿-修士';
-          C.npc['Robin'].title_lan = { EN: 'orphan-Charles', CN: '孤儿-修士'};
+          C.npc['Robin'].title = 'orphan-charles';
+          C.npc['Robin'].title_lan = { EN: 'orphan-charles', CN: '孤儿-修士'};
         } else {
-          C.npc['Robin'].title = '孤儿-修女';
-          C.npc['Robin'].title_lan = { EN: 'orphan-Charlene', CN: '孤儿-修女'};
+          C.npc['Robin'].title = 'orphan-charlene';
+          C.npc['Robin'].title_lan = { EN: 'orphan-charlene', CN: '孤儿-修女'};
         }
         break;
       case "priest":
-        C.npc['Robin'].title = '孤儿-司祭';
+        C.npc['Robin'].title = 'orphan-priest';
         C.npc['Robin'].title_lan = { EN: 'orphan-priest', CN: '孤儿-司祭'};
         break;
       default :
-        C.npc['Robin'].title = '孤儿';
+        C.npc['Robin'].title = 'orphan';
         C.npc['Robin'].title_lan = { EN: 'orphan', CN: '孤儿'};
         break;
     }
@@ -209,35 +212,35 @@ window.dailyMaplebirchNPCEffects = function() {
           break;
         case "monk":
           if (C.npc.Sydney.gender === "m") {
-            C.npc['Sydney'].title = '堕落者-修士';
-            C.npc['Sydney'].title_lan = { EN: 'fallen-Charles', CN: '堕落者-修士'};
+            C.npc['Sydney'].title = 'fallen-charles';
+            C.npc['Sydney'].title_lan = { EN: 'fallen-charles', CN: '堕落者-修士'};
           } else {
-            C.npc['Sydney'].title = '堕落者-修女';
-            C.npc['Sydney'].title_lan = { EN: 'fallen-Charlene', CN: '堕落者-修女'};
+            C.npc['Sydney'].title = 'fallen-charlene';
+            C.npc['Sydney'].title_lan = { EN: 'fallen-charlene', CN: '堕落者-修女'};
           }
           break;
         case "priest":
-          C.npc['Sydney'].title = '堕落者-司祭';
+          C.npc['Sydney'].title = 'fallen-priest';
           C.npc['Sydney'].title_lan = { EN: 'fallen-priest', CN: '堕落者-司祭'};
           break;
       }
     } else {
       switch (V.sydney.rank) {
         case "initiate":
-          C.npc['Sydney'].title = '虔信者-见习教徒';
+          C.npc['Sydney'].title = 'faithful-initiate';
           C.npc['Sydney'].title_lan = { EN: 'faithful-initiate', CN: '虔信者-见习教徒'};
           break;
         case "monk":
           if (C.npc.Sydney.gender === "m") {
-            C.npc['Sydney'].title = '虔信者-修士';
+            C.npc['Sydney'].title = 'faithful-Charles';
             C.npc['Sydney'].title_lan = { EN: 'faithful-Charles', CN: '虔信者-修士'};
           } else {
-            C.npc['Sydney'].title = '虔信者-修女';
+            C.npc['Sydney'].title = 'faithful-Charlene';
             C.npc['Sydney'].title_lan = { EN: 'faithful-Charlene', CN: '虔信者-修女'};
           }
           break;
         case "priest":
-          C.npc['Sydney'].title = '虔信者-司祭';
+          C.npc['Sydney'].title = 'faithful-priest';
           C.npc['Sydney'].title_lan = { EN: 'faithful-priest', CN: '虔信者-司祭'};
           break;
       }

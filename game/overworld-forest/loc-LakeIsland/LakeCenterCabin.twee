@@ -1,201 +1,13 @@
-:: Maplebirch Forest Lake Island [widget]
-
-<<widget "lake_island_effects">>
-	<<run maplebirchStatusCheck("Vivian")>>
-    <<run maplebirchLakeIslandRestore()>>
-    <<if !$Maplebirch.lakeisland.Hint>>
-        <i><span class="teal">你解锁了森林湖中隐藏的小岛</span></i>
-        <br><br>
-    <</if>>
-    <<if $outside === 1 && !$Maplebirch.event>>
-        <<switch _island_clean>>
-            <<case "dirtiest">>
-                <span class="red">这个地方破败不堪，脏乱无比。已经很久没人打扫了。</span>
-            <<case "dirtier">>
-                <span class="purple">杂草蔓延，藤蔓缠绕，仿佛大地自己都放弃了这里。</span>
-            <<case "dirty">>
-                <span class="lblue">虽然仍旧荒凉，但你能看出清理的痕迹，一切开始有了转机。</span>
-            <<case "clean">>
-                <span class="blue">大部分区域已经整理干净，偶有残留，但整体焕然一新。</span>
-            <<case "cleaner">>
-                <span class="teal">这里已恢复了宁静与秩序，自然与人手的痕迹交织成新的生机。</span>
-            <<case "cleanest">>
-                <span class="green">岛屿已然洁净如初，仿佛时间倒流，重现往昔荣耀。</span>
-        <</switch>>
-		<<if _vivian_location === "island" && $Maplebirch.lakeisland.lock is "lock">>	
-			<<switch random(1,7)>>
-				<<case 1>>
-					维安勤恳地打扫着木屋的四周，<<nnpc_He "Vivian">>看到了你后微笑地向你招了招手
-				<<case 2>>
-					维安弯着腰，将藤蔓一缕缕地从墙角扯出，<<nnpc_He "Vivian">>的动作虽轻柔却坚定。
-				<<case 3>>
-					维安<<nnpc_He "Vivian">>正小心翼翼地清扫石阶上的落叶，每一下都仿佛唤醒沉睡多年的寂静。
-				<<case 4>>
-					维安挥舞着扫帚，把积尘从门廊边缘一寸寸推开，偶尔抬头望向远方的湖面。
-				<<case 5>>
-					维安<<nnpc_He "Vivian">>正整理着一堆倒塌的木板，手上沾满灰尘，神情却平静安详。
-				<<case 6>>
-					维安蹲在地上，用布细细擦拭长椅的表面，仿佛在照料某种珍贵的遗物。
-				<<case 7>>
-					维安<<nnpc_He "Vivian">>正哼着不知名的小调，将一丛乱石旁的杂草连根拔起，脸上挂着满足的微笑。
-			<</switch>>
-		<</if>>
-    	<br><br>
-		<<if $Maplebirch.lakeisland.lock is "lock">>
-			<<set _clearing to $Maplebirch.lakeisland.decay>>
-			<<set _percent = Math.floor((_clearing/100)*100)>>
-			湖中岛正在重建，
-			<<if $Maplebirch.lakeisland.decay lte 0>>
-				<span class="green">这里已经恢复了昔日的辉煌了。</span>
-				<div class="meter">
-				<<print '<div class="greenbar" style="width:' + _percent + '%"></div>'>>
-				</div>
-			<<elseif $Maplebirch.lakeisland.decay lte 20>>
-				<span class="teal">清风吹拂着整洁的庭院，只余细碎的苔迹提醒曾经的荒废。</span>
-				<div class="meter">
-				<<print '<div class="tealbar" style="width:' + _percent + '%"></div>'>>
-				</div>
-			<<elseif $Maplebirch.lakeisland.decay lte 40>>
-				<span class="lblue">杂乱已经大致清除，岛屿露出了原有的轮廓与宁静。</span>
-				<div class="meter">
-				<<print '<div class="lbluebar" style="width:' + _percent + '%"></div>'>>
-				</div>
-			<<elseif $Maplebirch.lakeisland.decay lte 60>>
-				<span class="blue">虽还有破败之处，但已有秩序可寻，一切都在慢慢好转。</span>
-				<div class="meter">
-				<<print '<div class="bluebar" style="width:' + _percent + '%"></div>'>>
-				</div>
-			<<elseif $Maplebirch.lakeisland.decay lte 80>>
-				<span class="purple">岛上依旧荒凉，藤蔓与灰尘肆意，但希望已悄然生根。</span>
-				<div class="meter">
-				<<print '<div class="purplebar" style="width:' + _percent + '%"></div>'>>
-				</div>
-			<<elseif $Maplebirch.lakeisland.decay lte 99>>
-				<span class="pink">这里几乎无人问津，曾经的痕迹被岁月掩埋，只剩轮廓可辨。</span>
-				<div class="meter">
-				<<print '<div class="pinkbar" style="width:' + _percent + '%"></div>'>>
-				</div>
-			<<else>>
-				<span class="red">杂乱与破败无处不在，这片土地仿佛被时间遗忘了。</span>
-				<div class="meter">
-				<<print '<div class="redbar" style="width:' + _percent + '%"></div>'>>
-				</div>
-			<</if>>
-			<br>
-		<</if>>
-    <</if>>	
-<</widget>>
-
-<<widget "maplebirch_lakeisland_sleep_options">>
-    <<nightmareCheck "Maplebirch Lake Island Sleep">>
-
-	<<generateSleepLinks "Maplebirch Lake Island Sleep">>
-	<<if $bus is "lakeisland_vivian_bed">>
-		<<link [[爬下床|Lake Island Vivian Bedroom]]>>
-			<<storeon "lakeisland vivian bed" "check">>
-			<<if _store_check is 1>>
-				<<storeon "lakeisland vivian bed">>
-				<<set $wardrobe_location to "lake_island">>
-				<<wardrobeSelection true>>
-			<</if>>
-			<<loadTempHairStyle>>
-		<</link>>
-		<br>
-	<<else>>
-		<<link [[爬下床|Lake Island Bedroom]]>><<storeon "Lake Island Bed">><<set $wardrobe_location to "lake_island">><<loadTempHairStyle>><<wardrobeSelection>><<loadTempHairStyle>><</link>>
-	<</if>>
-	<br><br>
-<</widget>>
-
-<<widget "maplebirch_listsleepoutfits">>
-    <<switch _args[0]>>
-        <<case "Lake Island Bed">>
-            <<set _passage to "Lake Island Bed">>
-			<<set $wardrobe_location to "lake_island">>
-			<<set $storeLocation to "Lake Island Bed">>
-		<<case "Farm Bed">>
-			<<set _passage to "Farm Bed">>
-			<<set $wardrobe_location to "alexFarm">>
-			<<set $storeLocation to "Farm Bed">>
-		<<case "prison bed">>
-			<<set _passage to "Prison Bed">>
-			<<set $wardrobe_location to "prison">>
-			<<set $storeLocation to "prison bed">>
-		<<case "Robin Bed">>
-			<<set _passage to "Robin Room Bed">>
-			<<set $wardrobe_location to "wardrobe">>
-			<<set $storeLocation to "bed">>
-		<<case "Temple Bunk Bed">>
-			<<set _passage to "Temple Bunk Bed">>
-			<<set $wardrobe_location to "temple">>
-			<<set $storeLocation to "Temple Bunk Bed">>
-		<<case "Pirate Bed Lie">>
-			<<set _passage to "Pirate Bed Lie">>
-			<<set $wardrobe_location to "pirate">>
-			<<set $storeLocation to "Pirate Bed Lie">>
-		<<default>>
-			<<set _passage to "Bed">>
-			<<set $wardrobe_location to "wardrobe">>
-			<<set $storeLocation to "bed">>
-	<</switch>>
-	<<wardrobeSelection true>>
-	<<if $earSlime.alwaysSleepNaked is false>>
-		<<for _index, $_outfit range $outfit>>
-			<<if $_outfit.type.includes("sleep")>>
-				<<if _passage is "Bed">>
-					<<furnitureicon _bed.iconFile>>
-                <<elseif _passage is "Lake Island Bed">>
-                    <<MaplebirchIcon "lakeisland" "yourbed">>
-				<<elseif _passage is "Prison Bed">>
-					<<prisonicon "bed">>
-				<<elseif _passage is "Asylum Bed">>
-					<<bedicon "hospital">>
-				<<elseif $location is "alex_cottage">>
-					<<set _farmbed to ($loveInterest.primary is "Alex" or $loveInterest.secondary is "Alex") ? "alex" : "farm">>
-					<<bedicon _farmbed>>
-				<<else>>
-					<<bedicon>>
-				<</if>>
-				<<capture _index>>
-					<<set _outfitname to $_outfit.name + ($_outfit.colors is false ? "" : " [C]")>>
-					<<link [["穿上"+_outfitname+"并爬到床上"|_passage]]>><<set $wear_outfit to _index>><<saveTempHairStyle>><</link>>
-				<</capture>>
-				<br>
-			<</if>>
-		<</for>>
-	<<elseif $outfit.find(outfitSet => outfitSet.type.includes("sleep"))>>
-		<<icon "cross.png" "infront">>
-		<<if _passage is "Bed">>
-			<<furnitureicon _bed.iconFile>>
-        <<elseif _passage is "Lake Island Bed">>
-            <<MaplebirchIcon "lakeisland" "yourbed">>
-		<<elseif _passage is "Prison Bed">>
-			<<prisonicon "bed">>
-		<<elseif _passage is "Asylum Bed">>
-			<<bedicon "hospital">>
-		<<else>>
-			<<bedicon>>
-		<</if>>
-		<<if $possessed>>
-			<span class="purple">你脑袋里的史莱姆很安静。</span>
-			<br>
-		<<else>>
-			<span class="purple">史莱姆不会让你在穿着衣服的情况下去睡觉的。</span>
-			<br>
-		<</if>>
-	<</if>>
-<</widget>>
-
 :: Maplebirch Lake Center
 <<set $outside to 1>><<set $location to "lake_island">><<effects>>
 <<lake_island_effects>>
 <<if $Maplebirch.phase === 2>>
     <<npc Vivian>><<person1>>
     <<set $Maplebirch.lakeisland.Hint to true>>
-    你在维安的的带领下来到来到一处湖中的一处小型岛屿，那座岛上很多物品早已被时间腐蚀。维安说着话领着你从湖面上往小岛上走去。
+    你在维维安的的带领下来到来到一处湖中的一处小型岛屿，那座岛上很多物品早已被时间腐蚀。维维安说着话领着你从湖面上往小岛上走去。
     <br><br>
     <<if $englishtrait >= 3 && $historytrait >= 2>>
-        <<He>>说：“那间木屋是我为了研究湖下废墟曾设立的研究点，没想到已经过去这么久了……”，维安的有些沉思地低下头。突然<<He>>意识到自己没有穿任何衣物，<<He>><span class="gold"><<print C.npc.Vivian.breastsdesc>>和
+        <<He>>说：“那间木屋是我为了研究湖下废墟曾设立的研究点，没想到已经过去这么久了……”，维维安的有些沉思地低下头。突然<<He>>意识到自己没有穿任何衣物，<<He>><span class="gold"><<print C.npc.Vivian.breastsdesc>>和
         <<if C.npc.Vivian.vagina isnot "none" && C.npc.Vivian.penis isnot "none">>小穴还有<<print C.npc.Vivian.penisdesc>><<elseif C.npc.Vivian.penis isnot "none">><<print C.npc.Vivian.penisdesc>><<else>>小穴<</if>></span>
         完全暴露在空气中。<<arousal 1500>><<garousal>>
 		<br><br>
@@ -204,7 +16,7 @@
             之后<<He>>突然看了你一眼有些羞涩的问道：“你也要找一身衣服穿穿吗。”
         <</if>>
     <<else>>
-        你不知道维安叽里咕噜在说些什么。你注意到维安的<span class="gold"><<print C.npc.Vivian.breastsdesc>>和
+        你不知道维维安叽里咕噜在说些什么。你注意到维维安的<span class="gold"><<print C.npc.Vivian.breastsdesc>>和
         <<if C.npc.Vivian.vagina isnot "none" && C.npc.Vivian.penis isnot "none">>小穴还有<<print C.npc.Vivian.penisdesc>><<elseif C.npc.Vivian.penis isnot "none">><<print C.npc.Vivian.penisdesc>><<else>>小穴<</if>></span>
         完全暴露在空气中。<<arousal 1500>><<garousal>><<note "语文与历史等级不足" "teal">>
     <</if>>
@@ -218,30 +30,28 @@
     <<MaplebirchIcon "lakeisland" "snow">><<link [[走上岛屿 (0:01)|Maplebirch Lake Center Island]]>><<pass 1>><</link>>
 <<else>>
     <<MaplebirchIcon "lakeisland">><<link [[游上岛屿 (0:01)|Maplebirch Lake Center Island]]>><<pass 1>><</link>>
-<</if>><<MaplebirchHint>>    
-
-
+<</if>><<MaplebirchHint>>
 
 :: Maplebirch Lake Center Island
 <<set $outside to 1>><<set $location to "lake_island">><<effects>>
 <<lake_island_effects>>
 <<run maplebirchStatusCheck("Vivian")>>
 <<if $Maplebirch.phase === 2>>
-	<!-- 维安登场于湖中岛 -->
-    你走到了维安进入的木屋前，你看到周围有些荒凉，真的已经很久没有被打理过了。
+	<!-- 维维安登场于湖中岛 -->
+    你走到了维维安进入的木屋前，你看到周围有些荒凉，真的已经很久没有被打理过了。
     <br><br>
     你看到这座岛居然还有两颗红树在顽强地生长。
 
     <br><br><<if Weather.isSnow>><<MaplebirchIcon "lakeisland" "house_snow">><<else>><<MaplebirchIcon "lakeisland" "house">><</if>>
-    <<link [[进入木屋 (0:01)|Maplebirch Lake Island House]]>><<pass 1>><</link>><<note "维安在木屋里翻找着什么" "teal">>
+    <<link [[进入木屋 (0:01)|Maplebirch Lake Island House]]>><<pass 1>><</link>><<note "维维安在木屋里翻找着什么" "teal">>
     <br>
     <<MaplebirchIcon "wait">><<link [[等待 (0:05)|Maplebirch Lake Center Island]]>><<pass 5>><<set $Maplebirch.phase = 3>><</link>>
 
 <<elseif $Maplebirch.phase === 3>>
-	<!-- 维安湖中岛事件初结束 -->
+	<!-- 维维安湖中岛事件初结束 -->
 	<<if $Maplebirch.vivian.clothes isnot "scarecrow">>
 		<<set $Maplebirch.vivian.clothes = "scarecrow">>
-		你安静的在木屋前等待着，差不多过了五分钟左右维安穿着一套破旧的稻草人服装走了出来。
+		你安静的在木屋前等待着，差不多过了五分钟左右维维安穿着一套破旧的稻草人服装走了出来。
 		<<if $exposed >= 1>>
 			<<if $englishtrait >= 3 && $historytrait >= 2>>
 				<<He>>将一条毛巾递给了你，“没有找到好一点的衣服了，我是不会把我身上这件给你的！”
@@ -262,12 +72,11 @@
 		<<link [[你说你一直听不懂<<nnpc_He "Vivian">>的话|Vivian Not Understand]]>><<MaplebirchEndEvent>><</link>>
     <</if>>
 <<else>>
-	<!-- 事件缺失中 -->
-
-
-
-
-
+	<<if $Maplebirch.vivian.bus is "stroll">>
+		维维安在湖中岛的木屋前散着步。
+		<br><br>
+		<<link [[靠近维维安 (0:01)|Maplebirch Lake Island Near Vivian]]>><<pass 1>><</link>>
+	<</if>>
     <br><br><<if Weather.isSnow>><<MaplebirchIcon "lakeisland" "house_snow">><<else>><<MaplebirchIcon "lakeisland" "house">><</if>>
     <<link [[进入木屋 (0:01)|Maplebirch Lake Island House]]>><<pass 1>><</link>><br>
     <<if $Maplebirch.lakeisland.lock is "lock">>
@@ -276,29 +85,24 @@
         <br>
         <<if !$Maplebirch.daily.islandclean>>
 			<<if $worn.handheld.name is "feather duster">>
-				<<MaplebirchIcon "gift">><<link [[将羽毛掸子给予维安 (1:00)|Maplebirch Lake Center Island Clean]]>><<pass 60>>
+				<<MaplebirchIcon "gift" "duster">><<link [[将羽毛掸子给予维维安 (1:00)|Maplebirch Lake Center Island Clean]]>><<pass 60>>
             	<<set $Maplebirch.daily.islandclean to true>><<handheldruined>><<set $Maplebirch.answer to 1>><</link>>
 			<<else>>
-				<<farmicon "clear yard">><<link [[帮助维安清理四周 (1:00)|Maplebirch Lake Center Island Clean]]>><<pass 60>>
+				<<farmicon "clear yard">><<link [[帮助维维安重建这里 (1:00)|Maplebirch Lake Center Island Clean]]>><<pass 60>>
 				<<set $Maplebirch.daily.islandclean to true>><</link>>
 			<</if>>
 			<br><br>
-			<i>无论你是否帮忙，维安都会重建湖中岛，但如果你帮忙的话进度会更快。</i>
+			<i>无论你是否帮忙，维维安都会重建湖中岛，但如果你帮忙的话进度会更快。</i>
 		<<else>>
 			<br>
-			<<note "你今天已经帮维安清理过四周了" "teal">>
-			<<if !["feather duster"].includes($Maplebirch.vivian.items)>>
-				<br><br>
-				<i>如果带着<span class="gold">羽毛掸子</span>给维安或许会增加<<nnpc_He "Vivian">>清理的速度。</i>
+			<<note "你今天已经帮维维安清理过四周了。" "teal">>
+			<<if !$Maplebirch.vivian.items.includes("feather duster")>>
+				<i>如果带着<span class="gold">羽毛掸子</span>给维维安或许会增加<<nnpc_He "Vivian">>清理的速度。</i>
 			<</if>>
         <</if>>
 	<<else>>
         <<if Weather.isSnow>><<MaplebirchIcon "lakeisland" "backyard_snow">><<else>><<MaplebirchIcon "lakeisland" "backyard">><</if>>
         <<link [[前往后院 (0:02)|Maplebirch Lake Island Backyard]]>><<pass 2>><</link>>
-
-        <br>
-        <<note "地窖，还没写" "teal">>
-
         <<if $Maplebirch.Fishinglock && getFishingRodObtainedList().length gt 0 and $fishing_place_lake_island_unlock && window.modUtils.getMod('Terraria Expand Mod')>><!-- 待联动 -->
 	        钓鱼<br>
 	        <<fishingrod_held_icon>><<link [[在森林湖中岛钓鱼|Fishing Bitten]]>><<set $fishing_place to "lake_island">><</link>><br>
@@ -321,9 +125,9 @@
 <</if>>
 <<if $Maplebirch.phase === 2>>
 	<<npc Vivian>><<person1>>
-    你看到<span class="lewd">浑身赤裸</span>的维安在你身前翻找着衣物。<<arousal 1000>><<garousal>>
+    你看到<span class="lewd">浑身赤裸</span>的维维安在你身前翻找着衣物。<<arousal 1000>><<garousal>>
     <br><br>
-	<<link [[在维安的旁边站着等待 (0:03)|Lake Island Vivian Clothes]]>><<pass 5>><</link>>
+	<<link [[在维维安的旁边站着等待 (0:03)|Lake Island Vivian Clothes]]>><<pass 5>><</link>>
 	<br>
 	<<if hasSexStat("promiscuity", 2)>>
 		<<link [[狠狠地拍<<nnpc_He "Vivian">>的屁股|Lake Island Vivian Slap]]>><<set $Maplebirch.phase2 = 1>><<Maplebirchnpcincr Vivian love -1>><</link>><<promiscuous2>><<llove>>
@@ -335,22 +139,39 @@
 	<</if>>
 	<<link [[离开木屋 (0:01)|Maplebirch Lake Center Island]]>><<pass 1>><</link>>
 <<else>>
-    <<if $Maplebirch.lakeisland.Bedroom>>
-		<<if $Maplebirch.lakeisland.yourbed>>
-			<<MaplebirchIcon "lakeisland" "yourbed">><<link [[你的房间 (0:01)|Lake Island Bedroom]]>><<pass 1>><</link>>
-			<br>
-		<</if>>
-		<<MaplebirchIcon "lakeisland" "bed">><<link [[维安的房间 (0:01)|Lake Island Vivian Bedroom]]>><<pass 1>><</link>>
-		<br>
-    <</if>> 
-    
-    <<MaplebirchIcon "getouticon">><<link [[离开 (0:01)|Maplebirch Lake Center Island]]>><<pass 1>><</link>>
+	<span class="gold">你现在在木屋内。</span>
+	<<maplebirch_lakeisland_house>>
 <</if>>
 
+:: Maplebirch Lake Island House 2
+<<set $outside to 0>><<set $wardrobe_location to "lake_island">><<effects>>
+<<lake_island_effects>>
+<span class="gold">你来到了木屋的二楼。</span>
+<br><br>
+<<if $Maplebirch.lakeisland.Study>>
+	<<MaplebirchIcon "lakeisland" "study">><<link [[书房 (0:01)|Lake Island Study]]>><<pass 1>><</link>>
+	<br>
+<</if>>
+<<if $Maplebirch.lakeisland.Bathroom>>
+	<<bathroomicon>><<link [[浴室 (0:01)|Lake Island Bathroom 2]]>><<pass 1>><</link>>
+	<br>
+<</if>>
+<<if $Maplebirch.lakeisland.Bedroom>>
+	<<if $Maplebirch.lakeisland.yourbed>>
+		<<MaplebirchIcon "lakeisland" "bed">><<link [[你的房间 (0:01)|Lake Island Bedroom]]>><<pass 1>><</link>>
+		<br>
+	<</if>>
+	<<vivianroom_link>>
+<</if>>
+<br>
+<<MaplebirchIcon "lakeisland" "stair">><<link [[下楼 (0:01)|Maplebirch Lake Island House]]>><<pass 1>><</link>>
+
+<!-- 维维安的房间 -->
 :: Lake Island Vivian Bedroom
 <<set $outside to 0>><<set $wardrobe_location to "temple">><<effects>>
 <<lake_island_effects>><<wearoutfit>>
-
+<span class="gold">你正待在维维安的卧室中。</span>
+<br><br>
 <<if $earSlime.event and $earSlime.noSleep>>
 	<<if $possessed>>
 		<<ind>><span class="purple">你脑袋里的史莱姆很安静。</span>
@@ -359,10 +180,10 @@
 	<</if>>
 	<br>
 <<else>>
-	<<MaplebirchIcon "lakeisland" "bed">><<link [[脱光并爬到维安床上|Lake Island Vivian Bed]]>><<undressSleep "lakeisland vivian bed">><</link>>
+	<<furnitureicon _bed.iconFile>><<link [[脱光并爬到维维安床上|Lake Island Vivian Bed]]>><<undressSleep "lakeisland vivian bed">><</link>>
 	<br>
 	<<if $earSlime.alwaysSleepNaked is false>>
-		<<MaplebirchIcon "lakeisland" "bed">><<link [[爬到维安床上|Lake Island Vivian Bed]]>><</link>>
+		<<furnitureicon _bed.iconFile>><<link [[爬到维维安床上|Lake Island Vivian Bed]]>><</link>>
 	<<else>>
 		<<icon "cross.png" "infront">>
 		<<MaplebirchIcon "lakeisland" "bed">>
@@ -376,16 +197,16 @@
 <</if>>
 <<if $Maplebirch.lakeisland.yourbed>>
     <br>
-    <<MaplebirchIcon "lakeisland" "yourbed">><<link [[你的房间 (0:01)|Lake Island Bedroom]]>><<pass 1>><</link>>
+    <<MaplebirchIcon "lakeisland" "bed">><<link [[你的房间 (0:01)|Lake Island Bedroom]]>><<pass 1>><</link>>
 <</if>>
-<br><br><!-- 暂时这个图标 -->
-<<MaplebirchIcon "lakeisland" "stair">><<link [[下楼 (0:01)|Maplebirch Lake Island House]]>><<pass 1>><</link>>
+<br><br>
+<<MaplebirchIcon "getouticon">><<link [[离开 (0:01)|Maplebirch Lake Island House 2]]>><<pass 1>><</link>>
 
 :: Lake Island Vivian Bed
 <<set $bus to "lakeisland_vivian_bed">><<effects>><<lake_island_effects>>
 
 <<if $Maplebirch.vivian_bed is undefined>>
-	你依偎在维安身边。
+	你依偎在维维安身边。
 <<else>>
 	你偎在被窝里。
 	<<if numberOfEarSlime() and $Maplebirch.vivian_bed isnot "player" and random(0,100) lt 3 + Math.floor($earSlime.growth / 100) - $earSlime.eventTimer and !$earSlime.event>>
@@ -400,36 +221,36 @@
 <br><br>
 <<maplebirch_lakeisland_sleep_options>>
 
+<!-- PC的房间 -->
 :: Lake Island Bedroom
 <<set $outside to 0>><<effects>><<lake_island_effects>>
+<span class="gold">你正待在你的卧室中。</span>
+<!-- 墙纸 -->
+<<maplebirch_wallpaper>>
+<!-- 桌椅 -->
+<<maplebirch_tableText "icon">>
+<!-- 装饰 -->
+<<maplebirch_decoration>>
+<!-- 植物 -->
+<<maplebirch_windowsill>>
 <br><br>
-
 <<if $unbind is 1>>
 	<<unset $unbind>>
 	你解开身上的绑带。
 	<br><br>
 <</if>>
-
 <<if $leftarm is "bound" or $rightarm is "bound" or $feetuse is "bound" or $worn.feet.name is "ankle cuffs">>
-	<<if $possessed>>
-		你低头看了看身上的绑带。你轻轻一拉，几乎没有遇到任何阻力，它们就散开了。
-		<br><br>
-		<<unbind>>
-	<<else>>
-		<<undobindingsicon>><<link [[解除你的束缚 (0:10)|Lake Island Bedroom]]>><<set $unbind to 1>><<pass 10>><<unbind>><</link>>
-		<br><br>
-	<</if>>
+	<<undobindingsicon>><<link [[解除你的束缚 (0:10)|Lake Island Bedroom]]>><<set $unbind to 1>><<pass 10>><<unbind>><</link>>
+	<br><br>
+<</if>>
+<<if $worn.face.cursed is 1>>
+	<<link [[摘下你的$worn.face.name (0:10)|Lake Island Bedroom]]>><<pass 10>><<set $worn.face.type.push("broken")>><<faceruined>><</link>>
+	<br><br>
 <</if>>
 <<if !($earSlime.event and $earSlime.noSleep)>>
-	<!-- <<set _farmbed to ($loveInterest.primary is "Alex" or $loveInterest.secondary is "Alex") ? "alex" : "farm">> -->
-	<<MaplebirchIcon "lakeisland" "yourbed">><<link [[脱光并爬到床上|Lake Island Bed]]>><<undressSleep "Lake Island Bed">><</link>>
+	<<furnitureicon _bed.iconFile>><<link [[脱光并爬到床上|Lake Island Bed]]>><<undressSleep "Lake Island Bed">><</link>>
 	<br>
 	<<maplebirch_listsleepoutfits "Lake Island Bed">>
-
-	<<roomoptions>>
-
-	<<wardrobeicon>><<link [[衣柜|Lake Island Wardrobe]]>><</link>>
-	<br>
 <<else>>
 	<br>
 	<<if $possessed>>
@@ -439,6 +260,19 @@
 	<</if>>
 	<br>
 <</if>>
+<<if _bed.type.includes("comfy")>>
+	<<skinicon "masturbate">><<link [[在床上自慰|Maplebirch Lake Island Bedroom Masturbation]]>><<set $masturbationstart to 1>><</link>>
+	<br>
+<</if>>
+
+<<roomoptions>>
+<br>
+<<if _wardrobe>>
+	你的衣服正放在_wardrobe.nameCap里面。
+<</if>>
+<br>
+<<furnitureicon _wardrobe.iconFile>><<link [[衣柜|Wardrobe]]>><</link>>
+<br>
 <<if playerHasSexToys()>>
 	<<sextoysicon>><<link [[性玩具|Sextoys Inventory]]>><<set $sextoyInvReturnLink to $passage>><</link>>
 	<br>
@@ -448,10 +282,11 @@
 <<else>>
 	<<mirroricon>><<link [[镜子|Lake Island Mirror]]>><<preMirror>><</link>>
 <</if>>
+<<maplebirch_tableText "noicon">>
 <br><br>
-<<MaplebirchIcon "lakeisland" "bed">><<link [[维安的房间 (0:01)|Lake Island Vivian Bedroom]]>><<pass 1>><</link>>
-<br><br><!-- 暂时这个图标 -->
-<<MaplebirchIcon "lakeisland" "stair">><<link [[下楼 (0:01)|Maplebirch Lake Island House]]>><<pass 1>><</link>>
+<<vivianroom_link>>
+<br>
+<<MaplebirchIcon "getouticon">><<link [[离开 (0:01)|Maplebirch Lake Island House 2]]>><<pass 1>><</link>>
 <br><br>
 <<if window.modUtils.getMod('Terraria Expand Mod')>>
     <<terraDebugLink>>
@@ -553,7 +388,7 @@
 
 :: Lake Island Mirror
 <<effects>><<lake_island_effects>>
-<<MaplebirchIcon "lakeisland" "yourbed">><<link [[离开|Lake Island Bedroom]]>><<handheldon>><<unset $mirrorMenu>><<postMirror>><</link>>
+<<MaplebirchIcon "lakeisland" "bed">><<link [[离开|Lake Island Bedroom]]>><<handheldon>><<unset $mirrorMenu>><<postMirror>><</link>>
 <br>
 
 <<mirror>>
@@ -564,26 +399,164 @@
 <<set $settingsExitPassage to "Lake Island Bedroom">>
 <<settings>>
 
+:: Lake Island Bathroom
+<<set $outside to 0>><<set $location to "lake_island">><<effects>>
+<<set $bus to "lakeisland_bathroom">><<lake_island_effects>>
+<span class="gold">你正待在一楼的浴室里。</span>
+<br><br>
+<<if $stress gte $stressmax>>
+	<<passoutlakeisland>>
+	<<exit>>
+<</if>>
+<<if $leftarm is "bound" and $rightarm is "bound">>
+	<<set _clothed = ![V.worn.upper.name, V.worn.lower.name, V.worn.under_upper.name, V.worn.under_lower.name, V.worn.over_upper.name, V.worn.over_lower.name].every(x => x == 'naked')>>
+	<<bathroomicon "bath">><<link [[(_clothed ? "穿着衣服" : "") + "洗澡 " + "(0:30)"->Lake Island Bath]]>><<water>><<pass 30>><<stress -6>><<set $hygiene to 0>><</link>><<lstress>>
+<<else>>
+	<<bathroomicon "bath">><<link [[洗澡 (0:30)->Lake Island Bath]]>><<strip>><<pass 30>><<stress -6>><<set $hygiene to 0>><<set $Maplebirch.passage to "Lake Island Bathroom">><</link>><<lstress>>
+	<br>
+	<<bathroomicon "sink">><<link [[刷牙 (0:05)|Lake Island Bathroom Brush]]>><<pass 5>><<set $Maplebirch.passage to "Lake Island Bathroom">><</link>>
+<</if>>
+<br>
+<<if $pbdisable is "f" and ($pblevel gte 2 or $pbstrip gte 1 or $pblevelballs gte 2)>>
+	<<bathroomicon "shave">><<link [[修剪阴毛->Lake Island Shave]]>><<set $Maplebirch.passage to "Lake Island Bathroom">><</link>>
+	<br>
+<</if>>
+<<pregnancyTest "Lake Island Bathroom">>
+<br>
+<<if $Maplebirch.lakeisland.Kitchen>>
+	<<MaplebirchIcon "lakeisland" "kitchen">><<link [[厨房 (0:01)|Lake Island Kitchen]]>><<pass 1>><</link>>
+	<br>
+<</if>>
+<<MaplebirchIcon "lakeisland" "stair">><<link [[大厅 (0:01)->Maplebirch Lake Island House]]>><<pass 1>><<MaplebirchEndEvent>><</link>>
+
+:: Lake Island Bathroom 2
+<<set $outside to 0>><<set $location to "lake_island">><<effects>>
+<<set $bus to "lakeisland_bathroom">><<lake_island_effects>>
+<span class="gold">你正待在二楼的浴室里。</span>
+<br><br>
+<<if $stress gte $stressmax>>
+	<<passoutlakeisland>>
+	<<exit>>
+<</if>>
+<<if $leftarm is "bound" and $rightarm is "bound">>
+	<<set _clothed = ![V.worn.upper.name, V.worn.lower.name, V.worn.under_upper.name, V.worn.under_lower.name, V.worn.over_upper.name, V.worn.over_lower.name].every(x => x == 'naked')>>
+	<<bathroomicon "bath">><<link [[(_clothed ? "穿着衣服" : "") + "洗澡 " + "(0:30)"->Lake Island Bath]]>><<water>><<pass 30>><<stress -6>><<set $hygiene to 0>><<set $Maplebirch.passage to "Lake Island Bathroom 2">><</link>><<lstress>>
+<<else>>
+	<<bathroomicon "bath">><<link [[洗澡 (0:30)->Lake Island Bath]]>><<strip>><<pass 30>><<stress -6>><<set $hygiene to 0>><<set $Maplebirch.passage to "Lake Island Bathroom 2">><</link>><<lstress>>
+	<br>
+	<<bathroomicon "sink">><<link [[刷牙 (0:05)|Lake Island Bathroom Brush]]>><<pass 5>><<set $Maplebirch.passage to "Lake Island Bathroom 2">><</link>>
+<</if>>
+<br>
+<<if $pbdisable is "f" and ($pblevel gte 2 or $pbstrip gte 1 or $pblevelballs gte 2)>>
+	<<bathroomicon "shave">><<link [[修剪阴毛->Lake Island Shave]]>><<set $Maplebirch.passage to "Lake Island Bathroom 2">><</link>>
+	<br>
+<</if>>
+<<pregnancyTest "Lake Island Bathroom">>
+<br>
+<<if $Maplebirch.lakeisland.Bedroom>>
+	<<if $Maplebirch.lakeisland.yourbed>>
+		<<MaplebirchIcon "lakeisland" "bed">><<link [[你的房间 (0:01)|Lake Island Bedroom]]>><<pass 1>><</link>>
+		<br>
+	<</if>>
+	<<vivianroom_link>>
+	<br>
+<</if>>
+<<MaplebirchIcon "getouticon">><<link [[离开 (0:01)->Maplebirch Lake Island House 2]]>><<pass 1>><<MaplebirchEndEvent>><</link>>
+
+:: Lake Island Kitchen
+<<set $outside to 0>><<set $location to "lake_island">><<effects>>
+<<set $bus to "lakeisland_kitchen">><<lake_island_effects>>
+<span class="gold">你正待在湖中岛的厨房。干净整洁的木质柜台上空的碗柜整齐地悬列着，一个烤炉紧挨着，旁边还有一个是冰箱。</span>
+<br><br>
+<<ingredients_supplied>>
+<<ingredients_exceptions>>
+<br><br>
+<<kitchen_display_all>>
+
+<<if $Maplebirch.lakeisland.Bathroom>>
+	<<bathroomicon>><<link [[浴室 (0:01)|Lake Island Bathroom]]>><<pass 1>><</link>>
+	<br>
+<</if>>
+<<MaplebirchIcon "lakeisland" "stair">><<link [[大厅 (0:01)|Maplebirch Lake Island House]]>><<pass 1>><<handheldon>><</link>>
+
+:: Lake Island Study
+<<set $outside to 0>><<set $location to "lake_island">><<effects>><<set $bus to "lakeisland_stduy">><<lake_island_effects>>
+<span class="gold">你正待在湖中岛的书房里。</span>
+<br><br>
+<!-- 座椅 -->
+<<maplebirch_deskText "icon">>
+<!-- 海报 -->
+<<maplebirch_poster>>
+<br><br>
+<<if $study is 1>>
+	<<unset $study>>
+	<<if $phase is 1>>
+		你翻开你的科学教科书，开始阅读。
+		<<scienceskill>>
+	<<elseif $phase is 2>>
+		你翻开你的数学教科书，开始阅读。
+		<<mathsskill>>
+	<<elseif $phase is 3>>
+		你翻开你的语文教科书，开始阅读。
+		<<englishskill>>
+	<<elseif $phase is 4>>
+		你翻开你的历史教科书，开始阅读。
+		<<historyskill>>
+	<</if>>
+	<<endevent>>
+	<br><br>
+<</if>>
+<!-- 座椅 -->
+<<maplebirch_deskText "noicon">>
+
+<<if $Maplebirch.lakeisland.Bedroom>>
+	<<if $Maplebirch.lakeisland.yourbed>>
+		<<MaplebirchIcon "lakeisland" "bed">><<link [[你的房间 (0:01)|Lake Island Bedroom]]>><<pass 1>><</link>>
+		<br>
+	<</if>>
+	<<vivianroom_link>>
+	<br>
+<</if>>
+<<MaplebirchIcon "getouticon">><<link [[离开 (0:01)|Maplebirch Lake Island House 2]]>><<pass 1>><</link>>
 
 :: Maplebirch Lake Island Backyard
 <<set $outside to 1>><<set $location to "lake_island">><<effects>>
 <<lake_island_effects>>
 
+<!--<<link [[温室 (0:02)|Lake Island Greenhouse]]>><<pass 2>><<set $eventskip to 1>><</link>>-->
+<<ind>><span class="link-internal macro-link MaplebirchGrey">温室 (0:02)</span>
+<br><br>
 <<gardenicon "plot">><<link [[农田 (0:02)|Lake Island Fields]]>><<pass 2>><<set $eventskip to 1>><</link>>
-<br>
+<br><br>
 <<MaplebirchIcon "lakeisland" "orchard">><<link [[果园 (0:02)|Lake Island Orchard]]>><<pass 2>><<set $eventskip to 1>><</link>>
-<br>
+<br><br>
 <<MaplebirchIcon "getouticon">><<link [[返回 (0:02)|Maplebirch Lake Center Island]]>><<pass 2>><</link>>
 
 :: Lake Island Fields
 <<set $outside to 1>><<set $bus to "lakeisland_fields">><<effects>>
-<<plot_effects>>
+<<lake_island_effects>><<plot_effects>>
 
 
 <<display_plot lake_island>>
 
+<br>
+<<MaplebirchIcon "lakeisland" "orchard">><<link [[果园 (0:01)|Lake Island Orchard]]>><<pass 1>><<set $eventskip to 1>><</link>>
+<br><br>
 <<MaplebirchIcon "getouticon">><<link [[返回 (0:02)|Maplebirch Lake Island Backyard]]>><<pass 2>><</link>>
 
 :: Lake Island Orchard
+<<set $outside to 1>><<set $bus to "lakeisland_orchard">><<effects>>
+<<lake_island_effects>><<maplebirch_plot_effects>>
+
+
+<<display_fruiter lake_island>>
+
+<br>
+<<gardenicon "plot">><<link [[农田 (0:01)|Lake Island Fields]]>><<pass 1>><<set $eventskip to 1>><</link>>
+<br><br>
+<<MaplebirchIcon "getouticon">><<link [[返回 (0:02)|Maplebirch Lake Island Backyard]]>><<pass 2>><</link>>
+
+:: Lake Island Greenhouse
 
 <<MaplebirchIcon "getouticon">><<link [[返回 (0:02)|Maplebirch Lake Island Backyard]]>><<pass 2>><</link>>
+

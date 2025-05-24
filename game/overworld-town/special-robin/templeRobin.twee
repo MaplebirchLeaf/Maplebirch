@@ -1,12 +1,12 @@
 :: Temple Robin Maplebirch [widget]
 
 <<widget "RobinTempleInvitation_1">>
-    <<if ["initiate", "monk"].includes($temple_rank) && !$RobinTempleInvitation && $Maplebirch.robin.rank is "">>
+    <<if ["initiate", "monk", "priest"].includes($temple_rank) && !$Maplebirch.robin.temple_invitation && $Maplebirch.robin.rank is "">>
         <<if C.npc.Robin.love === 100 && (playerChastity("penis") || playerChastity("vagina") || playerChastity("anus") || playerChastity())>>
             之后，罗宾好奇地抚摸着你的$worn.genitals.cn_name_cap 表面，虽然<<nnpc_he "Robin">>隐藏得很好，你还是看到了<<nnpc_he "Robin">>眼中一闪而逝的遗憾。<<npcincr Robin dom -2>><<note "- 罗宾的自信" "lblue">>
             <br>
             <span class="teal">你感觉到<<nnpc_he "Robin">>似乎有话想要对你说，但又马上止住了嘴。</span>
-            <<set $RobinTempleInvitation = "ask">>
+            <<set $Maplebirch.robin.temple_invitation = "ask">>
         <<elseif playerChastity("penis") || playerChastity("vagina") || playerChastity("anus") || playerChastity()>>
             之后，罗宾漫不经心地抚摸着你的$worn.genitals.cn_name_cap 表面，<<nnpc_he "Robin">>感觉这东西有些奇怪。
         <<else>>
@@ -17,7 +17,7 @@
 <</widget>>
 
 <<widget "RobinTimelinessPrint">>
-    <<switch $RobinTempleInvitation>>
+    <<switch $Maplebirch.robin.temple_invitation>>
         <<case "templetest">>
             <<set $Maplebirch.RobinTempleTime = "今日">>
         <<case "test_quickly">>
@@ -40,7 +40,7 @@
 <</widget>>
 
 <<widget "RobinTempleTestTip">>
-    <<if ($RobinTempleInvitation === "templetest" || $RobinTempleTestTip) && Time.hour === 6>>
+    <<if ($Maplebirch.robin.temple_invitation === "templetest" || $RobinTempleTestTip) && Time.hour === 6>>
         <<if !$RobinChastitycheckTime_lock>>
             <<set $RobinChastitycheckTime to true>>
         <</if>>
@@ -99,17 +99,31 @@
     <</if>>
 <</widget>>
 
+:: Temple Robin Invitation Repeat
+<<set $outside to 0>><<set $location to "home">><<effects>>
+<<npc Robin>><<person1>>
+你尝试劝说罗宾再次加入神殿，你向<<He>>说：“想再加入神殿吗？”
+<br><br>
+<<if C.npc.Robin.dom > 70 && C.npc.Robin.trauma < 10 && C.npc.Robin.love >= 95>>
+    <<set $Maplebirch.robin.temple_invitation = "test_superslowly">>
+    罗宾微笑地看着你，“好吧！我原谅你那时把我一个人丢在神殿了，我会再次去考核的！”
+<<else>>
+    罗宾害怕地看着你：“……对、对不起，我不想再参与这个考核。原谅我，我做不到！”罗宾有些哭泣地捂着脸。
+<</if>>
+<br><br>
+<<robinoptions>>
+
 :: Temple Robin Invitation
 <<set $outside to 0>><<set $location to "home">><<effects>>
 <<npc Robin>><<person1>>
 
-<<unset $RobinTempleInvitation>>
+<<unset $Maplebirch.robin.temple_invitation>>
 你感觉罗宾有点不开心，你向<<He>>问道：“有什么不开心的事吗？我可以帮你的。”
 <br><br>
 <<if C.npc.Robin.dom > 50>>
     <<He>>做了个深呼吸的动作，抬起头对你微笑：“你让我感觉非常好，我也希望你能够一样好。不过你为什么要穿着这个呢？”<<He>>停顿了一下，又补充道，“我并没有不开心的意思，只是好奇。”
     <br><br>
-    你告诉罗宾你选择加入了神殿，约旦<<print sexSwitch("Jordan","修女","修士",)>>告诫过你，作为神殿的一员，你需要立下贞洁的誓言，这是对神殿的尊重。
+    你告诉罗宾你选择加入了神殿，约旦<<print sexSwitch("Jordan","姐妹","兄弟",)>>告诫过你，作为神殿的一员，你需要立下贞洁的誓言，这是对神殿的尊重。
     然后你告诉<<He>>加入神殿让你的生活改变了很多，那里的人很乐意帮助你们这样处境的孤儿，在表现良好的情况下还能领取津贴。
     <<if $grace >= 80>>
         而且你的表现一直很好，是所有修行者的榜样，这让你感到自豪和放松。
@@ -124,7 +138,7 @@
     <<if C.npc.Robin.lust >= 60>><<He>>在你唇边落下浅浅的一吻，俏皮的眨了眨眼，“虽然我还是可能有一点遗憾，但我会尊重你的选择！”<br><br><</if>>
     你突然觉得自己可以尝试推荐罗宾加入神殿，如果你们足够虔诚，或许神殿能够给你们特例？
     <br><br>
-    <<wolficon>><<link [[向罗宾推荐神殿|Temple Robin Invitation 2]]>><</link>><span class="red"><<note "警告！此选项不可逆。" "italic">></span>
+    <<wolficon>><<link [[向罗宾推荐神殿|Temple Robin Invitation 2]]>><</link>><span class="red"><<note "开启罗宾-神殿线<不可逆>" "italic">></span>
     <br>
 <<else>>
     <<He>>做了个深呼吸的动作，抬起头对你微笑：“我感觉非常好，并没有什么不开心的事。谢谢你的好意，我现在没有什么需要帮忙的。”
@@ -153,7 +167,7 @@
     <br>
     <<link [[推开|Temple Robin Invitation 3]]>><<set $Maplebirch.phase to 2>><<npcincr Robin love -1>><<npcincr Robin dom -1>><<stress -12>><<trauma -6>><</link>><<llove>><<note "- 罗宾的自信" "lblue">><<lstress>><<ltrauma>>
 <<else>>
-    <<set $RobinTempleInvitation = "test_slowly">>
+    <<set $Maplebirch.robin.temple_invitation = "test_slowly">>
     罗宾点头表示同意，并说：“如果有时间我会去看看的，我还有热可可和柠檬水…还有学校课程，不会耽误吗？”
     <br><br>
     <<if C.npc.Sydney.init === 1>>
@@ -172,10 +186,11 @@
 <<set _robin to statusCheck("Robin")>>
 
 <<if $Maplebirch.phase === 1>>
-    <<set $RobinTempleInvitation = "test_quickly">>
+    <<set $Maplebirch.robin.temple_invitation = "test_quickly">>
     你和罗宾亲吻了一段时间，最后你们不舍地分开。
     <<if ["holy pendant", "stone pendant"].includes($worn.neck.name)>>
-        突然，<<He>>的眼睛注意到你的脖子上挂着一枚十字吊坠。<<if C.npc.Robin.dom > 90>><<set _gif = true>>罗宾被勾起好奇心，<<He>>说：“你脖子上的吊坠好漂亮啊，如果我加入神殿的话，你可以送我吗？”<<else>>罗宾紧紧地盯着你脖子上的吊坠，但没有说什么。<</if>>
+        <<if $worn.neck.name is "holy pendant">><<set _neck to "holy">><<elseif $worn.neck.name is "stone pendant">><<set _neck to "stone">><</if>>
+        突然，<<He>>的眼睛注意到你的脖子上挂着一枚十字吊坠。<<if C.npc.Robin.dom > 90>><<set _gift = true>>罗宾被勾起好奇心，<<He>>说：“你脖子上的吊坠好漂亮啊，如果我加入神殿的话，你可以送我吗？”<<else>>罗宾紧紧地盯着你脖子上的吊坠，但没有说什么。<</if>>
     <</if>>
     <br><br>
     <<if $robinconsole is 1>>
@@ -185,14 +200,14 @@
         之后，你在罗宾的房间与<<He>>聊了很多。有关于以后神殿的生活，以及你在神殿的种种经历。<<stress -12>><<npcincr Robin trauma -1>><<lstress>><<lrtrauma>>
         <br><br>
     <</if>>
-    <<if _gif === true>>
-    <<MaplebirchIcon "gift">><<link [[赠予罗宾吊坠|Robin Pendant Gift]]>><<set $Maplebirch.RobinLovestage = _robin.lovestage>><<MaplebirchEndEvent>><</link>>
-    <br>
+    <<if _gift === true>>
+        <<MaplebirchIcon "gift" "pendant" _neck>><<link [[赠予罗宾吊坠|Robin Pendant Gift]]>><<set $Maplebirch.RobinLovestage = _robin.lovestage>><<MaplebirchEndEvent>><</link>>
+        <br>
     <</if>>
     <<MaplebirchIcon "getouticon">><<link [[返回房间|Robin's Room Entrance]]>><<set $Maplebirch.RobinLovestage = _robin.lovestage>><<MaplebirchEndEvent>><</link>>
 <<elseif $Maplebirch.phase === 2>>
     <<set _robin.lovestage -= 2>>
-    <<set $RobinTempleInvitation = "test_superslowly">>
+    <<set $Maplebirch.robin.temple_invitation = "test_superslowly">>
     你把罗宾从你身上推开，<<He>>感到很不可思议。
     <br><br>
     你说：“对不起，我现在并不想这样做……”，<<He>>听到你的话后感到格外失望。<<npcincr Robin dom -5>><<npcincr Robin trauma -1>><<note "--- 罗宾的自信" "lblue">><<grtrauma>>
@@ -224,20 +239,20 @@
 <<unset $RobinTempleTestTip>>
 你朝着罗宾的方向走去，罗宾好像没注意到你。<br><br>
 <<if $RobinChastitycheck === "success">>
-    <<set $RobinTempleInvitation = "ChastityTestsuccess">>
+    <<set $Maplebirch.robin.temple_invitation = "ChastityTestsuccess">>
     <<if $RobinChastityFire>>
         你发现<<He>>的脚底有被火焰灼烧的痕迹……
         <br><br>
     <</if>>
     你看到罗宾微笑地在神殿大厅中走着，<<He>>看到你朝<<He>>走来后，给你打了声招呼：“你好啊，你是来接我的吗？”
     <br><br>
-    罗宾走到你身前抱住你，“我通过了神殿测试，谢谢你推荐我来这里。我现在也是神殿的一员了，约旦<<print sexSwitch("Jordan","修女","修士",)>>告诉了很多神殿的工作，我会努力在神殿工作的。”
+    罗宾走到你身前抱住你，“我通过了神殿测试，谢谢你推荐我来这里。我现在也是神殿的一员了，约旦<<print sexSwitch("Jordan","姐妹","兄弟",)>>告诉了很多神殿的工作，我会努力在神殿工作的。”
     <br><br>
     你祝贺<<He>>成功通过了测试，并表示你们会在神殿一起努力的。<<npcincr Robin love 2>><<npcincr Robin dom 3>><<stress -12>><<glove>><<note "++ 罗宾的自信" "purple">><<lstress>>
     <br><br>
     <span id="next"><<link [[继续|Temple]]>><<unset $RobinChastityTestresult>><<endevent>><</link>></span><<nexttext>>
 <<elseif $RobinChastitycheck === "fail">>
-    <<set $RobinTempleInvitation = "ChastityTestfail">>
+    <<set $Maplebirch.robin.temple_invitation = "ChastityTestfail">>
     你看到罗宾在神殿大厅失落地走着，<<He>>看到你后低着头，眼神也不自觉地外瞟了瞟。
     <br><br>
     你靠近罗宾询问<<He>>怎么了，但你看到有泪珠掉在地板上。“对不起……我辜负了你对我的期待。”罗宾低头哭着对你说，“对不起……对不起……”
@@ -267,7 +282,7 @@
     在走时，你看到罗宾的眼神茫然且无助。<<npcincr Robin love -15>><<npcincr Robin dom -20>><<npcincr Robin trauma 10>><<llllove>><<note "---- 罗宾的自信" "lblue">><<gggrtrauma>>
     <br>
     你转过头，狠心地离开了神殿。
-    <br><br>
+    <br><br><<set $Maplebirch.robin.leave to true>>
     <<wolficon>><<link [[离开 (0:01)|Wolf Street]]>><<pass 1>><<MaplebirchEndEvent>><<endevent>><</link>>
 <</if>>
 
