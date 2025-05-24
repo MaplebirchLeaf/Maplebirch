@@ -14,10 +14,82 @@
     color: #fff;             /* 保持文字颜色 */
 }
 
-.MaplebirchGrid {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(48%, 1fr));
-	grid-gap: 14px;
-	margin: 10px;
-	text-align: center;
+.maplebirch-Grid {
+	border: 1px solid var(--700);
+	padding: 8px;
+	display: flex; /* 新增flex容器 */
+	gap: 10px; /* 控制图片与物品栏的间距 */
+	align-items: start;/* 顶部对齐 */
+}
+
+.MaplebirchGrey {
+	pointer-events: none;
+    cursor: not-allowed;
+    color: grey;
+}
+
+/* 家具 */
+#maplebirch-furniture-menu-container,
+#maplebirch-paper-menu-container,
+#maplebirch-toy-menu-container {
+	border: 1px solid var(--600);
+	margin-top: 10px;
+	padding: 10px;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.maplebirch-shopBlock {
+	padding: 2px;
+	border: solid 1px var(--300);
+	width: 40%;
+	margin: 3px;
+	flex-grow: 1;
+	min-width: 225px;
+	box-sizing: border-box;
+}
+
+/* 家具 */
+#maplebirch-furnitureContainer,
+#maplebirch-paperContainer,
+#maplebirch-toyContainer {
+	display: flex;
+	flex-wrap: wrap;
+	margin-bottom: 5px;
+	box-sizing: border-box;
+}
+
+/* 社交栏扩充 */
+.relation-stat-list > :nth-child(-n + 4) {
+    border-bottom: solid 1px var(--750);
+}
+
+.non-clickable-link {
+  /* 禁用鼠标交互 */
+  pointer-events: none;
+  /* 隐藏默认光标样式 */
+  cursor: default;
+}
+
+.maplebirch-tending-icon {
+  width: 24px;          /* 容器宽度 */
+  height: 24px;         /* 容器高度（强制正方形区域） */
+  flex-shrink: 0;        /* 在 Flex 布局中禁止缩小 */
+  overflow: hidden;      /* 隐藏超出容器的图片部分 */
+}
+
+.maplebirch-tending-icon img {
+  width: 100%;           /* 宽度撑满容器 */
+  height: 100%;          /* 高度撑满容器 */
+  object-fit: cover;     /* 关键属性：按比例缩放并裁剪填充容器 */
+}
+
+#mobileStats>.maplebirchModHintMobile {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAADXUAAA11AFeZeUIAAACtklEQVQ4jZWTWUhUcRSHv/+9d67jTFmaQUqUJRGhkaYlZZKTLSrFRHsSbRpFFC320LRAL2ULVqK2IUSYti9PrUShFbRIiRBUhFZSRouZWjrjvaeHFhEr6DwdzuE7/M6mNo/qK2avUCJDB7LszHXFf5oRHhJJeEwCMweFYTV+FNuyWHmzWgF8LsyV3qvz/1nUWHejWu1u+yIfYhaQk+lBEwuHbcti73hOXLn9V7Agc7SsuXRfaQAORxC3L5Ry68FDlLSTMzUZw+4gwh1EYO8q+QU1FuUKQLE3ReRnVANoM4PxpExhdHQY1yofghIQQbV8prW5oVOubXPIO05mZyZjmI4fMQCHMgkyXLj6DGaiZwBXLt2gl8tJWlw/xOnmzAyPeMcPp0MJ8zLGUPm0DrOHu1PBhqv3VHFZOW3v6tHePyc9KYo3da9AVyink8zEcHQdlK5RWfOMhJHDMN3OHwr2pMWJ7fez0OvBNNxgt4LuZ+a0EZwtuMqstRNx9e4HuqAbClMDTJ3opEgONKbK7xXtSIySYNvP2uwsUC3gbwUrwNnck8wqWgIOJ5jBXK6oIWJcNKePXSSvoqH7issnDBU5uk7kcLZIYZZIYZYcB5GSFVIW319el2SLb2SIdAN3pcZK/UmfNJ/aJHJik0jpGqmaPESuDTBFihfJfhNpKZojvkGqC9xFQumKdMlIH0vtkxeoL00kxEaAgGhBfHW42bc+nzcdbRxs6OSMX87z83liGgZ371URnzQU0+nmk9hY7V/59q2Z8m0HaXJYhIVGQMPbztvYOz1VXtY+ImBboLmISUkmoFsENAvLsjiyMZ+QHpFsffJJAfjidfElREleVZ3q0sKWSTES7OqJpulMWZqBIJzbeZgdd+q7TXpLUrT42/3sfvz6z49Wsny+bJ87pvukf5ovceDv3HdZzRYWiDsbxQAAAABJRU5ErkJggg==') !important;
+    background-position: center;
+    background-size: contain !important;
+    /* 或者使用 contain，根据需求选择 */
+    background-repeat: no-repeat;
+    width: 100%;
+    background-color: transparent !important;
 }

@@ -1,139 +1,70 @@
 {
   "name": "Maplebirch",
-  "version": "0.1.9.1",
+  "version": "0.2.0.0",
   "styleFileList": [
     "module/css/options_Maplebirch.css",
     "module/css/confusion_Maplebirch.css",
     "module/css/item_Maplebirch.css"
   ],
   "scriptFileList": [
-    "game/03-JavaScript/MaplebirchTime.js",
-    "game/MaplebirchNPCs/Noctyaph/Noctyaph.js",
-    "game/MaplebirchNPCs/Igniharp/Igniharp.js",
-    "game/overworld-forest/loc-LakeIsland/LakeIsandSettings.js",
-    "game/MaplebirchNPCs/Karasveil/Karasveil.js",
-    "game/overworld-town/special-robin/RobinTempleTest.js",
+    "game/03-JavaScript/MaplebirchText.js",
     "game/03-JavaScript/MaplebirchTraits.js",
-    "game/MaplebirchNPCs/MaplebirchNPCs.js",
+    "game/03-JavaScript/MaplebirchTime.js",
     "game/03-JavaScript/MaplebirchSettings.js",
+    "game/overworld-town/special-robin/RobinTempleTest.js",
+    "game/MaplebirchNPCs/MaplebirchNPCs.js",
+    "game/MaplebirchNPCs/Karasveil/Karasveil.js",
+    "game/MaplebirchNPCs/Igniharp/Igniharp.js",
+    "game/MaplebirchNPCs/Noctyaph/Noctyaph.js",
     "game/MaplebirchNPCs/Vivian/Vivian.js",
-    "game/03-JavaScript/MaplebirchText.js"
+    "game/overworld-forest/loc-LakeIsland/LakeIsandSettings.js",
+    "game/03-JavaScript/MaplebirchFruiter.js",
+    "game/03-JavaScript/MaplebirchAttribute.js",
+    "game/03-JavaScript/MaplebirchFurniture.js",
+    "game/03-JavaScript/MaplebirchItems.js",
+    "game/base-feats/maplebirchFeats.js"
   ],
   "tweeFileList": [
-    "game/MaplebirchNPCs/Vivian/VivianCombatSpeech.twee",
-    "game/overworld-town/loc-temple/RobinBunk.twee",
-    "game/overworld-town/loc-temple/RobinTempleExamination.twee",
     "game/versionupdate/versionupdate.twee",
-    "game/overworld-town/loc-temple/TempleConfusionExamination.twee",
-    "game/base-clothing/MaplebirchInit.twee",
-    "game/base-system/MaplebirchCoreCharacteristics.twee",
-    "game/MaplebirchNPCs/MaplebirchNPCs.twee",
-    "game/base-system/MaplebirchOptions.twee",
     "game/overworld-town/loc-temple/SydneyBunk.twee",
+    "game/base-system/Maplebirchimages.twee",
     "game/MaplebirchCompatibility.twee",
-    "game/base-combat/MaplebirchCombat.twee",
-    "game/overworld-forest/loc-LakeIsland/LakeIslandVivianEvent.twee",
     "game/overworld-town/special-robin/templeRobin.twee",
     "game/base-system/MaplebirchSetting.twee",
     "game/overworld-town/loc-temple/RobinTempleEvents.twee",
-    "game/overworld-forest/loc-LakeIsland/LakeCenterCabin.twee",
-    "game/MaplebirchNPCs/Vivian/VivianSetting.twee",
-    "game/overworld-forest/loc-lake/VivianRuinPlinth.twee",
     "game/overworld-town/loc-temple/RobinTempleRitual.twee",
     "game/overworld-town/loc-temple/RobinTempleAnguish.twee",
-    "game/base-system/Maplebirchimages.twee",
+    "game/overworld-town/loc-temple/RobinTempleExamination.twee",
+    "game/base-system/MaplebirchCoreCharacteristics.twee",
+    "game/base-clothing/MaplebirchInit.twee",
+    "game/MaplebirchNPCs/MaplebirchNPCs.twee",
+    "game/base-system/MaplebirchOptions.twee",
+    "game/overworld-town/loc-temple/RobinBunk.twee",
+    "game/overworld-town/loc-temple/TempleConfusionExamination.twee",
+    "game/MaplebirchNPCs/Vivian/VivianSetting.twee",
+    "game/overworld-forest/loc-lake/VivianRuinPlinth.twee",
+    "game/base-combat/MaplebirchCombat.twee",
+    "game/MaplebirchNPCs/Vivian/VivianCombatSpeech.twee",
+    "game/overworld-forest/loc-LakeIsland/LakeCenterCabin.twee",
+    "game/overworld-forest/loc-LakeIsland/LakeIslandVivianEvent.twee",
     "game/overworld-town/special-sydney/MaplebirchSydney.twee",
-    "game/base-system/MaplebirchOrchard.twee"
+    "game/base-system/MaplebirchOrchard.twee",
+    "game/overworld-forest/loc-LakeIsland/LakeIslandWidget.twee",
+    "game/base-system/MaplebirchFurniture.twee",
+    "game/overworld-town/loc-temple/maplebirchTemple.twee"
   ],
-  "imgFileList": [
-    "MaplebirchModImg/img/misc/icon/lake_island/Maplebirch_island_backyard.png",
-    "MaplebirchModImg/img/misc/locations/lake_island/reflective_blood.png",
-    "MaplebirchParasiteModImg/img/body/breasts/chestparasite3.png",
-    "MaplebirchParasiteModImg/img/body/breasts/breastsparasite3.png",
-    "MaplebirchModImg/img/ui/Igniharp_Trial.png",
-    "MaplebirchParasiteModImg/img/body/penis/penisparasite2.png",
-    "MaplebirchParasiteModImg/img/body/penis/penisparasite1.png",
-    "MaplebirchModImg/img/ui/Maplebirch_Heresy.png",
-    "MaplebirchParasiteModImg/img/body/breasts/chestparasite5.png",
-    "MaplebirchParasiteModImg/img/body/penisparasite.png",
-    "MaplebirchParasiteModImg/img/body/parasiteshorts.png",
-    "MaplebirchModImg/img/ui/sym_maplebirchsanity.png",
-    "MaplebirchModImg/img/misc/icon/Sydneyquarters.png",
-    "MaplebirchParasiteModImg/img/body/breasts/breastsparasite0.png",
-    "MaplebirchModImg/img/misc/icon/maplebirch_awareness.png",
-    "MaplebirchModImg/img/misc/icon/maplebirch_help.png",
-    "MaplebirchParasiteModImg/img/body/penis/penisparasiteballs4.png",
-    "MaplebirchModImg/img/misc/icon/lake_island/maplebirch_doublebeddeluxe.png",
-    "MaplebirchParasiteModImg/img/body/breasts/breastsparasite4.png",
-    "MaplebirchParasiteModImg/img/body/penis/penisparasite3.png",
-    "MaplebirchModImg/img/misc/icon/maplebirch_desecrate.png",
-    "MaplebirchModImg/img/misc/locations/lake_island/emissive_blood.png",
-    "MaplebirchModImg/img/misc/icon/Robinquarters.png",
-    "MaplebirchModImg/img/misc/locations/lake_island/base - 副本.png",
-    "MaplebirchModImg/img/misc/icon/lake_island/Maplebirch_island_house.png",
-    "MaplebirchParasiteModImg/img/body/chestparasite.gif",
-    "MaplebirchParasiteModImg/img/body/parasitepanty.png",
-    "MaplebirchParasiteModImg/img/body/penis/penisparasite4.png",
-    "MaplebirchModImg/img/misc/icon/Sydneybed.png",
-    "MaplebirchModImg/img/misc/icon/Maplebirch_PlagueDoctor.png",
-    "MaplebirchModImg/img/ui/Karasveil_Sin.png",
-    "MaplebirchParasiteModImg/img/body/breasts/chestparasite0.png",
-    "MaplebirchModImg/img/misc/icon/lake_island/maplebirch_doublebed.png",
-    "MaplebirchParasiteModImg/img/body/penis/penisparasiteballs1.png",
-    "MaplebirchModImg/img/misc/locations/lake_island/reflective_snow.png",
-    "MaplebirchParasiteModImg/img/body/clitparasite.png",
-    "MaplebirchModImg/img/ui/Noctyaph_Arrogant.png",
-    "MaplebirchModImg/img/misc/icon/Maplebirch.png",
-    "MaplebirchModImg/img/misc/icon/lake_island/maplebirch_singlebeddeluxe.png",
-    "MaplebirchParasiteModImg/img/body/penis/penisparasiteballs-2.png",
-    "MaplebirchParasiteModImg/img/body/breasts/chestparasite4.png",
-    "MaplebirchModImg/img/misc/icon/Sirris_manor/Maplebirch_sirris_garden.png",
-    "MaplebirchParasiteModImg/img/body/penis/penisparasite-1.png",
-    "MaplebirchModImg/img/misc/locations/lake_island/snow.png",
-    "MaplebirchModImg/img/misc/icon/lake_island/Maplebirch_lakeisland.png",
-    "MaplebirchParasiteModImg/img/body/penis/penisparasiteballs2.png",
-    "MaplebirchModImg/img/misc/locations/lake_island/bloodmoon_snow.png",
-    "MaplebirchParasiteModImg/img/body/breasts/breastsparasite1.png",
-    "MaplebirchParasiteModImg/img/body/penis/penisparasiteballs0.png",
-    "MaplebirchParasiteModImg/img/body/breasts/breastsparasite6.png",
-    "MaplebirchModImg/img/ui/Maplebirch_Null.png",
-    "MaplebirchModImg/img/misc/icon/Sirris_manor/Maplebirch_sirris_garden_overgrown.png",
-    "MaplebirchParasiteModImg/img/body/breasts/breastsparasite5.png",
-    "MaplebirchParasiteModImg/img/body/penis/penisparasite0.png",
-    "MaplebirchModImg/img/ui/Vivian_Lost.png",
-    "MaplebirchModImg/img/misc/icon/lake_island/maplebirch_singlebed.png",
-    "MaplebirchModImg/img/misc/icon/lake_island/Maplebirch_island_house_snow.png",
-    "MaplebirchModImg/img/misc/lake_island_house/main.png",
-    "MaplebirchParasiteModImg/img/body/penis/penisparasiteballs-1.png",
-    "MaplebirchModImg/img/misc/locations/lake_island/water.png",
-    "MaplebirchParasiteModImg/img/body/penis/penisparasite-2.png",
-    "MaplebirchModImg/img/misc/icon/lake_island/maplebirch_stair.png",
-    "MaplebirchModImg/img/misc/icon/lake_island/maplebirch_road_deep.png",
-    "MaplebirchParasiteModImg/img/body/breasts/chestparasite2.png",
-    "MaplebirchModImg/img/misc/icon/lake_island/Maplebirch_lakeisland_snow.png",
-    "MaplebirchParasiteModImg/img/body/penis/penisparasiteballs3.png",
-    "MaplebirchParasiteModImg/img/body/breasts/chestparasite1.png",
-    "MaplebirchModImg/img/misc/locations/lake_island/reflective.png",
-    "MaplebirchModImg/img/misc/icon/lake_island/maplebirch_bed.png",
-    "MaplebirchModImg/img/misc/locations/lake_island/base.png",
-    "MaplebirchModImg/img/misc/icon/lake_island/Maplebirch_island_backyard_snow.png",
-    "MaplebirchModImg/img/ui/Maplebirch_Truth.png",
-    "MaplebirchModImg/img/ui/Maplebirch_Moronity.png",
-    "MaplebirchModImg/img/misc/icon/Maplebirch_gift.png",
-    "MaplebirchModImg/img/misc/icon/Maplebirch_Abyss.png",
-    "MaplebirchModImg/img/misc/icon/RobinTemplebed.png",
-    "MaplebirchModImg/img/misc/locations/lake_island/bloodmoon.png",
-    "MaplebirchParasiteModImg/img/body/breasts/breastsparasite2.png",
-    "MaplebirchModImg/img/ui/Maplebirch_nightmare.png",
-    "MaplebirchParasiteModImg/img/body/chestparasite.png",
-    "MaplebirchModImg/img/ui/Maplebirch_Fraud.png",
-    "MaplebirchParasiteModImg/img/body/breasts/chestparasite6.png"
+  "imgFileList": [],
+  "additionDir": [
+    "MaplebirchModImg",
+    "MaplebirchParasiteModImg"
   ],
   "scriptFileList_inject_early": [
     "scriptEarly/SFRegist.js",
     "scriptEarly/maplebirchModInject_early.js"
   ],
   "additionFile": [
+    "README.md",
+    "game/base-feats/orchard_feats.json",
     "MaplebirchModImg/imgFileListFile.json",
     "MaplebirchParasiteModImg/imgFileListFile.json",
     "game/overworld-town/loc-temple/TempleBunkadjust.txt",
@@ -166,14 +97,24 @@
     "game/base-system/MaplebirchSideState.txt",
     "game/overworld-forest/loc-LakeIsland/LakeCenterIsland_snow.txt",
     "game/overworld-town/special-robin/RobinOptionsTime.txt",
-    "game/overworld-forest/loc-LakeIsland/LakeIslandWardrobe.txt"
+    "game/overworld-forest/loc-LakeIsland/LakeIslandWardrobe.txt",
+    "game/overworld-town/loc-docks/MaplebirchDockItemPush.txt",
+    "game/overworld-town/loc-docks/MaplebirchDockLocationPush.txt",
+    "game/overworld-town/loc-docks/MaplebirchDockItemSteal.txt",
+    "game/base-system/overlays/Maplebirch_Journal_Seed_1.txt",
+    "game/base-system/overlays/Maplebirch_Journal_Seed_2.txt",
+    "game/base-system/overlays/Maplebirch_Journal_Seed_3.txt",
+    "game/versionupdate/overlayReplace.txt",
+    "game/versionupdate/StoryCaption.txt"
   ],
   "addonPlugin": [
     {
       "modName": "ModdedClothesAddon",
       "addonName": "ModdedClothesAddon",
       "modVersion": "^1.1.0",
-      "params": {}
+      "params": {
+
+      }
     },
     {
       "modName": "TweeReplacer",
@@ -514,7 +455,7 @@
           "passage": "Lake Ruin Plinth",
           "findString": "<<elseif $tentacledisable is \"f\" and $hallucinations gte 2 and !_bmoon>>",
           "replaceFile": "game/overworld-forest/loc-lake/VivianMeet.txt",
-          "_comment": "森林湖维安初遇"
+          "_comment": "森林湖维维安初遇"
         },
         {
           "passage": "Widgets Named Npcs",
@@ -544,7 +485,7 @@
           "passage": "Lake Ruin Plinth",
           "findString": "<<if _leave>>\n\t<<if $museumAntiques.antiques.antiqueivorynecklace is \"notFound\">>",
           "replace": "<<if _leave>>\n\t<<VivianLakeRuinHelp>>\n\t<<if $museumAntiques.antiques.antiqueivorynecklace is \"notFound\">>",
-          "_comment": "森林湖救援维安"
+          "_comment": "森林湖救援维维安"
         },
         {
           "passage": "Lake Depths",
@@ -608,7 +549,7 @@
           "passage": "Lake Ruin Plinth",
           "findString": "<<if $museumAntiques.antiques.antiqueivorynecklace is \"notFound\">>",
           "replace": "<<VivianLakeRuinDes>>\n<<if $museumAntiques.antiques.antiqueivorynecklace is \"notFound\">>",
-          "_comment": "森林湖废墟基座室维安描述"
+          "_comment": "森林湖废墟基座室维维安描述"
         },
         {
           "passage": "Widgets Named Npcs",
@@ -619,7 +560,7 @@
         },
         {
           "passage": "Widgets Robin",
-          "findString": "\t<<if Time.schoolDay and Time.hour is 8>>",
+          "findString": "\t<<if Time.schoolDay and Time.hour gte 8 and Time.hour lte 12>>",
           "replaceFile": "game/overworld-town/special-robin/RobinOptionsTime.txt",
           "_comment": "罗宾房间到点去神殿"
         },
@@ -650,7 +591,7 @@
         {
           "passage": "Widgets Effects Man",
           "findString": "\t\t\t\t\t\t\t<<if $_npc.fullDescription is \"Sydney\">>",
-          "replace": "\t\t\t\t\t\t\t<<MaplebirchMancombatRobin>>\n\t\t\t\t\t\t\t<<if $_npc.fullDescription is \"Sydney\">>",
+          "replace": "\t\t\t\t\t\t\t<<MaplebirchMancombatRobin $_npc.fullDescription>>\n\t\t\t\t\t\t\t<<if $_npc.fullDescription is \"Sydney\">>",
           "all": true,
           "_comment": "罗宾贞操锁揭露"
         },
@@ -671,6 +612,213 @@
           "findString": "<<if _text_output is undefined>>",
           "replace": "<<set _text_output to (_args[0] + 1).toString()>>\n\t<<if _text_output is undefined>>",
           "_comment": "最多十块？无限！"
+        },
+        {
+          "passage": "Widgets Tending",
+          "findString": "<</widget>>\n\n<<widget \"tending_give\">>",
+          "replace": "<<FruitSeedGet $_type>>\n<<if _FruitSeeds>><span class=\"gold\">你找到了<<print setup.plants[$_type].plural>>的种子</span><</if>>\n<</widget>>\n\n<<widget \"tending_give\">>",
+          "_comment": "水果种子获取"
+        },
+        {
+          "passage": "Widgets Sleep",
+          "findString": "<<pass 1 hour>>",
+          "replace": "<<silently>><<pass 1 hour>><</silently>>",
+          "_comment": "睡觉pass静默"
+        },
+        {
+          "passage": "pregnancyTest",
+          "findString": "<<case \"Bedroom\">>",
+          "replace": "<<case \"Lake Island Bathroom\">>\n\t\t你在湖中岛的浴室使用了验孕棒。你紧盯着手中的验孕棒，不敢移开视线，等待着它的结果。\n\t<<case \"Bedroom\">>",
+          "_comment": "湖中岛浴室验孕棒文本"
+        },
+        {
+          "passage": "Widgets",
+          "findString": ")>>\n\t\t<<if _args[0] is \"noicon\">>",
+          "replace": ")>>\n\t\t<<if _args[0] is \"noicon\">><<if $options.Maplebirch.icon is true>><<deskchairicon>><</if>>",
+          "_comment": "房间桌椅贴图"
+        },
+        {
+          "passage": "Widgets",
+          "findString": "\"noicon\">>\n\t\t\t<<if _table>>\n\t\t\t\t<br>",
+          "replace": "\"noicon\">>\n\t\t\t<<if _table>>\n\t\t\t\t<br><<if $options.Maplebirch.icon is true>><<bedroomtablechairicon>><</if>>",
+          "_comment": "房间桌椅贴图"
+        },
+        {
+          "passage": "Widgets Furniture",
+          "findString": "<<dynamic \"furnitureList\" \"furniture-menu-container\">>",
+          "replace": "<<dynamic \"furnitureList\" \"furniture-menu-container\">><<dynamic \"maplebirch_furnitureList\" \"maplebirch-furniture-menu-container\">>",
+          "_comment": "湖中岛家具"
+        },
+        {
+          "passage": "Widgets Furniture",
+          "findString": "<<unset $furnitureDowngrade>>",
+          "replace": "<<unset $furnitureDowngrade>><<unset $Maplebirch.furnitureDowngrade>>",
+          "_comment": "变量删除"
+        },
+        {
+          "passage": "Widgets Furniture",
+          "findString": "<<dynamic \"paperList\" \"paper-menu-container\">>",
+          "replace": "<<dynamic \"paperList\" \"paper-menu-container\">><<dynamic \"maplebirch_paperList\" \"maplebirch-paper-menu-container\">>",
+          "_comment": "湖中岛糊墙"
+        },
+        {
+          "passage": "Widgets",
+          "findString": "<div @class=\"'relation-stat-list' + ($options.images ? '' : ' no-images')\">",
+          "replace": "<div @id=\"'relation-stat-list-' + _importantNPCs[_k].nam\" @class=\"'relation-stat-list' + ($options.images ? '' : ' no-images')\">",
+          "all":true,
+          "_comment": "社交元素捕获id"
+        },
+        {
+          "passage": "Sleep",
+          "findString": "<<elseif _robin.lovewake is 1>>",
+          "replace": "<<elseif _robin.lovewake is 1 && [\"sleep\",\"orphanage\",\"liveStream\"].includes(_robin_location)>>",
+          "_comment": "罗宾爬床逻辑错误"
+        },
+        {
+          "passage": "Sleep",
+          "findString": "<<set _robin to statusCheck(\"Robin\")>>",
+          "replace": "<<run statusCheck(\"Robin\")>>\n<<set _robin to statusCheck(\"Robin\")>>",
+          "_comment": "罗宾爬床逻辑错误兼位置检测"
+        },
+        {
+          "passage": "Widgets",
+          "findString": "<<for _j to $_statCount; _j lt 3; _j++>>",
+          "replace": "<<for _j to $_statCount; _j lt 5; _j++>>",
+          "all":true,
+          "_comment": "社交元素显示容量增加"
+        },
+        {
+          "passage": "Widgets",
+          "findString": "T.getStatConfig = function(stat) {",
+          "replace": "maplebirchNPCData(statDefaults);\n\t\t\tT.getStatConfig = function(stat) {",
+          "_comment": "社交栏NPC属性注入"
+        },
+        {
+          "passage": "Social",
+          "findString": "dom : { name : \"Confidence\", activeIcon : \"img/ui/sym_confidence.png\", color: \"blue\" }",
+          "replace": "dom : { name : \"Confidence\", activeIcon : \"img/ui/sym_confidence.png\", color: \"blue\" },\n\t\t\t\t\t\tholiness : {maxValue : 200, minValue : 0, activeIcon : 'img/ui/sym_holiness.png', color: 'white' }",
+          "_comment": "罗宾信仰值显示"
+        },
+        {
+          "passage": "Widgets Tending",
+          "findString": "<<default>><<set _bedType to clone($_plot.bed)>>",
+          "replace": "<<case \"fruiter\">><<set _bedType to \"土壤\">>\n\t\t<<case \"berry\">><<set _bedType to \"土壤\">>\n\t\t<<default>><<set _bedType to clone($_plot.bed)>>",
+          "_comment": "土壤质量显示"
+        },
+        {
+          "passage": "Temple Garden",
+          "findString": "\t\t<</if>>\n\t<</if>>",
+          "replace": "\t\t<</if>>\n\t\t<<maplebirch_temple_orchard>>\n\t<</if>>",
+          "_comment": "神殿园林入口"
+        },
+        {
+          "passage": "Temple Garden Work",
+          "findString": "<<endevent>>\n<<if $rng gte 81>>",
+          "replace": "<<endevent>>\n<<maplebirch_temple_orchard_lock>>\n<<if $rng gte 81>>",
+          "_comment": "神殿园林入口前置"
+        },
+        {
+          "passage": "Widgets Connudatus",
+          "findString": "<</if>>\n\t\t\t\t<br>",
+          "replace": "<</if>>\n\t\t\t\tmaplebirch_banana_sucker_buy\n\t\t\t\t<br>",
+          "_comment": "香蕉吸芽市集购买"
+        },
+        {
+          "passage": "Widgets Docks",
+          "findString": "\t\t\t<<elseif $rng gte 55 and $catsuit_found isnot true and $catsuit_spawned is undefined>>",
+          "replaceFile": "game/overworld-town/loc-docks/MaplebirchDockItemPush.txt",
+          "_comment": "码头偷取物品添加"
+        },
+        {
+          "passage": "Docks Examine Valuables",
+          "findString": "\t\t<<skul_dock_contents equipment>>\n\t<</if>>",
+          "replace": "\t\t<<skul_dock_contents equipment>>\n\t<</if>>\n\t<<maplebirch_banana_sucker_steal>>",
+          "_comment": "码头偷取物品地址获取添加"
+        },
+        {
+          "passage": "Docks Examine Valuables",
+          "findString": "\t<<elseif !_dock_contents>>",
+          "replaceFile": "game/overworld-town/loc-docks/MaplebirchDockLocationPush.txt",
+          "_comment": "码头偷取物品地址获取叙述"
+        },
+        {
+          "passage": "Docks Search",
+          "findString": "<<elseif $skul_dock[$bus].contents is \"equipment\">>",
+          "replaceFile": "game/overworld-town/loc-docks/MaplebirchDockItemSteal.txt",
+          "_comment": "码头偷取物品"
+        },
+        {
+          "passage": "Widgets Journal",
+          "findString": "<<set _plant_keys to Object.keys(setup.plants)>>",
+          "replace": "<<set _plant_keys to Object.keys(setup.plants)>>\n\t\t\t<<set _orchard_keys to Object.keys(setup.maplebirchFruiter)>>",
+          "_comment": "日志种子注入_1"
+        },
+        {
+          "passage": "Widgets Journal",
+          "findString": "\t\t\t<<set _total to 0>>",
+          "replaceFile": "game/base-system/overlays/Maplebirch_Journal_Seed_1.txt",
+          "_comment": "日志种子注入_2"
+        },
+        {
+          "passage": "Widgets Journal",
+          "findString": "\t\t\t<<if _collection is 0>>",
+          "replaceFile": "game/base-system/overlays/Maplebirch_Journal_Seed_2.txt",
+          "_comment": "日志种子注入_3"
+        },
+        {
+          "passage": "Widgets Journal",
+          "findString": "\t\t\t\t</div>\n\t\t\t</details>\n\t\t<</if>>\n\t<</if>>\n\t<br>",
+          "replaceFile": "game/base-system/overlays/Maplebirch_Journal_Seed_3.txt",
+          "_comment": "日志种子注入_4"
+        },
+        {
+          "passage": "Shopping Centre",
+          "findString": "|Supermarket]]>><<pass 1>>",
+          "replace": "|Supermarket]]>><<pass 1>><<run maplebirchFruit.ToPlants()>>",
+          "_comment": "种子获取-日间超市注入"
+        },
+        {
+          "passage": "Shopping Centre",
+          "findString": "|Supermarket Lock]]>><<pass 1>><</link>>",
+          "replace": "|Supermarket Lock]]>><<pass 1>><</link>><<run maplebirchFruit.ToPlants(\"night\")>>",
+          "_comment": "种子获取-夜间超市注入"
+        },
+        {
+          "passage": "Supermarket",
+          "findString": "<<unset $shoppingBasket>>",
+          "replace": "<<unset $shoppingBasket>><<run maplebirchFruit.ToPlants(false)>>",
+          "all": true,
+          "_comment": "种子获取-超市删除"
+        },
+        {
+          "passage": "Widgets Shop",
+          "findString": "<<set $shoppingBasket to {}>>\n\t\t\t\t<</link>>",
+          "replace": "<<set $shoppingBasket to {}>><<run maplebirchFruit.ToPlants(true)>>\n\t\t\t\t<</link>>",
+          "_comment": "种子获取-超市购买"
+        },
+        {
+          "passage": "Widgets Shop",
+          "findString": "<<set $shoppingBasket to {}>>\n\t\t\t<</link>>",
+          "replace": "<<set $shoppingBasket to {}>><<run maplebirchFruit.ToPlants(true)>>\n\t\t\t<</link>>",
+          "_comment": "种子获取-超市盗取"
+        },
+        {
+          "passage": "Temple Garden Work",
+          "findString": "<<wearProp _propCall>>",
+          "replace": "<<wearProp _propCall>><<maplenirch_lime_seed_get>>",
+          "_comment": "酸橙种子获取"
+        },
+        {
+          "passage": "StoryCaption",
+          "findString": "<<if $options.sidebarStats isnot \"disabled\">>",
+          "replaceFile": "game/versionupdate/StoryCaption.txt",
+          "comments": "添加模组介绍"
+        },
+        {
+          "passage": "overlayReplace",
+          "findString": "<<switch _key>>",
+          "replaceFile": "game/versionupdate/overlayReplace.txt",
+          "comments": "添加模组介绍"
         }
       ]
     },
@@ -688,7 +836,7 @@
         "js": [
           {
             "from": "if (V.schoolBlocked) delete V.schoolBlocked;",
-            "to": "dailyMaplebirchReset();\n\tif (V.schoolBlocked) delete V.schoolBlocked;",
+            "to": "dawnMaplebirchCheck();\n\tif (V.schoolBlocked) delete V.schoolBlocked;",
             "fileName": "time.js",
             "_comment": "每天6点时刷新"
           },
@@ -706,7 +854,7 @@
           },
           {
             "from": "\tif (V.syndromewolves === 1) V.wolfcavepatrol = 1;",
-            "to": "weeklyMaplebirchReset();\n\tif (V.syndromewolves === 1) V.wolfcavepatrol = 1;",
+            "to": "weeklyMaplebirchCheck();\n\tif (V.syndromewolves === 1) V.wolfcavepatrol = 1;",
             "fileName": "time.js",
             "_comment": "每周刷新"
           },
@@ -729,11 +877,39 @@
             "_comment": "湖中岛侧边栏图像"
           },
           {
-            "from": "fragment.append(dailyNPCEffects());",
-            "to": "fragment.append(dailyNPCEffects());\n\tdailyMaplebirchCheck();",
+            "from": "dailyNPCEffects();",
+            "to": "dailyNPCEffects();\n\tdailyMaplebirchCheck();",
             "fileName": "time.js",
             "_comment": "每天午夜检测"
+          },
+          {
+            "from": "$.event.trigger(\":onWeatherChange\");",
+            "to": "$.event.trigger(\":onWeatherChange\");\n\t\t\t$.event.trigger(\":onWeatherMaplebirchChange\");",
+            "fileName": "02-weather-generation.js",
+            "_comment": "果园下雨检测"
+          },
+          {
+            "from": "const Locations = Object.freeze({",
+            "to": "const Locations = Object.freeze({\n\t\tlakeisland: \"lakeisland\",",
+            "fileName": "furniture.js",
+            "_comment": "家具店湖中岛地址"
+          },
+          {
+            "from": "if (V.combat === 0 && V.ironmanmode === true) IronMan.scheduledSaves();",
+            "to": "if (V.combat === 0 && V.ironmanmode === true) IronMan.scheduledSaves();\n\n\tmaplebirchEffectInit();\n\tif (maplebirchEffectInit()) {maplebirchEffectInit().forEach(effect => {const [type, ...args] = effect;if (type === \"text\") {const [style, text, colour] = args;element(style, text, colour);maplebirchEffectDel();} else {fragment.append(wikifier(type, ...args)); }});}\n\t",
+            "fileName": "effect.js",
+            "_comment": "模组effect注入"
           }
+        ]
+      }
+    },
+    {
+      "modName": "ModdedFeatsAddon",
+      "addonName": "ModdedFeatsAddon",
+      "modVersion": "^1.0.0",
+      "params": {
+        "feats": [
+          "game/base-feats/orchard_feats.json"
         ]
       }
     },
@@ -742,16 +918,16 @@
       "addonName": "BeautySelectorAddon",
       "modVersion": "^2.0.0",
       "params": {
-        "types": [
-          {
-            "type": "MaplebirchModImg（秋枫白桦Mod图片包，请勿禁用，无顺序要求）",
-            "imgFileListFile": "MaplebirchModImg/imgFileListFile.json"
-          },
-          {
-            "type": "MaplebirchParasiteModImg（秋枫白桦Mod寄生虫空白图替换法）",
-            "imgFileListFile": "MaplebirchParasiteModImg/imgFileListFile.json"
-          }
-        ]
+       "types": [
+        {
+         "type": "MaplebirchModImg（秋枫白桦Mod图片包，请勿禁用，无顺序要求）",
+         "imgFileListFile": "MaplebirchModImg/imgFileListFile.json"
+        },
+        {
+          "type": "MaplebirchParasiteModImg（秋枫白桦Mod寄生虫空白图替换法）",
+          "imgFileListFile": "MaplebirchParasiteModImg/imgFileListFile.json"
+         }
+       ]
       }
     }
   ],
@@ -782,3 +958,4 @@
     }
   ]
 }
+          

@@ -42,7 +42,7 @@
             return match;
           }
         });
-        console.log("replace的结果是：" + contentReplaced)
+        console.log("replace的结果是：" + contentReplaced);
 
         // 更新前做内容对比
         if (contentReplaced !== content) {
@@ -90,7 +90,7 @@
                 console.log("当前match不做处理");
                 return match;
               }
-            } else if (window.modUtils.getMod('DomRobin')) {
+            } else if (modUtils.getMod('DomRobin')) {
               console.log("当前match是：" + match);
               if (count === 1) {
                 console.log("当前match不做处理");
@@ -116,7 +116,7 @@
             return match;
           }
       });
-      console.log("replace的结果是：" + contentReplaced)
+      console.log("replace的结果是：" + contentReplaced);
       
       // 更新前做内容对比
       if (contentReplaced !== content) {
@@ -177,7 +177,7 @@
             return match;
           }
       });
-      console.log("replace的结果是：" + contentReplaced)
+      console.log("replace的结果是：" + contentReplaced);
       
       // 更新前做内容对比
       if (contentReplaced !== content) {
@@ -200,21 +200,20 @@
       logger.log(`[maplebirchMod] 处理passage2: ${passage2.name}`);
       let content = passage2.content;
       let regex = new RegExp("name: .*", 'g');
-
+  
+      // 处理承诺仪式部分
+      let contentReplaced = content;
       if (content.match(regex)) {
         let count = 0;
-        let contentReplaced = content.replace(regex, function(match) {
+        contentReplaced = content.replace(regex, function(match) {
           count++;
-          if (window.modUtils.getMod('ModI18N')) {
+          if (modUtils.getMod('ModI18N')) {
             if(count === 4) {
               console.log("承诺仪式特质加载成功");
               return match.replace("承诺仪式：<<= $templePromised.replace('Sydney','悉尼')>>", "<<MaplebirchTemplePromised>>");
             } else if (count === 5) {
               console.log("破碎承诺特质加载成功");
               return match.replace("破碎的承诺：<<= $templePromised.replace('Sydney','悉尼')>>", "<<MaplebirchTemplePromisedBroken>>");
-            } else {
-              console.log("当前match不做处理");
-              return match;
             }
           } else {
             if(count === 4) {
@@ -223,25 +222,68 @@
             } else if (count === 5) {
               console.log("破碎承诺特质加载成功");
               return match.replace("Broken Promise: $templePromised", "<<MaplebirchTemplePromisedBroken>>");
-            } else {
-              console.log("当前match不做处理");
-              return match;
             }
           }
-        })
-
-        console.log("replace的结果是：" + contentReplaced)
-        modUtils.updatePassageData(
-          passage2.name,
-          contentReplaced,
-          passage2.tags,
-          passage2.id,
-        );
+          return match;
+        });
       } else {
-        logger.error(`[maplebirchModInject_early] 特质passage信息异常: [${passage2.name}]`);
+        logger.error(`[maplebirchMod] 特质passage格式异常`);
+        return;
       }
+      let contentReplaced1 = contentReplaced;
+      // 处理魅魔特质部分（基于已修改的contentReplaced）
+      if (modUtils.getMod('ModI18N')) {
+        // 中文版处理
+        let count1 = 0, count2 = 0;
+        contentReplaced1 = contentReplaced
+          .replace(/if\(V\.player\.gender is "f"\)\{/g, (match) => {
+            count1++;
+            return count1 <= 3 ? 
+              'if(V.player.gender is "h"){\n\t\t\t\t\t\t\t\treturn "' + 
+              ['公牛男孩(⚥)', '雄狐(⚥)', '魅影(⚥)'][count1-1] + 
+              '";\n\t\t\t\t\t\t\t}else if(V.player.gender is "f"){' : 
+              match;
+          })
+          .replace(/if\(V\.player\.gender is "m"\)\{/g, (match) => {
+            count2++;
+            return count2 <= 3 ? 
+              'if(V.player.gender is "h"){\n\t\t\t\t\t\t\t\treturn "' + 
+              ['奶牛女孩(⚥)', '雌狐(⚥)', '魅魔(⚥)'][count2-1] + 
+              '";\n\t\t\t\t\t\t\t}else if(V.player.gender is "m"){' : 
+              match;
+          });
+      } else {
+        // 英文版处理
+        let count1 = 0, count2 = 0;
+        contentReplaced1 = contentReplaced
+          .replace(/if\(V\.player\.gender is "f"\)\{/g, (match) => {
+            count1++;
+            return count1 <= 3 ? 
+              'if(V.player.gender is "h"){\n\t\t\t\t\t\t\t\treturn "' + 
+              ['Bull boy (hermaphrodite)', 'Fox (hermaphrodite)', 'Incubus (hermaphrodite)'][count1-1] + 
+              '";\n\t\t\t\t\t\t\t}else if(V.player.gender is "f"){' : 
+              match;
+          })
+          .replace(/if\(V\.player\.gender is "m"\)\{/g, (match) => {
+            count2++;
+            return count2 <= 3 ? 
+              'if(V.player.gender is "h"){\n\t\t\t\t\t\t\t\treturn "' + 
+              ['Cow girl (hermaphrodite)', 'Vixen (hermaphrodite)', 'Succubus (hermaphrodite)'][count2-1] + 
+              '";\n\t\t\t\t\t\t\t}else if(V.player.gender is "m"){' : 
+              match;
+          });
+      }
+      
+      console.log("replace的结果是：" + contentReplaced1);
+      // 最终更新passage
+      modUtils.updatePassageData(
+        passage2.name,
+        contentReplaced1,
+        passage2.tags,
+        passage2.id
+      );
     } else {
-      logger.error(`[maplebirchModInject_early] 特质获取passage信息失败`);
+      logger.error(`[maplebirchMod] 无法获取Traits passage`);
     }
   }
 
@@ -299,7 +341,7 @@
     };
 
     // 获取当前语言
-    let hasI18N = window.modUtils.getMod('ModI18N');
+    let hasI18N = modUtils.getMod('ModI18N');
     let lang = hasI18N ? 'cn' : 'en';
     
     // 目标段落处理
@@ -338,7 +380,11 @@
   function maplebirchNPCi18nNameInit() {
     let targetPassages = [
       'Statistics',
-      'Widgets Settings'
+      'Widgets Settings',
+      'Widgets Named Npcs',
+      'Widgets',
+      'Widgets Text',
+      'Widgets Docks',
     ];
 
     targetPassages.forEach(passageName => {
@@ -348,38 +394,86 @@
         return;
       }
 
-      if (window.modUtils.getMod('ModI18N')) {
-        logger.log(`[maplebirchMod] 处理passage2: ${passage2.name}`);
-        // 放宽正则表达式，允许空格和换行
-        let regex = new RegExp(
-          "[\\s\\S]*replace\\s*\\(\\s*\"Niki\"\\s*,\\s*\"尼奇\"\\s*\\)[\\s\\S]*",
-          'g'
-        );
-        let content = passage2.content;
-
-        let count = 0;
-        let contentReplaced = content.replace(regex, (match) => {
-          count++;
-          console.log("汉化NPC名字注入成功");
-          // 替换为新增多个replace
-          return match.replace(
-            "replace(\"Niki\",\"尼奇\")",
-            "replace(\"Vivian\",\"维安\").replace(\"Karasveil\",\"卡拉斯维尔\").replace(\"Igniharp\",\"伊格尼哈普\").replace(\"Noctyaph\",\"诺克迪亚弗\").replace(\"Niki\",\"尼奇\")"
-          );
-        });
-        console.log("replace的结果是：" + contentReplaced)
-
-        // 更新前做内容对比
-        if (contentReplaced !== content) {
-          modUtils.updatePassageData(
-            passage2.name,
-            contentReplaced,
-            passage2.tags,
-            passage2.id
-          );
+      if (modUtils.getMod('ModI18N')) {
+        if (passageName === 'Widgets Settings' || passageName === 'Statistics') {
+          logger.log(`[maplebirchMod] 处理passage2: ${passage2.name}`);
+          // 放宽正则表达式，允许空格和换行
+          let regex = new RegExp(/.*replace\(\"Niki\",\"尼奇\"\).*/g);
+          let content = passage2.content;
+          let count = 0;
+          let contentReplaced = content.replace(regex, (match) => {
+            count++;
+            console.log("汉化NPC名字注入成功");
+            // 替换为新增多个replace
+            let replaceString = match.replace(
+              "replace(\"Niki\",\"尼奇\")",
+              "replace(\"Vivian\",\"维维安\").replace(\"Karasveil\",\"卡拉斯维尔\").replace(\"Igniharp\",\"伊格尼哈普\").replace(\"Noctyaph\",\"诺克迪亚弗\").replace(\"Niki\",\"尼奇\")"
+            );
+            return replaceString;
+          });
+          console.log("replace的结果是：" + contentReplaced);
+          // 更新前做内容对比
+          if (contentReplaced !== content) {
+            modUtils.updatePassageData(
+              passage2.name,
+              contentReplaced,
+              passage2.tags,
+              passage2.id
+            );
             logger.log(`[maplebirchMod] 成功更新: ${passage2.name}`);
+          }
+        } else if (passageName === 'Widgets Named Npcs' || passageName === 'Widgets' || passageName === 'Widgets Text') {
+          logger.log(`[maplebirchMod] 处理passage2: ${passage2.name}`);
+          let regex = new RegExp(/.*replace\(\"photographer\", \"摄影师\"\).*/g);
+          let content = passage2.content;
+          let count = 0;
+          let contentReplaced = content.replace(regex, (match) => {
+            count++;
+            console.log("汉化NPC头衔注入成功");
+            let replaceString = match.replace(
+              "replace(\"photographer\", \"摄影师\")",
+              "replace(\"initiate\", \"见习教徒\").replace(\"charles\", \"修士\").replace(\"charlene\", \"修女\").replace(\"prospective\", \"慕道者\").replace(\"photographer\", \"摄影师\")"
+            );
+            return replaceString;
+          });
+          console.log("replace的结果是：" + contentReplaced);
+          // 更新前做内容对比
+          if (contentReplaced !== content) {
+            modUtils.updatePassageData(
+              passage2.name,
+              contentReplaced,
+              passage2.tags,
+              passage2.id
+            );
+            logger.log(`[maplebirchMod] 成功更新: ${passage2.name}`);
+          }
+        } else if (passageName === 'Widgets Docks') {
+          logger.log(`[maplebirchMod] 处理passage2: ${passage2.name}`);
+          let regex = new RegExp(/.*replace\(\"fertiliser\",\"肥料\"\).*/g);
+          let content = passage2.content;
+          let count = 0;
+          let contentReplaced = content.replace(regex, (match) => {
+            count++;
+            console.log("汉化NPC头衔注入成功");
+            let replaceString = match.replace(
+              "replace(\"fertiliser\",\"肥料\")",
+              "replace(\"banana\",\"香蕉吸芽\").replace(\"fertiliser\",\"肥料\")"
+            );
+            return replaceString;
+          });
+          console.log("replace的结果是：" + contentReplaced);
+          // 更新前做内容对比
+          if (contentReplaced !== content) {
+            modUtils.updatePassageData(
+              passage2.name,
+              contentReplaced,
+              passage2.tags,
+              passage2.id
+            );
+            logger.log(`[maplebirchMod] 成功更新: ${passage2.name}`);
+          }
         } else {
-            logger.warn(`[maplebirchMod] 未检测到有效修改: ${passage2.name}`);
+          logger.warn(`[maplebirchMod] 未检测到有效修改: ${passage2.name}`);
         }
       } else {
         logger.log(`未检测到i18n汉化包无需注入`);
@@ -417,22 +511,46 @@
       }
     },
   );
+  
+  function parseVersion(versionString) {
+    return versionString.split('.').map(Number);
+  }
 
+  // 比较两个版本号的大小
+  function compareVersions(version1, version2) {
+    let part1 = parseVersion(version1);
+    let part2 = parseVersion(version2);
+    let Length = Math.max(part1.length, part2.length);
+  
+    for (let i = 0; i < Length; i++) {
+      let num1 = part1[i] || 0; 
+      let num2 = part2[i] || 0;
+      if (num1 > num2) return 1;  // v1 > v2
+      if (num1 < num2) return -1; // v1 < v2
+    }
+    return 0; 
+  }
+  
   modSC2DataManager.getModLoadController().addLifeTimeCircleHook(
-    'maplebirch2',
+    'maplebirchSF',
     {
       // 监听每个模组加载完成事件
       ModLoaderLoadEnd: async () => {
         // ModLoader加载完毕后
         // 这是SC2开始执行前，ModLoader启动完成后，游戏启动前，的最后一个钩子
         // 可选钩子
-        if (window.modUtils.getMod('Simple Frameworks')) {
-          maplebirchSFModInit();
-          console.log('检测到 Simple Frameworks 已加载，现在执行我的模组逻辑');
-          logger.log(`[maplebirchMod] 成功检测: Simple Frameworks {v:2.0.5}`);
+        if (modUtils.getMod('Simple Frameworks')) {
+          logger.log(`[maplebirchMod] 成功检测: Simple Frameworks`);
+          let result = compareVersions(modUtils.getMod('Simple Frameworks').version, "2.0.0");
+          if (result === 1) {
+            maplebirchSFModInit();
+            iMod.modData.modList.pushUnique("Maplebirch");
+            logger.log(`[maplebirchMod] 检测到 Simple Frameworks {v:${modUtils.getMod('Simple Frameworks').version}} 已加载，现在执行我的模组逻辑`);
+          } else {
+            logger.error(`[maplebirchMod] 检测到 Simple Frameworks 版本为 {${modUtils.getMod('Simple Frameworks').version}} 低于 {v:2.0.0}，无法执行我的模组逻辑`);
+          }
         } else {
-          console.log('错误，未检测到 Simple Frameworks');
-          logger.error(`[maplebirchMod] 未检测到有: Simple Frameworks {v:2.0.5}`);
+          logger.error(`[maplebirchMod] 未检测到有: Simple Frameworks`);
         }
       }
     }

@@ -1,19 +1,3 @@
-/*.wraith {
-	background: var(--150);
-	text-shadow: 0 0 7px var(--150), 0 0 22px var(--purple), 0 0 32px var(--purple);
-	background-clip: text;
-	-webkit-background-clip: text;
-	color: transparent;
-}
-.MaplebirchMod {
-    animation: lustful 180s linear infinite;  只保留渐变流动动画 
-    background: linear-gradient(-90deg, #FE9900, #F8D304, #BBF804, #01FF99, #BBF804, #F8D304, #FE9900);
-    background-size: 100% 100%;
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-}*/
-
 .MaplebirchFallen {
     background: linear-gradient(45deg, 
         #5A5A5A 20%, 
@@ -125,6 +109,10 @@
   color: #666666;
 }
 
+.amber {
+  color: #FFBF00;
+}
+
 .MaplebirchColor {
     animation: lustful 180s linear infinite;
     background: linear-gradient(-90deg, #FF0000, #FF7F00, #FFFF00, #00FF00, #00FFFF, #0000FF, #8B00FF);
@@ -133,3 +121,71 @@
     color: transparent;
 }
 
+/* 背包格子 */
+.maplebirch-inventory {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 54px); /* 自动适应列数 */
+  gap: 6px;
+  align-content: start; /* 顶部对齐 */
+}
+
+.maplebirch-slot {
+  width: 50px;
+  height: 50px;
+  border: 2px solid #888;
+  box-shadow: inset 0 0 5px #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.maplebirch-slot img {
+  max-width: 90%;
+  max-height: 90%;
+}
+
+.maplebirch-slot .maplebirch-count {
+  position: absolute;
+  bottom: 2px;
+  right: 4px;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  text-shadow: 1px 1px 2px black;
+}
+
+.maplebirch-items_icon {
+  position: absolute;
+  top: 50%;               
+  left: 50%;              
+  transform: translate(-50%, -50%); 
+  display: inline-block;  
+}
+
+.maplebirch-item-detail-row {
+  grid-column: 1 / -1;
+	padding: 9px;
+	border: 2px solid var(--200);
+	animation: slide-down 0.5s ease-out;
+}
+
+.maplebirch-image-frame {
+  width: 135px;
+  height: 135px;
+  flex-shrink: 0; /* 禁止缩小 */
+  border: 1px solid #ccc;
+  overflow: hidden;
+}
+
+.maplebirch-image-frame img {
+  width: 100%;
+  height: 100%;
+  display: block;          /* 消除图片底部间隙 */
+  object-fit: cover;       /* 保持比例填充容器 */
+  /* object-fit: contain;  /* 保持比例完整显示 */
+}
+
+.maplebirchLinks {
+	padding: 0.1em 0.1em;
+}
